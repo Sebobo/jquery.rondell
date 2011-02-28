@@ -4,10 +4,23 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <title>Layertest</title>
         <link rel="stylesheet" type="text/css" href="style.css">
+		<style type=text/css>
+            html { 
+                height:100%; background:#222; color:#333; font:12px helvetica; 
+                background-image:-webkit-gradient(linear, left top, left bottom, from(#ccc), to(#000));
+                background-image:-moz-linear-gradient(top, #ccc, #000); 
+            }
+            a { color:#222; }
+            #rondell_1 { width:420px; height:420px; overflow:hidden; margin:20px auto; }
+            #rondell_1 > div { visibility:hidden; }
+		</style>
     </head>
     <body>
-        <a href="layertest.html">rondell mit kreis</a>
-        <a href="layertest2.html">flaches rondell</a>
+        <h2>
+            <a href="layertest.html">Rondell mit Kreis</a>
+            <a href="layertest2.html">Flaches Rondell</a>
+        </h2>
+        <br/>
         <div id="rondell_1">
             <div class="rondell_item">
                 <img src="test1.jpg" />
@@ -97,26 +110,27 @@
         <script type="text/javascript" language="javascript" src="http://code.jquery.com/jquery-1.5.1.min.js"></script>
         <script type="text/javascript" language="javascript" src="../jquery.rondell.js"></script>
         <script type="text/javascript">
-        var options = {               
-        	    size:{width:402, height: 402},
-        	    radius:{x:0, y:0},
-        	    item_top_margin:0, 
-        	    center:{left:200, top:200},
-        	    scaling:1,
-        	    visible_items:1,
-        	    item_size:{width:400, height:400},
-        	    func_top: function(layer_diff, options) {
-        	        return options.center.top - options.item_size.height / 2;
-        	    },
-        	    func_left: function(layer_diff, options) {
-        	        return options.center.left - options.item_size.width + layer_diff * options.item_size.width;
-        	    },
-        	    func_diff: function(layer_diff, options) {
-        	        return Math.abs(layer_diff) + 0.5;
-        	    } 
-        	  };
-        
-            $('#rondell_1 .rondell_item').rondell(options);
+            $(function() {
+		        var options = {               
+	        	    size:{width:410, height: 410},
+	        	    radius:{x:0, y:0},
+	        	    item_top_margin:0, 
+	        	    center:{left:205, top:205},
+	        	    scaling:1,
+	        	    visible_items:1,
+	        	    item_size:{width:400, height:400},
+	        	    func_top: function(layer_diff, options) {
+	        	        return options.center.top - options.item_size.height / 2;
+	        	    },
+	        	    func_left: function(layer_diff, options) {
+	        	        return options.center.left - options.item_size.width + layer_diff * options.item_size.width;
+	        	    },
+	        	    func_diff: function(layer_diff, options) {
+	        	        return Math.abs(layer_diff) + 0.5;
+	        	    } 
+        	    };
+                $('#rondell_1 .rondell_item').rondell(options);
+			});
         </script>
     </body>
 </html>

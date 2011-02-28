@@ -2,15 +2,15 @@
  * jQuery rondell plugin
  * @name jquery.rondell.js
  * @author Sebastian Helzle
- * @version 0.7
- * @date Feb 27, 2011
+ * @version 0.7.1
+ * @date Feb 28, 2011
  * @category jQuery plugin
  * @copyright (c) 2009-2011 Sebastian Helzle (www.sebastianhelzle.net)
  * @license CC Attribution 3.0 - http://creativecommons.org/licenses/by/3.0/deed.en
  */
 
 jQuery.rondell = {
-	version: '0.7',
+	version: '0.7.1',
     name: 'rondell',
     layer_count: 0,
     current_layer: 1,
@@ -19,7 +19,7 @@ jQuery.rondell = {
     size: {width: undefined, height: undefined},
     visible_items: 'auto',
     scaling: 2,
-    opacity_min: 0.1, 
+    opacity_min: 0.01, 
     fade_time: 300,
     item_delay: 100,
     item_class: 'rondell_item',
@@ -38,7 +38,7 @@ jQuery.rondell = {
     auto_rotation_once: false,
     auto_rotation_delay: 5000,
     controls_enabled: true,
-    controls_fade_time: 500,
+    controls_fade_time: 400,
     controls_margin: {x: 20, y: 20},
     strings: {prev: 'prev', next: 'next'},
     func_left: function(layer_diff, options) {
@@ -57,8 +57,8 @@ jQuery.rondell = {
 	func_opacity: function (layer_dist, options) {
 		return options.opacity_min + (1.0 - options.opacity_min) * (1.0 - Math.pow(layer_dist / options.visible_items, 2))
 	},
-    show_caption: function(layer_num, options) { options.items[options.current_layer].object.find('.rondell_caption').stop().fadeTo(300, 1); },
-    hide_captions: function(options) { $('.rondell_caption').stop().fadeTo(200, 0); },
+    show_caption: function(layer_num, options) { options.items[options.current_layer].object.find('.rondell_caption.overlay').stop().fadeTo(300, 1); },
+    hide_captions: function(options) { $('.rondell_caption.overlay').stop().fadeTo(200, 0); },
     event: {
         layer_fadein: function(layer_num, options) {
             var item = options.items[layer_num];

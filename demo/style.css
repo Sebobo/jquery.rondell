@@ -1,12 +1,10 @@
-body {
-    color:#333; font:12px helvetica;
-}
 img { border:0; }
 .rondell_item {
     position:absolute; display:block; overflow:hidden;
-    border:1px solid #ccc; background:#fff;
+    border:1px solid #ccc; background:#fff; cursor:pointer;
+    box-shadow:0 1px 3px rgba(0, 0, 0, 0.6); -webkit-box-shadow:0 1px 3px rgba(0, 0, 0, 0.6); -moz-box-shadow:0 1px 3px rgba(0, 0, 0, 0.6); 
 }
-.rondell_item a { cursor:default; }
+.rondell_item a { cursor:pointer; }
 .rondell_item_focused a { cursor:auto; }
 .rondell_item img {
     vertical-align:bottom; display:block; margin:0 auto;

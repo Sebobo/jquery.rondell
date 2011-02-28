@@ -5,18 +5,25 @@
         <title>Layertest</title>
         <link rel="stylesheet" type="text/css" href="style.css">
 		<style type="text/css">
-			.rondell_item { 
-			    background:transparent; -webkit-box-shadow:0 1px 3px rgba(0, 0, 0, 0.2); -moz-box-shadow:0 1px 3px rgba(0, 0, 0, 0.2); 
+			html { 
+			    height:100%; background:#222; color:#333; font:12px helvetica; 
+			    background-image:-webkit-gradient(linear, left top, left bottom, from(#ccc), to(#000));
+				background-image:-moz-linear-gradient(top, #ccc, #000); 
 			}
-			.rondell_item, .rondell_item img { -webkit-border-radius: 5px; }
-            #rondell_1 { width:775px; height:450px; overflow:hidden; }
+			a { color:#222; }
+			.rondell_item, .rondell_item img { border-radius:5px; -webkit-border-radius:5px; -moz-border-radius:5px; }
+            .rondell_item:hover { border:1px solid #ddd; }
+            #rondell_1 { width:775px; height:450px; overflow:hidden; margin:20px auto; }
             #rondell_1 > div { visibility:hidden; }
 		</style>
     </head>
     <body>
-        <a href="layertest.html">rondell mit kreis</a>
-        <a href="layertest2.html">flaches rondell</a>
-        <div id="rondell_1">
+        <h2>
+        	<a href="layertest.html">Rondell mit Kreis</a>
+            <a href="layertest2.html">Flaches Rondell</a>
+		</h2>
+        <br/>
+		<div id="rondell_1">
             <div>
             	<a target="_blank" href="test1.jpg">
             		<img class="resizeable" src="test1.jpg" />   
