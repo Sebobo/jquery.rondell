@@ -1,0 +1,342 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Sebobo's github home</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" href="css/screen.css" type="text/css" media="all" title="Screen" />  
+        <link rel="stylesheet" href="css/jquery.rondell.css" type="text/css" media="all" title="Screen" />  
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+        <script type="text/javascript" src="lib/jquery.fancybox-1.3.4.pack.js"></script>   
+        <script type="text/javascript" src="lib/modernizr-2.0.6.min.js"></script> 
+        <script type="text/javascript" language="javascript" src="lib/jquery.rondell.js"></script>
+    </head>
+    <body>
+        <div class="page hasShadow">
+            <h1 id="docustart">jQuery Rondell documentation &amp; demo page</h1>
+            
+            <br/>
+            
+            <h3>Rondell - Version 0.8</h3>
+            <p>
+                Created by <a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle">Sebastian Helzle</a>
+            </p>
+            
+            <br/>
+
+            <p>
+                This is a <a href="http://www.jquery.com" title="jQuery">jQuery</a> plugin for displaying galeries and other content.<br/>
+            </p>
+            
+            <p>
+                Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php" title="MIT licence">MIT</a> license.
+            </p>
+            
+            <p>
+                <a href="https://github.com/Sebobo/jquery.rondell" title="Rondell download">Download at github</a>
+            </p>
+            
+            <br/>
+            
+            <hr id="gallerydemo"/>
+            
+            <h3>Displaying a gallery</h3>
+            
+            <p>
+                This demo show how to display a gallery. Click an image to focus it and open it in a lightbox.<br/>
+                You can press arrow left and right on your keyboard to navigate through the images.
+            </p>
+            <p>
+                The rondell will automatically continue to rotate through the gallery when your mouse leaves it's area.
+            </p>
+            <p>
+                The lightbox is powered by <a href="http://www.fancybox.net" title="Fancybox">Fancybox</a>.
+            </p>
+            
+            <div id="rondell_1">
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/band.jpg">
+                        <img class="resizeable" src="images/band.jpg" alt="demo pic" />   
+                        <h3>Awesome concert</h3>
+                        <p>
+                            My favourite band.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/dog.jpg">
+                        <img class="resizeable" src="images/dog.jpg" alt="demo pic" /> 
+                        <h3>My dog</h3>
+                        <p>
+                            Standing in front of a glass door and wants in.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/cat.jpg">
+                        <img class="resizeable" src="images/cat.jpg" alt="demo pic" />
+                        <h3>My cat</h3>
+                        <p>
+                            Sleeping...
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/boar.jpg">
+                        <img class="resizeable" src="images/boar.jpg" alt="demo pic" />
+                        <h3>Dead pig on the wall</h3>
+                        <p>
+                            Hanging around.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/snow.jpg">
+                        <img class="resizeable" src="images/snow.jpg" alt="demo pic" />
+                        <h3>Winter wonderland</h3>
+                        <p>
+                            The german alps.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/rabbit.jpg">
+                        <img class="resizeable" src="images/rabbit.jpg" alt="demo pic" />
+                        <h3>Bunny</h3>
+                        <p>
+                            In my brothers garden.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/trash.jpg">
+                        <img class="resizeable" src="images/trash.jpg" alt="demo pic" />
+                        <h3>Trash</h3>
+                        <p>
+                            Somewhere in the USA.
+                        </p>
+                    </a>
+                </div>
+            </div>
+            
+            <br/>
+        
+            <hr id="stuffdemo"/>
+            
+            <h3>Displaying text and images</h3>
+            
+            <p>
+                This demo show how to display a mix of text and images with a different transition.<br/>
+                You can press arrow left and right on your keyboard to navigate through the images.<br/>
+            </p>
+            <p>
+                Automatic rotation is disabled in this demo.
+            </p>
+            
+            <div id="rondell_2">
+                <div>
+                    <img class="resizeable" src="images/water.png" alt="Waterfall" />
+                    <h2>Waterfall</h2>
+                    <p>
+                        Waterfalls are commonly formed when a river is young.
+                        At these times the channel is often narrow and deep. 
+                        When the river courses over resistant bedrock, erosion happens slowly, 
+                        while downstream the erosion occurs more rapidly.
+                        As the watercourse increases its velocity at the edge of the waterfall, 
+                        it plucks material from the riverbed.
+                    </p>
+                    <p> 
+                        Whirlpools created in the turbulence as well as sand and stones carried by the watercourse increase the erosion capacity.
+                        This causes the waterfall to carve deeper into the bed and to recede upstream. Often over time, 
+                        the waterfall will recede back to form a canyon or gorge downstream as it recedes upstream, 
+                        and it will carve deeper into the ridge above it. 
+                        The rate of retreat for a waterfall can be as high as one and half meters per year.
+                    </p>
+                    <a href="http://en.wikipedia.org/wiki/Waterfall" title="Waterfall">Read more</a>
+                </div>
+                <div>
+                    <h2>Some text</h2>
+                    <p>
+                        You can put <b>any</b> content you like in here.
+                    </p>
+                    <p>
+                        Also long text!
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+                        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+                        sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+                        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+                        sanctus est Lorem ipsum dolor sit amet.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+                        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+                        sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+                        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+                        sanctus est Lorem ipsum dolor sit amet.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+                        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+                        sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+                        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+                        sanctus est Lorem ipsum dolor sit amet.
+                    </p>
+                    <p>
+                        <b>Nice!</b>
+                    </p>
+                </div>
+                <div>
+                    <img class="resizeable" src="images/mountains.png" alt="Mountains" />
+                    <h2>Mountains</h2>
+                    <p>
+                        A mountain is a large landform that stretches above the surrounding land in a 
+                        limited area usually in the form of a peak. A mountain is generally steeper than a hill. 
+                        The adjective montane is used to describe mountainous areas and things associated with them. 
+                        The study of mountains is called Orography. Exogeology deals with planetary mountains, 
+                        which in that branch of science are usually called montes (singular—mons).
+                    </p>
+                    <p> 
+                        The highest mountain on Earth based from sea level is Mount Everest (8,848 m (29,029 ft)) 
+                        in the Himalayas of Asia. The highest known mountain in the Solar System is 
+                        Olympus Mons on the planet Mars at 21,171 m (69,459 ft).
+                    </p>
+                    <a href="http://en.wikipedia.org/wiki/Mountains" title="Mountains">Read more</a>
+                </div>
+                <div>
+                    <img src="images/ranseier.jpg" alt="Karl Ranseier" />
+                    <h2>Karl Ranseier</h2>
+                    <p>
+                        Karl Ranseier ist eine fiktive Person, die im Rahmen der Samstag-Nacht-News von 
+                        Stefan Jürgens in einer Trauerrede gewürdigt wurde. Erfunden wurde die Figur von Jacky Dreksler, 
+                        aus dessen Privatalbum auch das Foto Ranseiers stammt, das immer zu Beginn der Rubrik gezeigt wurde. 
+                        Der Name „Ranseier“ ist eine Idee Hugo Egon Balders.
+                    </p>
+                    <a href="http://de.wikipedia.org/wiki/Karl_Ranseier#Karl_Ranseier" title="Wikipedia">Karl Ranseier bei Wikipedia</a>
+                </div>
+            </div>
+            
+
+            <h6>Feedback is welcome!</h6>            
+            <p>
+                Please send me suggestions, ideas for improvement or anything else to 
+                <a href="mailto:sebastian@helzle.net" title="Send me a mail">sebastian@helzle.net</a>
+                or <a href="http://twitter.com/#!/sebobo" target="_blank" title="Sebobo at twitter">@sebobo</a>
+            </p>
+            
+            <br/>
+            
+            <h3>Have fun!</h3>
+            
+            <br/>
+            
+            <p>
+                All images are my own except the one of Karl Ranseier, which is available as public domain.
+            </p>
+            
+            <p>
+                jQuery Rondell is powered by 
+                <a href="http://jashkenas.github.com/coffee-script/" target="_blank" title="Coffeescript">coffeescript</a>, 
+                <a href="http://sass-lang.com/" target="_blank" title="Sass">sass</a>
+                and <a href="http://www.jquery.com" target="_blank" title="jQuery">jQuery</a>.
+            </p>
+    	</div>
+        <script type="text/javascript">
+            $(function() {
+                
+                $('#rondell_1 > div').rondell({
+                    radius: {
+                        x: 300, 
+                        y: 50
+                    },
+                    itemProperties: {
+                        topMargin: 0,
+                        sizeFocused: { 
+                            width: 300, 
+                            height: 390
+                        }
+                    },
+                    center: { 
+                        left: 400, 
+                        top: 200
+                    },
+                    visibleItems: 3,
+                    autoRotation: {
+                        enabled: true,
+                        direction: 1,
+                        once: false,
+                        delay: 5000
+                    },
+                    isActive: function() {
+                        return !$('#fancybox-wrap').is(':visible');
+                    }
+                }); 
+                
+                $('#rondell_2 > div').rondell({
+                    radius: { 
+                        x: 0, 
+                        y: 0
+                    }, 
+                    center: {
+                        left: 200, 
+                        top: 200
+                    },
+                    scaling: 1,
+                    visibleItems: 1,
+                    itemProperties: {
+                        topMargin: 0,
+                        size: { 
+                            width:400, 
+                            height:400
+                        }
+                    },
+                    controls: {
+                        margin: {
+                            x: 5,
+                            y: 5
+                        }
+                    },
+                    funcTop: function(layerDiff, rondell) {
+                        return rondell.center.top - rondell.itemProperties.size.height / 2;
+                    },
+                    funcLeft: function(layerDiff, rondell) {
+                        return rondell.center.left - rondell.itemProperties.size.width + layerDiff * rondell.itemProperties.size.width;
+                    },
+                    funcDiff: function(layerDiff, rondell) {
+                        return Math.abs(layerDiff) + 0.5;
+                    } 
+                });
+                
+                $('#rondell_1 a').fancybox({
+                    cyclic: true,
+                    hideOnContentClick: false,
+                    titleShow: false,
+                    padding: 0,
+                    scrolling: 'no',
+                    overlayShow: true,
+                    overlayColor: '#333',
+                    overlayOpacity: 0.3,
+                    enableEscapeButton: true
+                });
+            });
+        </script>
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-26146980-1']);
+          _gaq.push(['_trackPageview']);
+          _gaq.push(['_gat._anonymizeIp']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script>
+    </body>
+</html>

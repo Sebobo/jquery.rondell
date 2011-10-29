@@ -1,0 +1,329 @@
+/* Demo css */
+html {
+  height: 100%;
+  font-size: 12px;
+  color: #000;
+  background: #222;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+fieldset, img {
+  border: 0;
+}
+
+address, caption, cite, code, dfn, em, strong, th, var {
+  font-style: normal;
+  font-weight: normal;
+}
+
+li {
+  list-style: none;
+}
+
+caption, th {
+  text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+q:before, q:after {
+  content: '';
+}
+
+abbr, acronym {
+  border: 0;
+  font-variant: normal;
+}
+
+sup {
+  vertical-align: text-top;
+}
+
+sub {
+  vertical-align: text-bottom;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+input, textarea, select {
+  *font-size: 100%;
+}
+
+legend {
+  color: #000;
+}
+
+.cssgradients html {
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-image: -webkit-linear-gradient(top, #999999, #222222);
+  background-image: -moz-linear-gradient(top, #999999, #222222);
+  background-image: -ms-linear-gradient(top, #999999, #222222);
+  background-image: -o-linear-gradient(top, #999999, #222222);
+  background-image: linear-gradient(top, #999999, #222222);
+}
+
+body {
+  color: #333;
+  height: 100%;
+  font-family: arial;
+  font-size: 1em;
+  line-height: 1.2em;
+  padding: 30px 0;
+}
+
+a {
+  color: #0d3a8b;
+}
+
+img {
+  border: 0;
+}
+
+hr {
+  width: 50%;
+  height: 1px;
+  background: #eee;
+  border: 0;
+  margin: 40px 25%;
+}
+
+p {
+  margin: 0.6em 0;
+  line-height: 1.2em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0.6em 0;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.8em;
+}
+
+h3 {
+  font-size: 1.6em;
+}
+
+h4 {
+  font-size: 1.4em;
+}
+
+h5 {
+  font-size: 1.2em;
+}
+
+code, pre {
+  color: #555;
+  border: 1px solid #f0f0f0;
+  background-color: #fafafa;
+  padding: 5px;
+  font-size: 0.9em;
+}
+
+ul {
+  padding-left: 20px;
+}
+ul li {
+  margin: 0.6em 0;
+  list-style-type: disc;
+}
+
+img.inline {
+  margin: 10px;
+}
+
+.boxshadow.rgba img.inline {
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.clear {
+  clear: both;
+}
+
+.relative {
+  position: relative;
+}
+
+.hasBorder {
+  border: 4px solid #fff;
+}
+
+.centered {
+  margin: 0 auto;
+}
+
+.floatLeft {
+  float: left;
+}
+
+.floatRight {
+  float: right;
+}
+
+.boxshadow.rgba .hasShadow {
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.page {
+  margin: 0 auto;
+  width: 840px;
+  background: #fafafa;
+  padding: 40px;
+}
+
+/* rondell demo stuff */
+#rondell_1 {
+  width: 775px;
+  height: 450px;
+  margin: 20px auto;
+}
+#rondell_1 .rondellItem, #rondell_1 .rondellItem img {
+  border-radius: 5px;
+  -o-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+#rondell_1 .rondellItem a {
+  text-decoration: none;
+}
+
+.boxshadow.rgba #rondell_1 .rondellItem {
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+.boxshadow.rgba #rondell_1 .rondellItem:hover {
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+#rondell_2 {
+  width: 420px;
+  height: 420px;
+  margin: 20px auto;
+}
+#rondell_2 .rondellContainer {
+  background: #fff;
+}
+#rondell_2 .rondellItem {
+  border: 0;
+}
+
+.boxshadow.rgba #rondell_2 .rondellContainer {
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* fancybox */
+#fancybox-wrap,
+#fancybox-overlay,
+#fancybox-inner,
+#fancybox-loading div,
+#fancybox-close {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#fancybox-loading div, #fancybox-close {
+  background-image: url("../images/fancybox.png");
+}
+
+#fancybox-loading {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  height: 40px;
+  width: 40px;
+  margin-top: -20px;
+  margin-left: -20px;
+  overflow: hidden;
+  z-index: 1104;
+  display: none;
+}
+#fancybox-loading div {
+  width: 40px;
+  height: 480px;
+}
+
+#fancybox-overlay {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background: #000;
+  z-index: 1100;
+  display: none;
+}
+
+#fancybox-tmp {
+  overflow: auto;
+  display: none;
+}
+
+#fancybox-wrap {
+  z-index: 1101;
+  display: none;
+  border: 3px solid #888;
+}
+
+.borderradius #fancybox-wrap {
+  border-radius: 5px;
+  -o-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+.rgba.boxshadow #fancybox-wrap {
+  border-color: rgba(230, 230, 230, 0.7);
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+#fancybox-outer {
+  position: relative;
+  background: #222;
+  width: 100%;
+  height: 100%;
+}
+
+#fancybox-close {
+  top: -15px;
+  right: -15px;
+  left: auto;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  z-index: 1103;
+  display: none;
+  background-position: -40px 0px;
+}
