@@ -1,1 +1,5 @@
 .project
+.settings
+.sass-cache
+.DS_Store
+.pydevproject
