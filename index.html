@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="stylesheet" href="css/screen.css" type="text/css" media="all" title="Screen" />  
         <link rel="stylesheet" href="css/jquery.rondell.css" type="text/css" media="all" title="Screen" />  
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+        <script type="text/javascript" src="lib/jquery-1.6.4.min.js"></script>
         <script type="text/javascript" src="lib/jquery.fancybox-1.3.4.pack.js"></script>   
         <script type="text/javascript" src="lib/modernizr-2.0.6.min.js"></script> 
         <script type="text/javascript" language="javascript" src="lib/jquery.rondell.js"></script>
@@ -52,7 +52,7 @@
                 The lightbox is powered by <a href="http://www.fancybox.net" title="Fancybox">Fancybox</a>.
             </p>
             
-            <div id="rondell_1">
+            <div id="rondellGallery">
                 <div>
                     <a target="_blank" rel="rondell_1" href="images/band.jpg">
                         <img class="resizeable" src="images/band.jpg" alt="demo pic" />   
@@ -132,7 +132,7 @@
                 Automatic rotation is disabled in this demo.
             </p>
             
-            <div id="rondell_2">
+            <div id="rondellMixed">
                 <div>
                     <img class="resizeable" src="images/water.png" alt="Waterfall" />
                     <h2>Waterfall</h2>
@@ -222,8 +222,35 @@
                 </div>
             </div>
             
+            <br/>
+            
+            <hr/>
+            
+            <h3>Fetch images from another page and use a fancy cubic function as transition</h3>
+            
+            <p>
+                This demo fetches links &amp; images from my brothers great webservice 
+                <a href="http://www.wookmark.com" target="_blank" title="Wookmark.com">wookmark.com</a>
+                and creates a rondell from the data.
+            </p>
+            <p>
+                The link titles are used as caption.<br/>
+                Clicking the focused element will open the wookmark in a new tab or window.
+            </p>
+            
+            <div id="wookmarkDemo"></div>
+            
+            <hr/>
+            
+            <h3>Coming up</h3>
+            
+            <p>
+                How about touch controls?
+            </p>
+            
+            <br/>
 
-            <h6>Feedback is welcome!</h6>            
+            <h3>Feedback is welcome!</h6>            
             <p>
                 Please send me suggestions, ideas for improvement or anything else to 
                 <a href="mailto:sebastian@helzle.net" title="Send me a mail">sebastian@helzle.net</a>
@@ -250,7 +277,7 @@
         <script type="text/javascript">
             $(function() {
                 
-                $('#rondell_1 > div').rondell({
+                $('#rondellGallery > div').rondell({
                     radius: {
                         x: 300, 
                         y: 50
@@ -278,7 +305,19 @@
                     }
                 }); 
                 
-                $('#rondell_2 > div').rondell({
+                $('#rondellGallery a').fancybox({
+                    cyclic: true,
+                    hideOnContentClick: false,
+                    titleShow: false,
+                    padding: 0,
+                    scrolling: 'no',
+                    overlayShow: true,
+                    overlayColor: '#333',
+                    overlayOpacity: 0.3,
+                    enableEscapeButton: true
+                });
+                
+                $('#rondellMixed > div').rondell({
                     radius: { 
                         x: 0, 
                         y: 0
@@ -306,37 +345,65 @@
                         return rondell.center.top - rondell.itemProperties.size.height / 2;
                     },
                     funcLeft: function(layerDiff, rondell) {
-                        return rondell.center.left - rondell.itemProperties.size.width + layerDiff * rondell.itemProperties.size.width;
+                        return rondell.center.left + layerDiff * rondell.itemProperties.size.width;
                     },
                     funcDiff: function(layerDiff, rondell) {
                         return Math.abs(layerDiff) + 0.5;
                     } 
                 });
                 
-                $('#rondell_1 a').fancybox({
-                    cyclic: true,
-                    hideOnContentClick: false,
-                    titleShow: false,
-                    padding: 0,
-                    scrolling: 'no',
-                    overlayShow: true,
-                    overlayColor: '#333',
-                    overlayOpacity: 0.3,
-                    enableEscapeButton: true
+                $.ajax({
+                    url: 'http://www.sebastianhelzle.net/demos/get_page.php?page=wookmark',
+                    dataType: 'jsonp',
+                    success: function(json, text, xhqr) {
+                        if (text == 'success') {
+                            var content = $(json.pageContent),
+                                wookmarkDemo = $('#wookmarkDemo'); 
+                            wookmarkDemo.empty().append(content.find('.polaroid a:has(img):lt(21)'));
+                            $('img', wookmarkDemo).addClass('resizeable');
+                            $('a', wookmarkDemo).attr('target', '_blank').rondell({
+                                center: { 
+                                    left: 400, 
+                                    top: 200
+                                },
+                                visibleItems: 5,
+                                itemProperties: {
+                                    sizeFocused: { 
+                                        width: 350, 
+                                        height: 350
+                                    }
+                                },
+                                controls: {
+                                    margin: {
+                                        x: 10,
+                                        y: 190
+                                    }
+                                },
+                                funcTop: function(layerDiff, rondell) {
+                                    return rondell.center.top - rondell.itemProperties.size.height / 2.0 - Math.pow(layerDiff / 2, 3) * rondell.radius.x;
+                                },
+                                funcLeft: function(layerDiff, rondell) {
+                                    return rondell.center.left - rondell.itemProperties.size.width / 2.0 - Math.sin(layerDiff) * rondell.radius.x;
+                                }                                
+                            });
+                        }
+                    }
                 });
             });
         </script>
         <script type="text/javascript">
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-26146980-1']);
-          _gaq.push(['_trackPageview']);
-          _gaq.push(['_gat._anonymizeIp']);
-        
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
+          if (document.location.hostname == 'sebobo.github.com') {
+              var _gaq = _gaq || [];
+              _gaq.push(['_setAccount', 'UA-26146980-1']);
+              _gaq.push(['_trackPageview']);
+              _gaq.push(['_gat._anonymizeIp']);
+            
+              (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+              })();
+          }
         </script>
     </body>
 </html>

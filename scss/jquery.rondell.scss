@@ -4,6 +4,10 @@
   overflow: hidden;
   display: block;
   position: relative;
+  
+  &.initializing .rondellItem {
+    display:none;
+  } 
 }
 
 .rondellItem {
@@ -13,6 +17,7 @@
   background: #fff; 
   cursor: pointer;
   overflow: hidden;
+  text-decoration:none;
     
   a { cursor:pointer; color: #fff; }
     
@@ -27,7 +32,14 @@
     }
   }
   
-  &:hover { border-color: #eee; } 
+  &:hover { 
+    border-color: #eee; 
+    
+    &, div, p { text-decoration:none; }
+  } 
+}
+.rondellItemHovered {
+  opacity: 1 !important;
 }
 
 .rondellItemFocused {
@@ -46,6 +58,9 @@
   bottom: 0;
   left: 0;
   right: 0; 
+  text-decoration:none;
+  
+  a { text-decoration: underline; }
   
   &.overlay {
     top: auto;

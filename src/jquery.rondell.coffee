@@ -2,8 +2,8 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 0.8
-  @date 10/28/2011
+  @version 0.8.1
+  @date 11/02/2011
   @category jQuery plugin
   @copyright (c) 2009-2011 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -12,7 +12,7 @@
 (($) ->
   # Global rondell stuff
   $.rondell =
-    version: '0.8'
+    version: '0.8.1'
     name: 'rondell'
     defaults:
       resizeableClass: 'resizeable'
@@ -33,7 +33,7 @@
         height: null
       visibleItems: 'auto' # How many items should be visible in each direction
       scaling: 2 # Size of focused element
-      opacityMin: 0.01 # Min opacity before elements are set to display: none
+      opacityMin: 0.05 # Min opacity before elements are set to display: none
       fadeTime: 300
       zIndex: 1000 # All elements of the rondell will use this z-index and add their depth to it
       itemProperties: # Default properties for each item
@@ -90,7 +90,7 @@
     funcDiff: (layerDiff, rondell) ->
       Math.pow(Math.abs(layerDiff) / rondell.itemCount, 0.5) * Math.PI
     funcOpacity: (layerDist, rondell) ->
-      rondell.opacityMin + (1.0 - rondell.opacityMin) * (1.0 - Math.pow(layerDist / rondell.visibleItems, 2))
+      if rondell.visibleItems > 1 then Math.max(0, 1.0 - Math.pow(layerDist / rondell.visibleItems, 2)) else 0
     
     showCaption: (layerNum) => 
       # Restore automatic height and show caption
@@ -106,7 +106,7 @@
       caption.css(
         height: caption.height()
         overflow: 'hidden'
-      ).stop(true).fadeTo(100, 0)
+      ).stop(true).fadeTo(200, 0)
       
     _getItem: (layerNum) =>
       @items[layerNum - 1]
@@ -115,7 +115,13 @@
       @items[layerNum - 1] = item
       
       # Wrap other content as overlay caption
-      captionContent = item.icon?.siblings() or item.object.children()
+      captionContent = item.icon?.siblings()
+      if not (captionContent?.length or item.icon) and item.object.children().length
+        captionContent = item.object.children()
+      if not captionContent.length and item.icon?.attr('title')
+        captionContent = $("<p>#{item.icon.attr('title')}</p>")
+        item.object.append(captionContent)
+
       if captionContent.length
         captionContainer = $('<div class="rondellCaption"></div>')
         captionContainer.addClass('overlay') if item.icon
@@ -123,15 +129,24 @@
           
       # Init click events
       item.object
-      .addClass(@itemProperties.cssClass)
-      .click (e) => 
-        if @currentLayer isnt layerNum
-          @shiftTo(layerNum)
-          e.preventDefault()
+      .addClass("new #{@itemProperties.cssClass}")
+      .css('opacity', 0)
+      .bind('mouseover mouseout click', (e) =>
+        switch e.type
+          when 'mouseover'
+            item.object.addClass('rondellItemHovered') if item.object.is(':visible') and not item.hidden
+          when 'mouseout'
+            item.object.removeClass('rondellItemHovered')
+          when 'click'
+            if item.object.is(':visible') and not (@currentLayer is layerNum or item.hidden)
+              @shiftTo(layerNum)
+              e.preventDefault()
+      )
       
     _start: =>
       # Set visibleItems if set to auto
-      @visibleItems = @currentLayer if @visibleItems is 'auto'
+      @currentLayer = Math.round(@itemCount / 2)
+      @visibleItems = Math.max(2, Math.round(@itemCount / 4)) if @visibleItems is 'auto'
       
       # Create controls
       controls = @controls
@@ -155,7 +170,7 @@
       $(document).keydown(@keyDown)
       
       # add hover function to container
-      @container.bind('mouseover mouseout', @_hover)
+      @container.removeClass('initializing').bind('mouseover mouseout', @_hover)
       
       # Move items to starting positions
       @shiftTo(@currentLayer)
@@ -186,7 +201,7 @@
       itemFocusedHeight = item.sizeFocused.height
       
       # Move item to center position and fade in
-      item.object
+      item.object.stop(true).show(0)
       .animate(
           width: itemFocusedWidth
           height: itemFocusedHeight
@@ -201,8 +216,10 @@
       .addClass('rondellItemFocused')
       
       if item.icon and not item.resizeable
-        item.icon.animate(
-            marginTop: @itemTopMargin + (@itemProperties.size.height - item.icon.height()) / 2
+        margin = (@itemProperties.size.height - item.icon.height()) / 2
+        item.icon.stop(true).animate(
+            marginTop: margin
+            marginBottom: margin
           , @fadeTime)
           
     layerFadeOut: (layerNum) =>
@@ -222,41 +239,60 @@
       # Get the absolute layer number difference
       layerDiff = @funcDiff(layerPos - @currentLayer, @)
       layerDiff *= -1 if layerPos < @currentLayer
+      
+      newX = @funcLeft(layerDiff, @) + (@itemProperties.size.width - item.sizeSmall.width) / 2
+      newY = @funcTop(layerDiff, @) + (@itemProperties.size.height - item.sizeSmall.height) / 2
+      newZ = @zIndex + (if layerDiff < 0 then layerPos else -layerPos)
+      fadeTime = @fadeTime + @itemProperties.delay * layerDist
         
       # Is item visible
-      if layerDist <= @visibleItems
+      if layerDist <= @visibleItems or item.object.hasClass('new')
         @hideCaption(layerNum)
         
-        item.object.animate(
+        newOpacity = @funcOpacity(layerDist, @)
+        item.object.show() if newOpacity >= @opacityMin
+        
+        item.object.removeClass('new rondellItemFocused').stop(true)
+        .css('z-index', newZ)
+        .animate(
             width:   item.sizeSmall.width
             height:  item.sizeSmall.height
-            left:    @funcLeft(layerDiff, @) + (@itemProperties.size.width - item.sizeSmall.width) / 2
-            top:     @funcTop(layerDiff, @) + (@itemProperties.size.height - item.sizeSmall.height) / 2
-            opacity: if @opacityMin isnt 1 then @funcOpacity(layerDist, @) else 1
-          , @fadeTime + @itemProperties.delay * layerDist, @funcEase
+            left:    newX
+            top:     newY
+            opacity: newOpacity 
+          , fadeTime, @funcEase, =>
+            if item.object.css('opacity') < @opacityMin then item.object.hide() else item.object.show()
         )
+        
         item.hidden = false
         unless item.small
           item.small = true
           if item.icon and not item.resizeable
             margin = (@itemProperties.size.height - item.icon.height()) / 2
-            item.icon.animate(
+            item.icon.stop(true).animate(
                 marginTop: margin
                 marginBottom: margin
-              , @fadeTime
+              , fadeTime
             )
-            
-        # Create correct z-order
-        item.object
-        .css('z-index', if layerDiff < 0 then @zIndex + layerPos else @zIndex - layerPos)
-        .removeClass('rondellItemFocused')
-      else unless item.hidden
+      else if item.hidden
+        # Update position even if out of view to 
+        item.object.css(
+          left: newX
+          top: newY
+          'z-index': newZ
+        )
+      else
         # Hide items which are moved out of view
         item.hidden = true
-        item.object.fadeTo(@fadeTime / 2 + @itemProperties.delay * layerDist, 0, =>
+        item.object.stop(true)
+        .css('z-index', newZ)
+        .animate(
+            left: newX
+            top: newY
+            opacity: 0
+          , fadeTime, @funcEase, =>
           @hideCaption(layerNum)
         )
-        
 
     shiftTo: (layerNum) =>
       itemCount = @itemCount
@@ -330,7 +366,7 @@
     maxItems = @length
       
     # Wrap elements in new container
-    @wrapAll($('<div class="rondellContainer"></div>'))
+    @wrapAll($('<div class="rondellContainer initializing"></div>'))
       
     container = rondell.container = @parent().css
       width: containerWidth

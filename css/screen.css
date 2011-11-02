@@ -91,6 +91,10 @@ body {
 
 a {
   color: #0d3a8b;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
 
 img {
@@ -199,45 +203,47 @@ img.inline {
 }
 
 /* rondell demo stuff */
-#rondell_1 {
+#rondellGallery {
   width: 775px;
   height: 450px;
   margin: 20px auto;
 }
-#rondell_1 .rondellItem, #rondell_1 .rondellItem img {
+#rondellGallery .rondellItem, #rondellGallery .rondellItem img {
   border-radius: 5px;
   -o-border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
-#rondell_1 .rondellItem a {
+#rondellGallery .rondellItem a {
   text-decoration: none;
 }
 
-.boxshadow.rgba #rondell_1 .rondellItem {
+.boxshadow.rgba #rondellGallery .rondellItem,
+.boxshadow.rgba #wookmarkDemo .rondellItem {
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
-.boxshadow.rgba #rondell_1 .rondellItem:hover {
-  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+.boxshadow.rgba #rondellGallery .rondellItem:hover,
+.boxshadow.rgba #wookmarkDemo .rondellItem:hover {
+  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
 }
 
-#rondell_2 {
+#rondellMixed {
   width: 420px;
   height: 420px;
   margin: 20px auto;
 }
-#rondell_2 .rondellContainer {
+#rondellMixed .rondellContainer {
   background: #fff;
 }
-#rondell_2 .rondellItem {
+#rondellMixed .rondellItem {
   border: 0;
 }
 
-.boxshadow.rgba #rondell_2 .rondellContainer {
+.boxshadow.rgba #rondellMixed .rondellContainer {
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);

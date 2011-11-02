@@ -19,7 +19,12 @@ body {
   padding: 30px 0;
 }
 
-a { color:#0d3a8b; }
+a { 
+  color:#0d3a8b; 
+  text-decoration: none;
+  
+  &:hover { text-decoration: underline; } 
+}
 img { border:0; }
 hr { width: 50%; height:1px; background:#eee; border:0; margin:40px 25%; }
 p { margin:0.6em 0; line-height: 1.2em; }
@@ -59,7 +64,7 @@ img.inline { margin: 10px; }
 
 /* rondell demo stuff */
 
-#rondell_1 { 
+#rondellGallery { 
   width:775px; 
   height:450px; 
   margin:20px auto;  
@@ -69,13 +74,14 @@ img.inline { margin: 10px; }
     a { text-decoration: none; }
   }
 }
-.boxshadow.rgba #rondell_1 .rondellItem { 
+.boxshadow.rgba #rondellGallery .rondellItem,
+.boxshadow.rgba #wookmarkDemo .rondellItem { 
   @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.6));
   
-  &:hover { @include boxshadow(0 1px 4px rgba(0, 0, 0, 0.4)); }
+  &:hover { @include boxshadow(0 1px 6px rgba(0, 0, 0, 0.6)); }
 }
 
-#rondell_2 { 
+#rondellMixed { 
   width: 420px; 
   height: 420px; 
   margin: 20px auto;
@@ -83,7 +89,7 @@ img.inline { margin: 10px; }
   .rondellContainer { background: #fff; }
   .rondellItem { border: 0; }
 }
-.boxshadow.rgba #rondell_2 .rondellContainer { @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.6)); }
+.boxshadow.rgba #rondellMixed .rondellContainer { @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.6)); }
 
 /* fancybox */
 #fancybox-wrap,
