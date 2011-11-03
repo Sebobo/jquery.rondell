@@ -222,6 +222,16 @@
                 return !$('#fancybox-wrap').is(':visible');
             }
         }); 
+                
+        $('#rondellGallery a').fancybox({
+            cyclic: true,
+            hideOnContentClick: false,
+            padding: 0,
+            scrolling: 'no',
+            onStart: function(items, idx) {
+                return $(items[idx]).parent().hasClass('rondellItemFocused');
+            }
+        });
     });
 &lt;/script&gt;</pre>
             
