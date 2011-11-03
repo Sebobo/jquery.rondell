@@ -37,6 +37,10 @@ h4 { font-size: 1.4em; }
 h5 { font-size: 1.2em; }
 
 code, pre { color: #555; border: 1px solid #f0f0f0; background-color: #fafafa; padding:5px; font-size:0.9em; }
+
+.collapsor { }
+.collapsible { display:none; }
+
 ul { 
   padding-left:20px;
   
@@ -95,12 +99,12 @@ img.inline { margin: 10px; }
 
   .rondellItem { 
     &, img { @include rounded(5px); }
-    a { text-decoration: none; }
   }
 }
 .boxshadow.rgba {
   #rondellMixed .rondellContainer,
   #rondellGallery .rondellItem,
+  #rondellSimple .rondellItem,
   #wookmarkDemo .rondellItem { 
     @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.6));    
     &:hover { @include boxshadow(0 1px 2px rgba(0, 0, 0, 0.3)); } 

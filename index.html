@@ -37,12 +37,99 @@
             
             <br/>
             
-            <hr id="gallerydemo"/>
+            <hr id="gallerydemosimple"/>
             
             <h3>Displaying a gallery</h3>
             
             <p>
-                This demo show how to display a gallery. Click an image to focus it and open it in a lightbox.<br/>
+                This demo show how to display a gallery. Click an image to focus it.<br/>
+                You can press arrow left and right on your keyboard to navigate through the images.
+            </p>
+            
+            <div id="rondellSimple">
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/band.jpg">
+                        <img class="resizeable" src="images/band.jpg" alt="demo pic" />   
+                        <h3>Awesome concert</h3>
+                        <p>
+                            My favourite band.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/dog.jpg">
+                        <img class="resizeable" src="images/dog.jpg" alt="demo pic" /> 
+                        <h3>My dog</h3>
+                        <p>
+                            Standing in front of a glass door and wants in.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/cat.jpg">
+                        <img class="resizeable" src="images/cat.jpg" alt="demo pic" />
+                        <h3>My cat</h3>
+                        <p>
+                            Sleeping...
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/boar.jpg">
+                        <img class="resizeable" src="images/boar.jpg" alt="demo pic" />
+                        <h3>Dead pig on the wall</h3>
+                        <p>
+                            Hanging around.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/snow.jpg">
+                        <img class="resizeable" src="images/snow.jpg" alt="demo pic" />
+                        <h3>Winter wonderland</h3>
+                        <p>
+                            The german alps.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/rabbit.jpg">
+                        <img class="resizeable" src="images/rabbit.jpg" alt="demo pic" />
+                        <h3>Bunny</h3>
+                        <p>
+                            In my brothers garden.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/trash.jpg">
+                        <img class="resizeable" src="images/trash.jpg" alt="demo pic" />
+                        <h3>Trash</h3>
+                        <p>
+                            Somewhere in the USA.
+                        </p>
+                    </a>
+                </div>
+            </div>
+            
+            <p>
+                <a href="#demo1code" class="collapsor" title="Collapse code">+ Click here to show how it's done</a>
+            </p>
+            <pre id="demo1code" class="collapsible">
+&lt;script type="text/javascript"&gt;
+    $(function() {
+        $('#rondellGallery > div').rondell(); 
+    });
+&lt;/script&gt;</pre>
+            
+            <br/>
+            
+            <hr id="gallerydemo"/>
+            
+            <h3>Displaying an advanced gallery</h3>
+            
+            <p>
+                This demo show how to display an advanced gallery. Click an image to focus it and open it in a lightbox.<br/>
                 You can press arrow left and right on your keyboard to navigate through the images.
             </p>
             <p>
@@ -117,6 +204,26 @@
                     </a>
                 </div>
             </div>
+            
+            <p>
+                <a href="#demo2code" class="collapsor" title="Collapse code">+ Click here to show how it's done</a>
+            </p>
+            <pre id="demo2code" class="collapsible">
+&lt;script type="text/javascript"&gt;
+    $(function() {
+        $('#rondellGallery > div').rondell({
+            autoRotation: {
+                enabled: true,
+                direction: 1,
+                once: false,
+                delay: 5000
+            },
+            isActive: function() {
+                return !$('#fancybox-wrap').is(':visible');
+            }
+        }); 
+    });
+&lt;/script&gt;</pre>
             
             <br/>
         
@@ -222,6 +329,49 @@
                 </div>
             </div>
             
+            <p>
+                <a href="#demo3code" class="collapsor" title="Collapse code">+ Click here to show how it's done</a>
+            </p>
+            <pre id="demo3code" class="collapsible">
+&lt;script type="text/javascript"&gt;
+    $(function() {
+        $('#rondellMixed > div').rondell({
+            radius: { 
+                x: 0, 
+                y: 0
+            }, 
+            center: {
+                left: 200, 
+                top: 200
+            },
+            scaling: 1,
+            visibleItems: 1,
+            itemProperties: {
+                topMargin: 0,
+                size: { 
+                    width:400, 
+                    height:400
+                }
+            },
+            controls: {
+                margin: {
+                    x: 5,
+                    y: 5
+                }
+            },
+            funcTop: function(layerDiff, rondell) {
+                return rondell.center.top - rondell.itemProperties.size.height / 2;
+            },
+            funcLeft: function(layerDiff, rondell) {
+                return rondell.center.left + layerDiff * rondell.itemProperties.size.width;
+            },
+            funcDiff: function(layerDiff, rondell) {
+                return Math.abs(layerDiff) + 0.5;
+            } 
+        });
+    });
+&lt;/script&gt;</pre>
+            
             <br/>
             
             <hr/>
@@ -239,6 +389,54 @@
             </p>
             
             <div id="wookmarkDemo"></div>
+            
+            <p>
+                <a href="#demo4code" class="collapsor" title="Collapse code">+ Click here to show how it's done</a>
+            </p>
+            <pre id="demo4code" class="collapsible">
+&lt;script type="text/javascript"&gt;
+    $(function() {
+        $.ajax({
+            url: 'http://www.sebastianhelzle.net/demos/get_page.php?page=wookmark',
+            dataType: 'jsonp',
+            success: function(json, text, xhqr) {
+                if (text == 'success') {
+                    var content = $(json.pageContent),
+                        wookmarkDemo = $('#wookmarkDemo'); 
+                    wookmarkDemo.empty().append(content.find('.polaroid a:has(img):lt(21)').css('opacity', 0));
+                    $('img', wookmarkDemo).addClass('resizeable');
+                    $('a', wookmarkDemo).attr('target', '_blank').rondell({
+                        center: { 
+                            left: 400, 
+                            top: 200
+                        },
+                        visibleItems: 5,
+                        itemProperties: {
+                            sizeFocused: { 
+                                width: 350, 
+                                height: 350
+                            }
+                        },
+                        controls: {
+                            margin: {
+                                x: 10,
+                                y: 190
+                            }
+                        },
+                        funcTop: function(layerDiff, rondell) {
+                            return rondell.center.top - rondell.itemProperties.size.height / 2.0 
+                                - Math.pow(layerDiff / 2, 3) * rondell.radius.x;
+                        },
+                        funcLeft: function(layerDiff, rondell) {
+                            return rondell.center.left - rondell.itemProperties.size.width / 2.0 
+                                - Math.sin(layerDiff) * rondell.radius.x;
+                        }                                
+                    });
+                }
+            }
+        });
+    });
+&lt;/script&gt;</pre>
             
             <hr/>
             
@@ -411,23 +609,9 @@
         <script type="text/javascript">
             $(function() {
                 
+                $('#rondellSimple > div').rondell(); 
+                
                 $('#rondellGallery > div').rondell({
-                    radius: {
-                        x: 300, 
-                        y: 50
-                    },
-                    itemProperties: {
-                        topMargin: 0,
-                        sizeFocused: { 
-                            width: 300, 
-                            height: 390
-                        }
-                    },
-                    center: { 
-                        left: 400, 
-                        top: 200
-                    },
-                    visibleItems: 3,
                     autoRotation: {
                         enabled: true,
                         direction: 1,
@@ -520,6 +704,11 @@
                             });
                         }
                     }
+                });
+                
+                $('.collapsor').click(function(e) {
+                    $($(this).attr('href')).slideToggle(300);
+                    e.preventDefault();
                 });
             });
         </script>

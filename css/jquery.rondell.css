@@ -19,6 +19,7 @@
 .rondellItem a {
   cursor: pointer;
   color: #fff;
+  text-decoration: none;
 }
 .rondellItem img {
   vertical-align: bottom;

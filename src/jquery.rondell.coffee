@@ -23,10 +23,10 @@
       container: null
       radius: # Radius if the rondell uses a circle function
         x: 300 
-        y: 300  
+        y: 50  
       center: # Center where the focused element is displayed
         left: 400 
-        top: 350
+        top: 200
       size: # Defaults to center * 2
         width: null
         height: null
@@ -149,7 +149,7 @@
     _start: =>
       # Set visibleItems if set to auto
       @currentLayer = Math.round(@itemCount / 2)
-      @visibleItems = Math.max(2, Math.round(@itemCount / 4)) if @visibleItems is 'auto'
+      @visibleItems = Math.max(2, Math.floor(@itemCount / 2)) if @visibleItems is 'auto'
       
       # Create controls
       controls = @controls
