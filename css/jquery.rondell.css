@@ -76,59 +76,58 @@
   -webkit-border-radius: 5px;
 }
 
-.rondellControls {
+.rondellControl {
   position: absolute;
-  height: 30px;
-}
-.rondellControls a {
   font-size: 1.2em;
   font-weight: bold;
   color: #000;
   padding: 8px;
-  width: auto;
-  height: auto;
   display: block;
   text-decoration: none;
   background: #f5f5f5;
   text-shadow: 0 1px 1px #fff;
   opacity: 0;
 }
-.rondellControls a:hover {
+.rondellControl:hover {
   background: #fafafa;
 }
 
-.cssgradients .rondellControls a {
-  background-image: -webkit-linear-gradient(top, #fafafa, #f5f5f5);
-  background-image: -moz-linear-gradient(top, #fafafa, #f5f5f5);
-  background-image: -ms-linear-gradient(top, #fafafa, #f5f5f5);
-  background-image: -o-linear-gradient(top, #fafafa, #f5f5f5);
-  background-image: linear-gradient(top, #fafafa, #f5f5f5);
-}
-.cssgradients .rondellControls a:hover {
+.cssgradients .rondellControl {
   background-image: -webkit-linear-gradient(top, #fcfcfc, #f9f9f9);
   background-image: -moz-linear-gradient(top, #fcfcfc, #f9f9f9);
   background-image: -ms-linear-gradient(top, #fcfcfc, #f9f9f9);
   background-image: -o-linear-gradient(top, #fcfcfc, #f9f9f9);
   background-image: linear-gradient(top, #fcfcfc, #f9f9f9);
 }
+.cssgradients .rondellControl:hover {
+  background-image: -webkit-linear-gradient(top, #fafafa, #f5f5f5);
+  background-image: -moz-linear-gradient(top, #fafafa, #f5f5f5);
+  background-image: -ms-linear-gradient(top, #fafafa, #f5f5f5);
+  background-image: -o-linear-gradient(top, #fafafa, #f5f5f5);
+  background-image: linear-gradient(top, #fafafa, #f5f5f5);
+}
+.cssgradients .rondellControl:active {
+  background-image: -webkit-linear-gradient(top, #f5f5f5, #fafafa);
+  background-image: -moz-linear-gradient(top, #f5f5f5, #fafafa);
+  background-image: -ms-linear-gradient(top, #f5f5f5, #fafafa);
+  background-image: -o-linear-gradient(top, #f5f5f5, #fafafa);
+  background-image: linear-gradient(top, #f5f5f5, #fafafa);
+}
 
-.borderradius .rondellControls a {
+.borderradius .rondellControl {
   border-radius: 5px;
   -o-border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
 
-.boxshadow.rgba .rondellControls a {
+.boxshadow.rgba .rondellControl {
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+}
+.boxshadow.rgba .rondellControl:hover {
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-.rondellShiftLeft {
-  float: left;
-}
-
-.rondellShiftRight {
-  float: right;
 }

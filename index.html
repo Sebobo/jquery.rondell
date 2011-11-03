@@ -16,7 +16,7 @@
             
             <br/>
             
-            <h3>Rondell - Version 0.8</h3>
+            <h3>Rondell - Version 0.8.1</h3>
             <p>
                 Created by <a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle">Sebastian Helzle</a>
             </p>
@@ -242,6 +242,140 @@
             
             <hr/>
             
+            <h3>Options</h3>
+            
+            <table class="options">
+                <tr>
+                    <th>Key</th>
+                    <th>Default value</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>radius</td>
+                    <td>{ x: 300, y: 300 }</td>
+                    <td>The radius the rondell animation will use</td>
+                </tr>
+                <tr>
+                    <td>center</td>
+                    <td>{ x: 400, y: 350 }</td>
+                    <td>The center of the rondell animation</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>{ width: null, height: null }</td>
+                    <td>(Optional) Will be center * 2 if left unset</td>
+                </tr>
+                <tr>
+                    <td>scaling</td>
+                    <td>2</td>
+                    <td>Scaled size of the focused item</td>
+                </tr>
+                <tr>
+                    <td>opacityMin</td>
+                    <td>0.05</td>
+                    <td>Items which have less than this opacity are set to <i>display: none</i></td>
+                </tr>
+                <tr>
+                    <td>zIndex</td>
+                    <td>1000</td>
+                    <td>All elements of the rondell will use this z-index and add their depth to it</td>
+                </tr>
+                <tr>
+                    <td>fadeTime</td>
+                    <td>300</td>
+                    <td>Animation time</td>
+                </tr>
+                <tr>
+                    <td>resizeableClass</td>
+                    <td>'resizeable'</td>
+                    <td><i>img</i> tags with this class are resized when animated</td>
+                </tr>
+                <tr>
+                    <td>smallClass</td>
+                    <td>'itemSmall'</td>
+                    <td>css class for unfocused items</td>
+                </tr>
+                <tr>
+                    <td>hiddenClass</td>
+                    <td>'itemHidden'</td>
+                    <td>css class for hidden items</td>
+                </tr>
+                <tr>
+                    <td>visibleItems</td>
+                    <td>'auto'</td>
+                    <td>How many items should be visible in each direction</td>
+                </tr>
+                <tr>
+                    <td>repeating</td>
+                    <td>true</td>
+                    <td>Rondell will cycle forever</td>
+                </tr>
+                <tr>
+                    <td>itemProperties</td>
+                    <td>
+<pre>{ 
+    delay: 100,
+    cssClass: 'rondellItem',
+    size: {
+        width: 150,
+        height: 150
+    },
+    sizeFocused: { 
+        width: 0,
+        height: 0
+    },
+    topMargin: 20
+}</pre> 
+                    </td>
+                    <td>Default properties for each item</td>
+                </tr>
+                <tr>
+                    <td>autoRotation</td>
+                    <td>
+<pre>{ 
+    enabled: false,
+    paused: false,
+    timer: -1,
+    direction: 0,
+    once: false,
+    delay: 5000
+}</pre> 
+                    </td>
+                    <td>If the cursor leaves the rondell continue spinning</td>
+                </tr>
+                <tr>
+                    <td>controls</td>
+                    <td>
+<pre>{ 
+    enabled: true,
+    fadeTime: 400,
+    margin: {
+        x: 20,
+        y: 20
+    }
+}</pre> 
+                    </td>
+                    <td>Buttons to control the rondell</td>
+                </tr>
+                <tr>
+                    <td>strings</td>
+                    <td>
+<pre>{ 
+    prev: 'prev',
+    next: 'next'
+}</pre> 
+                    </td>
+                    <td>String for the controls</td>
+                </tr>
+                <tr>
+                    <td>funcEase</td>
+                    <td>'easeInOutQuad'</td>
+                    <td>jQuery easing function name for the movement of items</td>
+                </tr>
+            </table>
+            
+            <hr/>
+            
             <h3>Coming up</h3>
             
             <p>
@@ -308,13 +442,11 @@
                 $('#rondellGallery a').fancybox({
                     cyclic: true,
                     hideOnContentClick: false,
-                    titleShow: false,
                     padding: 0,
                     scrolling: 'no',
-                    overlayShow: true,
-                    overlayColor: '#333',
-                    overlayOpacity: 0.3,
-                    enableEscapeButton: true
+                    onStart: function(items, idx) {
+                        return $(items[idx]).parent().hasClass('rondellItemFocused');
+                    }
                 });
                 
                 $('#rondellMixed > div').rondell({
@@ -359,7 +491,7 @@
                         if (text == 'success') {
                             var content = $(json.pageContent),
                                 wookmarkDemo = $('#wookmarkDemo'); 
-                            wookmarkDemo.empty().append(content.find('.polaroid a:has(img):lt(21)'));
+                            wookmarkDemo.empty().append(content.find('.polaroid a:has(img):lt(21)').css('opacity', 0));
                             $('img', wookmarkDemo).addClass('resizeable');
                             $('a', wookmarkDemo).attr('target', '_blank').rondell({
                                 center: { 

@@ -21,7 +21,6 @@
       itemCount: 0 # Number of rondell items in a rondell
       currentLayer: 1 # Active layer number
       container: null
-      controlsContainer: null
       radius: # Radius if the rondell uses a circle function
         x: 300 
         y: 300  
@@ -130,7 +129,11 @@
       # Init click events
       item.object
       .addClass("new #{@itemProperties.cssClass}")
-      .css('opacity', 0)
+      .css(
+        opacity: 0
+        left: @center.left - item.sizeFocused.width / 2
+        top: @center.top - item.sizeFocused.height / 2
+      )
       .bind('mouseover mouseout click', (e) =>
         switch e.type
           when 'mouseover'
@@ -151,20 +154,22 @@
       # Create controls
       controls = @controls
       if controls.enabled
-        @controlsContainer = $("<div class=\"rondellControls\"></div>")
-        .append($('<a href="#"/>').addClass('rondellShiftLeft').text(@strings.prev).click(@shiftLeft))
-        .append($('<a href="#/"/>').addClass('rondellShiftRight').text(@strings.next).click(@shiftRight))
+        shiftLeft = $('<a class="rondellControl rondellShiftLeft" href="#"/>').text(@strings.prev).click(@shiftLeft)
         .css(
-          "padding-left": controls.margin.x
-          "padding-right": controls.margin.x
-          left: 0
-          right: 0
+          left: controls.margin.x
           top: controls.margin.y
           "z-index": @zIndex + @itemCount + 2
         )
+          
+        shiftRight = $('<a class="rondellControl rondellShiftRight" href="#/"/>').text(@strings.next).click(@shiftRight)
+        .css(
+          right: controls.margin.x
+          top: controls.margin.y
+          "z-index": @zIndex + @itemCount + 2
+        )
+          
+        @container.append(shiftLeft, shiftRight)
         
-        # Attach controlsto container
-        @container.append(@controlsContainer)
         
       # Attach keydown event to document
       $(document).keydown(@keyDown)
@@ -177,7 +182,7 @@
       
     _hover: (e) =>      
       # Show or hide controls if they exist
-      $('a', @controlsContainer).stop().fadeTo(@controls.fadeTime, if e.type is 'mouseover' then 1 else 0) if @controlsContainer
+      $('.rondellControl', @container).stop().fadeTo(@controls.fadeTime, if e.type is 'mouseover' then 1 else 0)
       
       # Start or stop auto rotation if enabled
       paused = @autoRotation.paused
@@ -202,6 +207,8 @@
       
       # Move item to center position and fade in
       item.object.stop(true).show(0)
+      .css('z-index', @zIndex + @itemCount)
+      .addClass('rondellItemFocused')
       .animate(
           width: itemFocusedWidth
           height: itemFocusedHeight
@@ -212,8 +219,6 @@
           @_autoShift()
           @showCaption(layerNum) if @hovering
       )
-      .css('z-index', @zIndex + @itemCount)
-      .addClass('rondellItemFocused')
       
       if item.icon and not item.resizeable
         margin = (@itemProperties.size.height - item.icon.height()) / 2
@@ -244,9 +249,10 @@
       newY = @funcTop(layerDiff, @) + (@itemProperties.size.height - item.sizeSmall.height) / 2
       newZ = @zIndex + (if layerDiff < 0 then layerPos else -layerPos)
       fadeTime = @fadeTime + @itemProperties.delay * layerDist
+      isNew = item.object.hasClass('new')
         
       # Is item visible
-      if layerDist <= @visibleItems or item.object.hasClass('new')
+      if layerDist <= @visibleItems or isNew
         @hideCaption(layerNum)
         
         newOpacity = @funcOpacity(layerDist, @)
@@ -287,10 +293,8 @@
         item.object.stop(true)
         .css('z-index', newZ)
         .animate(
-            left: newX
-            top: newY
             opacity: 0
-          , fadeTime, @funcEase, =>
+          , fadeTime / 2, @funcEase, =>
           @hideCaption(layerNum)
         )
 

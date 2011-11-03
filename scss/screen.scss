@@ -46,6 +46,30 @@ ul {
 img.inline { margin: 10px; }
 .boxshadow.rgba img.inline { @include boxshadow(0 1px 2px rgba(0, 0, 0, 0.5)); }
 
+.options {
+  th {
+    background: #222;
+    border: 1px solid #111; 
+    padding: 6px 10px;
+    color: #eee;
+    vertical-align: middle;
+  }
+  
+  tr:nth-child(even) { background: #eee; }
+  tr:nth-child(odd) { background: #fff; }
+  
+  td { 
+    border: 1px solid #ddd; 
+    padding: 6px 10px;
+    vertical-align: middle;
+    
+    pre {
+      background: transparent;
+      border: 0;
+    } 
+  }
+}
+
 .clear { clear: both; }
 .relative { position: relative; }
 .hasBorder { border: 4px solid #fff; }
@@ -74,11 +98,13 @@ img.inline { margin: 10px; }
     a { text-decoration: none; }
   }
 }
-.boxshadow.rgba #rondellGallery .rondellItem,
-.boxshadow.rgba #wookmarkDemo .rondellItem { 
-  @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.6));
-  
-  &:hover { @include boxshadow(0 1px 6px rgba(0, 0, 0, 0.6)); }
+.boxshadow.rgba {
+  #rondellMixed .rondellContainer,
+  #rondellGallery .rondellItem,
+  #wookmarkDemo .rondellItem { 
+    @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.6));    
+    &:hover { @include boxshadow(0 1px 2px rgba(0, 0, 0, 0.3)); } 
+  }
 }
 
 #rondellMixed { 
@@ -89,7 +115,6 @@ img.inline { margin: 10px; }
   .rondellContainer { background: #fff; }
   .rondellItem { border: 0; }
 }
-.boxshadow.rgba #rondellMixed .rondellContainer { @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.6)); }
 
 /* fancybox */
 #fancybox-wrap,
