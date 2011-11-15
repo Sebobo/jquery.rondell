@@ -1,8 +1,6 @@
 jQuery Rondell
 =============
 
-[Small Improvements](http://www.small-improvements.com) info popup
-
 This is a [jQuery](http://www.jquery.com) plugin for displaying galeries and other content.
 
 See the [documentation page](http://sebobo.github.com/jquery.rondell/) for a live demo and examples.
