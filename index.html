@@ -3,6 +3,8 @@
     <head>
         <title>jQuery Rondell</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="keywords" content="jquery,tooltip,popup,plugin,css3,open-source,mit-license,extension,overlay" />
+        <meta name="description" content="Sebastian Helzle's jQuery plugin repository" />
         <link rel="stylesheet" href="css/screen.css" type="text/css" media="all" title="Screen" />  
         <link rel="stylesheet" href="css/jquery.rondell.css" type="text/css" media="all" title="Screen" />  
         <script type="text/javascript" src="lib/jquery-1.6.4.min.js"></script>
@@ -12,11 +14,13 @@
     </head>
     <body>
         <div class="page hasShadow">
-            <h1 id="docustart">jQuery Rondell documentation &amp; demo page</h1>
+            <h1 id="docustart">jQuery Rondell - Display images and other content in a nice way</h1>
+            
+            <h3>Documentation &amp; examples</h3>
             
             <br/>
             
-            <h3>Rondell - Version 0.8.1</h3>
+            <h3>Rondell - Version 0.8.2</h3>
             <p>
                 Created by <a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle">Sebastian Helzle</a>
             </p>
@@ -25,15 +29,28 @@
 
             <p>
                 This is a <a href="http://www.jquery.com" title="jQuery">jQuery</a> plugin for displaying galeries and other content.<br/>
-                The rondell demos can be controlled with your keyboard, by clicking the controls or by clicking the rondell items. 
+                The rondell demos can be controlled with your keyboard, by clicking the controls or by clicking the rondell items.<br/>
+                Touching items on a phone or tablet computer will work too! 
             </p>
             
             <p>
                 Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php" title="MIT licence">MIT</a> license.
             </p>
             
+            <br/>
+            
             <p>
-                <a href="https://github.com/Sebobo/jquery.rondell" title="Rondell download">Download at github</a>
+                <a href="https://github.com/Sebobo/jquery.rondell/zipball/0.8.2" title="Rondell zip download" class="sampleElement">Download rondell now</a>
+            </p>
+            
+            <br/>
+            
+            <p>
+                <a href="https://github.com/Sebobo/jquery.rondell" title="Rondell source at github">Visit rondell at github</a>
+            </p>
+            
+            <p>
+                <a href="http://plugins.jquery.com/project/rondell" title="Rondell download at jQuery">Visit rondell in the jQuery plugin repository</a>
             </p>
             
             <br/>
@@ -50,9 +67,21 @@
             
             <br/>
             
+            <h3>New and improved in this version</h3>
+            
+            <ul>
+                <li><b>Touch controls for mobile devices</b> - Swipe left and right to move the rondell.</li>
+                <li><b>Reliable image loading</b> - The previous versions had sometimes problems getting the correct image sizes for some browsers and configurations.</li>
+                <li>And some minor fixes and code improvements.</li>
+            </ul>
+            
+            <br/>
+            
+            <h3>Examples</h3>
             <p>
                 <a href="#gallerydemosimple">Simple gallery</a> | 
-                <a href="#gallerydemo">Advanced gallery</a> |
+                <a href="#gallerydemo">Advanced gallery</a> | 
+                <a href="#productsdemo">Products overview</a> |
                 <a href="#stuffdemo">Text &amp; images</a> |
                 <a href="#wookmark">Fancy galery with images from external service</a> |
                 <a href="#options">Options</a> |
@@ -134,7 +163,7 @@
             </div>
             
             <p>
-                <a href="#demo1code" class="collapsor" title="Collapse code">+ Click here to show how it's done</a>
+                <a href="#demo1code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
             </p>
             <pre id="demo1code" class="collapsible">
 &lt;script type="text/javascript"&gt;
@@ -227,7 +256,7 @@
             </div>
             
             <p>
-                <a href="#demo2code" class="collapsor" title="Collapse code">+ Click here to show how it's done</a>
+                <a href="#demo2code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
             </p>
             <pre id="demo2code" class="collapsible">
 &lt;script type="text/javascript"&gt;
@@ -245,7 +274,6 @@
         }); 
                 
         $('#rondellGallery a').fancybox({
-            cyclic: true,
             hideOnContentClick: false,
             padding: 0,
             scrolling: 'no',
@@ -257,6 +285,55 @@
 &lt;/script&gt;</pre>
             
             <br/>
+            <!--
+            <hr id="productsdemo"/>
+            
+            <h3>Displaying an advanced gallery</h3>
+            
+            <p>
+                Example how this plugin can be used for displaying products on a company page or webshop.
+            </p>
+            
+            <div id="rondellProducts">
+                <div>
+                    <a href="#rondellProducts" title="Dummy link to the cloud">
+                        <img src="images/cloud.png" />
+                        <h3>Your own cloud</h3>
+                        <p>
+                            Buy your own cloud to do some really complicated stuff very fast!
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a href="#rondellProducts" title="Dummy link to the router">
+                        <img src="images/router.png" />
+                        <h3>The new router</h3>
+                        <p>
+                            The router which can connect to anything without cables!
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a href="#rondellProducts" title="Dummy link to the client">
+                        <img src="images/client.png" />
+                        <h3>Client computer 5000</h3>
+                        <p>
+                            Now even faster!
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a href="#rondellProducts" title="Dummy link to the unknown">
+                        <img src="images/unknown.png" />
+                        <h3>Surprise</h3>
+                        <p>
+                            Order this and you will be surprised!
+                        </p>
+                    </a>
+                </div>
+            </div>
+            
+            <br/>-->
         
             <hr id="stuffdemo"/>
             
@@ -361,7 +438,7 @@
             </div>
             
             <p>
-                <a href="#demo3code" class="collapsor" title="Collapse code">+ Click here to show how it's done</a>
+                <a href="#demo3code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
             </p>
             <pre id="demo3code" class="collapsible">
 &lt;script type="text/javascript"&gt;
@@ -422,7 +499,7 @@
             <div id="wookmarkDemo"></div>
             
             <p>
-                <a href="#demo4code" class="collapsor" title="Collapse code">+ Click here to show how it's done</a>
+                <a href="#demo4code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
             </p>
             <pre id="demo4code" class="collapsible">
 &lt;script type="text/javascript"&gt;
@@ -594,12 +671,31 @@
     next: 'next'
 }</pre> 
                     </td>
-                    <td>String for the controls</td>
+                    <td>
+                        Strings for the controls.<br/> 
+                        You can use custom controls via css or by calling <i>shiftLeft()</i> and <i>shiftRight()</i> 
+                        on the rondell object which is returned when you call $('myElement').rondell().
+                    </td>
                 </tr>
                 <tr>
                     <td>funcEase</td>
                     <td>'easeInOutQuad'</td>
                     <td>jQuery easing function name for the movement of items</td>
+                </tr>
+                <tr>
+                    <td>touch</td>
+                    <td>
+<pre>{ 
+    enabled: true,
+    preventDefaults: true,
+    threshold: 100
+}</pre> 
+                    </td>
+                    <td>
+                        Touch controls for swiping on mobile devices are enabled by default.<br/>
+                        <i>preventDefaults</i> will prevent clicking and scrolling while your swipe.<br/>
+                        <i>threshold</i> is the distance in pixels the finger has to travel, before a swipe is registered.<br/>
+                    </td>
                 </tr>
             </table>
             
@@ -608,7 +704,7 @@
             <h4>Coming up</h3>
             
             <p>
-                How about touch controls?
+                More examples and I will integrate more animation functions into the plugin or via extensions.
             </p>
             
             <br/>
@@ -643,6 +739,7 @@
     	</div>
         <script type="text/javascript">
             $(function() {
+                //$('#rondellSimple, #rondellGallery, #rondellProducts, #rondellMixed').hide();
                 
                 $('#rondellSimple > div').rondell(); 
                 
@@ -659,12 +756,30 @@
                 }); 
                 
                 $('#rondellGallery a').fancybox({
-                    cyclic: true,
                     hideOnContentClick: false,
                     padding: 0,
                     scrolling: 'no',
                     onStart: function(items, idx) {
                         return $(items[idx]).parent().hasClass('rondellItemFocused');
+                    }
+                });
+                
+                $('#rondellProducts > div').rondell({
+                    repeating: false,
+                    scaling: 4,
+                    visibleItems: 4,
+                    itemProperties: {
+                        size: {
+                            width: 100,
+                            height: 100
+                        }
+                    },
+                    radius: {
+                        x: 400,
+                        y: 0
+                    },
+                    funcLeft: function(layerDiff, rondell) {
+                        return rondell.center.left + (layerDiff + 0.5) * rondell.itemProperties.size.width;
                     }
                 });
                 
@@ -731,10 +846,10 @@
                                     }
                                 },
                                 funcTop: function(layerDiff, rondell) {
-                                    return rondell.center.top - rondell.itemProperties.size.height / 2.0 - Math.pow(layerDiff / 2, 3) * rondell.radius.x;
+                                    return rondell.center.top - rondell.itemProperties.size.height / 2.0 + Math.pow(layerDiff / 2, 3) * rondell.radius.x;
                                 },
                                 funcLeft: function(layerDiff, rondell) {
-                                    return rondell.center.left - rondell.itemProperties.size.width / 2.0 - Math.sin(layerDiff) * rondell.radius.x;
+                                    return rondell.center.left - rondell.itemProperties.size.width / 2.0 + Math.sin(layerDiff) * rondell.radius.x;
                                 }                                
                             });
                         }

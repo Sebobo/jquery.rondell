@@ -5,7 +5,7 @@
   display: block;
   position: relative;
   
-  &.initializing .rondellItem { display:none; } 
+  &.initializing * { display:none; } 
 }
 
 .rondellItem {
@@ -16,6 +16,9 @@
   cursor: pointer;
   overflow: hidden;
   text-decoration:none;
+  top: 0;
+  left: 0;
+  opacity: 1;
     
   a { cursor:pointer; color: #fff; text-decoration: none; }
     

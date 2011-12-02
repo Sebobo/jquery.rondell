@@ -90,6 +90,30 @@ img.inline { margin: 10px; }
   padding: 40px; 
 }
 
+.sampleElement {
+  border: 1px solid #fed980;
+  padding: 3px 5px;
+  background-color: #ffe199;
+  font-size: 1.1em;
+  text-shadow:0 1px 1px #fff24d;
+  
+  &, a { text-decoration: none; }
+  
+  &:hover {
+    background-color: #fff4d9;
+    border-color: #ffd777;
+  }
+}
+.borderradius .sampleElement { @include rounded(6px); }
+.cssgradients .sampleElement { 
+  @include linear-gradient(#fff24d, #f9aa18); 
+  
+  &:hover { @include linear-gradient(#fff24d, #fdc661); }
+}
+.boxshadow.rgba .sampleElement { 
+  @include boxshadow(0 1px 4px rgba(255, 162, 0, 0.3)); 
+}
+
 /* rondell demo stuff */
 
 #rondellGallery { 
@@ -118,6 +142,26 @@ img.inline { margin: 10px; }
   
   .rondellContainer { background: #fff; }
   .rondellItem { border: 0; }
+}
+
+#rondellProducts {
+  
+  .rondellContainer { 
+    background: #333; 
+  }
+  .rondellItem { 
+    border: 0; 
+    background: transparent;
+  }
+}
+.borderradius #rondellProducts .rondellContainer {
+  @include rounded(10px);
+}
+.cssgradients #rondellProducts .rondellContainer {
+  @include linear-gradient(#666, #111);
+}
+.boxshadow.rgba #rondellProducts .rondellContainer {
+  @include boxshadow(0 1px 5px rgba(0, 0, 0, 0.6));
 }
 
 /* fancybox */

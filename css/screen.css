@@ -229,6 +229,49 @@ img.inline {
   padding: 40px;
 }
 
+.sampleElement {
+  border: 1px solid #fed980;
+  padding: 3px 5px;
+  background-color: #ffe199;
+  font-size: 1.1em;
+  text-shadow: 0 1px 1px #fff24d;
+}
+.sampleElement, .sampleElement a {
+  text-decoration: none;
+}
+.sampleElement:hover {
+  background-color: #fff4d9;
+  border-color: #ffd777;
+}
+
+.borderradius .sampleElement {
+  border-radius: 6px;
+  -o-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+
+.cssgradients .sampleElement {
+  background-image: -webkit-linear-gradient(top, #fff24d, #f9aa18);
+  background-image: -moz-linear-gradient(top, #fff24d, #f9aa18);
+  background-image: -ms-linear-gradient(top, #fff24d, #f9aa18);
+  background-image: -o-linear-gradient(top, #fff24d, #f9aa18);
+  background-image: linear-gradient(top, #fff24d, #f9aa18);
+}
+.cssgradients .sampleElement:hover {
+  background-image: -webkit-linear-gradient(top, #fff24d, #fdc661);
+  background-image: -moz-linear-gradient(top, #fff24d, #fdc661);
+  background-image: -ms-linear-gradient(top, #fff24d, #fdc661);
+  background-image: -o-linear-gradient(top, #fff24d, #fdc661);
+  background-image: linear-gradient(top, #fff24d, #fdc661);
+}
+
+.boxshadow.rgba .sampleElement {
+  -webkit-box-shadow: 0 1px 4px rgba(255, 162, 0, 0.3);
+  -moz-box-shadow: 0 1px 4px rgba(255, 162, 0, 0.3);
+  box-shadow: 0 1px 4px rgba(255, 162, 0, 0.3);
+}
+
 /* rondell demo stuff */
 #rondellGallery {
   width: 775px;
@@ -269,6 +312,35 @@ img.inline {
 }
 #rondellMixed .rondellItem {
   border: 0;
+}
+
+#rondellProducts .rondellContainer {
+  background: #333;
+}
+#rondellProducts .rondellItem {
+  border: 0;
+  background: transparent;
+}
+
+.borderradius #rondellProducts .rondellContainer {
+  border-radius: 10px;
+  -o-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+.cssgradients #rondellProducts .rondellContainer {
+  background-image: -webkit-linear-gradient(top, #666666, #111111);
+  background-image: -moz-linear-gradient(top, #666666, #111111);
+  background-image: -ms-linear-gradient(top, #666666, #111111);
+  background-image: -o-linear-gradient(top, #666666, #111111);
+  background-image: linear-gradient(top, #666666, #111111);
+}
+
+.boxshadow.rgba #rondellProducts .rondellContainer {
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
 }
 
 /* fancybox */
