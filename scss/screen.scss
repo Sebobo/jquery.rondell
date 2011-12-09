@@ -136,12 +136,27 @@ img.inline { margin: 10px; }
 }
 
 #rondellMixed { 
-  width: 420px; 
-  height: 420px; 
+  width: 400px; 
+  height: 400px; 
   margin: 20px auto;
+  position: relative;
   
   .rondellContainer { background: #fff; }
   .rondellItem { border: 0; }
+  
+  .controlShiftLeft,
+  .controlShiftRight {
+    opacity: 0.6;
+    position: absolute;
+    left: -100px;
+    top: 168px;
+    
+    &:hover { opacity: 1; }
+  }
+  .controlShiftRight {
+    left: auto;
+    right: -100px;
+  }
 }
 
 #rondellProducts {

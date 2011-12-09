@@ -303,15 +303,31 @@ img.inline {
 }
 
 #rondellMixed {
-  width: 420px;
-  height: 420px;
+  width: 400px;
+  height: 400px;
   margin: 20px auto;
+  position: relative;
 }
 #rondellMixed .rondellContainer {
   background: #fff;
 }
 #rondellMixed .rondellItem {
   border: 0;
+}
+#rondellMixed .controlShiftLeft,
+#rondellMixed .controlShiftRight {
+  opacity: 0.6;
+  position: absolute;
+  left: -100px;
+  top: 168px;
+}
+#rondellMixed .controlShiftLeft:hover,
+#rondellMixed .controlShiftRight:hover {
+  opacity: 1;
+}
+#rondellMixed .controlShiftRight {
+  left: auto;
+  right: -100px;
 }
 
 #rondellProducts .rondellContainer {

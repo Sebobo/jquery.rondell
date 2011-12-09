@@ -340,11 +340,11 @@
             <h3>Displaying text and images</h3>
             
             <p>
-                This demo show how to display a mix of text and images with a different transition.<br/>
+                This demo show how to display a mix of text and images as slider.<br/>
                 You can press arrow left and right on your keyboard to navigate through the images.<br/>
             </p>
             <p>
-                Automatic rotation is disabled in this demo.
+                Automatic rotation is disabled in this demo and custom controls are used.
             </p>
             
             <div id="rondellMixed">
@@ -435,6 +435,12 @@
                     </p>
                     <a href="http://de.wikipedia.org/wiki/Karl_Ranseier#Karl_Ranseier" title="Wikipedia">Karl Ranseier bei Wikipedia</a>
                 </div>
+                <a href="#" class="controlShiftLeft">
+                    <img src="images/arrow_left.png" alt="Shift left"/>
+                </a>
+                <a href="#" class="controlShiftRight">
+                    <img src="images/arrow_right.png" alt="Shift right"/>
+                </a>
             </div>
             
             <p>
@@ -443,7 +449,7 @@
             <pre id="demo3code" class="collapsible">
 &lt;script type="text/javascript"&gt;
     $(function() {
-        $('#rondellMixed > div').rondell({
+        var rondellMixed = $('#rondellMixed > div').rondell({
             radius: { 
                 x: 0, 
                 y: 0
@@ -462,10 +468,7 @@
                 }
             },
             controls: {
-                margin: {
-                    x: 5,
-                    y: 5
-                }
+                enabled: false
             },
             funcTop: function(layerDiff, rondell) {
                 return rondell.center.top - rondell.itemProperties.size.height / 2;
@@ -476,6 +479,16 @@
             funcDiff: function(layerDiff, rondell) {
                 return Math.abs(layerDiff) + 0.5;
             } 
+        });
+        
+        // Init custom controls
+        $('#rondellMixed .controlShiftLeft').click(function(e) {
+            e.preventDefault();
+            rondellMixed.shiftLeft();
+        });
+        $('#rondellMixed .controlShiftRight').click(function(e) {
+            e.preventDefault();
+            rondellMixed.shiftRight();
         });
     });
 &lt;/script&gt;</pre>
@@ -661,7 +674,12 @@
     }
 }</pre> 
                     </td>
-                    <td>Buttons to control the rondell</td>
+                    <td>
+                        Set <i>enabled</i> to <i>false</i> if you want to use custom controls like in 
+                        <a href="rondellMixed" title="Mixed content example">example 3</a>.<br/>
+                        <i>fadeTime</i> controls the animation speed for the built-in controls when hovering over the rondell.<br>
+                        <i>margin</i> controls the distance of the 'prev' and 'next' button to the sides of the rondell. 
+                    </td>
                 </tr>
                 <tr>
                     <td>strings</td>
@@ -672,9 +690,7 @@
 }</pre> 
                     </td>
                     <td>
-                        Strings for the controls.<br/> 
-                        You can use custom controls via css or by calling <i>shiftLeft()</i> and <i>shiftRight()</i> 
-                        on the rondell object which is returned when you call $('myElement').rondell().
+                        Strings for the built-in controls.
                     </td>
                 </tr>
                 <tr>
@@ -701,7 +717,7 @@
             
             <hr/>
             
-            <h4>Coming up</h3>
+            <h4>Coming up</h4>
             
             <p>
                 More examples and I will integrate more animation functions into the plugin or via extensions.
@@ -709,7 +725,7 @@
             
             <br/>
 
-            <h4>Feedback is welcome!</h6>            
+            <h4>Feedback is welcome!</h4>            
             <p>
                 Please send me suggestions, ideas for improvement or anything else to 
                 <a href="mailto:sebastian@helzle.net" title="Send me a mail">sebastian@helzle.net</a>
@@ -718,7 +734,7 @@
             
             <br/>
             
-            <h4>Have fun and check out my other plugins</h3>
+            <h4>Have fun and check out my other plugins</h4>
             
             <p>
                 <a href="/jquery.smallipop" title="smallipop - a better tooltip plugin">jQuery smallipop</a>
@@ -783,7 +799,7 @@
                     }
                 });
                 
-                $('#rondellMixed > div').rondell({
+                var rondellMixed = $('#rondellMixed > div').rondell({
                     radius: { 
                         x: 0, 
                         y: 0
@@ -802,10 +818,7 @@
                         }
                     },
                     controls: {
-                        margin: {
-                            x: 5,
-                            y: 5
-                        }
+                        enabled: false
                     },
                     funcTop: function(layerDiff, rondell) {
                         return rondell.center.top - rondell.itemProperties.size.height / 2;
@@ -816,6 +829,16 @@
                     funcDiff: function(layerDiff, rondell) {
                         return Math.abs(layerDiff) + 0.5;
                     } 
+                });
+        
+                // Init custom controls
+                $('#rondellMixed .controlShiftLeft').click(function(e) {
+                    e.preventDefault();
+                    rondellMixed.shiftLeft();
+                });
+                $('#rondellMixed .controlShiftRight').click(function(e) {
+                    e.preventDefault();
+                    rondellMixed.shiftRight();
                 });
                 
                 $.ajax({
@@ -864,8 +887,11 @@
         </script>
         <!-- Piwik --> 
         <script type="text/javascript">
-            var pkBaseURL = (("https:" == document.location.protocol) ? "https://tracking.sebastianhelzle.net/" : "http://tracking.sebastianhelzle.net/");
-            document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+            var hostname = document.location.hostname;
+            if (hostname && hostname.indexOf('localhost') < 0) {
+                var pkBaseURL = (("https:" == document.location.protocol) ? "https://tracking.sebastianhelzle.net/" : "http://tracking.sebastianhelzle.net/");
+                document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+            }
         </script>
         <script type="text/javascript">
             try {
