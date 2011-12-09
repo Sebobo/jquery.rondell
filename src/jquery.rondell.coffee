@@ -12,7 +12,7 @@
 (($) ->
   # Global rondell stuff
   $.rondell =
-    version: '0.8.2'
+    version: '0.8.3'
     name: 'rondell'
     defaults:
       resizeableClass: 'resizeable'
@@ -44,7 +44,6 @@
         sizeFocused:
           width: 0
           height: 0
-        topMargin: 20 
       repeating: true # Rondell will go forever
       autoRotation: # If the cursor leaves the rondell continue spinning
         enabled: false
@@ -69,6 +68,8 @@
         start: undefined
         end: undefined
       funcEase: 'easeInOutQuad' # Easing function name for the movement of items
+      theme: 'default'
+      effect: null
   
   # Add default easing function for rondell to jQuery if missing
   unless $.easing.easeInOutQuad        
@@ -344,7 +345,7 @@
       )
       
       if item.icon and not item.resizeable
-        margin = (@itemProperties.size.height - item.icon.height()) / 2
+        margin = (@itemProperties.sizeFocused.height - item.icon.height()) / 2
         item.icon.stop(true).animate(
             marginTop: margin
             marginBottom: margin
