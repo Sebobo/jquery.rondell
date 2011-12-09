@@ -12,7 +12,7 @@
 (($) ->
   # Global rondell stuff
   $.rondell =
-    version: '0.8.3'
+    version: '0.8.3-beta'
     name: 'rondell'
     defaults:
       resizeableClass: 'resizeable'
@@ -45,6 +45,7 @@
           width: 0
           height: 0
       repeating: true # Rondell will go forever
+      alwaysShowCaption: false
       autoRotation: # If the cursor leaves the rondell continue spinning
         enabled: false
         paused: false
@@ -68,8 +69,8 @@
         start: undefined
         end: undefined
       funcEase: 'easeInOutQuad' # Easing function name for the movement of items
-      theme: 'default'
-      effect: null
+      theme: 'default' # CSS theme class which gets added to the rondell container
+      effect: null # Special effect function for the focused item
   
   # Add default easing function for rondell to jQuery if missing
   unless $.easing.easeInOutQuad        
@@ -321,7 +322,7 @@
         if paused and not @autoRotation.once
           @autoRotation.paused = false
           @_autoShift()
-        @hideCaption(@currentLayer)
+        @hideCaption(@currentLayer) unless @alwaysShowCaption
       
     layerFadeIn: (layerNum) =>
       item = @_getItem(layerNum)
@@ -341,7 +342,7 @@
           opacity: 1
         , @fadeTime, @funcEase, =>
           @_autoShift()
-          @showCaption(layerNum) if @hovering
+          @showCaption(layerNum) if @hovering or @alwaysShowCaption
       )
       
       if item.icon and not item.resizeable

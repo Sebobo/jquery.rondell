@@ -337,6 +337,30 @@ img.inline {
   border: 0;
   background: transparent;
 }
+#rondellProducts .rondellCaption {
+  margin: 5px;
+  padding: 0;
+  font-size: 11px;
+}
+#rondellProducts .rondellCaption.overlay {
+  padding: 0 5px;
+  background: #f5f5f5;
+  background: rgba(200, 200, 200, 0.3);
+  border: 2px solid rgba(200, 200, 200, 0.5);
+}
+#rondellProducts .rondellControl {
+  font-size: 0;
+  color: transparent;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+}
+#rondellProducts .rondellControl.rondellShiftLeft {
+  background: url("../images/arrow_left_small.png") no-repeat;
+}
+#rondellProducts .rondellControl.rondellShiftRight {
+  background: url("../images/arrow_right_small.png") no-repeat;
+}
 
 .borderradius #rondellProducts .rondellContainer {
   border-radius: 10px;

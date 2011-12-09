@@ -48,10 +48,11 @@
             <p>
                 <a href="https://github.com/Sebobo/jquery.rondell" title="Rondell source at github">Visit rondell at github</a>
             </p>
-            
+            <!--
             <p>
                 <a href="http://plugins.jquery.com/project/rondell" title="Rondell download at jQuery">Visit rondell in the jQuery plugin repository</a>
             </p>
+            -->
             
             <br/>
             
@@ -89,7 +90,7 @@
             
             <hr id="gallerydemosimple"/>
             
-            <h3>Displaying a gallery</h3>
+            <h3>Simple gallery</h3>
             
             <p>
                 This demo show how to display a gallery. Click an image to focus it.<br/>
@@ -176,7 +177,7 @@
             
             <hr id="gallerydemo"/>
             
-            <h3>Displaying an advanced gallery</h3>
+            <h3>Advanced gallery</h3>
             
             <p>
                 This demo show how to display an advanced gallery. Click an image to focus it and open it in a lightbox.<br/>
@@ -285,10 +286,10 @@
 &lt;/script&gt;</pre>
             
             <br/>
-            <!--
+            
             <hr id="productsdemo"/>
             
-            <h3>Displaying an advanced gallery</h3>
+            <h3>Product overview</h3>
             
             <p>
                 Example how this plugin can be used for displaying products on a company page or webshop.
@@ -297,8 +298,8 @@
             <div id="rondellProducts">
                 <div>
                     <a href="#rondellProducts" title="Dummy link to the cloud">
-                        <img src="images/cloud.png" />
-                        <h3>Your own cloud</h3>
+                        <img src="images/cloud.png" alt="cloud product" />
+                        <h5>Your own cloud</h5>
                         <p>
                             Buy your own cloud to do some really complicated stuff very fast!
                         </p>
@@ -306,8 +307,8 @@
                 </div>
                 <div>
                     <a href="#rondellProducts" title="Dummy link to the router">
-                        <img src="images/router.png" />
-                        <h3>The new router</h3>
+                        <img src="images/router.png" alt="router product" />
+                        <h5>The new router</h5>
                         <p>
                             The router which can connect to anything without cables!
                         </p>
@@ -315,17 +316,35 @@
                 </div>
                 <div>
                     <a href="#rondellProducts" title="Dummy link to the client">
-                        <img src="images/client.png" />
-                        <h3>Client computer 5000</h3>
+                        <img src="images/client.png" alt="client product" />
+                        <h5>The green computer</h5>
                         <p>
-                            Now even faster!
+                            Our climate saver for only <b>999$</b>!
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a href="#rondellProducts" title="Dummy link to the client">
+                        <img src="images/client3.png" alt="client product" />
+                        <h5>The blue computer</h5>
+                        <p>
+                            Makes you calm while working. Now only <b>1999$</b>!
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a href="#rondellProducts" title="Dummy link to the client">
+                        <img src="images/client2.png" alt="client product" />
+                        <h5>The pink computer</h5>
+                        <p>
+                            For the girls. Only <b>599$</b>!
                         </p>
                     </a>
                 </div>
                 <div>
                     <a href="#rondellProducts" title="Dummy link to the unknown">
-                        <img src="images/unknown.png" />
-                        <h3>Surprise</h3>
+                        <img src="images/unknown.png" alt="unknown product" />
+                        <h5>Surprise</h5>
                         <p>
                             Order this and you will be surprised!
                         </p>
@@ -333,11 +352,54 @@
                 </div>
             </div>
             
-            <br/>-->
+            <p>
+                <a href="#demo3code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
+            </p>
+            <pre id="demo3code" class="collapsible">
+$('#rondellProducts > div').rondell({
+    repeating: false,
+    alwaysShowCaption: true,
+    visibleItems: 4,
+    itemProperties: {
+        delay: 0,
+        size: {
+            width: 100,
+            height: 200
+        },
+        sizeFocused: {
+            width: 300,
+            height: 200
+        }
+    },
+    controls: {
+        margin: {
+            x: 180,
+            y: 155
+        }
+    },
+    center: {
+        left: 400, 
+        top: 100
+    },
+    funcTop: function(layerDiff, rondell) {
+        return 0;
+    },
+    funcDiff: function(layerDiff, rondell) {
+        return Math.abs(layerDiff) + 1;
+    },
+    funcLeft: function(layerDiff, rondell) {
+        return rondell.center.left + (layerDiff - 0.5) * rondell.itemProperties.size.width;
+    },
+    funcOpacity: function(layerDist, rondell) {
+        return 0.8;
+    }
+});</pre>
+            
+            <br/>
         
             <hr id="stuffdemo"/>
             
-            <h3>Displaying text and images</h3>
+            <h3>Text and images</h3>
             
             <p>
                 This demo show how to display a mix of text and images as slider.<br/>
@@ -444,9 +506,9 @@
             </div>
             
             <p>
-                <a href="#demo3code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
+                <a href="#demo4code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
             </p>
-            <pre id="demo3code" class="collapsible">
+            <pre id="demo4code" class="collapsible">
 &lt;script type="text/javascript"&gt;
     $(function() {
         var rondellMixed = $('#rondellMixed > div').rondell({
@@ -461,7 +523,6 @@
             scaling: 1,
             visibleItems: 1,
             itemProperties: {
-                topMargin: 0,
                 size: { 
                     width:400, 
                     height:400
@@ -497,7 +558,7 @@
             
             <hr id="wookmark"/>
             
-            <h3>Fetch images from another page and use a fancy cubic function as transition</h3>
+            <h3>Fetch images from another page and use a fancy cubic function for animation</h3>
             
             <p>
                 This demo fetches links &amp; images from my brothers great webservice 
@@ -512,9 +573,9 @@
             <div id="wookmarkDemo"></div>
             
             <p>
-                <a href="#demo4code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
+                <a href="#demo5code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
             </p>
-            <pre id="demo4code" class="collapsible">
+            <pre id="demo5code" class="collapsible">
 &lt;script type="text/javascript"&gt;
     $(function() {
         $.ajax({
@@ -642,25 +703,32 @@
     sizeFocused: { 
         width: 0,
         height: 0
-    },
-    topMargin: 20
+    }
 }</pre> 
                     </td>
-                    <td>Default properties for each item</td>
+                    <td>
+                        <i>delay</i> is an offset between the start of the animation for each item when all items shift.<br/>
+                        <i>cssClass</i> is the class which each item gets after initializing.<br/>
+                        <i>size</i> is the standard size for non-focused items.<br/>
+                        <i>sizeFocused</i> is the size of the focused element and will be calculated automatically from the <i>scaling</i> parameter if not set or 0.<br/>
+                    </td>
                 </tr>
                 <tr>
                     <td>autoRotation</td>
                     <td>
 <pre>{ 
     enabled: false,
-    paused: false,
-    timer: -1,
     direction: 0,
     once: false,
     delay: 5000
 }</pre> 
                     </td>
-                    <td>If the cursor leaves the rondell continue spinning</td>
+                    <td>
+                        Set <i>enabled</i> to <i>true</i> if you want the rondell to spin every few seconds.<br/>
+                        Set <i>direction</i> to '1' if you want the rondell to rotate to the right in autorotation mode.<br/> 
+                        Set <i>once</i> to true if the rondell should not start autorotation after the user has hovered the rondell.<br/>
+                        <i>delay</i> is the time between rotation steps.
+                    </td>
                 </tr>
                 <tr>
                     <td>controls</td>
@@ -737,7 +805,7 @@
             <h4>Have fun and check out my other plugins</h4>
             
             <p>
-                <a href="/jquery.smallipop" title="smallipop - a better tooltip plugin">jQuery smallipop</a>
+                <a href="/jquery.smallipop" class="sampleElement" title="smallipop - a better tooltip plugin">jQuery smallipop</a>
             </p>
             
             <br/>
@@ -755,7 +823,7 @@
     	</div>
         <script type="text/javascript">
             $(function() {
-                //$('#rondellSimple, #rondellGallery, #rondellProducts, #rondellMixed').hide();
+                //$('#rondellSimple, #rondellGallery, #rondellwookmarkDemo, #rondellMixed').hide();
                 
                 $('#rondellSimple > div').rondell(); 
                 
@@ -782,20 +850,40 @@
                 
                 $('#rondellProducts > div').rondell({
                     repeating: false,
-                    scaling: 4,
+                    alwaysShowCaption: true,
                     visibleItems: 4,
                     itemProperties: {
+                        delay: 0,
                         size: {
                             width: 100,
-                            height: 100
+                            height: 200
+                        },
+                        sizeFocused: {
+                            width: 300,
+                            height: 200
                         }
                     },
-                    radius: {
-                        x: 400,
-                        y: 0
+                    controls: {
+                        margin: {
+                            x: 180,
+                            y: 155
+                        }
+                    },
+                    center: {
+                        left: 400, 
+                        top: 100
+                    },
+                    funcTop: function(layerDiff, rondell) {
+                        return 0;
+                    },
+                    funcDiff: function(layerDiff, rondell) {
+                        return Math.abs(layerDiff) + 1;
                     },
                     funcLeft: function(layerDiff, rondell) {
-                        return rondell.center.left + (layerDiff + 0.5) * rondell.itemProperties.size.width;
+                        return rondell.center.left + (layerDiff - 0.5) * rondell.itemProperties.size.width;
+                    },
+                    funcOpacity: function(layerDist, rondell) {
+                        return 0.8;
                     }
                 });
                 
@@ -811,7 +899,6 @@
                     scaling: 1,
                     visibleItems: 1,
                     itemProperties: {
-                        topMargin: 0,
                         size: { 
                             width:400, 
                             height:400
