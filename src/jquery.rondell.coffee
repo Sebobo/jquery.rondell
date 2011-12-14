@@ -90,8 +90,11 @@
       @maxItems = numItems
       
       # Update rondell properties with new options
-      $.extend(true, @, $.rondell.defaults, options or {})
-    
+      if options?.preset of $.rondell.presets
+        $.extend(true, @, $.rondell.defaults, $.rondell.presets[options.preset], options or {})
+      else
+        $.extend(true, @, $.rondell.defaults, options or {})
+        
       @itemProperties.sizeFocused =
         width: @itemProperties.sizeFocused.width or @itemProperties.size.width * @scaling
         height: @itemProperties.sizeFocused.height or @itemProperties.size.height * @scaling
@@ -407,14 +410,14 @@
         unless item.small
           item.small = true
           if item.icon and not item.resizeable
-            margin = (itemHeight - item.icon.height()) / 2
+            margin = (@itemProperties.size.height - item.icon.height()) / 2
             item.icon.stop(true).animate(
                 marginTop: margin
                 marginBottom: margin
               , fadeTime
             )
       else if item.hidden
-        # Update position even if out of view to 
+        # Update position even if out of view to fix animation when reappearing
         item.object.css(
           left: newX
           top: newY
@@ -492,6 +495,8 @@
     
     # Set container size  
     rondell.container = @parent().css(rondell.size)
+    
+    rondell.container.addClass("rondellTheme_#{rondell.theme}")
           
     # Setup each item
     @each ->
@@ -520,5 +525,57 @@
         
     # Return rondell instance
     rondell
+  
+  # Option presets  
+  $.rondell.presets =
+    carousel:
+      autoRotation:
+        enabled: true
+        direction: 1
+        once: false
+        delay: 5000
+      funcSize: (layerDiff, rondell) ->
+        (rondell.maxItems / Math.abs(layerDiff)) / rondell.maxItems
+      
+    products:
+      repeating: false
+      alwaysShowCaption: true
+      visibleItems: 4
+      itemProperties:
+        delay: 0
+      center:
+        left: 400 
+        top: 100
+      funcTop: (layerDiff, rondell) ->
+        0
+      funcDiff: (layerDiff, rondell) ->
+        Math.abs(layerDiff) + 1
+      funcLeft: (layerDiff, rondell) ->
+        rondell.center.left + (layerDiff - 0.5) * rondell.itemProperties.size.width
+      funcOpacity: (layerDist, rondell) ->
+        0.8
+       
+    pages:
+      radius: 
+        x: 0 
+        y: 0
+      scaling: 1
+      visibleItems: 1
+      controls:
+        enabled: false
+      funcTop: (layerDiff, rondell) ->
+          rondell.center.top - rondell.itemProperties.size.height / 2
+      funcLeft: (layerDiff, rondell) ->
+          rondell.center.left + layerDiff * rondell.itemProperties.size.width
+      funcDiff: (layerDiff, rondell) ->
+          Math.abs(layerDiff) + 0.5
+      
+    cubic:
+      funcTop: (layerDiff, rondell) ->
+          rondell.center.top - rondell.itemProperties.size.height / 2 + Math.pow(layerDiff / 2, 3) * rondell.radius.x
+      funcLeft: (layerDiff, rondell) ->
+          rondell.center.left - rondell.itemProperties.size.width / 2 + Math.sin(layerDiff) * rondell.radius.x
+      funcSize: (layerDiff, rondell) ->
+          Math.pow((Math.PI - Math.abs(layerDiff)) / Math.PI, 3)
     
 )(jQuery) 
