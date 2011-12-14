@@ -20,7 +20,7 @@
             
             <br/>
             
-            <h3>Rondell - Version 0.8.2</h3>
+            <h3>Rondell - Version 0.8.3</h3>
             <p>
                 Created by <a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle">Sebastian Helzle</a>
             </p>
@@ -34,13 +34,18 @@
             </p>
             
             <p>
+                The plugin has been tested with and should work fine with:<br/>
+                IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+
+            </p>
+            
+            <p>
                 Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php" title="MIT licence">MIT</a> license.
             </p>
             
             <br/>
             
             <p>
-                <a href="https://github.com/Sebobo/jquery.rondell/zipball/0.8.2" title="Rondell zip download" class="sampleElement">Download rondell now</a>
+                <a href="https://github.com/Sebobo/jquery.rondell/zipball/0.8.3" title="Rondell zip download" class="sampleElement">Download rondell now</a>
             </p>
             
             <br/>
@@ -71,9 +76,24 @@
             <h3>New and improved in this version</h3>
             
             <ul>
-                <li><b>Touch controls for mobile devices</b> - Swipe left and right to move the rondell.</li>
-                <li><b>Reliable image loading</b> - The previous versions had sometimes problems getting the correct image sizes for some browsers and configurations.</li>
-                <li>And some minor fixes and code improvements.</li>
+                <li><b>A size function</b> to simulate a depth effect (see the <a href="#options" title="List of options">options</a>).</li>
+                <li><b>Presets</b> for the plugins options which contain the necessary settings to setup the plugin like the examples on this page.</li>
+                <li><b>Themes</b> are now included in the plugins css file to help you make your rondell look like one of my examples.</li>
+                <li><b>Touch controls for mobile devices</b> - Swipe left and right to move the rondell (0.8.2).</li>
+                <li><b>Reliable image loading</b> - The previous versions had sometimes problems getting the correct image sizes for some browsers and configurations (0.8.2).</li>
+                <li>And some minor fixes and code improvements (0.8.2).</li>
+            </ul>
+            
+            <br/>
+            
+            <h3>Dependencies</h3>
+            
+            <ul>
+                <li><a href="http://www.jQuery.com" title="jQuery">jQuery</a> version 1.5.2 or better</li>
+                <li>
+                    <a href="http://www.modernizr.com/" title="Modernizr library">Modernizr</a> for browser capability fallbacks.<br/>
+                    The library is included in the plugins <i>lib</i> folder.<br/> 
+                </li>
             </ul>
             
             <br/>
@@ -612,7 +632,10 @@ $('#rondellProducts > div').rondell({
                         funcLeft: function(layerDiff, rondell) {
                             return rondell.center.left - rondell.itemProperties.size.width / 2.0 
                                 - Math.sin(layerDiff) * rondell.radius.x;
-                        }                                
+                        },
+                        funcSize: function(layerDiff, rondell) {
+                            return Math.pow((Math.PI - Math.abs(layerDiff)) / Math.PI, 3);
+                        }                                 
                     });
                 }
             }
@@ -684,6 +707,11 @@ $('#rondellProducts > div').rondell({
                     <td>visibleItems</td>
                     <td>'auto'</td>
                     <td>How many items should be visible in each direction</td>
+                </tr>
+                <tr>
+                    <td>alwaysShowCaption</td>
+                    <td>false</td>
+                    <td>Should the overlay always be shown. By default it's only shown when hovering the rondell.</td>
                 </tr>
                 <tr>
                     <td>repeating</td>
@@ -781,15 +809,60 @@ $('#rondellProducts > div').rondell({
                         <i>threshold</i> is the distance in pixels the finger has to travel, before a swipe is registered.<br/>
                     </td>
                 </tr>
+                <tr>
+                    <td>theme</td>
+                    <td>default</td>
+                    <td>
+                        Css class which will be added to the rondell container.<br/>
+                        The rondell css file already includes some themes:<br/>  
+                        <i>default, light, dark, page</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>preset</td>
+                    <td>''</td>
+                    <td>
+                        The plugin contains some presets for the options to help you get started with your own rondell.<br/>
+                        The current presets are based on the examples on this page and include:<br/>
+                        <i>carousel, products, pages, cubic</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>effect</td>
+                    <td>''</td>
+                    <td>Currently not used.</td>
+                </tr>
+                <tr>
+                    <td>
+                        funcLeft<br/>
+                        funcTop<br/>
+                        funcOpacity<br/>
+                        funcSize<br/>
+                        funcDiff
+                    </td>
+                    <td></td>
+                    <td>
+                        These functions will be called by the plugin when animating the rondell items.<br/>
+                        At first <i>funcDiff</i> is called for each item with the absolute distance from the center 
+                        item to calculate the relative distance between the items. The second parameter is 
+                        the rondell object itself.<br/>
+                        The return value will be used to call the other four functions. Each with the new relative distance
+                        as first parameter and the rondell object as second parameter.<br/>
+                        The rondell object can be used to access all of the options in the rondell.<br/>
+                        I will provide an in-depth tutorial at a later date. In the meantime please use the advanced examples as a
+                        base for your own customization or send me a message and I'll try to help. 
+                    </td>
+                </tr>
             </table>
             
             <hr/>
             
             <h4>Coming up</h4>
             
-            <p>
-                More examples and I will integrate more animation functions into the plugin or via extensions.
-            </p>
+            <ul>
+                <li>More examples</li>
+                <li>Effects for the focused item</li>
+            </ul>
             
             <br/>
 
@@ -944,6 +1017,10 @@ $('#rondellProducts > div').rondell({
                                 },
                                 visibleItems: 5,
                                 itemProperties: {
+                                    size: {
+                                        width: 350,
+                                        height: 350  
+                                    },
                                     sizeFocused: { 
                                         width: 350, 
                                         height: 350
@@ -956,10 +1033,13 @@ $('#rondellProducts > div').rondell({
                                     }
                                 },
                                 funcTop: function(layerDiff, rondell) {
-                                    return rondell.center.top - rondell.itemProperties.size.height / 2.0 + Math.pow(layerDiff / 2, 3) * rondell.radius.x;
+                                    return rondell.center.top - rondell.itemProperties.size.height / 2 + Math.pow(layerDiff / 2, 3) * rondell.radius.x;
                                 },
                                 funcLeft: function(layerDiff, rondell) {
-                                    return rondell.center.left - rondell.itemProperties.size.width / 2.0 + Math.sin(layerDiff) * rondell.radius.x;
+                                    return rondell.center.left - rondell.itemProperties.size.width / 2 + Math.sin(layerDiff) * rondell.radius.x;
+                                },
+                                funcSize: function(layerDiff, rondell) {
+                                    return Math.pow((Math.PI - Math.abs(layerDiff)) / Math.PI, 3);
                                 }                                
                             });
                         }
