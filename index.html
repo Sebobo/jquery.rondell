@@ -53,11 +53,6 @@
             <p>
                 <a href="https://github.com/Sebobo/jquery.rondell" title="Rondell source at github">Visit rondell at github</a>
             </p>
-            <!--
-            <p>
-                <a href="http://plugins.jquery.com/project/rondell" title="Rondell download at jQuery">Visit rondell in the jQuery plugin repository</a>
-            </p>
-            -->
             
             <br/>
             
@@ -597,23 +592,57 @@ $('#rondellProducts > div').rondell({
             </p>
             <pre id="demo5code" class="collapsible">
 &lt;script type="text/javascript"&gt;
-    $(function() {
+    $(function() {                
         $.ajax({
-            url: 'http://www.sebastianhelzle.net/demos/get_page.php?page=wookmark',
+            url: 'http://www.wookmark.com/api/json',
             dataType: 'jsonp',
             success: function(json, text, xhqr) {
                 if (text == 'success') {
-                    var content = $(json.pageContent),
-                        wookmarkDemo = $('#wookmarkDemo'); 
-                    wookmarkDemo.empty().append(content.find('.polaroid a:has(img):lt(21)').css('opacity', 0));
-                    $('img', wookmarkDemo).addClass('resizeable');
-                    $('a', wookmarkDemo).attr('target', '_blank').rondell({
+                    var items = json,
+                        wookmarkDemo = $('#wookmarkDemo');
+                    
+                    wookmarkDemo.empty();
+                    
+                    // Parsing returned json data
+                    $.each(items, function(idx, item) {
+                        if (idx > 20) return false;
+                        
+                        // Create link container
+                        var newItem = $('&lt;a/&gt;')
+                        .attr({
+                            'href': item.url,
+                            'title': item.title,
+                            'target': '_blank'
+                        })
+                        .css('opacity', 0);
+                        
+                        // Create image
+                        var newImg = $('&lt;img/&gt;')
+                        .attr({
+                            'src': item.preview,
+                            'alt': item.title,
+                            'width': item.width,
+                            'height': item.height
+                        })
+                        .addClass('resizeable');
+                        
+                        // Append image to link and link to container for the rondell
+                        newItem.append(newImg);
+                        wookmarkDemo.append(newItem);
+                    });
+                        
+                    // Create wookmark rondell 
+                    $('a', wookmarkDemo).rondell({
                         center: { 
                             left: 400, 
                             top: 200
                         },
                         visibleItems: 5,
                         itemProperties: {
+                            size: {
+                                width: 350,
+                                height: 350  
+                            },
                             sizeFocused: { 
                                 width: 350, 
                                 height: 350
@@ -626,16 +655,14 @@ $('#rondellProducts > div').rondell({
                             }
                         },
                         funcTop: function(layerDiff, rondell) {
-                            return rondell.center.top - rondell.itemProperties.size.height / 2.0 
-                                - Math.pow(layerDiff / 2, 3) * rondell.radius.x;
+                            return rondell.center.top - rondell.itemProperties.size.height / 2 + Math.pow(layerDiff / 2, 3) * rondell.radius.x;
                         },
                         funcLeft: function(layerDiff, rondell) {
-                            return rondell.center.left - rondell.itemProperties.size.width / 2.0 
-                                - Math.sin(layerDiff) * rondell.radius.x;
+                            return rondell.center.left - rondell.itemProperties.size.width / 2 + Math.sin(layerDiff) * rondell.radius.x;
                         },
                         funcSize: function(layerDiff, rondell) {
                             return Math.pow((Math.PI - Math.abs(layerDiff)) / Math.PI, 3);
-                        }                                 
+                        }                                
                     });
                 }
             }
@@ -1002,15 +1029,45 @@ $('#rondellProducts > div').rondell({
                 });
                 
                 $.ajax({
-                    url: 'http://www.sebastianhelzle.net/demos/get_page.php?page=wookmark',
+                    url: 'http://www.wookmark.com/api/json',
                     dataType: 'jsonp',
                     success: function(json, text, xhqr) {
                         if (text == 'success') {
-                            var content = $(json.pageContent),
-                                wookmarkDemo = $('#wookmarkDemo'); 
-                            wookmarkDemo.empty().append(content.find('.polaroid a:has(img):lt(21)').css('opacity', 0));
-                            $('img', wookmarkDemo).addClass('resizeable');
-                            $('a', wookmarkDemo).attr('target', '_blank').rondell({
+                            var items = json,
+                                wookmarkDemo = $('#wookmarkDemo');
+                            
+                            wookmarkDemo.empty();
+                            
+                            // Parsing returned json data
+                            $.each(items, function(idx, item) {
+                                if (idx > 20) return false;
+                                
+                                // Create link container
+                                var newItem = $('<a/>')
+                                .attr({
+                                    'href': item.url,
+                                    'title': item.title,
+                                    'target': '_blank'
+                                })
+                                .css('opacity', 0);
+                                
+                                // Create image
+                                var newImg = $('<img/>')
+                                .attr({
+                                    'src': item.preview,
+                                    'alt': item.title,
+                                    'width': item.width,
+                                    'height': item.height
+                                })
+                                .addClass('resizeable');
+                                
+                                // Append image to link and link to container for the rondell
+                                newItem.append(newImg);
+                                wookmarkDemo.append(newItem);
+                            });
+                                
+                            // Create wookmark rondell 
+                            $('a', wookmarkDemo).rondell({
                                 center: { 
                                     left: 400, 
                                     top: 200
