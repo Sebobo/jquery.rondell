@@ -2,7 +2,7 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 0.8.2
+  @version 0.8.3
   @date 11/19/2011
   @category jQuery plugin
   @copyright (c) 2009-2011 Sebastian Helzle (www.sebastianhelzle.net)
@@ -12,7 +12,7 @@
 (($) ->
   # Global rondell stuff
   $.rondell =
-    version: '0.8.3-beta'
+    version: '0.8.3'
     name: 'rondell'
     defaults:
       resizeableClass: 'resizeable'
@@ -70,6 +70,7 @@
         end: undefined
       funcEase: 'easeInOutQuad' # Easing function name for the movement of items
       theme: 'default' # CSS theme class which gets added to the rondell container
+      preset: '' # Configuration preset
       effect: null # Special effect function for the focused item
   
   # Add default easing function for rondell to jQuery if missing
@@ -107,6 +108,8 @@
       Math.pow(Math.abs(layerDiff) / rondell.itemCount, 0.5) * Math.PI
     funcOpacity: (layerDist, rondell) ->
       if rondell.visibleItems > 1 then Math.max(0, 1.0 - Math.pow(layerDist / rondell.visibleItems, 2)) else 0
+    funcSize: (layerDist, rondell) ->
+      1
     
     showCaption: (layerNum) => 
       # Restore automatic height and show caption
@@ -370,8 +373,11 @@
       layerDiff = @funcDiff(layerPos - @currentLayer, @)
       layerDiff *= -1 if layerPos < @currentLayer
       
-      newX = @funcLeft(layerDiff, @) + (@itemProperties.size.width - item.sizeSmall.width) / 2
-      newY = @funcTop(layerDiff, @) + (@itemProperties.size.height - item.sizeSmall.height) / 2
+      itemWidth = item.sizeSmall.width * @funcSize(layerDiff, @)
+      itemHeight = item.sizeSmall.height * @funcSize(layerDiff, @)
+      
+      newX = @funcLeft(layerDiff, @) + (@itemProperties.size.width - itemWidth) / 2
+      newY = @funcTop(layerDiff, @) + (@itemProperties.size.height - itemHeight) / 2
       
       newZ = @zIndex + (if layerDiff < 0 then layerPos else -layerPos)
       fadeTime = @fadeTime + @itemProperties.delay * layerDist
@@ -387,8 +393,8 @@
         item.object.removeClass('rondellItemNew rondellItemFocused').stop(true)
         .css('z-index', newZ)
         .animate(
-            width: item.sizeSmall.width
-            height: item.sizeSmall.height
+            width: itemWidth
+            height: itemHeight
             left: newX
             top: newY
             opacity: newOpacity 
@@ -400,7 +406,7 @@
         unless item.small
           item.small = true
           if item.icon and not item.resizeable
-            margin = (@itemProperties.size.height - item.icon.height()) / 2
+            margin = (itemHeight - item.icon.height()) / 2
             item.icon.stop(true).animate(
                 marginTop: margin
                 marginBottom: margin
