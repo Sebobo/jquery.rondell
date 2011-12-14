@@ -11,7 +11,7 @@ Installation
 
 ### Prequisites
 
- * [jQuery](http://www.jquery.com) - 1.4.3 or better
+ * [jQuery](http://www.jquery.com) - 1.5.2 or better
  * [Modernizr](http://www.modernizr.com) - This library tests the browser for feature support and adds classes to the body tag. We use this for css fallbacks in our themes.
  
 Both are also provided in the `lib` folder. 
