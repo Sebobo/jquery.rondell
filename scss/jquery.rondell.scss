@@ -1,5 +1,6 @@
 @import "mixins";
 
+// container which holds all items
 .rondellContainer {
   overflow: hidden;
   display: block;
@@ -8,6 +9,7 @@
   &.initializing * { display:none; } 
 }
 
+// design for each item
 .rondellItem {
   position: absolute; 
   display: block; 
@@ -34,16 +36,19 @@
   }
   
   &:hover { 
-    border-color: #eee; 
+    border-color: #bbb; 
     
     &, div, p { text-decoration:none; }
   } 
 }
+
 .rondellItemHovered { opacity: 1 !important; }
 
 .rondellItemFocused {
   &, a { cursor: auto; }
 }
+
+// caption element over selected item
 .rondellCaption {
   position: absolute; 
   margin: 10px; 
@@ -73,6 +78,7 @@
   }
 }
 
+// controls design
 .rondellControl {
   position: absolute;
   font-size: 1.2em; 
@@ -98,4 +104,87 @@
   @include boxshadow(0 0 1px rgba(0, 0, 0, 0.3));
   
   &:hover { @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.5)); } 
+}
+
+/* themes */
+
+/* default theme */
+.rondellTheme_default {}
+.boxshadow.rgba .rondellTheme_default .rondellItem { 
+  @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.6));    
+  &:hover { @include boxshadow(0 1px 2px rgba(0, 0, 0, 0.3)); }
+} 
+.borderradius .rondellTheme_default .rondellItem {
+  &, img { @include rounded(5px); }
+}
+
+/* light theme */
+.rondellTheme_light {
+  .rondellContainer { background: #fff; }
+  .rondellItem { border: 0; }
+}
+.boxshadow.rgba .rondellTheme_light .rondellItem { 
+  @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.6));    
+  &:hover { @include boxshadow(0 1px 2px rgba(0, 0, 0, 0.3)); }
+}
+
+/* dark theme, good for preset 'products' */
+.rondellTheme_dark {
+  .rondellContainer { 
+    background: #333; 
+  }
+  .rondellItem { 
+    border: 0; 
+    background: transparent;
+  }
+  .rondellCaption { 
+    margin: 5px; 
+    padding: 0; 
+    font-size: 11px;
+    
+    &.overlay {
+      padding: 0 5px;
+      background: #f5f5f5;
+      background: rgba(200, 200, 200, 0.3); 
+      border: 2px solid rgba(200, 200, 200, 0.5);
+    }
+  }
+  .rondellControl {
+    font-size: 0;  
+    color: transparent;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    
+    &.rondellShiftLeft {
+      background: url('../images/arrow_left_small.png') no-repeat;
+    }
+    &.rondellShiftRight {
+      background: url('../images/arrow_right_small.png') no-repeat;
+    }
+  }
+}
+.borderradius .rondellTheme_dark {
+  @include rounded(10px);
+}
+.cssgradients .rondellTheme_dark {
+  @include linear-gradient(#666, #111);
+}
+.boxshadow.rgba .rondellTheme_dark {
+  @include boxshadow(0 1px 5px rgba(0, 0, 0, 0.6));
+}
+
+/* page theme, good for preset 'pages' */
+.boxshadow.rgba .rondellTheme_page {
+  @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.6));    
+} 
+.borderradius .rondellTheme_page {
+  @include rounded(3px);
+} 
+
+.rondellTheme_page .rondellItem {
+  border: 0; 
+} 
+.borderradius .rondellTheme_page .rondellItem {
+  &, img { @include rounded(3px); }
 }

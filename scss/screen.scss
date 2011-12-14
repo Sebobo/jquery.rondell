@@ -116,33 +116,25 @@ img.inline { margin: 10px; }
 
 /* rondell demo stuff */
 
+#rondellSimple,
+#rondellGallery,
+#rondellMixed,
+
+#wookmarkDemo {
+  display: none;
+}
+
 #rondellGallery { 
   width:775px; 
   height:450px; 
-  margin:20px auto;  
-
-  .rondellItem { 
-    &, img { @include rounded(5px); }
-  }
-}
-.boxshadow.rgba {
-  #rondellMixed .rondellContainer,
-  #rondellGallery .rondellItem,
-  #rondellSimple .rondellItem,
-  #wookmarkDemo .rondellItem { 
-    @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.6));    
-    &:hover { @include boxshadow(0 1px 2px rgba(0, 0, 0, 0.3)); } 
-  }
+  margin:20px auto;
 }
 
 #rondellMixed { 
   width: 400px; 
   height: 400px; 
-  margin: 20px auto;
   position: relative;
-  
-  .rondellContainer { background: #fff; }
-  .rondellItem { border: 0; }
+  margin: 20px auto;
   
   .controlShiftLeft,
   .controlShiftRight {
@@ -157,52 +149,6 @@ img.inline { margin: 10px; }
     left: auto;
     right: -100px;
   }
-}
-
-#rondellProducts {
-  
-  .rondellContainer { 
-    background: #333; 
-  }
-  .rondellItem { 
-    border: 0; 
-    background: transparent;
-  }
-  .rondellCaption { 
-    margin: 5px; 
-    padding: 0; 
-    font-size: 11px;
-    
-    &.overlay {
-      padding: 0 5px;
-      background: #f5f5f5;
-      background: rgba(200, 200, 200, 0.3); 
-      border: 2px solid rgba(200, 200, 200, 0.5);
-    }
-  }
-  .rondellControl {
-    font-size: 0;  
-    color: transparent;
-    padding: 0;
-    width: 32px;
-    height: 32px;
-    
-    &.rondellShiftLeft {
-      background: url('../images/arrow_left_small.png') no-repeat;
-    }
-    &.rondellShiftRight {
-      background: url('../images/arrow_right_small.png') no-repeat;
-    }
-  }
-}
-.borderradius #rondellProducts .rondellContainer {
-  @include rounded(10px);
-}
-.cssgradients #rondellProducts .rondellContainer {
-  @include linear-gradient(#666, #111);
-}
-.boxshadow.rgba #rondellProducts .rondellContainer {
-  @include boxshadow(0 1px 5px rgba(0, 0, 0, 0.6));
 }
 
 /* fancybox */
