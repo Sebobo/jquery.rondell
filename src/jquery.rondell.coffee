@@ -15,6 +15,7 @@
     version: '0.8.3'
     name: 'rondell'
     defaults:
+      showContainer: true
       resizeableClass: 'resizeable'
       smallClass: 'itemSmall'
       hiddenClass: 'itemHidden'
@@ -482,7 +483,7 @@
           # arrow right 
           when 39 then @shiftRight(e) 
   
-  $.fn.rondell = (options) ->
+  $.fn.rondell = (options, callback) ->
     # Create new rondell instance
     rondell = new Rondell(options, @length)
     
@@ -512,6 +513,12 @@
           sizeFocused: rondell.itemProperties.sizeFocused
         )
         
+    rondell.container.parent().show() if rondell.showContainer
+        
+    # Fire callback with rondell instance if callback was provided
+    callback?(rondell)
+        
+    # Return rondell instance
     rondell
     
 )(jQuery) 
