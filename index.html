@@ -25,11 +25,17 @@
                 Created by <a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle">Sebastian Helzle</a>
             </p>
             
+            <img src="images/preview.png" class="floatRight" alt="Rondell preview" />
+            
             <br/>
 
             <p>
-                This is a <a href="http://www.jquery.com" title="jQuery">jQuery</a> plugin for displaying galeries and other content.<br/>
-                The rondell demos can be controlled with your keyboard, by clicking the controls or by clicking the rondell items.<br/>
+                This is a <a href="http://www.jquery.com" title="jQuery">jQuery</a> plugin for displaying galeries<br/> 
+                and other content the way <b>you</b> want.<br/>
+                <br/>
+                The rondell demos can be controlled with your keyboard,<br/> 
+                by clicking the controls or by clicking the rondell items.<br/>
+                <br/>
                 Touching items on a phone or tablet computer will work too! 
             </p>
             
@@ -74,6 +80,7 @@
                 <li><b>A size function</b> to simulate a depth effect (see the <a href="#options" title="List of options">options</a>).</li>
                 <li><b>Presets</b> for the plugins options which contain the necessary settings to setup the plugin like the examples on this page.</li>
                 <li><b>Themes</b> are now included in the plugins css file to help you make your rondell look like one of my examples.</li>
+                <li><b>A callback</b> when the plugin has finished loading. See <a href="#usage" title="Usage example">usage</a>.</li>
                 <li><b>Touch controls for mobile devices</b> - Swipe left and right to move the rondell (0.8.2).</li>
                 <li><b>Reliable image loading</b> - The previous versions had sometimes problems getting the correct image sizes for some browsers and configurations (0.8.2).</li>
                 <li>And some minor fixes and code improvements (0.8.2).</li>
@@ -90,6 +97,15 @@
                     The library is included in the plugins <i>lib</i> folder.<br/> 
                 </li>
             </ul>
+            
+            <br id="usage"/>
+            
+            <h3>Usage</h3>
+            
+<pre>
+&lt;script type="text/javascript"&gt;
+    $('.myExample > .myItem').rondell([options][, callback]);
+&lt;/script&gt;</pre>
             
             <br/>
             
@@ -278,11 +294,9 @@
 &lt;script type="text/javascript"&gt;
     $(function() {
         $('#rondellGallery > div').rondell({
-            autoRotation: {
-                enabled: true,
-                direction: 1,
-                once: false,
-                delay: 5000
+            preset: 'carousel',
+            radius: {
+                x: 220
             },
             isActive: function() {
                 return !$('#fancybox-wrap').is(':visible');
@@ -372,8 +386,8 @@
             </p>
             <pre id="demo3code" class="collapsible">
 $('#rondellProducts > div').rondell({
-    repeating: false,
-    alwaysShowCaption: true,
+    preset: 'products',
+    theme: 'dark',
     visibleItems: 4,
     itemProperties: {
         delay: 0,
@@ -395,18 +409,6 @@ $('#rondellProducts > div').rondell({
     center: {
         left: 400, 
         top: 100
-    },
-    funcTop: function(layerDiff, rondell) {
-        return 0;
-    },
-    funcDiff: function(layerDiff, rondell) {
-        return Math.abs(layerDiff) + 1;
-    },
-    funcLeft: function(layerDiff, rondell) {
-        return rondell.center.left + (layerDiff - 0.5) * rondell.itemProperties.size.width;
-    },
-    funcOpacity: function(layerDist, rondell) {
-        return 0.8;
     }
 });</pre>
             
@@ -527,16 +529,12 @@ $('#rondellProducts > div').rondell({
 &lt;script type="text/javascript"&gt;
     $(function() {
         var rondellMixed = $('#rondellMixed > div').rondell({
-            radius: { 
-                x: 0, 
-                y: 0
-            }, 
+            preset: 'pages',
+            theme: 'page'
             center: {
                 left: 200, 
                 top: 200
             },
-            scaling: 1,
-            visibleItems: 1,
             itemProperties: {
                 size: { 
                     width:400, 
@@ -545,16 +543,7 @@ $('#rondellProducts > div').rondell({
             },
             controls: {
                 enabled: false
-            },
-            funcTop: function(layerDiff, rondell) {
-                return rondell.center.top - rondell.itemProperties.size.height / 2;
-            },
-            funcLeft: function(layerDiff, rondell) {
-                return rondell.center.left + layerDiff * rondell.itemProperties.size.width;
-            },
-            funcDiff: function(layerDiff, rondell) {
-                return Math.abs(layerDiff) + 0.5;
-            } 
+            }
         });
         
         // Init custom controls
@@ -633,6 +622,7 @@ $('#rondellProducts > div').rondell({
                         
                     // Create wookmark rondell 
                     $('a', wookmarkDemo).rondell({
+                        preset: 'cubic',
                         center: { 
                             left: 400, 
                             top: 200
@@ -653,16 +643,7 @@ $('#rondellProducts > div').rondell({
                                 x: 10,
                                 y: 190
                             }
-                        },
-                        funcTop: function(layerDiff, rondell) {
-                            return rondell.center.top - rondell.itemProperties.size.height / 2 + Math.pow(layerDiff / 2, 3) * rondell.radius.x;
-                        },
-                        funcLeft: function(layerDiff, rondell) {
-                            return rondell.center.left - rondell.itemProperties.size.width / 2 + Math.sin(layerDiff) * rondell.radius.x;
-                        },
-                        funcSize: function(layerDiff, rondell) {
-                            return Math.pow((Math.PI - Math.abs(layerDiff)) / Math.PI, 3);
-                        }                                
+                        }                               
                     });
                 }
             }
@@ -674,7 +655,7 @@ $('#rondellProducts > div').rondell({
             
             <h3>Options</h3>
             
-            <table class="options">
+            <table class="options" summary="Options for the jQuery rondell plugin">
                 <tr>
                     <th>Key</th>
                     <th>Default value</th>
@@ -840,9 +821,11 @@ $('#rondellProducts > div').rondell({
                     <td>theme</td>
                     <td>default</td>
                     <td>
-                        Css class which will be added to the rondell container.<br/>
+                        Theme which will be used for the rondell.<br/>
                         The rondell css file already includes some themes:<br/>  
-                        <i>default, light, dark, page</i>
+                        <i>default, light, dark, page</i><br/>
+                        <br/>
+                        Take a look at the <i>jquery.rondell.css</i> if you want to customize a theme. 
                     </td>
                 </tr>
                 <tr>
@@ -878,6 +861,17 @@ $('#rondellProducts > div').rondell({
                         The rondell object can be used to access all of the options in the rondell.<br/>
                         I will provide an in-depth tutorial at a later date. In the meantime please use the advanced examples as a
                         base for your own customization or send me a message and I'll try to help. 
+                    </td>
+                </tr>
+                <tr>
+                    <td>showContainer</td>
+                    <td>true</td>
+                    <td>
+                        When the plugin has finished loading it will automatically 
+                        show the parent of the items you selected.<br/>
+                        This is for removing the glitch when the plugin takes to long to load and all your items
+                        are shown one under another.<br/>
+                        You should set the css of your items container to <i>display:none</i>.
                     </td>
                 </tr>
             </table>
@@ -928,11 +922,9 @@ $('#rondellProducts > div').rondell({
                 $('#rondellSimple > div').rondell(); 
                 
                 $('#rondellGallery > div').rondell({
-                    autoRotation: {
-                        enabled: true,
-                        direction: 1,
-                        once: false,
-                        delay: 5000
+                    preset: 'carousel',
+                    radius: {
+                        x: 220
                     },
                     isActive: function() {
                         return !$('#fancybox-wrap').is(':visible');
@@ -949,8 +941,8 @@ $('#rondellProducts > div').rondell({
                 });
                 
                 $('#rondellProducts > div').rondell({
-                    repeating: false,
-                    alwaysShowCaption: true,
+                    preset: 'products',
+                    theme: 'dark',
                     visibleItems: 4,
                     itemProperties: {
                         delay: 0,
@@ -972,32 +964,16 @@ $('#rondellProducts > div').rondell({
                     center: {
                         left: 400, 
                         top: 100
-                    },
-                    funcTop: function(layerDiff, rondell) {
-                        return 0;
-                    },
-                    funcDiff: function(layerDiff, rondell) {
-                        return Math.abs(layerDiff) + 1;
-                    },
-                    funcLeft: function(layerDiff, rondell) {
-                        return rondell.center.left + (layerDiff - 0.5) * rondell.itemProperties.size.width;
-                    },
-                    funcOpacity: function(layerDist, rondell) {
-                        return 0.8;
                     }
                 });
                 
                 var rondellMixed = $('#rondellMixed > div').rondell({
-                    radius: { 
-                        x: 0, 
-                        y: 0
-                    }, 
+                    preset: 'pages',
+                    theme: 'page',
                     center: {
                         left: 200, 
                         top: 200
                     },
-                    scaling: 1,
-                    visibleItems: 1,
                     itemProperties: {
                         size: { 
                             width:400, 
@@ -1006,16 +982,7 @@ $('#rondellProducts > div').rondell({
                     },
                     controls: {
                         enabled: false
-                    },
-                    funcTop: function(layerDiff, rondell) {
-                        return rondell.center.top - rondell.itemProperties.size.height / 2;
-                    },
-                    funcLeft: function(layerDiff, rondell) {
-                        return rondell.center.left + layerDiff * rondell.itemProperties.size.width;
-                    },
-                    funcDiff: function(layerDiff, rondell) {
-                        return Math.abs(layerDiff) + 0.5;
-                    } 
+                    }
                 });
         
                 // Init custom controls
@@ -1068,6 +1035,7 @@ $('#rondellProducts > div').rondell({
                                 
                             // Create wookmark rondell 
                             $('a', wookmarkDemo).rondell({
+                                preset: 'cubic',
                                 center: { 
                                     left: 400, 
                                     top: 200
@@ -1088,16 +1056,7 @@ $('#rondellProducts > div').rondell({
                                         x: 10,
                                         y: 190
                                     }
-                                },
-                                funcTop: function(layerDiff, rondell) {
-                                    return rondell.center.top - rondell.itemProperties.size.height / 2 + Math.pow(layerDiff / 2, 3) * rondell.radius.x;
-                                },
-                                funcLeft: function(layerDiff, rondell) {
-                                    return rondell.center.left - rondell.itemProperties.size.width / 2 + Math.sin(layerDiff) * rondell.radius.x;
-                                },
-                                funcSize: function(layerDiff, rondell) {
-                                    return Math.pow((Math.PI - Math.abs(layerDiff)) / Math.PI, 3);
-                                }                                
+                                }                           
                             });
                         }
                     }
