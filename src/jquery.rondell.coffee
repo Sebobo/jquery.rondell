@@ -81,13 +81,14 @@
    
   # Rondell class holds all rondell items and functions   
   class Rondell
-    @rondellCount: 0
-    @activeRondell: null # Stores the last activated rondell for keyboard interaction
+    @rondellCount: 0            # Globally stores the number of rondells for uuid creation
+    @activeRondell: null        # Globally stores the last activated rondell for keyboard interaction
     
-    constructor: (options, numItems) ->
+    constructor: (options, numItems, initCallback=undefined) ->
       @id = Rondell.rondellCount++
       @items = [] # Holds the items
       @maxItems = numItems
+      @initCallback = initCallback
       
       # Update rondell properties with new options
       if options?.preset of $.rondell.presets
@@ -277,8 +278,14 @@
       # Attach keydown event to document for each rondell instance
       $(document).keydown(@keyDown)
       
-      # add hover and touch functions to container
+      # Add hover and touch functions to container
       @container.removeClass('initializing').bind('mouseover mouseout', @_hover).bind('touchstart touchmove touchend', @_touch)
+      
+      # Show items parent container
+      @container.parent().show() if @showContainer
+          
+      # Fire callback with rondell instance if callback was provided
+      @initCallback?(@)
       
       # Move items to starting positions
       @shiftTo(@currentLayer)
@@ -486,9 +493,9 @@
           # arrow right 
           when 39 then @shiftRight(e) 
   
-  $.fn.rondell = (options, callback) ->
+  $.fn.rondell = (options={}, callback=undefined) ->
     # Create new rondell instance
-    rondell = new Rondell(options, @length)
+    rondell = new Rondell(options, @length, callback)
     
     # Wrap elements in new container
     @wrapAll($('<div class="rondellContainer initializing"></div>'))
@@ -517,11 +524,6 @@
           sizeSmall: rondell.itemProperties.size
           sizeFocused: rondell.itemProperties.sizeFocused
         )
-        
-    rondell.container.parent().show() if rondell.showContainer
-        
-    # Fire callback with rondell instance if callback was provided
-    callback?(rondell)
         
     # Return rondell instance
     rondell
