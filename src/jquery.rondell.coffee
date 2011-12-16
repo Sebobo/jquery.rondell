@@ -10,76 +10,76 @@
 ###
 
 (($) ->
-  # Global rondell stuff
+  ### Global rondell plugin properties ###
   $.rondell =
     version: '0.8.3'
     name: 'rondell'
     defaults:
-      showContainer: true
+      showContainer: true       # When the plugin has finished initializing $.show() will be called on the items container
       resizeableClass: 'resizeable'
       smallClass: 'itemSmall'
       hiddenClass: 'itemHidden'
-      itemCount: 0 # Number of rondell items in a rondell
-      currentLayer: 1 # Active layer number
-      container: null
-      radius: # Radius if the rondell uses a circle function
+      itemCount: 0              # Number of rondell items in a rondell instance
+      currentLayer: 1           # Active layer number in a rondell instance
+      container: null           # Container object wrapping the rondell items
+      radius:                   # Radius for the default circle function
         x: 300 
         y: 50  
-      center: # Center where the focused element is displayed
+      center:                   # Center where the focused element is displayed
         left: 400 
         top: 200
-      size: # Defaults to center * 2
+      size:                     # Defaults to center * 2 on init
         width: null
         height: null
-      visibleItems: 'auto' # How many items should be visible in each direction
-      scaling: 2 # Size of focused element
-      opacityMin: 0.05 # Min opacity before elements are set to display: none
+      visibleItems: 'auto'      # How many items should be visible in each direction
+      scaling: 2                # Size of focused element
+      opacityMin: 0.05          # Min opacity before elements are set to display: none
       fadeTime: 300
-      zIndex: 1000 # All elements of the rondell will use this z-index and add their depth to it
-      itemProperties: # Default properties for each item
-        delay: 100
-        cssClass: 'rondellItem'
+      zIndex: 1000              # All elements of the rondell will use this z-index and add their depth to it
+      itemProperties:           # Default properties for each item
+        delay: 100              # Time offset between the animation of each item
+        cssClass: 'rondellItem' # Identifier for each item
         size: 
           width: 150
           height: 150
         sizeFocused:
           width: 0
           height: 0
-      repeating: true # Rondell will go forever
-      alwaysShowCaption: false
-      autoRotation: # If the cursor leaves the rondell continue spinning
+      repeating: true           # Will show first item after last item and so on
+      alwaysShowCaption: false  # Don't hide caption on mouseleave
+      autoRotation:             # If the cursor leaves the rondell continue spinning
         enabled: false
-        paused: false
-        timer: -1
-        direction: 0
-        once: false
+        paused: false           # Can be used to pause the auto rotation with a play/pause button for example 
+        _timer: -1              
+        direction: 0            # 0 or 1 means left and right
+        once: false             # Will animate until the rondell will be hovered at least once
         delay: 5000
-      controls: # Buttons to control the rondell
+      controls:                 # Buttons to control the rondell
         enabled: true
-        fadeTime: 400
-        margin: 
-          x: 20
-          y: 20
+        fadeTime: 400           # Show/hide animation speed
+        margin:     
+          x: 20                 # Distance from left and right edge of the container
+          y: 20                 # Distance from top and bottom edge of the container
       strings: # String for the controls 
         prev: 'prev'
         next: 'next'
       touch:
         enabled: true
-        preventDefaults: true
-        threshold: 100
-        start: undefined
-        end: undefined
-      funcEase: 'easeInOutQuad' # Easing function name for the movement of items
-      theme: 'default' # CSS theme class which gets added to the rondell container
-      preset: '' # Configuration preset
-      effect: null # Special effect function for the focused item
+        preventDefaults: true   # Will call event.preventDefault() on touch events
+        threshold: 100          # Distance in pixels the "finger" has to swipe to create the touch event
+        _start: undefined        
+        _end: undefined         
+      funcEase: 'easeInOutQuad' # jQuery easing function name for the movement of items
+      theme: 'default'          # CSS theme class which gets added to the rondell container
+      preset: ''                # Configuration preset
+      effect: null              # Special effect function for the focused item, not used currently
   
-  # Add default easing function for rondell to jQuery if missing
+  ### Add default easing function for rondell to jQuery if missing ###
   unless $.easing.easeInOutQuad        
     $.easing.easeInOutQuad = (x, t, b, c, d) ->
       if ((t/=d/2) < 1) then c/2*t*t + b else -c/2 * ((--t)*(t-2) - 1) + b
    
-  # Rondell class   
+  # Rondell class holds all rondell items and functions   
   class Rondell
     @rondellCount: 0
     @activeRondell: null # Stores the last activated rondell for keyboard interaction
@@ -290,17 +290,17 @@
       
       switch e.type
         when 'touchstart'
-          @touch.start = 
+          @touch._start = 
             x: touch.pageX
             y: touch.pageY
         when 'touchmove'
           e.preventDefault() if @touch.preventDefaults
-          @touch.end =
+          @touch._end =
             x: touch.pageX
             y: touch.pageY
         when 'touchend'
-          if @touch.start and @touch.end
-            changeX = @touch.end.x - @touch.start.x
+          if @touch._start and @touch._end
+            changeX = @touch._end.x - @touch._start.x
             if Math.abs(changeX) > @touch.threshold
               if changeX > 0
                 @shiftLeft()
@@ -308,7 +308,7 @@
                 @shiftRight()
               
             # Reset end position
-            @touch.start = @touch.end = undefined
+            @touch._start = @touch._end = undefined
             
       true
       
@@ -417,7 +417,7 @@
               , fadeTime
             )
       else if item.hidden
-        # Update position even if out of view to fix animation when reappearing
+        ### Update position even if out of view to fix animation when reappearing ###
         item.object.css(
           left: newX
           top: newY
@@ -461,10 +461,10 @@
         
     _autoShift: =>
       autoRotation = @autoRotation
-      if @isActive() and autoRotation.enabled and autoRotation.timer < 0
+      if @isActive() and autoRotation.enabled and autoRotation._timer < 0
         # store timer id
-        autoRotation.timer = window.setTimeout( =>
-            @autoRotation.timer = -1
+        autoRotation._timer = window.setTimeout( =>
+            @autoRotation._timer = -1
             if @isActive() and not autoRotation.paused
               if autoRotation.direction then @shiftRight() else @shiftLeft()
           , autoRotation.delay
@@ -476,9 +476,9 @@
     keyDown: (e) =>
       if @isActive() and Rondell.activeRondell is @.id
         # Clear current rotation timer on user interaction
-        if @autoRotation.timer >= 0
-          window.clearTimeout(@autoRotation.timer) 
-          @autoRotation.timer = -1
+        if @autoRotation._timer >= 0
+          window.clearTimeout(@autoRotation._timer) 
+          @autoRotation._timer = -1
           
         switch e.which
           # arrow left
