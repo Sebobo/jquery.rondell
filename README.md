@@ -55,8 +55,8 @@ The sources are provided in the `src` and `scss` folders.
 
 So you can either work with the compiled `.js` and `.css` files in your project or use the coffeescript and sass files.
 
-I have provided a combined watcher script `watcher.py` which starts the two watcher daemons, when your editing the files.
-This requires the installation of python, coffeescript and sass. You can find very good installation instructions on the project homepages.
+I have provided a `Cakefile` which starts the two watcher daemons, when your editing .scss and .coffee files.
+This requires node.js and coffeescript installed on your computer.
 
 Feedback
 --------
