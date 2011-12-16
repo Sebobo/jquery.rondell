@@ -13,7 +13,7 @@
 
 {spawn, exec} = require 'child_process'
 
-task 'watchspawn', 'Watch sass and src folders for changes and recompile from src and scss folders to lib and css', ->
+task 'watch', 'Watch sass and src folders for changes and recompile from src and scss folders to lib and css', ->
   
   console.log "Watching src folder for changes in coffee scripts"
   
