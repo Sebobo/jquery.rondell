@@ -2,8 +2,8 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 0.8.3
-  @date 11/19/2011
+  @version 0.8.4
+  @date 12/21/2011
   @category jQuery plugin
   @copyright (c) 2009-2011 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -12,15 +12,14 @@
 (($) ->
   ### Global rondell plugin properties ###
   $.rondell =
-    version: '0.8.3'
+    version: '0.8.4'
     name: 'rondell'
     defaults:
       showContainer: true       # When the plugin has finished initializing $.show() will be called on the items container
       resizeableClass: 'resizeable'
       smallClass: 'itemSmall'
       hiddenClass: 'itemHidden'
-      itemCount: 0              # Number of rondell items in a rondell instance
-      currentLayer: 1           # Active layer number in a rondell instance
+      currentLayer: 0           # Active layer number in a rondell instance
       container: null           # Container object wrapping the rondell items
       radius:                   # Radius for the default circle function
         x: 300 
@@ -88,6 +87,7 @@
       @id = Rondell.rondellCount++
       @items = [] # Holds the items
       @maxItems = numItems
+      @loadedItems = 0
       @initCallback = initCallback
       
       # Update rondell properties with new options
@@ -110,7 +110,7 @@
     funcTop: (layerDiff, rondell) ->
       rondell.center.top - rondell.itemProperties.size.height / 2.0 + Math.cos(layerDiff) * rondell.radius.y
     funcDiff: (layerDiff, rondell) ->
-      Math.pow(Math.abs(layerDiff) / rondell.itemCount, 0.5) * Math.PI
+      Math.pow(Math.abs(layerDiff) / rondell.maxItems, 0.5) * Math.PI
     funcOpacity: (layerDist, rondell) ->
       if rondell.visibleItems > 1 then Math.max(0, 1.0 - Math.pow(layerDist / rondell.visibleItems, 2)) else 0
     funcSize: (layerDist, rondell) ->
@@ -178,13 +178,15 @@
               e.preventDefault()
       )
       
-      @_start() if @itemCount is @maxItems
+      @loadedItems += 1
       
-    _onloadItem: (obj, copy=undefined) =>
+      @_start() if @loadedItems is @maxItems
+      
+    _onloadItem: (itemIndex, obj, copy=undefined) =>
       icon = $('img:first', obj)
       
       isResizeable = icon.hasClass(@resizeableClass)
-      layerNum = @itemCount += 1
+      layerNum = itemIndex
     
       itemSize = @itemProperties.size
       focusedSize = @itemProperties.sizeFocused
@@ -237,23 +239,25 @@
           height: foHeight
       )
       
-    _loadItem: (obj) =>
+    _loadItem: (itemIndex, obj) =>
       icon = $('img:first', obj)
       if icon[0].complete and icon[0].width
         # Image is already loaded (i.e. from cache)
-        @_onloadItem(obj) 
+        @_onloadItem(itemIndex, obj) 
       else 
         # Create copy of the image and wait for the copy to load to get the real dimensions
         copy = $("<img style=\"display:none\"/>")
         $('body').append(copy)
         copy.one("load", =>
-          @_onloadItem(obj, copy)
+          @_onloadItem(itemIndex, obj, copy)
         ).attr("src", icon.attr("src"))
       
     _start: =>
-      # Set visibleItems if set to auto
-      @currentLayer = Math.round(@itemCount / 2)
-      @visibleItems = Math.max(2, Math.floor(@itemCount / 2)) if @visibleItems is 'auto'
+      # Set currentlayer to the middle item or leave it be if set before and index exists
+      @currentLayer = Math.max(0, Math.min(@currentLayer or Math.round(@maxItems / 2), @maxItems))
+      
+      # Set visibleItems to half the maxItems if set to auto
+      @visibleItems = Math.max(2, Math.floor(@maxItems / 2)) if @visibleItems is 'auto'
       
       # Create controls
       controls = @controls
@@ -262,14 +266,14 @@
         .css(
           left: controls.margin.x
           top: controls.margin.y
-          "z-index": @zIndex + @itemCount + 2
+          "z-index": @zIndex + @maxItems + 2
         )
           
         shiftRight = $('<a class="rondellControl rondellShiftRight" href="#/"/>').text(@strings.next).click(@shiftRight)
         .css(
           right: controls.margin.x
           top: controls.margin.y
-          "z-index": @zIndex + @itemCount + 2
+          "z-index": @zIndex + @maxItems + 2
         )
           
         @container.append(shiftLeft, shiftRight)
@@ -346,7 +350,7 @@
       
       # Move item to center position and fade in
       item.object.stop(true).show(0)
-      .css('z-index', @zIndex + @itemCount)
+      .css('z-index', @zIndex + @maxItems)
       .addClass('rondellItemFocused')
       .animate(
           width: itemFocusedWidth
@@ -374,10 +378,10 @@
       
       # Find new layer position
       if layerDist > @visibleItems and @repeating
-        if @currentLayer + @visibleItems > @itemCount
-          layerPos += @itemCount
-        else if @currentLayer - @visibleItems <= @itemCount
-          layerPos -= @itemCount
+        if @currentLayer + @visibleItems > @maxItems
+          layerPos += @maxItems
+        else if @currentLayer - @visibleItems <= @maxItems
+          layerPos -= @maxItems
         layerDist = Math.abs(layerPos - @currentLayer)
 
       # Get the absolute layer number difference
@@ -442,21 +446,19 @@
         )
 
     shiftTo: (layerNum) =>
-      itemCount = @itemCount
-      
       if @repeating 
-        # Update current layer
+        # Update current layer number if carousel reached it's limit
         if layerNum < 1 
-          layerNum = itemCount
-        else if layerNum > itemCount 
+          layerNum = @maxItems
+        else if layerNum > @maxItems 
           layerNum = 1
       
-      if layerNum > 0 and layerNum <= itemCount
-        @currentLayer = currentLayer = layerNum
+      if layerNum > 0 and layerNum <= @maxItems
+        @currentLayer = layerNum
         
         # Hide all layers except the current layer
-        @layerFadeOut(i) for i in [1..itemCount] when i isnt currentLayer
-        @layerFadeIn(currentLayer)
+        @layerFadeOut(i) for i in [1..@maxItems] when i isnt @currentLayer
+        @layerFadeIn(@currentLayer)
          
     shiftLeft: (e) => 
       e?.preventDefault()
@@ -492,6 +494,48 @@
           when 37 then @shiftLeft(e)
           # arrow right 
           when 39 then @shiftRight(e) 
+          
+  class DF1Filter
+    ###!
+      Direct Form 1 Filter
+      Sample values for average inertia:
+        t = 1/30 timestep
+        m = 1 mass
+        d = 0.5 damping
+        c = 1 spring constant
+        scaling = 40 scales the output
+    ###
+
+    constructor: (t, m , d, c, scaling) ->
+      @t = t
+      @m = m
+      @d = d
+      @c = c
+      @scaling = scaling
+    
+      @a0 = 1 + 2 * d / c / t + 4 * m / c / (t * t)
+      @a1 = (2 - 8 * m / c / (t * t)) / @a0
+      @a2 = (1 - 2 * d / t / c + 4 * m / c / (t * t)) / @a0
+    
+      @b0 = 1 / @a0
+      @b1 = 2 / @a0
+      @b2 = 1 / @a0
+    
+      @x1 = @x2 = @y1 = @y2 = 0
+  
+    reset = (val) =>
+      @x1 = @x2 = @y1 = @y2 = val
+  
+    getOutput = (x0) =>    
+      output = @b0 * x0 + @b1 * @x1 + @b2 * @x2 - @a1 * @y1 - @a2 * @y2
+      
+      @x2 = @x1 
+      @x1 = x0
+      
+      @y2 = @y1
+      @y1 = output
+  
+      output * @scaling
   
   $.fn.rondell = (options={}, callback=undefined) ->
     # Create new rondell instance
@@ -506,16 +550,15 @@
     rondell.container.addClass("rondellTheme_#{rondell.theme}")
           
     # Setup each item
-    @each ->
+    @each (idx) ->
       obj = $(@)
+      itemIndex = idx + 1
       
       if $('img:first', obj).length
-        rondell._loadItem(obj)
+        rondell._loadItem(itemIndex, obj)
       else
         # Init item without an icon
-        layerNum = rondell.itemCount += 1
-    
-        rondell._initItem(layerNum, 
+        rondell._initItem(itemIndex, 
           object: obj 
           icon: null
           small: false 
@@ -527,57 +570,5 @@
         
     # Return rondell instance
     rondell
-  
-  # Option presets  
-  $.rondell.presets =
-    carousel:
-      autoRotation:
-        enabled: true
-        direction: 1
-        once: false
-        delay: 5000
-      funcSize: (layerDiff, rondell) ->
-        (rondell.maxItems / Math.abs(layerDiff)) / rondell.maxItems
-      
-    products:
-      repeating: false
-      alwaysShowCaption: true
-      visibleItems: 4
-      itemProperties:
-        delay: 0
-      center:
-        left: 400 
-        top: 100
-      funcTop: (layerDiff, rondell) ->
-        0
-      funcDiff: (layerDiff, rondell) ->
-        Math.abs(layerDiff) + 1
-      funcLeft: (layerDiff, rondell) ->
-        rondell.center.left + (layerDiff - 0.5) * rondell.itemProperties.size.width
-      funcOpacity: (layerDist, rondell) ->
-        0.8
-       
-    pages:
-      radius: 
-        x: 0 
-        y: 0
-      scaling: 1
-      visibleItems: 1
-      controls:
-        enabled: false
-      funcTop: (layerDiff, rondell) ->
-          rondell.center.top - rondell.itemProperties.size.height / 2
-      funcLeft: (layerDiff, rondell) ->
-          rondell.center.left + layerDiff * rondell.itemProperties.size.width
-      funcDiff: (layerDiff, rondell) ->
-          Math.abs(layerDiff) + 0.5
-      
-    cubic:
-      funcTop: (layerDiff, rondell) ->
-          rondell.center.top - rondell.itemProperties.size.height / 2 + Math.pow(layerDiff / 2, 3) * rondell.radius.x
-      funcLeft: (layerDiff, rondell) ->
-          rondell.center.left - rondell.itemProperties.size.width / 2 + Math.sin(layerDiff) * rondell.radius.x
-      funcSize: (layerDiff, rondell) ->
-          Math.pow((Math.PI - Math.abs(layerDiff)) / Math.PI, 3)
     
 )(jQuery) 
