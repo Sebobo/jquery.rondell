@@ -222,11 +222,36 @@ img.inline {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.page {
+.page,
+.pageHeader {
   margin: 0 auto;
   width: 840px;
   background: #fafafa;
   padding: 40px;
+}
+
+.pageHeader {
+  background: #267be4;
+  color: #fafafa;
+}
+.pageHeader a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.cssgradients .pageHeader {
+  background-image: -webkit-linear-gradient(top, #337edc, #0a5abf);
+  background-image: -moz-linear-gradient(top, #337edc, #0a5abf);
+  background-image: -ms-linear-gradient(top, #337edc, #0a5abf);
+  background-image: -o-linear-gradient(top, #337edc, #0a5abf);
+  background-image: linear-gradient(top, #337edc, #0a5abf);
+}
+
+.borderradius .pageHeader {
+  border-radius: 8px 8px 0 0;
+  -o-border-radius: 8px 8px 0 0;
+  -moz-border-radius: 8px 8px 0 0;
+  -webkit-border-radius: 8px 8px 0 0;
 }
 
 .sampleElement {
