@@ -407,7 +407,7 @@
           opacity: 1
         , @fadeTime, @funcEase, =>
           @_autoShift()
-          @showCaption(layerNum) if @hovering or @alwaysShowCaption
+          @showCaption(layerNum) if @hovering or @alwaysShowCaption or @_onMobile()
       )
       
       if item.icon and not item.resizeable
