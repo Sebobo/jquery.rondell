@@ -62,6 +62,11 @@
       strings: # String for the controls 
         prev: 'prev'
         next: 'next'
+      mousewheel:
+        enabled: true
+        threshold: 5
+        minTimeBetweenShifts: 300
+        _lastShift: 0
       touch:
         enabled: true
         preventDefaults: true   # Will call event.preventDefault() on touch events
@@ -193,8 +198,8 @@
       scaling = @scaling
       
       # create size vars for the small and focused size
-      foWidth = smWidth = copy?.width() || copy?[0].width || icon[0].width || icon.width()
-      foHeight = smHeight = copy?.height() || copy?[0].height || icon[0].height || icon.height()
+      foWidth = smWidth = copy?.width() or copy?[0].width or icon[0].width or icon.width()
+      foHeight = smHeight = copy?.height() or copy?[0].height or icon[0].height or icon.height()
       
       # Delete copy, not needed anymore
       copy?.remove()
@@ -262,39 +267,75 @@
       # Create controls
       controls = @controls
       if controls.enabled
-        shiftLeft = $('<a class="rondellControl rondellShiftLeft" href="#"/>').text(@strings.prev).click(@shiftLeft)
+        @controls._shiftLeft = $('<a class="rondellControl rondellShiftLeft" href="#"/>').text(@strings.prev).click(@shiftLeft)
         .css(
           left: controls.margin.x
           top: controls.margin.y
           "z-index": @zIndex + @maxItems + 2
         )
           
-        shiftRight = $('<a class="rondellControl rondellShiftRight" href="#/"/>').text(@strings.next).click(@shiftRight)
+        @controls._shiftRight = $('<a class="rondellControl rondellShiftRight" href="#/"/>').text(@strings.next).click(@shiftRight)
         .css(
           right: controls.margin.x
           top: controls.margin.y
           "z-index": @zIndex + @maxItems + 2
         )
           
-        @container.append(shiftLeft, shiftRight)
-        
+        @container.append(@controls._shiftLeft, @controls._shiftRight)
         
       # Attach keydown event to document for each rondell instance
       $(document).keydown(@keyDown)
+        
+      # Enable rondell traveling with mousewheel if plugin is available
+      @container.bind('mousewheel', @_onMousewheel) if @mousewheel.enabled and $.fn.mousewheel?
       
-      # Add hover and touch functions to container
-      @container.removeClass('initializing').bind('mouseover mouseout', @_hover).bind('touchstart touchmove touchend', @_touch)
+      # Use modernizr feature detection to enable touch device support
+      if @_onMobile()
+        # Enable swiping
+        @container.bind('touchstart touchmove touchend', @_onTouch) if @touch.enabled
+      else
+        # Add hover and touch functions to container when we don't have touch support
+        @container.bind('mouseover mouseout', @_hover)
+        
+      @container.removeClass('initializing')
       
-      # Show items parent container
+      # Show items hidden parent container to prevent graphical glitch
       @container.parent().show() if @showContainer
           
-      # Fire callback with rondell instance if callback was provided
+      # Fire callback after initialization with rondell instance if callback was provided
       @initCallback?(@)
       
       # Move items to starting positions
       @shiftTo(@currentLayer)
       
-    _touch: (e) =>
+    _onMobile: ->
+      ###
+      Mobile device detection. 
+      Check for touch functionality is currently enough.
+      ###
+      return Modernizr?.touch
+      
+    _onMousewheel: (e, d, dx, dy) =>
+      ###
+      Allows rondell traveling with mousewheel.
+      Requires mousewheel plugin for jQuery. 
+      ###
+      return unless (@mousewheel.enabled and @isFocused())
+      
+      now = (new Date()).getTime()
+      return if now - @mousewheel._lastShift < @mousewheel.minTimeBetweenShifts
+      
+      viewport = $(window)
+      viewportTop = viewport.scrollTop()
+      viewportBottom = viewportTop + viewport.height()
+      
+      selfYCenter = @container.offset().top + @container.outerHeight() / 2
+      
+      if selfYCenter > viewportTop and selfYCenter < viewportBottom and Math.abs(dx) >= @mousewheel.threshold
+        if dx < 0 then @shiftLeft() else @shiftRight()
+        @mousewheel._lastShift = now
+      
+    _onTouch: (e) =>
       return unless @touch.enabled
       
       touch = e.originalEvent.touches[0] or e.originalEvent.changedTouches[0]
@@ -311,6 +352,7 @@
             y: touch.pageY
         when 'touchend'
           if @touch._start and @touch._end
+            # Check if delta x is greater than our threshold for swipe detection
             changeX = @touch._end.x - @touch._start.x
             if Math.abs(changeX) > @touch.threshold
               if changeX > 0
@@ -323,14 +365,19 @@
             
       true
       
-    _hover: (e) =>      
-      # Show or hide controls if they exist
-      $('.rondellControl', @container).stop().fadeTo(@controls.fadeTime, if e.type is 'mouseover' then 1 else 0)
+    _hover: (e) =>
+      ###
+      Shows/hides rondell controls.
+      Starts/pauses autorotation.
+      Updates active rondell id.
+      ###
       
       # Start or stop auto rotation if enabled
       paused = @autoRotation.paused
       if e.type is 'mouseover'
-        Rondell.activeRondell = @.id
+        # Set active rondell id if hovered
+        Rondell.activeRondell = @id
+        
         @hovering = true
         unless paused
           @autoRotation.paused = true
@@ -341,6 +388,9 @@
           @autoRotation.paused = false
           @_autoShift()
         @hideCaption(@currentLayer) unless @alwaysShowCaption
+            
+      # Show or hide controls if they exist
+      @_refreshControls() if @controls.enabled
       
     layerFadeIn: (layerNum) =>
       item = @_getItem(layerNum)
@@ -398,7 +448,7 @@
       fadeTime = @fadeTime + @itemProperties.delay * layerDist
       isNew = item.object.hasClass('rondellItemNew')
         
-      # Is item visible
+      # Smooth animation when item is visible
       if isNew or layerDist <= @visibleItems
         @hideCaption(layerNum)
         
@@ -428,7 +478,7 @@
               , fadeTime
             )
       else if item.hidden
-        ### Update position even if out of view to fix animation when reappearing ###
+        # Update position even if out of view to fix animation when reappearing
         item.object.css(
           left: newX
           top: newY
@@ -459,14 +509,22 @@
         # Hide all layers except the current layer
         @layerFadeOut(i) for i in [1..@maxItems] when i isnt @currentLayer
         @layerFadeIn(@currentLayer)
-         
+        
+      @_refreshControls()
+        
+    _refreshControls: =>
+      return unless @controls.enabled
+      
+      @controls._shiftLeft.stop().fadeTo(@controls.fadeTime, if @currentLayer > 1 or @repeating and @hovering then 1 else 0)
+      @controls._shiftRight.stop().fadeTo(@controls.fadeTime, if @currentLayer < @maxItems or @repeating and @hovering then 1 else 0)
+      
     shiftLeft: (e) => 
       e?.preventDefault()
       @shiftTo(@currentLayer - 1) 
         
     shiftRight: (e) => 
       e?.preventDefault()
-      @shiftTo(@currentLayer + 1) 
+      @shiftTo(@currentLayer + 1)
         
     _autoShift: =>
       autoRotation = @autoRotation
@@ -481,9 +539,12 @@
         
     isActive: ->
       true
+      
+    isFocused: =>
+      Rondell.activeRondell is @id
     
     keyDown: (e) =>
-      if @isActive() and Rondell.activeRondell is @.id
+      if @isActive() and @isFocused()
         # Clear current rotation timer on user interaction
         if @autoRotation._timer >= 0
           window.clearTimeout(@autoRotation._timer) 
