@@ -121,12 +121,29 @@ img.inline { margin: 10px; }
     background-color: #fff4d9;
     border-color: #ffd777;
   }
+  
+  &.big {  
+    font-size: 1.4em;  
+  }
+  &.green { 
+    background-color: #2ea41e; 
+    border-color: #239714; 
+    color: #fafafa;
+    text-shadow: 0 1px 1px #196d0e;
+  }
 }
 .borderradius .sampleElement { @include rounded(6px); }
 .cssgradients .sampleElement { 
   @include linear-gradient(#fff24d, #f9aa18); 
   
   &:hover { @include linear-gradient(#fff24d, #fdc661); }
+  
+  &.green { 
+    @include linear-gradient(#35b125, #29a219); 
+    &:hover {
+      @include linear-gradient(#40bb30, #31aa21);
+    }
+  }
 }
 .boxshadow.rgba .sampleElement { 
   @include boxshadow(0 1px 4px rgba(255, 162, 0, 0.3)); 
