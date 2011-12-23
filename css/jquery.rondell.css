@@ -3,6 +3,9 @@
   display: block;
   position: relative;
 }
+.rondellContainer.initializing {
+  background: url("../images/loader.gif") no-repeat 50% 50%;
+}
 .rondellContainer.initializing * {
   display: none;
 }

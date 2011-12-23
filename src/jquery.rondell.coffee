@@ -298,9 +298,6 @@
         @container.bind('mouseover mouseout', @_hover)
         
       @container.removeClass('initializing')
-      
-      # Show items hidden parent container to prevent graphical glitch
-      @container.parent().show() if @showContainer
           
       # Fire callback after initialization with rondell instance if callback was provided
       @initCallback?(@)
@@ -561,13 +558,11 @@
     rondell = new Rondell(options, @length, callback)
     
     # Wrap elements in new container
-    @wrapAll($('<div class="rondellContainer initializing"></div>'))
-    
-    # Set container size  
-    rondell.container = @parent().css(rondell.size)
-    
-    rondell.container.addClass("rondellTheme_#{rondell.theme}")
-          
+    rondell.container = @wrapAll($("<div class=\"rondellContainer initializing rondellTheme_#{rondell.theme}\"/>").css(rondell.size)).parent()
+      
+    # Show items hidden parent container to prevent graphical glitch
+    rondell.container.parent().show() if rondell.showContainer
+     
     # Setup each item
     @each (idx) ->
       obj = $(@)

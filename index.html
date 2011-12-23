@@ -73,13 +73,40 @@
             <h3>New and improved in this version</h3>
             <br/>
             <ul>
-                <li><b>A size function</b> to simulate a depth effect (see the <a href="#options" title="List of options">options</a>).</li>
-                <li><b>Presets</b> for the plugins options which contain the necessary settings to setup the plugin like the examples on this page.</li>
-                <li><b>Themes</b> are now included in the plugins css file to help you make your rondell look like one of my examples.</li>
-                <li><b>A callback</b> when the plugin has finished loading. See <a href="#usage" title="Usage example">usage</a>.</li>
-                <li><b>Touch controls for mobile devices</b> - Swipe left and right to move the rondell (0.8.2).</li>
-                <li><b>Reliable image loading</b> - The previous versions had sometimes problems getting the correct image sizes for some browsers and configurations (0.8.2).</li>
-                <li>And some minor fixes and code improvements (0.8.2).</li>
+                <li>
+                    <b>Mousewheel (x-axis) support</b> allows you to traverse left and right in the rondell. 
+                    (Requires the optional <a href="https://github.com/brandonaaron/jquery-mousewheel" title="jQuery mousewheel">jQuery mousewheel plugin</a>)
+                </li>
+                <li>
+                    Controls hide if autorotation is disabled and shifting is impossible. (See the <a href="#productsdemo" class="scrollToId" title="Products demo">products demo</a>)
+                </li>
+                <li>
+                    Items are now displayed in the order you provide them.
+                </li>
+                <li>
+                    Starting item index is now customizeable by providing the <i>currentLayer</i> option. (See the <a href="#options" class="scrollToId" title="List of options">options</a>)
+                </li>
+            </ul>
+            <br/>
+            <a href="#changelog" class="collapsor" title="Collapse code">+ Click here to see changes in the last versions</a>
+            <ul id="changelog" class="collapsible">
+                <li>
+                    <h6>0.8.3</h6>
+                    <ul>
+                        <li><b>A size function</b> to simulate a depth effect. (See the <a href="#options" class="scrollToId" title="List of options">options</a>)</li>
+                        <li><b>Presets</b> for the plugins options which contain the necessary settings to setup the plugin like the examples on this page.</li>
+                        <li><b>Themes</b> are now included in the plugins css file to help you make your rondell look like one of my examples.</li>
+                        <li><b>A callback</b> when the plugin has finished loading. (See <a href="#usage" class="scrollToId" title="Usage example">usage</a>)</li>
+                    </ul>
+                </li>
+                <li>
+                    <h6>0.8.2</h6>
+                    <ul>
+                        <li><b>Touch controls for mobile devices</b> - Swipe left and right to move the rondell.</li>
+                        <li><b>Reliable image loading</b> - The previous versions had sometimes problems getting the correct image sizes for some browsers and configurations.</li>
+                        <li>And some minor fixes and code improvements.</li>
+                    </ul>
+                </li>
             </ul>
             
             <br/>
@@ -296,7 +323,14 @@
             },
             isActive: function() {
                 return !$('#fancybox-wrap').is(':visible');
-            }
+            },
+            controls: {
+                margin: {
+                    x: 20,
+                    y: 190
+                }
+            },
+            currentLayer: 1
         }); 
                 
         $('#rondellGallery a').fancybox({
@@ -693,6 +727,14 @@ $('#rondellProducts > div').rondell({
                     <td>Animation time</td>
                 </tr>
                 <tr>
+                    <td>currentLayer</td>
+                    <td>0</td>
+                    <td>
+                        Index of the item which should be focused at the start.<br/>
+                        If left at 0 it will automatically be set to half the item count.
+                    </td>
+                </tr>
+                <tr>
                     <td>resizeableClass</td>
                     <td>'resizeable'</td>
                     <td><i>img</i> tags with this class are resized when animated</td>
@@ -935,7 +977,8 @@ $('#rondellProducts > div').rondell({
                             x: 20,
                             y: 190
                         }
-                    }
+                    },
+                    currentLayer: 1
                 }); 
                 
                 $('#rondellGallery a').fancybox({
