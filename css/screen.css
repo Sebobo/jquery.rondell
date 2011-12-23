@@ -110,12 +110,12 @@ hr {
 }
 
 p {
-  margin: 0.6em 0;
+  margin: 0.3em 0;
   line-height: 1.2em;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  margin: 0.6em 0;
+  margin: 0.3em 0 0.6em;
   font-weight: bold;
 }
 
@@ -153,9 +153,10 @@ code, pre {
 
 ul {
   padding-left: 20px;
+  margin: 0.3em 0;
 }
 ul li {
-  margin: 0.6em 0;
+  margin: 0.3em 0;
   list-style-type: disc;
 }
 

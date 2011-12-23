@@ -53,8 +53,8 @@
 
 .rondellCaption {
   position: absolute;
-  margin: 10px;
-  padding: 10px;
+  margin: 5px;
+  padding: 5px;
   color: #333;
   overflow-x: hidden;
   overflow-y: auto;
@@ -72,15 +72,24 @@
 .rondellCaption.overlay {
   top: auto;
   position: absolute;
-  padding: 8px;
+  padding: 3px 8px;
   display: none;
   color: #f5f5f5;
   background-color: #333;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.borderradius .rondellCaption.overlay {
   border-radius: 5px;
   -o-border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
+}
+
+.boxshadow .rondellCaption.overlay {
+  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) inset;
+  -moz-box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) inset;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) inset;
 }
 
 .rondellControl {

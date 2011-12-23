@@ -55,8 +55,8 @@
 // caption element over selected item
 .rondellCaption {
   position: absolute; 
-  margin: 10px; 
-  padding: 10px; 
+  margin: 5px; 
+  padding: 5px; 
   color: #333; 
   overflow-x: hidden;
   overflow-y: auto;
@@ -73,13 +73,18 @@
   &.overlay {
     top: auto;
     position: absolute;
-    padding: 8px; 
+    padding: 3px 8px; 
     display: none;
     color: #f5f5f5;
     background-color: #333; 
-    background-color: rgba(0, 0, 0, 0.5); 
-    @include rounded(5px);
+    background-color: rgba(0, 0, 0, 0.5);
   }
+}
+.borderradius .rondellCaption.overlay {
+  @include rounded(5px);
+}
+.boxshadow .rondellCaption.overlay {
+  @include boxshadow(0 0 8px rgba(0, 0, 0, 0.3) inset);
 }
 
 // controls design

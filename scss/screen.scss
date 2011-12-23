@@ -25,11 +25,11 @@ a {
   
   &:hover { text-decoration: underline; } 
 }
-img { border:0; }
-hr { width: 50%; height:1px; background:#eee; border:0; margin:40px 25%; }
-p { margin:0.6em 0; line-height: 1.2em; }
+img { border: 0; }
+hr { width: 50%; height: 1px; background: #eee; border: 0; margin: 40px 25%; }
+p { margin: 0.3em 0 ; line-height: 1.2em; }
 
-h1, h2, h3, h4, h5, h6 { margin:0.6em 0; font-weight: bold; }
+h1, h2, h3, h4, h5, h6 { margin: 0.3em 0 0.6em; font-weight: bold; }
 h1 { font-size: 2em; }
 h2 { font-size: 1.8em; }
 h3 { font-size: 1.6em; }
@@ -43,8 +43,9 @@ code, pre { color: #555; border: 1px solid #f0f0f0; background-color: #fafafa; p
 
 ul { 
   padding-left:20px;
+  margin: 0.3em 0 ;
   
-  li { margin: 0.6em 0; list-style-type: disc; } 
+  li { margin: 0.3em 0 ; list-style-type: disc; } 
 }
 
 img.inline { margin: 10px; }
