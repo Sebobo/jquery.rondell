@@ -555,48 +555,6 @@
           when 37 then @shiftLeft(e)
           # arrow right 
           when 39 then @shiftRight(e) 
-          
-  class DF1Filter
-    ###!
-      Direct Form 1 Filter
-      Sample values for average inertia:
-        t = 1/30 timestep
-        m = 1 mass
-        d = 0.5 damping
-        c = 1 spring constant
-        scaling = 40 scales the output
-    ###
-
-    constructor: (t, m , d, c, scaling) ->
-      @t = t
-      @m = m
-      @d = d
-      @c = c
-      @scaling = scaling
-    
-      @a0 = 1 + 2 * d / c / t + 4 * m / c / (t * t)
-      @a1 = (2 - 8 * m / c / (t * t)) / @a0
-      @a2 = (1 - 2 * d / t / c + 4 * m / c / (t * t)) / @a0
-    
-      @b0 = 1 / @a0
-      @b1 = 2 / @a0
-      @b2 = 1 / @a0
-    
-      @x1 = @x2 = @y1 = @y2 = 0
-  
-    reset = (val) =>
-      @x1 = @x2 = @y1 = @y2 = val
-  
-    getOutput = (x0) =>    
-      output = @b0 * x0 + @b1 * @x1 + @b2 * @x2 - @a1 * @y1 - @a2 * @y2
-      
-      @x2 = @x1 
-      @x1 = x0
-      
-      @y2 = @y1
-      @y1 = output
-  
-      output * @scaling
   
   $.fn.rondell = (options={}, callback=undefined) ->
     # Create new rondell instance
