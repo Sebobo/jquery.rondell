@@ -7,10 +7,6 @@
         <meta name="description" content="Sebastian Helzle's jQuery plugin repository" />
         <link rel="stylesheet" href="css/screen.css" type="text/css" media="all" title="Screen" />  
         <link rel="stylesheet" href="css/jquery.rondell.css" type="text/css" media="all" title="Screen" />  
-        <script type="text/javascript" src="lib/jquery-1.6.4.min.js"></script>
-        <script type="text/javascript" src="lib/jquery.fancybox-1.3.4.pack.js"></script>   
-        <script type="text/javascript" src="lib/modernizr-2.0.6.min.js"></script> 
-        <script type="text/javascript" language="javascript" src="lib/jquery.rondell.js"></script>
     </head>
     <body>
         <div class="pageHeader hasShadow">
@@ -914,7 +910,12 @@ $('#rondellProducts > div').rondell({
                 <a href="http://sass-lang.com/" target="_blank" title="Sass">sass</a>
                 and <a href="http://www.jquery.com" target="_blank" title="jQuery">jQuery</a>.
             </p>
-    	</div>
+    	</div>  
+        <script type="text/javascript" src="lib/modernizr-2.0.6.min.js"></script> 
+        <script type="text/javascript" src="lib/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="lib/jquery.fancybox-1.3.4.pack.js"></script> 
+        <script type="text/javascript" src="lib/jquery.mousewheel-3.0.6.min.js"></script> 
+        <script type="text/javascript" language="javascript" src="lib/jquery.rondell.js"></script>
         <script type="text/javascript">
             $(function() {
                 //$('#rondellSimple, #rondellGallery, #rondellwookmarkDemo, #rondellMixed').hide();
@@ -1081,14 +1082,16 @@ $('#rondellProducts > div').rondell({
                 });
             });
         </script>
-        <!-- Piwik --> 
         <script type="text/javascript">
             var hostname = document.location.hostname;
             if (hostname && hostname.indexOf('localhost') < 0) {
                 var pkBaseURL = (("https:" == document.location.protocol) ? "https://tracking.sebastianhelzle.net/" : "http://tracking.sebastianhelzle.net/");
                 document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+                
+                document.write(unescape("%3Cscript src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=sebobo' type='text/javascript'%3E%3C/script%3E"));
             }
         </script>
+        <!-- Piwik --> 
         <script type="text/javascript">
             try {
                 var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 5);
@@ -1098,6 +1101,5 @@ $('#rondellProducts > div').rondell({
         </script>
         <noscript><p><img src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt="" /></p></noscript>
         <!-- End Piwik Tracking Code -->
-        <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=sebobo"></script>
     </body>
 </html>
