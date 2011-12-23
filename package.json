@@ -13,7 +13,9 @@
         }
     ],
     "dependencies": {
-        "jquery": ">=1.5.2"
+        "jquery": ">=1.5.2",
+        "modernizr": ">=2.0.0",
+        "mousewheel": "*"
     },
     "description": "This is a plugin for displaying galeries and other content as carousel or a any form you want.",
     "keywords": [
