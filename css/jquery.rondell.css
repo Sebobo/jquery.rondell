@@ -200,14 +200,14 @@
   font-size: 0;
   color: transparent;
   padding: 0;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
+}
+.rondellTheme_dark .rondellControl.rondellShiftLeft, .rondellTheme_dark .rondellControl.rondellShiftRight {
+  background: url("../images/buttons.png") no-repeat 0 0;
 }
 .rondellTheme_dark .rondellControl.rondellShiftLeft {
-  background: url("../images/arrow_left_small.png") no-repeat;
-}
-.rondellTheme_dark .rondellControl.rondellShiftRight {
-  background: url("../images/arrow_right_small.png") no-repeat;
+  background-position: 0 -28px;
 }
 
 .borderradius .rondellTheme_dark {

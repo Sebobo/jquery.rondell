@@ -154,14 +154,15 @@
     font-size: 0;  
     color: transparent;
     padding: 0;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     
-    &.rondellShiftLeft {
-      background: url('../images/arrow_left_small.png') no-repeat;
-    }
+    &.rondellShiftLeft,
     &.rondellShiftRight {
-      background: url('../images/arrow_right_small.png') no-repeat;
+      background: url('../images/buttons.png') no-repeat 0 0;
+    }
+    &.rondellShiftLeft {
+      background-position: 0 -28px;
     }
   }
 }

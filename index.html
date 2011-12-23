@@ -70,7 +70,6 @@
                 <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
                 <a class="addthis_counter addthis_pill_style"></a>
             </div>
-            <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=sebobo"></script>
             <!-- AddThis Button END -->
             
             <br/>
@@ -112,12 +111,12 @@
             
             <h3>Examples</h3>
             <p>
-                <a href="#gallerydemosimple">Simple gallery</a> | 
-                <a href="#gallerydemo">Advanced gallery</a> | 
-                <a href="#productsdemo">Products overview</a> |
-                <a href="#stuffdemo">Text &amp; images</a> |
-                <a href="#wookmark">Fancy galery with images from external service</a> |
-                <a href="#options">Options</a> |
+                <a class="scrollToId" href="#gallerydemosimple">Simple gallery</a> | 
+                <a class="scrollToId" href="#gallerydemo">Advanced gallery</a> | 
+                <a class="scrollToId" href="#productsdemo">Products overview</a> |
+                <a class="scrollToId" href="#stuffdemo">Text &amp; images</a> |
+                <a class="scrollToId" href="#wookmark">Fancy galery with images from external service</a> |
+                <a class="scrollToId" href="#options">Options</a> |
             </p>
             
             <hr id="gallerydemosimple"/>
@@ -929,6 +928,12 @@ $('#rondellProducts > div').rondell({
                     },
                     isActive: function() {
                         return !$('#fancybox-wrap').is(':visible');
+                    },
+                    controls: {
+                        margin: {
+                            x: 20,
+                            y: 190
+                        }
                     }
                 }); 
                 
@@ -958,8 +963,8 @@ $('#rondellProducts > div').rondell({
                     },
                     controls: {
                         margin: {
-                            x: 180,
-                            y: 155
+                            x: 200,
+                            y: 153
                         }
                     },
                     center: {
@@ -1064,8 +1069,15 @@ $('#rondellProducts > div').rondell({
                 });
                 
                 $('.collapsor').click(function(e) {
-                    $($(this).attr('href')).slideToggle(300);
                     e.preventDefault();
+                    $($(this).attr('href')).slideToggle(300);
+                });
+                
+                $('.scrollToId').click(function(e) {
+                    e.preventDefault();
+                    $('html, body').animate({
+                        scrollTop: $($(this).attr('href')).offset().top
+                    }, 800, 'swing');   
                 });
             });
         </script>
@@ -1086,5 +1098,6 @@ $('#rondellProducts > div').rondell({
         </script>
         <noscript><p><img src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt="" /></p></noscript>
         <!-- End Piwik Tracking Code -->
+        <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=sebobo"></script>
     </body>
 </html>
