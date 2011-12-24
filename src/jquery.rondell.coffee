@@ -208,19 +208,22 @@
       return unless smWidth and smHeight
     
       if isResizeable
-        if smWidth >= smHeight
-          # compute smaller side length
-          smHeight *= itemSize.width / smWidth
-          foHeight *= focusedSize.width / foWidth
-          # compute full size length
-          smWidth = itemSize.width
-          foWidth = focusedSize.width
-        else
-          # compute smaller side length
+        # fit to small width
+        smHeight *= itemSize.width / smWidth
+        smWidth = itemSize.width
+          
+        # fit to small height
+        if smHeight > itemSize.height
           smWidth *= itemSize.height / smHeight
-          foWidth *= focusedSize.height / foHeight
-          # compute full size length
           smHeight = itemSize.height
+        
+        # fit to focused width
+        foHeight *= focusedSize.width / foWidth
+        foWidth = focusedSize.width
+        
+        # fit to focused height
+        if foHeight > focusedSize.height
+          foWidth *= focusedSize.height / foHeight
           foHeight = focusedSize.height
       else
         # scale to given sizes
@@ -246,7 +249,7 @@
       
     _loadItem: (itemIndex, obj) =>
       icon = $('img:first', obj)
-      if icon[0].complete and icon[0].width
+      if icon.width() > 0 or (icon[0].complete and icon[0].width > 0)
         # Image is already loaded (i.e. from cache)
         @_onloadItem(itemIndex, obj) 
       else 
