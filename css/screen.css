@@ -269,6 +269,15 @@ img.inline {
   background-color: #fff4d9;
   border-color: #ffd777;
 }
+.sampleElement.big {
+  font-size: 1.4em;
+}
+.sampleElement.green {
+  background-color: #2ea41e;
+  border-color: #239714;
+  color: #fafafa;
+  text-shadow: 0 1px 1px #196d0e;
+}
 
 .borderradius .sampleElement {
   border-radius: 6px;
@@ -290,6 +299,20 @@ img.inline {
   background-image: -ms-linear-gradient(top, #fff24d, #fdc661);
   background-image: -o-linear-gradient(top, #fff24d, #fdc661);
   background-image: linear-gradient(top, #fff24d, #fdc661);
+}
+.cssgradients .sampleElement.green {
+  background-image: -webkit-linear-gradient(top, #35b125, #29a219);
+  background-image: -moz-linear-gradient(top, #35b125, #29a219);
+  background-image: -ms-linear-gradient(top, #35b125, #29a219);
+  background-image: -o-linear-gradient(top, #35b125, #29a219);
+  background-image: linear-gradient(top, #35b125, #29a219);
+}
+.cssgradients .sampleElement.green:hover {
+  background-image: -webkit-linear-gradient(top, #40bb30, #31aa21);
+  background-image: -moz-linear-gradient(top, #40bb30, #31aa21);
+  background-image: -ms-linear-gradient(top, #40bb30, #31aa21);
+  background-image: -o-linear-gradient(top, #40bb30, #31aa21);
+  background-image: linear-gradient(top, #40bb30, #31aa21);
 }
 
 .boxshadow.rgba .sampleElement {
