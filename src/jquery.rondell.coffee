@@ -178,9 +178,8 @@
           when 'mouseout'
             item.object.removeClass('rondellItemHovered')
           when 'click'
-            if item.object.is(':visible') and not (@currentLayer is layerNum or item.hidden)
-              @shiftTo(layerNum)
-              e.preventDefault()
+            e.preventDefault() unless @currentLayer is layerNum
+            @shiftTo(layerNum) if item.object.is(':visible') and not item.hidden
       )
       
       @loadedItems += 1
@@ -427,11 +426,8 @@
       layerPos = layerNum
       
       # Find new layer position
-      if layerDist > @visibleItems and @repeating
-        if @currentLayer + @visibleItems > @maxItems
-          layerPos += @maxItems
-        else if @currentLayer - @visibleItems <= @maxItems
-          layerPos -= @maxItems
+      if layerDist > @visibleItems and layerDist > @maxItems / 2 and @repeating
+        if layerNum > @currentLayer then layerPos -= @maxItems else layerPos += @maxItems
         layerDist = Math.abs(layerPos - @currentLayer)
 
       # Get the absolute layer number difference
