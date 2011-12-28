@@ -61,4 +61,31 @@
       funcSize: (layerDiff, rondell) ->
           Math.pow((Math.PI - Math.abs(layerDiff)) / Math.PI, 3)
           
+    gallery:
+      visibleItems: 4
+      controls:
+        enabled: false
+      center:
+        top: 145
+        left: 250
+      size:
+        height: 400
+        width: 500
+      itemProperties:
+        delay: 10
+        sizeFocused: 
+          width: 480
+          height: 280
+        size:
+          width: 100
+          height: 100 
+      funcTop: (layerDiff, rondell) ->
+        rondell.size.height - rondell.itemProperties.size.height - 5
+      funcDiff: (layerDiff, rondell) ->
+        Math.abs(layerDiff) - 0.5
+      funcLeft: (layerDiff, rondell) ->
+        rondell.center.left + (layerDiff - 0.5) * rondell.itemProperties.size.width
+      funcOpacity: (layerDist, rondell) ->
+        0.8
+          
 )(jQuery) 
