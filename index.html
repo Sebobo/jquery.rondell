@@ -4,7 +4,7 @@
         <title>jQuery Rondell</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="keywords" content="jquery,tooltip,popup,plugin,css3,open-source,mit-license,extension,overlay" />
-        <meta name="description" content="Sebastian Helzle's jQuery plugin repository" />
+        <meta name="description" content="Sebastian Helzle's jQuery Rondell plugin" />
         <link rel="stylesheet" href="css/screen.css" type="text/css" media="all" title="Screen" />  
         <link rel="stylesheet" href="css/jquery.rondell.css" type="text/css" media="all" title="Screen" />  
     </head>
@@ -140,13 +140,13 @@
                 <a class="scrollToId" href="#gallerydemo">Advanced gallery</a> | 
                 <a class="scrollToId" href="#productsdemo">Products overview</a> |
                 <a class="scrollToId" href="#stuffdemo">Text &amp; images</a> |
-                <a class="scrollToId" href="#wookmark">Fancy galery with images from external service</a> |
+                <a class="scrollToId" href="#wookmark">Fancy gallery with images from external service</a> |
                 <a class="scrollToId" href="#options">Options</a> |
             </p>
             
             <hr id="gallerydemosimple"/>
             
-            <h3>Simple gallery</h3>
+            <h3>Simple carousel</h3>
             
             <p>
                 This demo show how to display a gallery. Click an image to focus it.<br/>
@@ -233,7 +233,7 @@
             
             <hr id="gallerydemo"/>
             
-            <h3>Advanced gallery</h3>
+            <h3>Advanced carousel</h3>
             
             <p>
                 This demo show how to display an advanced gallery. Click an image to focus it and open it in a lightbox.<br/>
@@ -320,19 +320,9 @@
     $(function() {
         $('#rondellGallery > div').rondell({
             preset: 'carousel',
-            radius: {
-                x: 220
-            },
             isActive: function() {
                 return !$('#fancybox-wrap').is(':visible');
-            },
-            controls: {
-                margin: {
-                    x: 20,
-                    y: 190
-                }
-            },
-            currentLayer: 1
+            }
         }); 
                 
         $('#rondellGallery a').fancybox({
@@ -355,6 +345,8 @@
             <p>
                 Example how this plugin can be used for displaying products on a company page or webshop.
             </p>
+            
+            <br/>
             
             <div id="rondellProducts">
                 <div>
@@ -419,29 +411,7 @@
             <pre id="demo3code" class="collapsible">
 $('#rondellProducts > div').rondell({
     preset: 'products',
-    theme: 'dark',
-    visibleItems: 4,
-    itemProperties: {
-        delay: 0,
-        size: {
-            width: 100,
-            height: 200
-        },
-        sizeFocused: {
-            width: 300,
-            height: 200
-        }
-    },
-    controls: {
-        margin: {
-            x: 180,
-            y: 155
-        }
-    },
-    center: {
-        left: 400, 
-        top: 100
-    }
+    theme: 'dark'
 });</pre>
             
             <br/>
@@ -563,19 +533,6 @@ $('#rondellProducts > div').rondell({
         var rondellMixed = $('#rondellMixed > div').rondell({
             preset: 'pages',
             theme: 'page'
-            center: {
-                left: 200, 
-                top: 200
-            },
-            itemProperties: {
-                size: { 
-                    width:400, 
-                    height:400
-                }
-            },
-            controls: {
-                enabled: false
-            }
         });
         
         // Init custom controls
@@ -594,7 +551,7 @@ $('#rondellProducts > div').rondell({
             
             <hr id="wookmark"/>
             
-            <h3>Fetch images from another page and use a fancy cubic function for animation</h3>
+            <h3>Fetch images from another page via an api.</h3>
             
             <p>
                 This demo fetches links &amp; images from my brothers great webservice 
@@ -602,11 +559,18 @@ $('#rondellProducts > div').rondell({
                 and creates a rondell from the data.
             </p>
             <p>
-                The link titles are used as caption.<br/>
-                Clicking the focused element will open the wookmark in a new tab or window.
+                Demo 1 shows a carousel with a cubic function.<br/>
+                Demo 2 uses the dark theme and a gallery layout.<br/>
+                The link and img titles are used as caption and clicking the focused element will open the wookmark in a new tab or window.
             </p>
             
-            <div id="wookmarkDemo"></div>
+            <div id="wookmarkDemo1" class="centered" style="width: 800px;"></div>
+            
+            <br/>
+            
+            <div id="wookmarkDemo2" class="centered" style="width: 500px;"></div>
+            
+            <br/>
             
             <p>
                 <a href="#demo5code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
@@ -620,13 +584,14 @@ $('#rondellProducts > div').rondell({
             success: function(json, text, xhqr) {
                 if (text == 'success') {
                     var items = json,
-                        wookmarkDemo = $('#wookmarkDemo');
+                        wookmarkDemo1 = $('#wookmarkDemo1'),
+                        wookmarkDemo2 = $('#wookmarkDemo2');
                     
                     wookmarkDemo.empty();
                     
                     // Parsing returned json data
                     $.each(items, function(idx, item) {
-                        if (idx > 20) return false;
+                        if (idx >= 20) return false;
                         
                         // Create link container
                         var newItem = $('&lt;a/&gt;')
@@ -649,33 +614,19 @@ $('#rondellProducts > div').rondell({
                         
                         // Append image to link and link to container for the rondell
                         newItem.append(newImg);
-                        wookmarkDemo.append(newItem);
+                        wookmarkDemo1.append(newItem);
+                        wookmarkDemo2.append(newItem.clone());
                     });
                         
-                    // Create wookmark rondell 
-                    $('a', wookmarkDemo).rondell({
-                        preset: 'cubic',
-                        center: { 
-                            left: 400, 
-                            top: 200
-                        },
-                        visibleItems: 5,
-                        itemProperties: {
-                            size: {
-                                width: 350,
-                                height: 350  
-                            },
-                            sizeFocused: { 
-                                width: 350, 
-                                height: 350
-                            }
-                        },
-                        controls: {
-                            margin: {
-                                x: 10,
-                                y: 190
-                            }
-                        }                               
+                    // Create wookmark carousel 
+                    $('a', wookmarkDemo1).rondell({
+                        preset: 'cubic'                               
+                    });
+                    
+                    // Create wookmark gallery 
+                    $('a', wookmarkDemo2).rondell({
+                        preset: 'gallery',
+                        theme: 'dark'                               
                     });
                 }
             }
@@ -968,19 +919,9 @@ $('#rondellProducts > div').rondell({
                 
                 $('#rondellGallery > div').rondell({
                     preset: 'carousel',
-                    radius: {
-                        x: 220
-                    },
                     isActive: function() {
                         return !$('#fancybox-wrap').is(':visible');
-                    },
-                    controls: {
-                        margin: {
-                            x: 20,
-                            y: 190
-                        }
-                    },
-                    currentLayer: 1
+                    }
                 }); 
                 
                 $('#rondellGallery a').fancybox({
@@ -994,47 +935,12 @@ $('#rondellProducts > div').rondell({
                 
                 $('#rondellProducts > div').rondell({
                     preset: 'products',
-                    theme: 'dark',
-                    visibleItems: 4,
-                    itemProperties: {
-                        delay: 0,
-                        size: {
-                            width: 100,
-                            height: 200
-                        },
-                        sizeFocused: {
-                            width: 300,
-                            height: 200
-                        }
-                    },
-                    controls: {
-                        margin: {
-                            x: 200,
-                            y: 153
-                        }
-                    },
-                    center: {
-                        left: 400, 
-                        top: 100
-                    }
+                    theme: 'dark'
                 });
                 
                 var rondellMixed = $('#rondellMixed > div').rondell({
                     preset: 'pages',
-                    theme: 'page',
-                    center: {
-                        left: 200, 
-                        top: 200
-                    },
-                    itemProperties: {
-                        size: { 
-                            width:400, 
-                            height:400
-                        }
-                    },
-                    controls: {
-                        enabled: false
-                    }
+                    theme: 'page'
                 });
         
                 // Init custom controls
@@ -1053,13 +959,15 @@ $('#rondellProducts > div').rondell({
                     success: function(json, text, xhqr) {
                         if (text == 'success') {
                             var items = json,
-                                wookmarkDemo = $('#wookmarkDemo');
+                                wookmarkDemo1 = $('#wookmarkDemo1'),
+                                wookmarkDemo2 = $('#wookmarkDemo2');
                             
-                            wookmarkDemo.empty();
+                            wookmarkDemo1.empty();
+                            wookmarkDemo2.empty();
                             
                             // Parsing returned json data
                             $.each(items, function(idx, item) {
-                                if (idx > 20) return false;
+                                if (idx >= 20) return false;
                                 
                                 // Create link container
                                 var newItem = $('<a/>')
@@ -1082,33 +990,19 @@ $('#rondellProducts > div').rondell({
                                 
                                 // Append image to link and link to container for the rondell
                                 newItem.append(newImg);
-                                wookmarkDemo.append(newItem);
+                                wookmarkDemo1.append(newItem);
+                                wookmarkDemo2.append(newItem.clone());
+                            });
+                            
+                            // Create wookmark carousel
+                            $('a', wookmarkDemo1).rondell({
+                                preset: 'cubic'            
                             });
                                 
-                            // Create wookmark rondell 
-                            $('a', wookmarkDemo).rondell({
-                                preset: 'cubic',
-                                center: { 
-                                    left: 400, 
-                                    top: 200
-                                },
-                                visibleItems: 5,
-                                itemProperties: {
-                                    size: {
-                                        width: 350,
-                                        height: 350  
-                                    },
-                                    sizeFocused: { 
-                                        width: 350, 
-                                        height: 350
-                                    }
-                                },
-                                controls: {
-                                    margin: {
-                                        x: 10,
-                                        y: 190
-                                    }
-                                }                           
+                            // Create wookmark gallery
+                            $('a', wookmarkDemo2).rondell({
+                                preset: 'gallery',
+                                theme: 'dark'
                             });
                         }
                     }
