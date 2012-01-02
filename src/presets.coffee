@@ -17,6 +17,13 @@
         direction: 1
         once: false
         delay: 5000
+      radius: 
+        x: 220
+      controls: 
+        margin: 
+          x: 20
+          y: 190
+      currentLayer: 1
       funcSize: (layerDiff, rondell) ->
         (rondell.maxItems / Math.abs(layerDiff)) / rondell.maxItems
       
@@ -26,9 +33,19 @@
       visibleItems: 4
       itemProperties:
         delay: 0
+        size: 
+          width: 100
+          height: 200
+        sizeFocused: 
+          width: 300
+          height: 200
       center:
         left: 400 
         top: 100
+      controls: 
+        margin: 
+          x: 210
+          y: 158
       funcTop: (layerDiff, rondell) ->
         0
       funcDiff: (layerDiff, rondell) ->
@@ -46,6 +63,13 @@
       visibleItems: 1
       controls:
         enabled: false
+      center: 
+        left: 200 
+        top: 200
+      itemProperties: 
+        size:  
+          width: 400 
+          height: 400
       funcTop: (layerDiff, rondell) ->
           rondell.center.top - rondell.itemProperties.size.height / 2
       funcLeft: (layerDiff, rondell) ->
@@ -54,6 +78,21 @@
           Math.abs(layerDiff) + 0.5
       
     cubic:
+      center: 
+        left: 400 
+        top: 200
+      visibleItems: 5
+      itemProperties: 
+        size: 
+          width: 350
+          height: 350  
+        sizeFocused:  
+          width: 350 
+          height: 350
+      controls:
+        margin:
+          x: 10
+          y: 190
       funcTop: (layerDiff, rondell) ->
           rondell.center.top - rondell.itemProperties.size.height / 2 + Math.pow(layerDiff / 2, 3) * rondell.radius.x
       funcLeft: (layerDiff, rondell) ->
@@ -84,7 +123,7 @@
       funcDiff: (layerDiff, rondell) ->
         Math.abs(layerDiff) - 0.5
       funcLeft: (layerDiff, rondell) ->
-        rondell.center.left + (layerDiff - 0.5) * rondell.itemProperties.size.width
+        rondell.center.left + (layerDiff - 0.5) * (rondell.itemProperties.size.width + 5)
       funcOpacity: (layerDist, rondell) ->
         0.8
           
