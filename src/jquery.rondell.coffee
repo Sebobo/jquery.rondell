@@ -511,8 +511,8 @@
     _refreshControls: =>
       return unless @controls.enabled
       
-      @controls._shiftLeft.stop().fadeTo(@controls.fadeTime, if @currentLayer > 1 or @repeating and @hovering then 1 else 0)
-      @controls._shiftRight.stop().fadeTo(@controls.fadeTime, if @currentLayer < @maxItems or @repeating and @hovering then 1 else 0)
+      @controls._shiftLeft.stop().fadeTo(@controls.fadeTime, if (@currentLayer > 1 or @repeating) and @hovering then 1 else 0)
+      @controls._shiftRight.stop().fadeTo(@controls.fadeTime, if (@currentLayer < @maxItems or @repeating) and @hovering then 1 else 0)
       
     shiftLeft: (e) => 
       e?.preventDefault()
