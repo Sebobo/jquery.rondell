@@ -18,7 +18,7 @@ task 'watch', 'Watch sass and src folders for changes and recompile from src and
   
   console.log "Watching src folder for changes in coffee scripts"
   
-  coffeeProcess = spawn 'coffee', ['--bare', '--join', "lib/jquery.#{pluginName}.js", '--watch', '--compile', 'src/']
+  coffeeProcess = spawn 'coffee', ['--join', "lib/jquery.#{pluginName}.js", '--watch', '--compile', 'src/']
   coffeeProcess.stdout.on 'data', (data) -> 
     console.log data.toString().trim()
     
