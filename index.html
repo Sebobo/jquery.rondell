@@ -15,7 +15,7 @@
             
             <br/>
             
-            <h3>Version 0.8.4</h3>
+            <h3>Version 0.8.5</h3>
             <p>
                 Created by <a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle">Sebastian Helzle</a>
             </p>
@@ -51,7 +51,7 @@
             <br/>
             
             <p>
-                <a href="https://github.com/Sebobo/jquery.rondell/zipball/0.8.4" title="Rondell zip download" class="sampleElement green big">Download rondell now</a>
+                <a href="https://github.com/Sebobo/jquery.rondell/zipball/0.8.5" title="Rondell zip download" class="sampleElement green big">Download rondell now</a>
                 &nbsp;
                 <a href="https://github.com/Sebobo/jquery.rondell" title="Rondell source at github" class="sampleElement">Visit rondell at github</a>
             </p>
@@ -67,31 +67,45 @@
                 <a class="addthis_counter addthis_pill_style"></a>
             </div>
             <!-- AddThis Button END -->
+            <br/>
+            <!-- Flattr button BEGIN -->
+            <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://sebobo.github.com/jquery.rondell"></a>
+            <noscript><a href="http://flattr.com/thing/460088/jQuery-Rondell-by-Sebastian-Helzle" target="_blank">
+            <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
+            <!-- Flattr button END -->
             
             <br/>
             <br/>
             <h3>New and improved in this version</h3>
             <br/>
             <ul>
-                <li>
-                    <b>Mousewheel (x-axis) support</b> allows you to traverse left and right in the rondell. 
-                    (Requires the optional <a href="https://github.com/brandonaaron/jquery-mousewheel" title="jQuery mousewheel">jQuery mousewheel plugin</a>)
-                </li>
-                <li>
-                    Controls hide if autorotation is disabled and shifting is impossible. (See the <a href="#productsdemo" class="scrollToId" title="Products demo">products demo</a>)
-                </li>
-                <li>
-                    Items are now displayed in the order you provide them.
-                </li>
-                <li>
-                    Starting item index is now customizeable by providing the <i>currentLayer</i> option. (See the <a href="#options" class="scrollToId" title="List of options">options</a>)
-                </li>
+                <li>Fixed a bug in image size computations and improved performance.</li>
+                <li>Moved more default options into presets.</li>
+                <li>Improved dark theme text readability.</li>
+                <li>New gallery example and preset.</li>
             </ul>
             <br/>
             <p>
                 <a href="#changelog" class="collapsor" title="Collapse code">+ Click here to see changes in the last versions</a>
             </p>
             <ul id="changelog" class="collapsible">
+                <li>
+                    <h6>0.8.4</h6>
+                    <ul>
+                        <li>
+                            <b>Mousewheel (x-axis) support</b> allows you to traverse left and right in the rondell. 
+                            (Requires the optional <a href="https://github.com/brandonaaron/jquery-mousewheel" title="jQuery mousewheel">jQuery mousewheel plugin</a>)
+                        </li>
+                        <li>
+                            Controls hide if autorotation is disabled and shifting is impossible. (See the <a href="#productsdemo" class="scrollToId" title="Products demo">products demo</a>)
+                        </li>
+                        <li>
+                            Items are now displayed in the order you provide them.
+                        </li>
+                        <li>
+                            Starting item index is now customizeable by providing the <i>currentLayer</i> option. (See the <a href="#options" class="scrollToId" title="List of options">options</a>)
+                        </li>
+                    </ul>
                 <li>
                     <h6>0.8.3</h6>
                     <ul>
@@ -872,8 +886,9 @@ $('#rondellProducts > div').rondell({
             <h4>Coming up</h4>
             
             <ul>
-                <li>More examples</li>
+                <li>Improved mouse and touch control</li>
                 <li>Effects for the focused item</li>
+                <li>Slider mode</li>
             </ul>
             
             <br/>
@@ -1022,13 +1037,21 @@ $('#rondellProducts > div').rondell({
             });
         </script>
         <script type="text/javascript">
-            var hostname = document.location.hostname;
-            if (hostname && hostname.indexOf('localhost') < 0) {
-                var pkBaseURL = (("https:" == document.location.protocol) ? "https://tracking.sebastianhelzle.net/" : "http://tracking.sebastianhelzle.net/");
-                document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-                
-                document.write(unescape("%3Cscript src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=sebobo' type='text/javascript'%3E%3C/script%3E"));
-            }
+            (function() {
+                var hostname = document.location.hostname;
+                if (hostname && hostname.indexOf('github') >= 0) {
+                    var pkBaseURL = (("https:" == document.location.protocol) ? "https://tracking.sebastianhelzle.net/" : "http://tracking.sebastianhelzle.net/");
+                    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+                    
+                    document.write(unescape("%3Cscript src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=sebobo' type='text/javascript'%3E%3C/script%3E"));
+                    
+                    var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+                    s.type = 'text/javascript';
+                    s.async = true;
+                    s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+                    t.parentNode.insertBefore(s, t);
+                }
+            })();
         </script>
         <!-- Piwik --> 
         <script type="text/javascript">

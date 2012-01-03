@@ -2,17 +2,17 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 0.8.4
-  @date 12/21/2011
+  @version 0.8.5
+  @date 01/03/2012
   @category jQuery plugin
-  @copyright (c) 2009-2011 Sebastian Helzle (www.sebastianhelzle.net)
+  @copyright (c) 2009-2012 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
 ###
 
 (($) ->
   ### Global rondell plugin properties ###
   $.rondell =
-    version: '0.8.4'
+    version: '0.8.5'
     name: 'rondell'
     defaults:
       showContainer: true       # When the plugin has finished initializing $.show() will be called on the items container
