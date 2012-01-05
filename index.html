@@ -1039,7 +1039,7 @@ $('#rondellProducts > div').rondell({
         <script type="text/javascript">
             (function() {
                 var hostname = document.location.hostname;
-                if (hostname && hostname.indexOf('github') >= 0) {
+                if (hostname && (hostname.indexOf('github') >= 0 || hostname.indexOf('sebastianhelzle') >= 0)) {
                     var pkBaseURL = (("https:" == document.location.protocol) ? "https://tracking.sebastianhelzle.net/" : "http://tracking.sebastianhelzle.net/");
                     document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
                     
