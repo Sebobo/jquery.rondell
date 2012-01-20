@@ -2,8 +2,8 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 0.8.5
-  @date 01/03/2012
+  @version 0.8.6
+  @date 01/20/2012
   @category jQuery plugin
   @copyright (c) 2009-2012 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -12,7 +12,7 @@
 (($) ->
   ### Global rondell plugin properties ###
   $.rondell =
-    version: '0.8.5'
+    version: '0.8.6'
     name: 'rondell'
     defaults:
       showContainer: true       # When the plugin has finished initializing $.show() will be called on the items container
@@ -22,11 +22,11 @@
       currentLayer: 0           # Active layer number in a rondell instance
       container: null           # Container object wrapping the rondell items
       radius:                   # Radius for the default circle function
-        x: 300 
+        x: 250 
         y: 50  
       center:                   # Center where the focused element is displayed
-        left: 400 
-        top: 200
+        left: 340 
+        top: 160
       size:                     # Defaults to center * 2 on init
         width: null
         height: null
@@ -57,8 +57,8 @@
         enabled: true
         fadeTime: 400           # Show/hide animation speed
         margin:     
-          x: 20                 # Distance from left and right edge of the container
-          y: 20                 # Distance from top and bottom edge of the container
+          x: 130                 # Distance from left and right edge of the container
+          y: 270                 # Distance from top and bottom edge of the container
       strings: # String for the controls 
         prev: 'prev'
         next: 'next'
@@ -73,6 +73,7 @@
         threshold: 100          # Distance in pixels the "finger" has to swipe to create the touch event
         _start: undefined        
         _end: undefined         
+      randomStart: false  
       funcEase: 'easeInOutQuad' # jQuery easing function name for the movement of items
       theme: 'default'          # CSS theme class which gets added to the rondell container
       preset: ''                # Configuration preset
@@ -143,20 +144,26 @@
     _initItem: (layerNum, item) =>
       @items[layerNum - 1] = item
       
+      # If item is an img tag, wrap with div
+      if item.object[0].nodeName.toLowerCase() is "img"
+        item.object.wrap("<div/>")
+        item.object = item.object.parent()
+        item.icon = $('img:first', item.object)
+      
       # Wrap other content as overlay caption
       captionContent = item.icon?.siblings()
       if not (captionContent?.length or item.icon) and item.object.children().length
         captionContent = item.object.children()
         
       # Or use title/alt texts as overlay caption
-      if not captionContent.length 
-        caption = item.object.attr('title') or item.icon?.attr('alt') or item.icon?.attr('title')  
+      unless captionContent?.length 
+        caption = item.object.attr('title') or item.icon?.attr('title') or item.icon?.attr('alt')  
         if caption
           captionContent = $("<p>#{caption}</p>")
           item.object.append(captionContent)
 
       # Create overlay from caption if found
-      if captionContent.length
+      if captionContent?.length
         captionContainer = $('<div class="rondellCaption"></div>')
         captionContainer.addClass('overlay') if item.icon
         captionContent.wrapAll(captionContainer)
@@ -261,7 +268,10 @@
       
     _start: =>
       # Set currentlayer to the middle item or leave it be if set before and index exists
-      @currentLayer = Math.max(0, Math.min(@currentLayer or Math.round(@maxItems / 2), @maxItems))
+      if @randomStart
+        @currentLayer = Math.round(Math.random() * (@maxItems - 1))
+      else
+        @currentLayer = Math.max(0, Math.min(@currentLayer or Math.round(@maxItems / 2), @maxItems))
       
       # Set visibleItems to half the maxItems if set to auto
       @visibleItems = Math.max(2, Math.floor(@maxItems / 2)) if @visibleItems is 'auto'
