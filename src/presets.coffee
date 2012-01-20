@@ -18,11 +18,15 @@
         once: false
         delay: 5000
       radius: 
-        x: 220
+        x: 240
+      center:
+        left: 340 
+        top: 160
       controls: 
         margin: 
-          x: 20
-          y: 190
+          x: 130
+          y: 260
+      randomStart: true
       currentLayer: 1
       funcSize: (layerDiff, rondell) ->
         (rondell.maxItems / Math.abs(layerDiff)) / rondell.maxItems
@@ -62,7 +66,12 @@
       scaling: 1
       visibleItems: 1
       controls:
-        enabled: false
+        margin:
+          x: 5
+          y: 5
+      strings: 
+        prev: ' '
+        next: ' '
       center: 
         left: 200 
         top: 200
@@ -79,7 +88,7 @@
       
     cubic:
       center: 
-        left: 400 
+        left: 300 
         top: 200
       visibleItems: 5
       itemProperties: 
@@ -91,8 +100,8 @@
           height: 350
       controls:
         margin:
-          x: 10
-          y: 190
+          x: 70
+          y: 330
       funcTop: (layerDiff, rondell) ->
           rondell.center.top - rondell.itemProperties.size.height / 2 + Math.pow(layerDiff / 2, 3) * rondell.radius.x
       funcLeft: (layerDiff, rondell) ->
@@ -102,14 +111,16 @@
           
     gallery:
       visibleItems: 4
-      controls:
-        enabled: false
       center:
         top: 145
         left: 250
       size:
         height: 400
         width: 500
+      controls:
+        margin:
+          x: 10
+          y: 255
       itemProperties:
         delay: 10
         sizeFocused: 
@@ -126,5 +137,35 @@
         rondell.center.left + (layerDiff - 0.5) * (rondell.itemProperties.size.width + 5)
       funcOpacity: (layerDist, rondell) ->
         0.8
+        
+    slider:
+      visibleItems: 1
+      fadeTime: 1000
+      opacityMin: 0.01
+      autoRotation:
+        enabled: true
+      center: 
+        top: 150
+        left: 300
+      size:
+        height: 300
+        width: 600
+      controls:
+        margin: 
+          x: -1
+          y: 135
+      itemProperties:
+        sizeFocused:
+          width: 600
+          height: 300
+        size:
+          width: 600
+          height: 300
+      funcTop: (layerDiff, rondell) ->
+        0
+      funcLeft: (layerDiff, rondell) ->
+        0
+      funcOpacity: (layerDist, rondell) ->
+        0.02
           
 )(jQuery) 
