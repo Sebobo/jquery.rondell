@@ -6,6 +6,8 @@
   display: block;
   position: relative;
   
+  font-size: 12px;
+  
   &.initializing {
     background: url('../images/loader.gif') no-repeat 50% 50%;
     
@@ -46,8 +48,6 @@
   } 
 }
 
-.rondellItemHovered { opacity: 1 !important; }
-
 .rondellItemFocused {
   &, a { cursor: auto; }
 }
@@ -77,11 +77,13 @@
     display: none;
     color: #fafafa;
     background-color: #333; 
-    background-color: rgba(0, 0, 0, 0.5);
   }
 }
+.rgba .rondellCaption.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
 .borderradius .rondellCaption.overlay {
-  @include rounded(5px);
+  @include rounded(4px);
 }
 .boxshadow .rondellCaption.overlay {
   @include boxshadow(0 0 8px rgba(0, 0, 0, 0.3) inset);
@@ -90,42 +92,55 @@
 // controls design
 .rondellControl {
   position: absolute;
-  font-size: 1.2em; 
+  font-size: 12px; 
   font-weight: bold; 
   color: #000;
-  padding: 8px;
+  padding: 4px 8px;
   display: block; 
   text-decoration: none;
   background: #f5f5f5;
-  text-shadow: 0 1px 1px #fff;
+  text-shadow: 0 1px 1px #ccc;
   opacity: 0;
   
-  &:hover { background: #fafafa; }
-}
-.cssgradients .rondellControl { 
-  @include linear-gradient(#fcfcfc, #f9f9f9);
-  
-  &:hover { @include linear-gradient(#fafafa, #f5f5f5); }
-  &:active { @include linear-gradient(#f5f5f5, #fafafa); }
-}
-.borderradius .rondellControl { @include rounded(5px); }
-.boxshadow.rgba .rondellControl { 
-  @include boxshadow(0 0 1px rgba(0, 0, 0, 0.3));
-  
-  &:hover { @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.5)); } 
+  &:hover { 
+    background: #fafafa;
+    text-decoration: none;
+  }
 }
 
 /* themes */
 
 /* default theme */
-.rondellTheme_default {}
-.boxshadow.rgba .rondellTheme_default .rondellItem { 
-  border: 0;
-  @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.4));    
-  &:hover { @include boxshadow(0 1px 2px rgba(0, 0, 0, 0.3)); }
+.rondellTheme_default {
+  .rondellItemHovered { opacity: 1 !important; }
+}
+.boxshadow.rgba .rondellTheme_default {
+  .rondellControl { 
+    @include boxshadow(0 0 1px rgba(0, 0, 0, 0.3));
+    
+    &:hover { @include boxshadow(0 0 2px rgba(0, 0, 0, 0.3)); } 
+  }
+  .rondellItem { 
+    border: 0;
+    @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.4));    
+    &:hover { @include boxshadow(0 1px 2px rgba(0, 0, 0, 0.3)); }
+  }
 } 
-.borderradius .rondellTheme_default .rondellItem {
-  &, img { @include rounded(5px); }
+.borderradius .rondellTheme_default {
+  .rondellControl { 
+    @include rounded(3px); 
+  }
+  .rondellItem {
+    &, img { 
+      @include rounded(3px); 
+    }
+  }
+}
+.cssgradients .rondellTheme_default .rondellControl { 
+  @include linear-gradient(#fcfcfc, #f9f9f9);
+  
+  &:hover { @include linear-gradient(#fafafa, #f5f5f5); }
+  &:active { @include linear-gradient(#f5f5f5, #fafafa); }
 }
 
 /* light theme */
@@ -147,6 +162,7 @@
     border: 0; 
     background: transparent;
   }
+  .rondellItemHovered { opacity: 1 !important; }
   .rondellCaption { 
     margin: 5px; 
     padding: 0; 
@@ -177,7 +193,7 @@
   }
 }
 .borderradius .rondellTheme_dark {
-  @include rounded(10px);
+  @include rounded(5px);
 }
 .cssgradients .rondellTheme_dark {
   @include linear-gradient(#666, #111);
@@ -185,23 +201,124 @@
 .boxshadow.rgba .rondellTheme_dark {
   border: 0;
   @include boxshadow(0 1px 5px rgba(0, 0, 0, 0.6) inset);
+  
+  .rondellControl {
+    @include boxshadow(none);
+  }
 }
 
 /* page theme, good for preset 'pages' */
 .rondellTheme_page {
   border: 1px solid #ccc;
+  
+  .rondellItem {
+    border: 0; 
+  } 
+  .rondellControl {
+    font-size: 0;  
+    padding: 0;
+    color: transparent;
+    width: 20px;
+    height: 16px;
+    
+    &.rondellShiftLeft,
+    &.rondellShiftRight {
+      background: url('../images/arrows.png') no-repeat 0 0;
+    }
+    &.rondellShiftRight {
+      background-position: 0 -16px;
+    }
+  }
 }
 .boxshadow.rgba .rondellTheme_page {
   border: 0;
-  @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.6));    
+  @include boxshadow(0 1px 3px rgba(0, 0, 0, 0.6));
+  
+  .rondellControl {
+    
+  }    
 } 
 .borderradius .rondellTheme_page {
   @include rounded(3px);
+  
+  .rondellItem {
+    &, img { @include rounded(3px); }
+  }
+  .rondellControl {
+    @include rounded(0 0 3px 0);
+  }
 } 
 
-.rondellTheme_page .rondellItem {
-  border: 0; 
-} 
-.borderradius .rondellTheme_page .rondellItem {
-  &, img { @include rounded(3px); }
+/* slider theme */
+.rondellTheme_slider {
+  border: 1px solid #aaa;
+  
+  .rondellItem {
+    border: 0; 
+  }
+  
+  .rondellCaption {
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0 0 3px #000;
+    font-size: 14px;
+    
+    &.overlay {
+      background: transparent;
+    }
+  }
+  
+  .rondellControl {
+    font-size: 0;  
+    color: transparent;
+    padding: 0;
+    width: 15px;
+    height: 30px;
+    background-color: #666;
+    border: 1px solid #555;
+    
+    &:hover {
+      background-color: #888;
+    }
+  }
 }
+.rgba .rondellTheme_slider .rondellControl {
+  background-color: rbga(50, 50, 50, 0.2);    
+}
+.cssgradients .rondellTheme_slider .rondellControl {
+  @include linear-gradient(#666666, #555555);
+  
+  &:hover {
+    @include linear-gradient(#777777, #555555);
+  }
+}
+.boxshadow.rgba .rondellTheme_slider {
+  @include boxshadow(0 1px 4px rgba(0, 0, 0, 0.4));
+  
+  .rondellCaption {
+    @include boxshadow(none);
+  }
+  
+  .rondellControl {
+    @include boxshadow(0 1px 4px rgba(0, 0, 0, 0.7));
+  }
+} 
+.borderradius .rondellTheme_slider {
+  @include rounded(2px);
+  
+  .rondellItem {
+    &, img { 
+      @include rounded(2px); 
+    }
+  }
+  
+  .rondellControl {
+    &.rondellShiftLeft {
+      @include rounded(0 15px 15px 0);
+    }
+    &.rondellShiftRight {
+      @include rounded(15px 0 0 15px);
+    }
+  }
+}  
+  

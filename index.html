@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="keywords" content="jquery,tooltip,popup,plugin,css3,open-source,mit-license,extension,overlay" />
         <meta name="description" content="Sebastian Helzle's jQuery Rondell plugin" />
+        <meta http-equiv="content-language" content="en">
         <link rel="stylesheet" href="css/screen.css" type="text/css" media="all" title="Screen" />  
         <link rel="stylesheet" href="css/jquery.rondell.css" type="text/css" media="all" title="Screen" />  
     </head>
@@ -15,11 +16,17 @@
             
             <br/>
             
-            <h3>Version 0.8.5</h3>
+            <h3>Version 0.8.6</h3>
             <p>
                 Created by <a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle">Sebastian Helzle</a>
             </p>
         
+        </div>
+        <div class="tabs hasShadow">
+            <a href="/" title="Projects overview">Home</a>
+            <a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">Smallipop</a>
+            <a href="/jquery.rondell" class="active" title="jQuery rondell - A graphical plugin">Rondell</a>
+            <br class="clear"/>
         </div>
         <div class="page hasShadow">
             
@@ -51,7 +58,7 @@
             <br/>
             
             <p>
-                <a href="https://github.com/Sebobo/jquery.rondell/zipball/0.8.5" title="Rondell zip download" class="sampleElement green big">Download rondell now</a>
+                <a href="https://github.com/Sebobo/jquery.rondell/zipball/0.8.6" title="Rondell zip download" class="sampleElement green big">Download rondell now</a>
                 &nbsp;
                 <a href="https://github.com/Sebobo/jquery.rondell" title="Rondell source at github" class="sampleElement">Visit rondell at github</a>
             </p>
@@ -69,201 +76,142 @@
             <!-- AddThis Button END -->
             <br/>
             <!-- Flattr button BEGIN -->
-            <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://projects.sebastianhelzle.net/jquery.rondell/"></a>
+            <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://sebobo.github.com/jquery.rondell"></a>
             <noscript><a href="http://flattr.com/thing/460088/jQuery-Rondell-by-Sebastian-Helzle" target="_blank">
             <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
             <!-- Flattr button END -->
             
-            <br/>
-            <br/>
-            <h3>New and improved in this version</h3>
-            <br/>
-            <ul>
-                <li>Fixed a bug in image size computations and improved performance.</li>
-                <li>Moved more default options into presets.</li>
-                <li>Improved dark theme text readability.</li>
-                <li>New gallery example and preset.</li>
-            </ul>
-            <br/>
-            <p>
-                <a href="#changelog" class="collapsor" title="Collapse code">+ Click here to see changes in the last versions</a>
-            </p>
-            <ul id="changelog" class="collapsible">
-                <li>
-                    <h6>0.8.4</h6>
-                    <ul>
-                        <li>
-                            <b>Mousewheel (x-axis) support</b> allows you to traverse left and right in the rondell. 
-                            (Requires the optional <a href="https://github.com/brandonaaron/jquery-mousewheel" title="jQuery mousewheel">jQuery mousewheel plugin</a>)
-                        </li>
-                        <li>
-                            Controls hide if autorotation is disabled and shifting is impossible. (See the <a href="#productsdemo" class="scrollToId" title="Products demo">products demo</a>)
-                        </li>
-                        <li>
-                            Items are now displayed in the order you provide them.
-                        </li>
-                        <li>
-                            Starting item index is now customizeable by providing the <i>currentLayer</i> option. (See the <a href="#options" class="scrollToId" title="List of options">options</a>)
-                        </li>
-                    </ul>
-                <li>
-                    <h6>0.8.3</h6>
-                    <ul>
-                        <li><b>A size function</b> to simulate a depth effect. (See the <a href="#options" class="scrollToId" title="List of options">options</a>)</li>
-                        <li><b>Presets</b> for the plugins options which contain the necessary settings to setup the plugin like the examples on this page.</li>
-                        <li><b>Themes</b> are now included in the plugins css file to help you make your rondell look like one of my examples.</li>
-                        <li><b>A callback</b> when the plugin has finished loading. (See <a href="#usage" class="scrollToId" title="Usage example">usage</a>)</li>
-                    </ul>
-                </li>
-                <li>
-                    <h6>0.8.2</h6>
-                    <ul>
-                        <li><b>Touch controls for mobile devices</b> - Swipe left and right to move the rondell.</li>
-                        <li><b>Reliable image loading</b> - The previous versions had sometimes problems getting the correct image sizes for some browsers and configurations.</li>
-                        <li>And some minor fixes and code improvements.</li>
-                    </ul>
-                </li>
-            </ul>
-            
-            <br/>
-            
-            <h3>Dependencies</h3>
-            <br/>
-            <ul>
-                <li><a href="http://www.jQuery.com" title="jQuery">jQuery</a> version 1.5.2 or better</li>
-                <li>
-                    <a href="http://www.modernizr.com/" title="Modernizr library">Modernizr</a> for browser capability fallbacks.<br/>
-                    The library is included in the plugins <i>lib</i> folder.<br/> 
-                </li>
-            </ul>
-            
             <br id="usage"/>
             
-            <h3>Usage</h3>
+            <h4>Usage</h4>
             
 <pre>
 &lt;script type="text/javascript"&gt;
     $('.myExample > .myItem').rondell([options][, callback]);
 &lt;/script&gt;</pre>
-            
+
             <br/>
             
-            <h3>Examples</h3>
+            <div class="column size2of3">
+                <h5>New and improved in this version</h5>
+                <br/>
+                <ul>
+                    <li>Improved some presets and themes.</li>
+                    <li>Added random start option.</li>
+                </ul>
+                <br/>
+                <p>
+                    <a href="#changelog" class="collapsor" title="Collapse code">+ Click here to see changes in the last versions</a>
+                </p>
+                <ul id="changelog" class="collapsible">
+                    <li>
+                        <h6>0.8.5</h6>
+                        <ul>
+                            <li>Fixed a bug in image size computations and improved performance.</li>
+                            <li>Moved more default options into presets.</li>
+                            <li>Improved dark theme text readability.</li>
+                            <li>New gallery example and preset.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h6>0.8.4</h6>
+                        <ul>
+                            <li>
+                                <b>Mousewheel (x-axis) support</b> allows you to traverse left and right in the rondell. 
+                                (Requires the optional <a href="https://github.com/brandonaaron/jquery-mousewheel" title="jQuery mousewheel">jQuery mousewheel plugin</a>)
+                            </li>
+                            <li>
+                                Controls hide if autorotation is disabled and shifting is impossible. (See the <a href="#productsdemo" class="scrollToId" title="Products demo">products demo</a>)
+                            </li>
+                            <li>
+                                Items are now displayed in the order you provide them.
+                            </li>
+                            <li>
+                                Starting item index is now customizeable by providing the <i>currentLayer</i> option. (See the <a href="#options" class="scrollToId" title="List of options">options</a>)
+                            </li>
+                        </ul>
+                    <li>
+                        <h6>0.8.3</h6>
+                        <ul>
+                            <li><b>A size function</b> to simulate a depth effect. (See the <a href="#options" class="scrollToId" title="List of options">options</a>)</li>
+                            <li><b>Presets</b> for the plugins options which contain the necessary settings to setup the plugin like the examples on this page.</li>
+                            <li><b>Themes</b> are now included in the plugins css file to help you make your rondell look like one of my examples.</li>
+                            <li><b>A callback</b> when the plugin has finished loading. (See <a href="#usage" class="scrollToId" title="Usage example">usage</a>)</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h6>0.8.2</h6>
+                        <ul>
+                            <li><b>Touch controls for mobile devices</b> - Swipe left and right to move the rondell.</li>
+                            <li><b>Reliable image loading</b> - The previous versions had sometimes problems getting the correct image sizes for some browsers and configurations.</li>
+                            <li>And some minor fixes and code improvements.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="column size1of3 last">            
+                <h5>Dependencies</h5>
+                <br/>
+                <ul>
+                    <li><a href="http://www.jQuery.com" title="jQuery">jQuery</a> version 1.5.2 or better</li>
+                    <li>
+                        <a href="http://www.modernizr.com/" title="Modernizr library">Modernizr</a> for browser capability fallbacks.<br/>
+                        The library is included in the plugins <i>lib</i> folder.<br/> 
+                    </li>
+                </ul>
+            </div>
+            
+            <br class="clear"/>
+            <br/>
+            <br/>
+            
+            <h3>Overview</h3>
             <p>
-                <a class="scrollToId" href="#gallerydemosimple">Simple gallery</a> | 
-                <a class="scrollToId" href="#gallerydemo">Advanced gallery</a> | 
-                <a class="scrollToId" href="#productsdemo">Products overview</a> |
-                <a class="scrollToId" href="#stuffdemo">Text &amp; images</a> |
-                <a class="scrollToId" href="#wookmark">Fancy gallery with images from external service</a> |
-                <a class="scrollToId" href="#options">Options</a> |
+                <a class="scrollToId" href="#gallerydemosimple">Simple carousel</a> &ndash; 
+                <a class="scrollToId" href="#gallerydemo">Advanced carousel</a> &ndash; 
+                <a class="scrollToId" href="#productsdemo">Product scroller</a> &ndash;
+                <a class="scrollToId" href="#stuffdemo">Mixed content</a> &ndash;
+                <a class="scrollToId" href="#wookmark">Using a webservice</a> &ndash;
+                <a class="scrollToId" href="#options">Options</a>
             </p>
             
             <hr id="gallerydemosimple"/>
             
-            <h3>Simple carousel</h3>
-            
-            <p>
-                This demo show how to display a gallery. Click an image to focus it.<br/>
-                You can press arrow left and right on your keyboard to navigate through the images.
-            </p>
-            
-            <div id="rondellSimple">
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/band.jpg">
-                        <img class="resizeable" src="images/band.jpg" alt="demo pic" />   
-                        <h3>Awesome concert</h3>
+            <div class="column size1of4">
+                <h3>Simple carousel</h3>
+                
+                <p>
+                    This demo show how to display a gallery. Click an image to focus it.
+                </p>
+                <p>
+                    You can press arrow left and right on your keyboard to navigate through the images.
+                </p>
+                <p>
+                    Even swiping on touch devices is supported!
+                </p>
+                <br/>
+                <p>
+                    <a href="#demo1code" class="showCode" title="Show the code for the simple carousel">Click here to see how it's done</a>
+                </p>
+                <div class="hidden">
+                    <div id="demo1code">
                         <p>
-                            My favourite band.
+                            The following code will create a simple carousel:
                         </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/dog.jpg">
-                        <img class="resizeable" src="images/dog.jpg" alt="demo pic" /> 
-                        <h3>My dog</h3>
-                        <p>
-                            Standing in front of a glass door and wants in.
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/cat.jpg">
-                        <img class="resizeable" src="images/cat.jpg" alt="demo pic" />
-                        <h3>My cat</h3>
-                        <p>
-                            Sleeping...
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/boar.jpg">
-                        <img class="resizeable" src="images/boar.jpg" alt="demo pic" />
-                        <h3>Dead pig on the wall</h3>
-                        <p>
-                            Hanging around.
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/snow.jpg">
-                        <img class="resizeable" src="images/snow.jpg" alt="demo pic" />
-                        <h3>Winter wonderland</h3>
-                        <p>
-                            The german alps.
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/rabbit.jpg">
-                        <img class="resizeable" src="images/rabbit.jpg" alt="demo pic" />
-                        <h3>Bunny</h3>
-                        <p>
-                            In my brothers garden.
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/trash.jpg">
-                        <img class="resizeable" src="images/trash.jpg" alt="demo pic" />
-                        <h3>Trash</h3>
-                        <p>
-                            Somewhere in the USA.
-                        </p>
-                    </a>
-                </div>
-            </div>
-            
-            <p>
-                <a href="#demo1code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
-            </p>
-            <pre id="demo1code" class="collapsible">
-&lt;script type="text/javascript"&gt;
+<pre>&lt;script type="text/javascript"&gt;
     $(function() {
         $('#rondellGallery > div').rondell(); 
     });
 &lt;/script&gt;</pre>
+                    </div>
+                </div>
+            </div>
             
-            <br/>
-            
-            <hr id="gallerydemo"/>
-            
-            <h3>Advanced carousel</h3>
-            
-            <p>
-                This demo show how to display an advanced gallery. Click an image to focus it and open it in a lightbox.<br/>
-                You can press arrow left and right on your keyboard to navigate through the images.
-            </p>
-            <p>
-                The rondell will automatically continue to rotate through the gallery when your mouse leaves it's area.
-            </p>
-            <p>
-                The lightbox is powered by <a href="http://www.fancybox.net" title="Fancybox">Fancybox</a>.
-            </p>
-            
-            <div id="rondellGallery">
+            <div id="rondellSimple" class="column size3of4 last">
                 <div>
-                    <a target="_blank" rel="rondell_1" href="images/band.jpg">
-                        <img class="resizeable" src="images/band.jpg" alt="demo pic" />   
+                    <a target="_blank" rel="rondell_1" href="images/galery/band.jpg">
+                        <img class="resizeable" src="images/galery/band.jpg" alt="demo pic" />   
                         <h3>Awesome concert</h3>
                         <p>
                             My favourite band.
@@ -271,8 +219,8 @@
                     </a>
                 </div>
                 <div>
-                    <a target="_blank" rel="rondell_1" href="images/dog.jpg">
-                        <img class="resizeable" src="images/dog.jpg" alt="demo pic" /> 
+                    <a target="_blank" rel="rondell_1" href="images/galery/dog.jpg">
+                        <img class="resizeable" src="images/galery/dog.jpg" alt="demo pic" /> 
                         <h3>My dog</h3>
                         <p>
                             Standing in front of a glass door and wants in.
@@ -280,8 +228,8 @@
                     </a>
                 </div>
                 <div>
-                    <a target="_blank" rel="rondell_1" href="images/cat.jpg">
-                        <img class="resizeable" src="images/cat.jpg" alt="demo pic" />
+                    <a target="_blank" rel="rondell_1" href="images/galery/cat.jpg">
+                        <img class="resizeable" src="images/galery/cat.jpg" alt="demo pic" />
                         <h3>My cat</h3>
                         <p>
                             Sleeping...
@@ -289,8 +237,8 @@
                     </a>
                 </div>
                 <div>
-                    <a target="_blank" rel="rondell_1" href="images/boar.jpg">
-                        <img class="resizeable" src="images/boar.jpg" alt="demo pic" />
+                    <a target="_blank" rel="rondell_1" href="images/galery/boar.jpg">
+                        <img class="resizeable" src="images/galery/boar.jpg" alt="demo pic" />
                         <h3>Dead pig on the wall</h3>
                         <p>
                             Hanging around.
@@ -298,8 +246,8 @@
                     </a>
                 </div>
                 <div>
-                    <a target="_blank" rel="rondell_1" href="images/snow.jpg">
-                        <img class="resizeable" src="images/snow.jpg" alt="demo pic" />
+                    <a target="_blank" rel="rondell_1" href="images/galery/snow.jpg">
+                        <img class="resizeable" src="images/galery/snow.jpg" alt="demo pic" />
                         <h3>Winter wonderland</h3>
                         <p>
                             The german alps.
@@ -307,8 +255,8 @@
                     </a>
                 </div>
                 <div>
-                    <a target="_blank" rel="rondell_1" href="images/rabbit.jpg">
-                        <img class="resizeable" src="images/rabbit.jpg" alt="demo pic" />
+                    <a target="_blank" rel="rondell_1" href="images/galery/rabbit.jpg">
+                        <img class="resizeable" src="images/galery/rabbit.jpg" alt="demo pic" />
                         <h3>Bunny</h3>
                         <p>
                             In my brothers garden.
@@ -316,8 +264,8 @@
                     </a>
                 </div>
                 <div>
-                    <a target="_blank" rel="rondell_1" href="images/trash.jpg">
-                        <img class="resizeable" src="images/trash.jpg" alt="demo pic" />
+                    <a target="_blank" rel="rondell_1" href="images/galery/trash.jpg">
+                        <img class="resizeable" src="images/galery/trash.jpg" alt="demo pic" />
                         <h3>Trash</h3>
                         <p>
                             Somewhere in the USA.
@@ -326,12 +274,106 @@
                 </div>
             </div>
             
-            <p>
-                <a href="#demo2code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
-            </p>
-            <pre id="demo2code" class="collapsible">
+            <br class="clear"/>
+            
+            <hr id="gallerydemo"/>
+            
+            <div id="rondellGallery" class="column size3of4">
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/galery/band.jpg">
+                        <img class="resizeable" src="images/galery/band.jpg" alt="demo pic" />   
+                        <h3>Awesome concert</h3>
+                        <p>
+                            My favourite band.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/galery/dog.jpg">
+                        <img class="resizeable" src="images/galery/dog.jpg" alt="demo pic" /> 
+                        <h3>My dog</h3>
+                        <p>
+                            Standing in front of a glass door and wants in.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/galery/cat.jpg">
+                        <img class="resizeable" src="images/galery/cat.jpg" alt="demo pic" />
+                        <h3>My cat</h3>
+                        <p>
+                            Sleeping...
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/galery/boar.jpg">
+                        <img class="resizeable" src="images/galery/boar.jpg" alt="demo pic" />
+                        <h3>Dead pig on the wall</h3>
+                        <p>
+                            Hanging around.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/galery/snow.jpg">
+                        <img class="resizeable" src="images/galery/snow.jpg" alt="demo pic" />
+                        <h3>Winter wonderland</h3>
+                        <p>
+                            The german alps.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/galery/rabbit.jpg">
+                        <img class="resizeable" src="images/galery/rabbit.jpg" alt="demo pic" />
+                        <h3>Bunny</h3>
+                        <p>
+                            In my brothers garden.
+                        </p>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank" rel="rondell_1" href="images/galery/trash.jpg">
+                        <img class="resizeable" src="images/galery/trash.jpg" alt="demo pic" />
+                        <h3>Trash</h3>
+                        <p>
+                            Somewhere in the USA.
+                        </p>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="column size1of4 last">
+                <h3>Advanced carousel</h3>
+                
+                <p>
+                    This demo show how to display an advanced gallery. Click an image to focus it and a second click will open a lightbox.
+                </p>
+                <p>
+                    You can press arrow left and right on your keyboard to navigate through the images.
+                </p>
+                <p>
+                    The rondell will automatically continue to rotate through the gallery when your mouse leaves it's area.
+                </p>
+                <p>
+                    The lightbox is powered by <a href="http://www.fancybox.net" title="Fancybox">Fancybox</a>.
+                </p>
+                <br/>
+                <p>
+                    <a href="#demo2code" class="showCode" title="Show the code to create an advanced carousel">Click here to see how it's done</a>
+                </p>
+                <div class="hidden">
+                    <div id="demo2code">
+                        <p>
+                            The following code will create an advanced carousel:
+                        </p>
+                        <pre>
 &lt;script type="text/javascript"&gt;
     $(function() {
+        // Create a rondell with the 'carousel' preset and set an option 
+        // to disable the rondell when the lightbox is active
+        
         $('#rondellGallery > div').rondell({
             preset: 'carousel',
             isActive: function() {
@@ -339,9 +381,11 @@
             }
         }); 
                 
+        // Initialize fancybox for links to full size images
+        
         $('#rondellGallery a').fancybox({
             hideOnContentClick: false,
-            padding: 0,
+            padding: 10,
             scrolling: 'no',
             onStart: function(items, idx) {
                 return $(items[idx]).parent().hasClass('rondellItemFocused');
@@ -349,23 +393,80 @@
         });
     });
 &lt;/script&gt;</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <br class="clear"/>
+            
+            <hr id="sliderdemo"/>
+            
+            <div class="column size1of4">
+                <h3>Slider</h3>
+                
+                <p>
+                    This demo shows how create a slider.
+                </p>
+                <p>
+                    The auto-rotation stops while hovering and continues after the mouse leaves.
+                </p>
+                <p>
+                    Also works great on touch devices like the previous examples.
+                </p>
+                <br/>
+                <p>
+                    <a href="#demo3code" class="showCode" title="Show the code for the slider">Click here to see how it's done</a>
+                </p>
+                <div class="hidden">
+                    <div id="demo3code">
+<pre>&lt;script type="text/javascript"&gt;
+    $(function() {
+        $('#rondellSlider > img').rondell({
+            preset: 'slider',
+            theme: 'slider'
+        });
+    });
+&lt;/script&gt;</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="column size3of4 last">
+                <div id="rondellSlider" class="centered">
+                    <img src="images/slider/pic1.png" alt="demo pic 1" title="A beautiful unicorn" />
+                    <img src="images/slider/pic2.png" alt="demo pic 2" title="Swan on the alpsee"/>
+                    <img src="images/slider/pic3.png" alt="demo pic 3" title="Great landscape"/>
+                    <img src="images/slider/pic4.png" alt="demo pic 4" title="Austrian mountains"/>
+                </div>
+            </div>
             
             <br/>
             
             <hr id="productsdemo"/>
             
-            <h3>Product overview</h3>
+            <h3>Product scroller</h3>
             
             <p>
                 Example how this plugin can be used for displaying products on a company page or webshop.
             </p>
-            
+            <br/>
+            <p>
+                <a href="#demo4code" class="showCode" title="Show the code for the product scroller">Click here to see how it's done</a>
+            </p>
+            <div class="hidden">
+                <div id="demo4code"> 
+<pre>$('#rondellProducts > div').rondell({
+    preset: 'products',
+    theme: 'dark'
+});</pre>
+                </div>
+            </div>
             <br/>
             
-            <div id="rondellProducts">
+            <div id="rondellProducts" class="centered">
                 <div>
                     <a href="#rondellProducts" title="Dummy link to the cloud">
-                        <img src="images/cloud.png" alt="cloud product" />
+                        <img src="images/products/cloud.png" alt="cloud product" />
                         <h5>Your own cloud</h5>
                         <p>
                             Buy your own cloud to do some really complicated stuff very fast!
@@ -374,7 +475,7 @@
                 </div>
                 <div>
                     <a href="#rondellProducts" title="Dummy link to the router">
-                        <img src="images/router.png" alt="router product" />
+                        <img src="images/products/router.png" alt="router product" />
                         <h5>The new router</h5>
                         <p>
                             The router which can connect to anything without cables!
@@ -383,7 +484,7 @@
                 </div>
                 <div>
                     <a href="#rondellProducts" title="Dummy link to the client">
-                        <img src="images/client.png" alt="client product" />
+                        <img src="images/products/client.png" alt="client product" />
                         <h5>The green computer</h5>
                         <p>
                             Our climate saver for only <b>999$</b>!
@@ -392,7 +493,7 @@
                 </div>
                 <div>
                     <a href="#rondellProducts" title="Dummy link to the client">
-                        <img src="images/client3.png" alt="client product" />
+                        <img src="images/products/client3.png" alt="client product" />
                         <h5>The blue computer</h5>
                         <p>
                             Makes you calm while working. Now only <b>1999$</b>!
@@ -401,7 +502,7 @@
                 </div>
                 <div>
                     <a href="#rondellProducts" title="Dummy link to the client">
-                        <img src="images/client2.png" alt="client product" />
+                        <img src="images/products/client2.png" alt="client product" />
                         <h5>The pink computer</h5>
                         <p>
                             For the girls. Only <b>599$</b>!
@@ -410,7 +511,7 @@
                 </div>
                 <div>
                     <a href="#rondellProducts" title="Dummy link to the unknown">
-                        <img src="images/unknown.png" alt="unknown product" />
+                        <img src="images/products/unknown.png" alt="unknown product" />
                         <h5>Surprise</h5>
                         <p>
                             Order this and you will be surprised!
@@ -419,130 +520,29 @@
                 </div>
             </div>
             
-            <p>
-                <a href="#demo3code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
-            </p>
-            <pre id="demo3code" class="collapsible">
-$('#rondellProducts > div').rondell({
-    preset: 'products',
-    theme: 'dark'
-});</pre>
-            
             <br/>
         
             <hr id="stuffdemo"/>
             
-            <h3>Text and images</h3>
-            
-            <p>
-                This demo show how to display a mix of text and images as slider.<br/>
-                You can press arrow left and right on your keyboard to navigate through the images.<br/>
-            </p>
-            <p>
-                Automatic rotation is disabled in this demo and custom controls are used.
-            </p>
-            
-            <div id="rondellMixed">
-                <div>
-                    <img class="resizeable" src="images/water.png" alt="Waterfall" />
-                    <h2>Waterfall</h2>
-                    <p>
-                        Waterfalls are commonly formed when a river is young.
-                        At these times the channel is often narrow and deep. 
-                        When the river courses over resistant bedrock, erosion happens slowly, 
-                        while downstream the erosion occurs more rapidly.
-                        As the watercourse increases its velocity at the edge of the waterfall, 
-                        it plucks material from the riverbed.
-                    </p>
-                    <p> 
-                        Whirlpools created in the turbulence as well as sand and stones carried by the watercourse increase the erosion capacity.
-                        This causes the waterfall to carve deeper into the bed and to recede upstream. Often over time, 
-                        the waterfall will recede back to form a canyon or gorge downstream as it recedes upstream, 
-                        and it will carve deeper into the ridge above it. 
-                        The rate of retreat for a waterfall can be as high as one and half meters per year.
-                    </p>
-                    <a href="http://en.wikipedia.org/wiki/Waterfall" title="Waterfall">Read more</a>
-                </div>
-                <div>
-                    <h2>Some text</h2>
-                    <p>
-                        You can put <b>any</b> content you like in here.
-                    </p>
-                    <p>
-                        Also long text!
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-                        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-                        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
-                        sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-                        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-                        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
-                        sanctus est Lorem ipsum dolor sit amet.
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-                        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-                        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
-                        sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-                        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-                        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
-                        sanctus est Lorem ipsum dolor sit amet.
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-                        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-                        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
-                        sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-                        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-                        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
-                        sanctus est Lorem ipsum dolor sit amet.
-                    </p>
-                    <p>
-                        <b>Nice!</b>
-                    </p>
-                </div>
-                <div>
-                    <img class="resizeable" src="images/mountains.png" alt="Mountains" />
-                    <h2>Mountains</h2>
-                    <p>
-                        A mountain is a large landform that stretches above the surrounding land in a 
-                        limited area usually in the form of a peak. A mountain is generally steeper than a hill. 
-                        The adjective montane is used to describe mountainous areas and things associated with them. 
-                        The study of mountains is called Orography. Exogeology deals with planetary mountains, 
-                        which in that branch of science are usually called montes (singular—mons).
-                    </p>
-                    <p> 
-                        The highest mountain on Earth based from sea level is Mount Everest (8,848 m (29,029 ft)) 
-                        in the Himalayas of Asia. The highest known mountain in the Solar System is 
-                        Olympus Mons on the planet Mars at 21,171 m (69,459 ft).
-                    </p>
-                    <a href="http://en.wikipedia.org/wiki/Mountains" title="Mountains">Read more</a>
-                </div>
-                <div>
-                    <img src="images/ranseier.jpg" alt="Karl Ranseier" />
-                    <h2>Karl Ranseier</h2>
-                    <p>
-                        Karl Ranseier ist eine fiktive Person, die im Rahmen der Samstag-Nacht-News von 
-                        Stefan Jürgens in einer Trauerrede gewürdigt wurde. Erfunden wurde die Figur von Jacky Dreksler, 
-                        aus dessen Privatalbum auch das Foto Ranseiers stammt, das immer zu Beginn der Rubrik gezeigt wurde. 
-                        Der Name „Ranseier“ ist eine Idee Hugo Egon Balders.
-                    </p>
-                    <a href="http://de.wikipedia.org/wiki/Karl_Ranseier#Karl_Ranseier" title="Wikipedia">Karl Ranseier bei Wikipedia</a>
-                </div>
-                <a href="#" class="controlShiftLeft">
-                    <img src="images/arrow_left.png" alt="Shift left"/>
-                </a>
-                <a href="#" class="controlShiftRight">
-                    <img src="images/arrow_right.png" alt="Shift right"/>
-                </a>
-            </div>
-            
-            <p>
-                <a href="#demo4code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
-            </p>
-            <pre id="demo4code" class="collapsible">
-&lt;script type="text/javascript"&gt;
+            <div class="column size1of3">
+                <h3>Full size text &amp; images</h3>
+                
+                <p>
+                    This demo show how to display a mix of text and images as slider.<br/>
+                    If an item contains no image, the item's content is displayed normally and can be scrolled.<br/>
+                    If the item contains an image, the caption is displayed as overlay.
+                </p>
+                <p>
+                    You can press arrow left and right on your keyboard to navigate through the images.<br/>
+                    Automatic rotation is disabled in this demo.
+                </p>
+                <br/>
+                <p>
+                    <a href="#demo5code" class="showCode" title="Show the code for the full size slider">Click here to see how it's done</a>
+                </p>
+                <div class="hidden">
+                    <div id="demo5code">
+<pre>&lt;script type="text/javascript"&gt;
     $(function() {
         var rondellMixed = $('#rondellMixed > div').rondell({
             preset: 'pages',
@@ -560,37 +560,128 @@ $('#rondellProducts > div').rondell({
         });
     });
 &lt;/script&gt;</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="column size2of3 last">
+                <div id="rondellMixed" class="centered">
+                    <div>
+                        <img class="resizeable" src="images/page/water.png" alt="Waterfall" />
+                        <h2>Waterfall</h2>
+                        <p>
+                            Waterfalls are commonly formed when a river is young.
+                            At these times the channel is often narrow and deep. 
+                            When the river courses over resistant bedrock, erosion happens slowly, 
+                            while downstream the erosion occurs more rapidly.
+                            As the watercourse increases its velocity at the edge of the waterfall, 
+                            it plucks material from the riverbed.
+                        </p>
+                        <p> 
+                            Whirlpools created in the turbulence as well as sand and stones carried by the watercourse increase the erosion capacity.
+                            This causes the waterfall to carve deeper into the bed and to recede upstream. Often over time, 
+                            the waterfall will recede back to form a canyon or gorge downstream as it recedes upstream, 
+                            and it will carve deeper into the ridge above it. 
+                            The rate of retreat for a waterfall can be as high as one and half meters per year.
+                        </p>
+                        <a href="http://en.wikipedia.org/wiki/Waterfall" title="Waterfall">Read more</a>
+                    </div>
+                    <div>
+                        <h2>Some text</h2>
+                        <p>
+                            You can put <b>any</b> content you like in here.
+                        </p>
+                        <p>
+                            Also long text!
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+                            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+                            sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+                            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+                            sanctus est Lorem ipsum dolor sit amet.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+                            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+                            sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+                            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+                            sanctus est Lorem ipsum dolor sit amet.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+                            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+                            sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+                            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+                            sanctus est Lorem ipsum dolor sit amet.
+                        </p>
+                        <p>
+                            <b>Nice!</b>
+                        </p>
+                    </div>
+                    <div>
+                        <img class="resizeable" src="images/page/mountains.png" alt="Mountains" />
+                        <h2>Mountains</h2>
+                        <p>
+                            A mountain is a large landform that stretches above the surrounding land in a 
+                            limited area usually in the form of a peak. A mountain is generally steeper than a hill. 
+                            The adjective montane is used to describe mountainous areas and things associated with them. 
+                            The study of mountains is called Orography. Exogeology deals with planetary mountains, 
+                            which in that branch of science are usually called montes (singular—mons).
+                        </p>
+                        <p> 
+                            The highest mountain on Earth based from sea level is Mount Everest (8,848 m (29,029 ft)) 
+                            in the Himalayas of Asia. The highest known mountain in the Solar System is 
+                            Olympus Mons on the planet Mars at 21,171 m (69,459 ft).
+                        </p>
+                        <a href="http://en.wikipedia.org/wiki/Mountains" title="Mountains">Read more</a>
+                    </div>
+                    <div>
+                        <img src="images/page/ranseier.jpg" alt="Karl Ranseier" />
+                        <h2>Karl Ranseier</h2>
+                        <p>
+                            Karl Ranseier ist eine fiktive Person, die im Rahmen der Samstag-Nacht-News von 
+                            Stefan Jürgens in einer Trauerrede gewürdigt wurde. Erfunden wurde die Figur von Jacky Dreksler, 
+                            aus dessen Privatalbum auch das Foto Ranseiers stammt, das immer zu Beginn der Rubrik gezeigt wurde. 
+                            Der Name „Ranseier“ ist eine Idee Hugo Egon Balders.
+                        </p>
+                        <a href="http://de.wikipedia.org/wiki/Karl_Ranseier#Karl_Ranseier" title="Wikipedia">Karl Ranseier bei Wikipedia</a>
+                    </div>
+                </div>
+            </div>
             
             <br/>
             
             <hr id="wookmark"/>
             
-            <h3>Fetch images from another page via an api.</h3>
+            <div class="column size3of4">
+                <div id="wookmarkDemo1"></div>
+            </div>
             
-            <p>
-                This demo fetches links &amp; images from my brothers great webservice 
-                <a href="http://www.wookmark.com" target="_blank" title="Wookmark.com">wookmark.com</a>
-                and creates a rondell from the data.
-            </p>
-            <p>
-                Demo 1 shows a carousel with a cubic function.<br/>
-                Demo 2 uses the dark theme and a gallery layout.<br/>
-                The link and img titles are used as caption and clicking the focused element will open the wookmark in a new tab or window.
-            </p>
-            
-            <div id="wookmarkDemo1" class="centered" style="width: 800px;"></div>
-            
-            <br/>
-            
-            <div id="wookmarkDemo2" class="centered" style="width: 500px;"></div>
-            
-            <br/>
-            
-            <p>
-                <a href="#demo5code" class="collapsor" title="Collapse code">+ Click here to see how it's done</a>
-            </p>
-            <pre id="demo5code" class="collapsible">
-&lt;script type="text/javascript"&gt;
+            <div class="column size1of4 last">
+                <h3>Show images from a webservice via an api.</h3>
+                <p>
+                    This demo fetches links &amp; images from my brothers great webservice 
+                    <a href="http://www.wookmark.com" target="_blank" title="Wookmark.com">wookmark.com</a>
+                    and creates a rondell from the data.
+                </p>
+                <p>
+                    This example shows a carousel with a cubic function.<br/>
+                    The link and img titles are used as caption and clicking the focused element will open the wookmark in a new tab or window.
+                </p>
+                <br/>
+                <p>
+                    <a href="#demo6code" class="showCode" title="Show the code for the wookmark example">Click here to see how it's done</a>
+                </p>
+                <div class="hidden">
+                    <div id="demo6code"> 
+<pre>&lt;script type="text/javascript"&gt;
     $(function() {                
         $.ajax({
             url: 'http://www.wookmark.com/api/json',
@@ -598,8 +689,7 @@ $('#rondellProducts > div').rondell({
             success: function(json, text, xhqr) {
                 if (text == 'success') {
                     var items = json,
-                        wookmarkDemo1 = $('#wookmarkDemo1'),
-                        wookmarkDemo2 = $('#wookmarkDemo2');
+                        wookmarkDemo = $('#wookmarkDemo'),
                     
                     wookmarkDemo.empty();
                     
@@ -628,17 +718,85 @@ $('#rondellProducts > div').rondell({
                         
                         // Append image to link and link to container for the rondell
                         newItem.append(newImg);
-                        wookmarkDemo1.append(newItem);
-                        wookmarkDemo2.append(newItem.clone());
+                        wookmarkDemo.append(newItem);
                     });
                         
                     // Create wookmark carousel 
-                    $('a', wookmarkDemo1).rondell({
+                    $('a', wookmarkDemo).rondell({
                         preset: 'cubic'                               
                     });
+                }
+            }
+        });
+    });
+&lt;/script&gt;</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <br class="clear"/>
+            
+            <hr id="wookmark2"/>
+            
+            <div class="column size1of3">
+                <h3>Show images from a webservice via an api.</h3>
+                <p>
+                    This demo fetches links &amp; images from my brothers great webservice 
+                    <a href="http://www.wookmark.com" target="_blank" title="Wookmark.com">wookmark.com</a>
+                    and creates a rondell from the data.
+                </p>
+                <p>
+                    This example uses the dark theme and a gallery layout.<br/>
+                    The link and img titles are used as caption and clicking the focused element will open the wookmark in a new tab or window.
+                </p>
+                <br/>
+                <p>
+                    <a href="#demo6code" class="showCode" title="Show the code for the wookmark example">Click here to see how it's done</a>
+                </p>
+                <div class="hidden">
+                    <div id="demo6code"> 
+<pre>&lt;script type="text/javascript"&gt;
+    $(function() {                
+        $.ajax({
+            url: 'http://www.wookmark.com/api/json',
+            dataType: 'jsonp',
+            success: function(json, text, xhqr) {
+                if (text == 'success') {
+                    var items = json,
+                        wookmarkDemo = $('#wookmarkDemo'),
                     
-                    // Create wookmark gallery 
-                    $('a', wookmarkDemo2).rondell({
+                    wookmarkDemo.empty();
+                    
+                    // Parsing returned json data
+                    $.each(items, function(idx, item) {
+                        if (idx >= 20) return false;
+                        
+                        // Create link container
+                        var newItem = $('&lt;a/&gt;')
+                        .attr({
+                            'href': item.url,
+                            'title': item.title,
+                            'target': '_blank'
+                        })
+                        .css('opacity', 0);
+                        
+                        // Create image
+                        var newImg = $('&lt;img/&gt;')
+                        .attr({
+                            'src': item.preview,
+                            'alt': item.title,
+                            'width': item.width,
+                            'height': item.height
+                        })
+                        .addClass('resizeable');
+                        
+                        // Append image to link and link to container for the rondell
+                        newItem.append(newImg);
+                        wookmarkDemo.append(newItem);
+                    });
+                        
+                    // Create wookmark carousel 
+                    $('a', wookmarkDemo).rondell({
                         preset: 'gallery',
                         theme: 'dark'                               
                     });
@@ -647,6 +805,15 @@ $('#rondellProducts > div').rondell({
         });
     });
 &lt;/script&gt;</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="column size2of3 last">
+                <div id="wookmarkDemo2" class="centered" style="width: 500px;"></div>
+            </div>
+            
+            <br class="clear"/>
             
             <hr id="options"/>
             
@@ -886,9 +1053,7 @@ $('#rondellProducts > div').rondell({
             <h4>Coming up</h4>
             
             <ul>
-                <li>Improved mouse and touch control</li>
                 <li>Effects for the focused item</li>
-                <li>Slider mode</li>
             </ul>
             
             <br/>
@@ -921,6 +1086,7 @@ $('#rondellProducts > div').rondell({
                 and <a href="http://www.jquery.com" target="_blank" title="jQuery">jQuery</a>.
             </p>
     	</div>  
+    	<br/>
         <script type="text/javascript" src="lib/modernizr-2.0.6.min.js"></script> 
         <script type="text/javascript" src="lib/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="lib/jquery.fancybox-1.3.4.pack.js"></script> 
@@ -941,11 +1107,19 @@ $('#rondellProducts > div').rondell({
                 
                 $('#rondellGallery a').fancybox({
                     hideOnContentClick: false,
-                    padding: 0,
+                    padding: 10,
                     scrolling: 'no',
+                    overlayColor: '#333',
                     onStart: function(items, idx) {
                         return $(items[idx]).parent().hasClass('rondellItemFocused');
                     }
+                });
+                
+                $(function() {
+                    $('#rondellSlider > img').rondell({
+                        preset: 'slider',
+                        theme: 'slider'
+                    });
                 });
                 
                 $('#rondellProducts > div').rondell({
@@ -1025,7 +1199,18 @@ $('#rondellProducts > div').rondell({
                 
                 $('.collapsor').click(function(e) {
                     e.preventDefault();
-                    $($(this).attr('href')).slideToggle(300);
+                    var self = $(this);
+                    self.slideUp(300, function() {
+                        $(self.attr('href')).slideDown(300); 
+                    });
+                });
+                
+                $('.showCode').fancybox({
+                    scrolling: 'no',
+                    padding: 10,
+                    titleShow: false,
+                    autoDimensions: true,
+                    overlayColor: '#333'
                 });
                 
                 $('.scrollToId').click(function(e) {
