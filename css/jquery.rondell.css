@@ -2,6 +2,7 @@
   overflow: hidden;
   display: block;
   position: relative;
+  font-size: 12px;
 }
 .rondellContainer.initializing {
   background: url("../images/loader.gif") no-repeat 50% 50%;
@@ -43,10 +44,6 @@
   text-decoration: none;
 }
 
-.rondellItemHovered {
-  opacity: 1 !important;
-}
-
 .rondellItemFocused, .rondellItemFocused a {
   cursor: auto;
 }
@@ -76,14 +73,17 @@
   display: none;
   color: #fafafa;
   background-color: #333;
+}
+
+.rgba .rondellCaption.overlay {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
 .borderradius .rondellCaption.overlay {
-  border-radius: 5px;
-  -o-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
+  border-radius: 4px;
+  -o-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
 }
 
 .boxshadow .rondellCaption.overlay {
@@ -94,62 +94,37 @@
 
 .rondellControl {
   position: absolute;
-  font-size: 1.2em;
+  font-size: 12px;
   font-weight: bold;
   color: #000;
-  padding: 8px;
+  padding: 4px 8px;
   display: block;
   text-decoration: none;
   background: #f5f5f5;
-  text-shadow: 0 1px 1px #fff;
+  text-shadow: 0 1px 1px #ccc;
   opacity: 0;
 }
 .rondellControl:hover {
   background: #fafafa;
-}
-
-.cssgradients .rondellControl {
-  background-image: -webkit-linear-gradient(top, #fcfcfc, #f9f9f9);
-  background-image: -moz-linear-gradient(top, #fcfcfc, #f9f9f9);
-  background-image: -ms-linear-gradient(top, #fcfcfc, #f9f9f9);
-  background-image: -o-linear-gradient(top, #fcfcfc, #f9f9f9);
-  background-image: linear-gradient(top, #fcfcfc, #f9f9f9);
-}
-.cssgradients .rondellControl:hover {
-  background-image: -webkit-linear-gradient(top, #fafafa, #f5f5f5);
-  background-image: -moz-linear-gradient(top, #fafafa, #f5f5f5);
-  background-image: -ms-linear-gradient(top, #fafafa, #f5f5f5);
-  background-image: -o-linear-gradient(top, #fafafa, #f5f5f5);
-  background-image: linear-gradient(top, #fafafa, #f5f5f5);
-}
-.cssgradients .rondellControl:active {
-  background-image: -webkit-linear-gradient(top, #f5f5f5, #fafafa);
-  background-image: -moz-linear-gradient(top, #f5f5f5, #fafafa);
-  background-image: -ms-linear-gradient(top, #f5f5f5, #fafafa);
-  background-image: -o-linear-gradient(top, #f5f5f5, #fafafa);
-  background-image: linear-gradient(top, #f5f5f5, #fafafa);
-}
-
-.borderradius .rondellControl {
-  border-radius: 5px;
-  -o-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-
-.boxshadow.rgba .rondellControl {
-  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
-}
-.boxshadow.rgba .rondellControl:hover {
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  text-decoration: none;
 }
 
 /* themes */
 /* default theme */
+.rondellTheme_default .rondellItemHovered {
+  opacity: 1 !important;
+}
+
+.boxshadow.rgba .rondellTheme_default .rondellControl {
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+}
+.boxshadow.rgba .rondellTheme_default .rondellControl:hover {
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+}
 .boxshadow.rgba .rondellTheme_default .rondellItem {
   border: 0;
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
@@ -162,11 +137,39 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
+.borderradius .rondellTheme_default .rondellControl {
+  border-radius: 3px;
+  -o-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
 .borderradius .rondellTheme_default .rondellItem, .borderradius .rondellTheme_default .rondellItem img {
-  border-radius: 5px;
-  -o-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
+  border-radius: 3px;
+  -o-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+
+.cssgradients .rondellTheme_default .rondellControl {
+  background-image: -webkit-linear-gradient(top, #fcfcfc, #f9f9f9);
+  background-image: -moz-linear-gradient(top, #fcfcfc, #f9f9f9);
+  background-image: -ms-linear-gradient(top, #fcfcfc, #f9f9f9);
+  background-image: -o-linear-gradient(top, #fcfcfc, #f9f9f9);
+  background-image: linear-gradient(top, #fcfcfc, #f9f9f9);
+}
+.cssgradients .rondellTheme_default .rondellControl:hover {
+  background-image: -webkit-linear-gradient(top, #fafafa, #f5f5f5);
+  background-image: -moz-linear-gradient(top, #fafafa, #f5f5f5);
+  background-image: -ms-linear-gradient(top, #fafafa, #f5f5f5);
+  background-image: -o-linear-gradient(top, #fafafa, #f5f5f5);
+  background-image: linear-gradient(top, #fafafa, #f5f5f5);
+}
+.cssgradients .rondellTheme_default .rondellControl:active {
+  background-image: -webkit-linear-gradient(top, #f5f5f5, #fafafa);
+  background-image: -moz-linear-gradient(top, #f5f5f5, #fafafa);
+  background-image: -ms-linear-gradient(top, #f5f5f5, #fafafa);
+  background-image: -o-linear-gradient(top, #f5f5f5, #fafafa);
+  background-image: linear-gradient(top, #f5f5f5, #fafafa);
 }
 
 /* light theme */
@@ -197,6 +200,9 @@
   border: 0;
   background: transparent;
 }
+.rondellTheme_dark .rondellItemHovered {
+  opacity: 1 !important;
+}
 .rondellTheme_dark .rondellCaption {
   margin: 5px;
   padding: 0;
@@ -224,10 +230,10 @@
 }
 
 .borderradius .rondellTheme_dark {
-  border-radius: 10px;
-  -o-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
+  border-radius: 5px;
+  -o-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 
 .cssgradients .rondellTheme_dark {
@@ -244,10 +250,31 @@
   -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6) inset;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6) inset;
 }
+.boxshadow.rgba .rondellTheme_dark .rondellControl {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
 
 /* page theme, good for preset 'pages' */
 .rondellTheme_page {
   border: 1px solid #ccc;
+}
+.rondellTheme_page .rondellItem {
+  border: 0;
+}
+.rondellTheme_page .rondellControl {
+  font-size: 0;
+  padding: 0;
+  color: transparent;
+  width: 20px;
+  height: 16px;
+}
+.rondellTheme_page .rondellControl.rondellShiftLeft, .rondellTheme_page .rondellControl.rondellShiftRight {
+  background: url("../images/arrows.png") no-repeat 0 0;
+}
+.rondellTheme_page .rondellControl.rondellShiftRight {
+  background-position: 0 -16px;
 }
 
 .boxshadow.rgba .rondellTheme_page {
@@ -263,14 +290,104 @@
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
 }
-
-.rondellTheme_page .rondellItem {
-  border: 0;
-}
-
 .borderradius .rondellTheme_page .rondellItem, .borderradius .rondellTheme_page .rondellItem img {
   border-radius: 3px;
   -o-border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
+}
+.borderradius .rondellTheme_page .rondellControl {
+  border-radius: 0 0 3px 0;
+  -o-border-radius: 0 0 3px 0;
+  -moz-border-radius: 0 0 3px 0;
+  -webkit-border-radius: 0 0 3px 0;
+}
+
+/* slider theme */
+.rondellTheme_slider {
+  border: 1px solid #aaa;
+}
+.rondellTheme_slider .rondellItem {
+  border: 0;
+}
+.rondellTheme_slider .rondellCaption {
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 0 0 3px #000;
+  font-size: 14px;
+}
+.rondellTheme_slider .rondellCaption.overlay {
+  background: transparent;
+}
+.rondellTheme_slider .rondellControl {
+  font-size: 0;
+  color: transparent;
+  padding: 0;
+  width: 15px;
+  height: 30px;
+  background-color: #666;
+  border: 1px solid #555;
+}
+.rondellTheme_slider .rondellControl:hover {
+  background-color: #888;
+}
+
+.rgba .rondellTheme_slider .rondellControl {
+  background-color: rbga(50, 50, 50, 0.2);
+}
+
+.cssgradients .rondellTheme_slider .rondellControl {
+  background-image: -webkit-linear-gradient(top, #666666, #555555);
+  background-image: -moz-linear-gradient(top, #666666, #555555);
+  background-image: -ms-linear-gradient(top, #666666, #555555);
+  background-image: -o-linear-gradient(top, #666666, #555555);
+  background-image: linear-gradient(top, #666666, #555555);
+}
+.cssgradients .rondellTheme_slider .rondellControl:hover {
+  background-image: -webkit-linear-gradient(top, #777777, #555555);
+  background-image: -moz-linear-gradient(top, #777777, #555555);
+  background-image: -ms-linear-gradient(top, #777777, #555555);
+  background-image: -o-linear-gradient(top, #777777, #555555);
+  background-image: linear-gradient(top, #777777, #555555);
+}
+
+.boxshadow.rgba .rondellTheme_slider {
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+.boxshadow.rgba .rondellTheme_slider .rondellCaption {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.boxshadow.rgba .rondellTheme_slider .rondellControl {
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.borderradius .rondellTheme_slider {
+  border-radius: 2px;
+  -o-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+}
+.borderradius .rondellTheme_slider .rondellItem, .borderradius .rondellTheme_slider .rondellItem img {
+  border-radius: 2px;
+  -o-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+}
+.borderradius .rondellTheme_slider .rondellControl.rondellShiftLeft {
+  border-radius: 0 15px 15px 0;
+  -o-border-radius: 0 15px 15px 0;
+  -moz-border-radius: 0 15px 15px 0;
+  -webkit-border-radius: 0 15px 15px 0;
+}
+.borderradius .rondellTheme_slider .rondellControl.rondellShiftRight {
+  border-radius: 15px 0 0 15px;
+  -o-border-radius: 15px 0 0 15px;
+  -moz-border-radius: 15px 0 0 15px;
+  -webkit-border-radius: 15px 0 0 15px;
 }
