@@ -95,6 +95,7 @@
                 <ul>
                     <li>Improved some presets and themes.</li>
                     <li>Added random start option.</li>
+                    <li>Added slider preset.</li>
                 </ul>
                 <br/>
                 <p>
@@ -553,16 +554,6 @@
             preset: 'pages',
             theme: 'page'
         });
-        
-        // Init custom controls
-        $('#rondellMixed .controlShiftLeft').click(function(e) {
-            e.preventDefault();
-            rondellMixed.shiftLeft();
-        });
-        $('#rondellMixed .controlShiftRight').click(function(e) {
-            e.preventDefault();
-            rondellMixed.shiftRight();
-        });
     });
 &lt;/script&gt;</pre>
                     </div>
@@ -590,6 +581,34 @@
                             The rate of retreat for a waterfall can be as high as one and half meters per year.
                         </p>
                         <a href="http://en.wikipedia.org/wiki/Waterfall" title="Waterfall">Read more</a>
+                    </div>
+                    <div>
+                        <img class="resizeable" src="images/page/mountains.png" alt="Mountains" />
+                        <h2>Mountains</h2>
+                        <p>
+                            A mountain is a large landform that stretches above the surrounding land in a 
+                            limited area usually in the form of a peak. A mountain is generally steeper than a hill. 
+                            The adjective montane is used to describe mountainous areas and things associated with them. 
+                            The study of mountains is called Orography. Exogeology deals with planetary mountains, 
+                            which in that branch of science are usually called montes (singular—mons).
+                        </p>
+                        <p> 
+                            The highest mountain on Earth based from sea level is Mount Everest (8,848 m (29,029 ft)) 
+                            in the Himalayas of Asia. The highest known mountain in the Solar System is 
+                            Olympus Mons on the planet Mars at 21,171 m (69,459 ft).
+                        </p>
+                        <a href="http://en.wikipedia.org/wiki/Mountains" title="Mountains">Read more</a>
+                    </div>
+                    <div>
+                        <img src="images/page/ranseier.jpg" alt="Karl Ranseier" />
+                        <h2>Karl Ranseier</h2>
+                        <p>
+                            Karl Ranseier ist eine fiktive Person, die im Rahmen der Samstag-Nacht-News von 
+                            Stefan Jürgens in einer Trauerrede gewürdigt wurde. Erfunden wurde die Figur von Jacky Dreksler, 
+                            aus dessen Privatalbum auch das Foto Ranseiers stammt, das immer zu Beginn der Rubrik gezeigt wurde. 
+                            Der Name „Ranseier“ ist eine Idee Hugo Egon Balders.
+                        </p>
+                        <a href="http://de.wikipedia.org/wiki/Karl_Ranseier#Karl_Ranseier" title="Wikipedia">Karl Ranseier bei Wikipedia</a>
                     </div>
                     <div>
                         <h2>Some text</h2>
@@ -629,34 +648,6 @@
                         <p>
                             <b>Nice!</b>
                         </p>
-                    </div>
-                    <div>
-                        <img class="resizeable" src="images/page/mountains.png" alt="Mountains" />
-                        <h2>Mountains</h2>
-                        <p>
-                            A mountain is a large landform that stretches above the surrounding land in a 
-                            limited area usually in the form of a peak. A mountain is generally steeper than a hill. 
-                            The adjective montane is used to describe mountainous areas and things associated with them. 
-                            The study of mountains is called Orography. Exogeology deals with planetary mountains, 
-                            which in that branch of science are usually called montes (singular—mons).
-                        </p>
-                        <p> 
-                            The highest mountain on Earth based from sea level is Mount Everest (8,848 m (29,029 ft)) 
-                            in the Himalayas of Asia. The highest known mountain in the Solar System is 
-                            Olympus Mons on the planet Mars at 21,171 m (69,459 ft).
-                        </p>
-                        <a href="http://en.wikipedia.org/wiki/Mountains" title="Mountains">Read more</a>
-                    </div>
-                    <div>
-                        <img src="images/page/ranseier.jpg" alt="Karl Ranseier" />
-                        <h2>Karl Ranseier</h2>
-                        <p>
-                            Karl Ranseier ist eine fiktive Person, die im Rahmen der Samstag-Nacht-News von 
-                            Stefan Jürgens in einer Trauerrede gewürdigt wurde. Erfunden wurde die Figur von Jacky Dreksler, 
-                            aus dessen Privatalbum auch das Foto Ranseiers stammt, das immer zu Beginn der Rubrik gezeigt wurde. 
-                            Der Name „Ranseier“ ist eine Idee Hugo Egon Balders.
-                        </p>
-                        <a href="http://de.wikipedia.org/wiki/Karl_Ranseier#Karl_Ranseier" title="Wikipedia">Karl Ranseier bei Wikipedia</a>
                     </div>
                 </div>
             </div>
@@ -1026,6 +1017,11 @@
                     <td>Currently not used.</td>
                 </tr>
                 <tr>
+                    <td>randomStart</td>
+                    <td>false</td>
+                    <td>Will select a random item to start with.</td>
+                </tr>
+                <tr>
                     <td>
                         funcLeft<br/>
                         funcTop<br/>
@@ -1141,16 +1137,6 @@
                 var rondellMixed = $('#rondellMixed > div').rondell({
                     preset: 'pages',
                     theme: 'page'
-                });
-        
-                // Init custom controls
-                $('#rondellMixed .controlShiftLeft').click(function(e) {
-                    e.preventDefault();
-                    rondellMixed.shiftLeft();
-                });
-                $('#rondellMixed .controlShiftRight').click(function(e) {
-                    e.preventDefault();
-                    rondellMixed.shiftRight();
                 });
                 
                 $.ajax({
