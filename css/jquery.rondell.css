@@ -151,6 +151,7 @@
 }
 
 .cssgradients .rondellTheme_default .rondellControl {
+  background-repeat: repeat-x;
   background-image: -webkit-linear-gradient(top, #fcfcfc, #f9f9f9);
   background-image: -moz-linear-gradient(top, #fcfcfc, #f9f9f9);
   background-image: -ms-linear-gradient(top, #fcfcfc, #f9f9f9);
@@ -158,6 +159,7 @@
   background-image: linear-gradient(top, #fcfcfc, #f9f9f9);
 }
 .cssgradients .rondellTheme_default .rondellControl:hover {
+  background-repeat: repeat-x;
   background-image: -webkit-linear-gradient(top, #fafafa, #f5f5f5);
   background-image: -moz-linear-gradient(top, #fafafa, #f5f5f5);
   background-image: -ms-linear-gradient(top, #fafafa, #f5f5f5);
@@ -165,6 +167,7 @@
   background-image: linear-gradient(top, #fafafa, #f5f5f5);
 }
 .cssgradients .rondellTheme_default .rondellControl:active {
+  background-repeat: repeat-x;
   background-image: -webkit-linear-gradient(top, #f5f5f5, #fafafa);
   background-image: -moz-linear-gradient(top, #f5f5f5, #fafafa);
   background-image: -ms-linear-gradient(top, #f5f5f5, #fafafa);
@@ -237,6 +240,7 @@
 }
 
 .cssgradients .rondellTheme_dark {
+  background-repeat: repeat-x;
   background-image: -webkit-linear-gradient(top, #666666, #111111);
   background-image: -moz-linear-gradient(top, #666666, #111111);
   background-image: -ms-linear-gradient(top, #666666, #111111);
@@ -337,6 +341,7 @@
 }
 
 .cssgradients .rondellTheme_slider .rondellControl {
+  background-repeat: repeat-x;
   background-image: -webkit-linear-gradient(top, #666666, #555555);
   background-image: -moz-linear-gradient(top, #666666, #555555);
   background-image: -ms-linear-gradient(top, #666666, #555555);
@@ -344,6 +349,7 @@
   background-image: linear-gradient(top, #666666, #555555);
 }
 .cssgradients .rondellTheme_slider .rondellControl:hover {
+  background-repeat: repeat-x;
   background-image: -webkit-linear-gradient(top, #777777, #555555);
   background-image: -moz-linear-gradient(top, #777777, #555555);
   background-image: -ms-linear-gradient(top, #777777, #555555);
