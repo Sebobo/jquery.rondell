@@ -1,8 +1,7 @@
 @import "mixins";
+@import "base";
 
 /* Demo css */
-
-html {height:100%;font-size:13px;color:#333;background:#f2f2f2;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym {border:0;font-variant:normal;}sup {vertical-align:text-top;}sub {vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}
 
 body {
   height: 100%;
@@ -10,29 +9,6 @@ body {
   font-size: 1em;
   line-height: 1.3em;
   padding: 30px 0;
-}
-
-.column {
-  float: left;
-  overflow: hidden;
-}
-.column.last {
-  float: none;
-}
-.size1of2 {
-  width: 50%;
-}
-.size1of4 {
-  width: 25%;
-}
-.size3of4 {
-  width: 75%;
-}
-.size1of3 {
-  width: 33%;
-}
-.size2of3 {
-  width: 67%;
 }
 
 a { 
@@ -110,15 +86,15 @@ img.inline { margin: 10px; }
   width: 920px;
   background: #fcfcfc; 
   padding: 30px; 
+  position: relative;
 }
 
 .pageHeader {
   background: #267be4;
   color: #fafafa;
   
-  a {
+  p a {
     color: #fff;
-    text-decoration: underline;
   }
 }
 .cssgradients .pageHeader {
@@ -126,47 +102,6 @@ img.inline { margin: 10px; }
 }
 .borderradius .pageHeader {
   @include rounded(8px 8px 0 0);
-}
-
-.sampleElement {
-  border: 1px solid #fed980;
-  padding: 3px 5px;
-  background-color: #ffe199;
-  font-size: 1.1em;
-  text-shadow:0 1px 1px #fff24d;
-  
-  &, a { text-decoration: none; }
-  
-  &:hover {
-    background-color: #fff4d9;
-    border-color: #ffd777;
-  }
-  
-  &.big {  
-    font-size: 1.4em;  
-  }
-  &.green { 
-    background-color: #2ea41e; 
-    border-color: #239714; 
-    color: #fafafa;
-    text-shadow: 0 1px 1px #196d0e;
-  }
-}
-.borderradius .sampleElement { @include rounded(6px); }
-.cssgradients .sampleElement { 
-  @include linear-gradient(#fff24d, #f9aa18); 
-  
-  &:hover { @include linear-gradient(#fff24d, #fdc661); }
-  
-  &.green { 
-    @include linear-gradient(#35b125, #29a219); 
-    &:hover {
-      @include linear-gradient(#40bb30, #31aa21);
-    }
-  }
-}
-.boxshadow.rgba .sampleElement { 
-  @include boxshadow(0 1px 4px rgba(255, 162, 0, 0.3)); 
 }
 
 /* rondell demo stuff */
@@ -266,48 +201,10 @@ img.inline { margin: 10px; }
   background-position:-40px 0px;
 }
 
+
 /* Tabs */
-.tabs {
-  background: #f0f0f0;
-  width: 980px;
-  padding: 0;
-  margin: 0 auto;
-    
-  a {
-    display: block;
-    float: left;
-    color: #333;
-    text-shadow: 0 1px 1px #fff;
-    font-size: 1.1em;
-    background: #eee;
-    border-bottom: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    padding: 6px 10px 5px;
-    text-decoration: none;
-    
-    &.active {
-      font-weight: bold;
-      background: #ddd;
-    }
-    &:hover {
-      background: #f5f5f5;
-    }
-  }
-}
-.boxshadow.rgba .tabs a {
-  &.active,
-  &:active {
-    @include boxshadow(0 1px 1px rgba(0, 0, 0, 0.2) inset);
-  }
-}
-.cssgradients .tabs {
-  @include linear-gradient(#fafafa, #f5f5f5);
-  
-  a {
-    @include linear-gradient(#f5f5f5, #eeeeee);
-    
-    &:hover {
-      @include linear-gradient(#fff, #eeeeee);
-    }
-  } 
+.pageHeader .tabs {
+  margin: 0 -30px;
+  width: 933px;
+  padding: 0 10px 0 37px;
 }
