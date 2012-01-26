@@ -4,6 +4,7 @@
 
 // Base
 $basefont:          13px;
+$baseline:          18px;
 
 // Links
 $linkColor:         #0069d6;
@@ -45,6 +46,23 @@ html {height:100%;font-size:$basefont;color:$grayDark;background:$grayLighter;}b
   &.notice    { background-color: lighten($blue, 25%); }
 }
 .borderradius .label { @include rounded(3px); }
+
+// Basic stuff
+.clear { 
+  clear: both; 
+}
+.relative { 
+  position: relative; 
+}
+.centered { 
+  margin: 0 auto; 
+}
+.floatLeft { 
+  float: left; 
+}
+.floatRight { 
+  float: right; 
+}
 
 
 // Tabs 
@@ -308,7 +326,6 @@ input[type=submit].btn {
   }
 }
 
-
 // Columns
 .column {
   float: left;
@@ -331,5 +348,37 @@ input[type=submit].btn {
 }
 .size2of3 {
   width: 66.76%;
+}
+
+// Inline and block code styles
+code, pre {
+  padding: 0 3px 2px;
+  font-family: Monaco, Andale Mono, Courier New, monospace;
+  font-size: 12px;
+}
+.borderradius {
+  code, pre {
+    @include rounded(3px);
+  }
+}
+code {
+  background-color: lighten($orange, 40%);
+  color: rgba(0,0,0,.75);
+  padding: 1px 3px;
+}
+pre {
+  background-color: #f5f5f5;
+  display: block;
+  padding: ($baseline - 1) / 2;
+  margin: 0 0 $baseline;
+  line-height: $baseline;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.rgba pre {
+  border-color: rgba(0, 0, 0, .15);
 }
 

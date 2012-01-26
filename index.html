@@ -12,7 +12,7 @@
     <body>
         <div class="pageHeader hasShadow">
             
-            <h1 id="docustart">jQuery Rondell - Display images and other content in a nice way</h1>
+            <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
             
             <h3>Version 0.8.6</h3>
             <p>
@@ -24,9 +24,25 @@
                 <li class="selected"><a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">Rondell</a></li>
             </ul>
         </div>
+        
+        <div class="side-menu">
+            <h2>Table of contents</h2>
+            <ul>
+                <li><a class="scrollToId" href="#introduction">Introduction</a></li>  
+                <li><a class="scrollToId" href="#gallerydemosimple">Simple carousel</a></li> 
+                <li><a class="scrollToId" href="#gallerydemo">Advanced carousel</a></li> 
+                <li><a class="scrollToId" href="#sliderdemo">Slider</a></li>
+                <li><a class="scrollToId" href="#productsdemo">Product scroller</a></li>
+                <li><a class="scrollToId" href="#stuffdemo">Mixed content</a></li>
+                <li><a class="scrollToId" href="#wookmark">Using a webservice</a></li>
+                <li><a class="scrollToId" href="#options">Options</a></li> 
+                <li><a class="scrollToId" href="#installation">Installation</a></li>
+            </ul>
+        </div>
+        
         <div class="page hasShadow">
             
-            <h3>About</h3>
+            <h3 id="introduction">About</h3>
             
             <img src="images/preview.png" class="floatRight" alt="Rondell preview" />
             
@@ -155,19 +171,6 @@
             </div>
             
             <br class="clear"/>
-            <br/>
-            <br/>
-            
-            <h3>Overview</h3>
-            <p>
-                <a class="scrollToId" href="#gallerydemosimple">Simple carousel</a> &ndash; 
-                <a class="scrollToId" href="#gallerydemo">Advanced carousel</a> &ndash; 
-                <a class="scrollToId" href="#productsdemo">Product scroller</a> &ndash;
-                <a class="scrollToId" href="#stuffdemo">Mixed content</a> &ndash;
-                <a class="scrollToId" href="#wookmark">Using a webservice</a> &ndash;
-                <a class="scrollToId" href="#options">Options</a> &ndash; 
-                <a class="scrollToId" href="#installation">Installation</a>
-            </p>
             
             <hr id="gallerydemosimple"/>
             
@@ -1262,31 +1265,9 @@
                         }
                     }
                 });
-                
-                $('.collapsor').click(function(e) {
-                    e.preventDefault();
-                    var self = $(this);
-                    self.slideUp(300, function() {
-                        $(self.attr('href')).slideDown(300); 
-                    });
-                });
-                
-                $('.showCode').fancybox({
-                    scrolling: 'no',
-                    padding: 10,
-                    titleShow: false,
-                    autoDimensions: true,
-                    overlayColor: '#333'
-                });
-                
-                $('.scrollToId').click(function(e) {
-                    e.preventDefault();
-                    $('html, body').animate({
-                        scrollTop: $($(this).attr('href')).offset().top
-                    }, 800, 'swing');   
-                });
             });
         </script>
+        <script type="text/javascript" src="lib/demohelpers.js"></script>
         <script type="text/javascript">
             var hostname = document.location.hostname;
             if (hostname && (hostname.indexOf('github') >= 0 || hostname.indexOf('sebastianhelzle') >= 0)) {

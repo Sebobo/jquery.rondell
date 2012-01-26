@@ -3,6 +3,10 @@
 
 /* Demo css */
 
+html {
+  background-image: url('../images/bg.png');
+}
+
 body {
   height: 100%;
   font-family: arial;
@@ -27,8 +31,6 @@ h2 { font-size: 1.8em; }
 h3 { font-size: 1.6em; }
 h4 { font-size: 1.4em; }
 h5 { font-size: 1.2em; }
-
-code, pre { color: #555; padding:5px; font-size:0.9em; }
 
 .collapsor { }
 .collapsible { display:none; }
@@ -71,12 +73,7 @@ img.inline { margin: 10px; }
   }
 }
 
-.clear { clear: both; }
-.relative { position: relative; }
 .hasBorder { border: 4px solid #fff; }
-.centered { margin: 0 auto; }
-.floatLeft { float: left; }
-.floatRight { float: right; }
 
 .boxshadow.rgba .hasShadow { @include boxshadow(0 2px 4px rgba(0, 0, 0, 0.5)); }
 
@@ -143,6 +140,46 @@ img.inline { margin: 10px; }
   .controlShiftRight {
     left: auto;
     right: -100px;
+  }
+}
+
+/*
+ * Sidemenu
+ */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  margin-left: -(460 + 130 + 2 * 30px);
+  padding-top: 30px;
+  text-align: right;
+  width: 140px;
+  font-size: 14px;
+  z-index: 9999;
+  
+  h2 {
+    color: #5C230C;
+    font-size: 16px;
+  }
+  
+  ul {
+    
+  }
+  
+  li {
+    list-style-type: none;
+    a {
+      color: #999;
+      
+      &:hover {
+        color: #333;
+        text-decoration: underline;
+      }
+      
+      &.current {
+        color: #333;
+      } 
+    }
   }
 }
 
