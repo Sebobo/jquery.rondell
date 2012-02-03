@@ -118,7 +118,8 @@ img.inline { margin: 10px; }
 #rondellGallery,
 #rondellMixed,
 #rondellProducts,
-#wookmarkDemo {
+#wookmarkDemo,
+#rondellTopDemo {
   display: none;
 }
 
@@ -159,7 +160,7 @@ img.inline { margin: 10px; }
  */
 .side-menu {
   position: fixed;
-  top: 0;
+  top: 168px;
   left: 50%;
   margin-left: -(460 + 130 + 2 * 30px);
   padding-top: 30px;

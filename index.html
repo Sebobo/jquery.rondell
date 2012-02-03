@@ -86,30 +86,37 @@
             
             <br class="clear"/>
             <br/>
+            <div>
+                <div class="column">
+                    <!-- Flattr button BEGIN -->
+                    <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://sebobo.github.com/jquery.rondell"></a>
+                    <noscript><a href="http://flattr.com/thing/460088/jQuery-Rondell-by-Sebastian-Helzle" target="_blank">
+                    <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
+                    <!-- Flattr button END -->
+                </div>
+                <div class="column last">
+                    <!-- AddThis Button BEGIN -->
+                    <div class="addthis_toolbox addthis_default_style">
+                        <a class="addthis_button_preferred_1"></a>
+                        <a class="addthis_button_preferred_2"></a>
+                        <a class="addthis_button_preferred_3"></a>
+                        <a class="addthis_button_preferred_4"></a>
+                        <a class="addthis_button_compact"></a>
+                        <a class="addthis_counter addthis_bubble_style"></a>
+                    </div>
+                    <!-- AddThis Button END -->
+                </div>
+            </div>
+
+            <br/>
             <br id="usage"/>
             
-            <div class="column size1of2">
+            <div class="size1of2">
                 <h4>Usage</h4>
                 <pre>
 &lt;script type="text/javascript"&gt;
     $('.myExample > .myItem').rondell([options][, callback]);
 &lt;/script&gt;</pre>
-            </div>
-            <div class="column size1of2">
-                <!-- AddThis Button BEGIN -->
-                <div class="addthis_toolbox addthis_default_style ">
-                    <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-                    <a class="addthis_button_tweet"></a>
-                    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
-                    <a class="addthis_counter addthis_pill_style"></a>
-                </div>
-                <!-- AddThis Button END -->
-                <br/>
-                <!-- Flattr button BEGIN -->
-                <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://sebobo.github.com/jquery.rondell"></a>
-                <noscript><a href="http://flattr.com/thing/460088/jQuery-Rondell-by-Sebastian-Helzle" target="_blank">
-                <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
-                <!-- Flattr button END -->
             </div>
 
             <br class="clear"/>
@@ -1308,7 +1315,7 @@
         <script type="text/javascript" src="lib/demohelpers.js"></script>
         <script type="text/javascript">
             var hostname = document.location.hostname;
-            if (hostname && (hostname.indexOf('github') >= 0 || hostname.indexOf('sebastianhelzle') >= 0)) {
+            //if (hostname && (hostname.indexOf('github') >= 0 || hostname.indexOf('sebastianhelzle') >= 0)) {
                 var pkBaseURL = (("https:" == document.location.protocol) ? "https://tracking.sebastianhelzle.net/" : "http://tracking.sebastianhelzle.net/");
                 document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
                 
@@ -1319,7 +1326,7 @@
                 s.async = true;
                 s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
                 t.parentNode.insertBefore(s, t);
-            }
+            //}
         </script>
         <!-- Piwik --> 
         <script type="text/javascript">
