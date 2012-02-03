@@ -2,8 +2,8 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 0.8.6
-  @date 01/20/2012
+  @version 0.8.7
+  @date 02/03/2012
   @category jQuery plugin
   @copyright (c) 2009-2012 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -12,7 +12,7 @@
 (($) ->
   ### Global rondell plugin properties ###
   $.rondell =
-    version: '0.8.6'
+    version: '0.8.7'
     name: 'rondell'
     defaults:
       showContainer: true       # When the plugin has finished initializing $.show() will be called on the items container
@@ -194,7 +194,7 @@
       @_start() if @loadedItems is @maxItems
       
     _onloadItem: (itemIndex, obj, copy=undefined) =>
-      icon = $('img:first', obj)
+      icon = if obj.is('img') then obj else $('img:first', obj)
       
       isResizeable = icon.hasClass(@resizeableClass)
       layerNum = itemIndex
@@ -254,7 +254,8 @@
       )
       
     _loadItem: (itemIndex, obj) =>
-      icon = $('img:first', obj)
+      icon = if obj.is('img') then obj else $('img:first', obj)
+
       if icon.width() > 0 or (icon[0].complete and icon[0].width > 0)
         # Image is already loaded (i.e. from cache)
         @_onloadItem(itemIndex, obj) 
@@ -577,7 +578,7 @@
       obj = $(@)
       itemIndex = idx + 1
       
-      if $('img:first', obj).length
+      if obj.is('img') or $('img:first', obj).length
         rondell._loadItem(itemIndex, obj)
       else
         # Init item without an icon
