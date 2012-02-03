@@ -1,9 +1,11 @@
 /*
  * SASS Base for Sebobo github projects.
+ * 01/26/2012 17:23
  */
 html {
   height: 100%;
   font-size: 13px;
+  font-family: arial;
   color: #404040;
   background: #e6e6e6;
 }
@@ -118,6 +120,18 @@ legend {
 
 .floatRight {
   float: right;
+}
+
+.clearfix {
+  zoom: 1;
+}
+.clearfix:before, .clearfix:after {
+  display: table;
+  content: "";
+  zoom: 1;
+}
+.clearfix:after {
+  clear: both;
 }
 
 .tabs {
@@ -553,7 +567,7 @@ p {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  margin: 0.3em 0 0.8em;
+  margin: 0 0 0.8em;
   line-height: 1.1em;
   font-weight: bold;
 }
@@ -583,6 +597,14 @@ h5 {
 }
 
 .hidden {
+  display: none;
+}
+
+.js .hideOnJS {
+  display: none;
+}
+
+.no-js .showOnJS {
   display: none;
 }
 
@@ -650,6 +672,9 @@ img.inline {
 .pageHeader {
   background: #267be4;
   color: #fafafa;
+}
+.pageHeader h1 {
+  margin-top: -5px;
 }
 .pageHeader p a {
   color: #fff;
@@ -728,7 +753,7 @@ img.inline {
   z-index: 9999;
 }
 .side-menu h2 {
-  color: #5C230C;
+  color: #267BE4;
   font-size: 16px;
 }
 .side-menu li {
