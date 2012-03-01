@@ -112,7 +112,9 @@
 
 /* default theme */
 .rondellTheme_default {
-  .rondellItemHovered { opacity: 1 !important; }
+  .rondellItemHovered { 
+    opacity: 1 !important; 
+  }
 }
 .boxshadow.rgba .rondellTheme_default {
   .rondellControl { 
@@ -147,6 +149,7 @@
 .rondellTheme_light {
   .rondellContainer { background: #fff; }
   .rondellItem { border: 0; }
+  .rondellItemHovered { opacity: 1 !important; }
 }
 .boxshadow.rgba .rondellTheme_light .rondellItem {
   border: 0; 
