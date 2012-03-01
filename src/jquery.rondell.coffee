@@ -178,23 +178,23 @@
         captionContainer = $('<div class="rondellCaption"></div>')
         captionContainer.addClass('overlay') if item.icon
         captionContent.wrapAll(captionContainer)
+
+      # Add some private variables
+      item.animating = false
         
       # Init click events
       item.object
       .addClass("rondellItemNew #{@itemProperties.cssClass}")
-      .css(
+      .css
         opacity: 0
         width: item.sizeSmall.width
         height: item.sizeSmall.height
         left: @center.left - item.sizeFocused.width / 2
         top: @center.top - item.sizeFocused.height / 2
-      )
       .bind('mouseenter mouseleave click', (e) =>
         switch e.type
-          when 'mouseenter'
-            item.object.addClass('rondellItemHovered') if item.object.is(':visible') and not item.hidden
-          when 'mouseleave'
-            item.object.removeClass('rondellItemHovered')
+          when 'mouseenter' then @_onMouseEnterItem layerNum
+          when 'mouseleave' then @_onMouseLeaveItem layerNum
           when 'click'
             e.preventDefault() unless @currentLayer is layerNum
             @shiftTo(layerNum) if item.object.is(':visible') and not item.hidden
@@ -203,11 +203,27 @@
       @loadedItems += 1
       
       @_start() if @loadedItems is @maxItems
+
+    _onMouseEnterItem: (itemIndex) =>
+      item = @_getItem(itemIndex)
+      if not item.animating and not item.hidden and item.object.is(':visible')
+        item.object.addClass('rondellItemHovered').stop(true).animate
+            opacity: 1
+          , @fadeTime, @funcEase
+
+    _onMouseLeaveItem: (itemIndex) =>
+      item = @_getItem(itemIndex)
+      item.object.removeClass('rondellItemHovered')
+
+      if not item.animating and not item.hidden
+        item.object.stop(true).animate
+            opacity: item.lastTarget.opacity
+          , @fadeTime, @funcEase
       
     _onloadItem: (itemIndex, obj, copy=undefined) =>
       icon = if obj.is('img') then obj else $('img:first', obj)
       
-      isResizeable = icon.hasClass(@resizeableClass)
+      isResizeable = icon.hasClass @resizeableClass
       layerNum = itemIndex
     
       itemSize = @itemProperties.size
@@ -418,22 +434,26 @@
       item.small = false
       itemFocusedWidth = item.sizeFocused.width
       itemFocusedHeight = item.sizeFocused.height
+
+      newTarget =
+        width: itemFocusedWidth
+        height: itemFocusedHeight
+        left: @center.left - itemFocusedWidth / 2
+        top: @center.top - itemFocusedHeight / 2
+        opacity: 1
+      item.lastTarget = newTarget
+      item.animating = true
       
       # Move item to center position and fade in
-      item.object.stop(true).show(0)
-      .data("lastTarget", null)
-      .css("z-index", @zIndex + @maxItems)
+      item.object.stop(true)
+      .css
+        zIndex: @zIndex + @maxItems
+        display: "block"
       .addClass("rondellItemFocused")
-      .animate(
-          width: itemFocusedWidth
-          height: itemFocusedHeight
-          left: @center.left - itemFocusedWidth / 2
-          top: @center.top - itemFocusedHeight / 2
-          opacity: 1
-        , @fadeTime, @funcEase, =>
-          @_autoShiftInit()
-          @showCaption(layerNum) if @hovering or @alwaysShowCaption or @_onMobile()
-      )
+      .animate newTarget, @fadeTime, @funcEase, =>
+        item.animating = false
+        @_autoShiftInit()
+        @showCaption(layerNum) if @hovering or @alwaysShowCaption or @_onMobile()
       
       if item.icon and not item.resizeable
         margin = (@itemProperties.sizeFocused.height - item.icon.height()) / 2
@@ -477,7 +497,7 @@
 
         newTarget.opacity = @funcOpacity layerDiff, @, layerNum
 
-        lastTarget = item.object.data "lastTarget"
+        lastTarget = item.lastTarget
         return if lastTarget \
           and lastTarget.width is newTarget.width \
           and lastTarget.height is newTarget.height \
@@ -485,13 +505,15 @@
           and lastTarget.top is newTarget.top \
           and lastTarget.opacity is newTarget.opacity
 
-        item.object.data "lastTarget", newTarget
+        item.lastTarget = newTarget
+        item.animating = true
 
         item.object.removeClass("rondellItemNew rondellItemFocused").stop(true)
         .css
           zIndex: newZ
           display: "block"
         .animate newTarget, fadeTime, @funcEase, =>
+          item.animating = false
           if newTarget.opacity < @opacityMin
             item.hidden = true
             item.object.css "display", "none"
@@ -514,11 +536,15 @@
       else
         # Hide items which are moved out of view
         item.hidden = true
+        item.animating = true
 
         item.object.stop(true)
         .css('z-index', newZ)
         .animate newTarget, fadeTime / 2, @funcEase, =>
+          item.animating = false
           @hideCaption layerNum
+          
+      item.lastTarget = newTarget
 
     shiftTo: (layerNum) =>
       if @repeating 

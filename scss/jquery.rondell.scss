@@ -111,11 +111,6 @@
 /* themes */
 
 /* default theme */
-.rondellTheme_default {
-  .rondellItemHovered { 
-    opacity: 1 !important; 
-  }
-}
 .boxshadow.rgba .rondellTheme_default {
   .rondellControl { 
     @include boxshadow(0 0 1px rgba(0, 0, 0, 0.3));
@@ -149,7 +144,6 @@
 .rondellTheme_light {
   .rondellContainer { background: #fff; }
   .rondellItem { border: 0; }
-  .rondellItemHovered { opacity: 1 !important; }
 }
 .boxshadow.rgba .rondellTheme_light .rondellItem {
   border: 0; 
@@ -165,7 +159,6 @@
     border: 0; 
     background: transparent;
   }
-  .rondellItemHovered { opacity: 1 !important; }
   .rondellCaption { 
     margin: 5px; 
     padding: 0; 
