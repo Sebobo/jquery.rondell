@@ -137,6 +137,44 @@
         rondell.center.left + (layerDiff - 0.5) * (rondell.itemProperties.size.width + 5)
       funcOpacity: (layerDist, rondell) ->
         0.8
+
+    thumbGallery:
+      # Custom options
+      myColumns: 3
+      myRows: 3
+      myItemPadding: 5
+      # Standard rondell options
+      visibleItems: 9
+      center:
+        top: 200
+        left: 550
+      size:
+        height: 400
+        width: 800
+      controls:
+        enabled: false
+        margin:
+          x: 10
+          y: 255
+      itemProperties:
+        delay: 30
+        sizeFocused: 
+          width: 480
+          height: 390
+        size:
+          width: 94
+          height: 126 
+      funcTop: (l, r, i) ->
+        row = (i - 1) % r.myRows
+        r.myItemPadding + row * (r.itemProperties.size.height + r.myItemPadding)
+      funcLeft: (l, r, i) ->
+        column = Math.floor(r.myColumns / 2) + Math.ceil(i / r.myRows) - Math.ceil((i - l) / r.myRows)
+        r.myItemPadding + column * (r.itemProperties.size.width + r.myItemPadding)
+      funcDiff: (d, r, i) ->
+        Math.abs d
+      funcOpacity: (l, r, i) ->
+        column = Math.floor(r.myColumns / 2) + Math.ceil(i / r.myRows) - Math.ceil((i - l) / r.myRows)
+        if column < 0 or column >= r.myColumns then 0 else 0.8
         
     slider:
       visibleItems: 1

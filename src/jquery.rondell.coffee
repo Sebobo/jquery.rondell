@@ -12,7 +12,7 @@
 (($) ->
   ### Global rondell plugin properties ###
   $.rondell =
-    version: '0.8.7'
+    version: '0.9.0-beta'
     name: 'rondell'
     defaults:
       showContainer: true       # When the plugin has finished initializing $.show() will be called on the items container
@@ -34,6 +34,7 @@
       scaling: 2                # Size of focused element
       opacityMin: 0.05          # Min opacity before elements are set to display: none
       fadeTime: 300
+      keyDelay: 300             # Min time between key strokes are registered
       zIndex: 1000              # All elements of the rondell will use this z-index and add their depth to it
       itemProperties:           # Default properties for each item
         delay: 100              # Time offset between the animation of each item
@@ -49,7 +50,6 @@
       autoRotation:             # If the cursor leaves the rondell continue spinning
         enabled: false
         paused: false           # Can be used to pause the auto rotation with a play/pause button for example 
-        _timer: -1              
         direction: 0            # 0 or 1 means left and right
         once: false             # Will animate until the rondell will be hovered at least once
         delay: 5000
@@ -66,18 +66,16 @@
         enabled: true
         threshold: 5
         minTimeBetweenShifts: 300
-        _lastShift: 0
       touch:
         enabled: true
         preventDefaults: true   # Will call event.preventDefault() on touch events
-        threshold: 100          # Distance in pixels the "finger" has to swipe to create the touch event
-        _start: undefined        
-        _end: undefined         
-      randomStart: false  
+        threshold: 100          # Distance in pixels the "finger" has to swipe to create the touch event      
+      randomStart: false
       funcEase: 'easeInOutQuad' # jQuery easing function name for the movement of items
       theme: 'default'          # CSS theme class which gets added to the rondell container
       preset: ''                # Configuration preset
       effect: null              # Special effect function for the focused item, not used currently
+      onAfterShift: null
   
   ### Add default easing function for rondell to jQuery if missing ###
   unless $.easing.easeInOutQuad        
@@ -101,25 +99,38 @@
         $.extend(true, @, $.rondell.defaults, $.rondell.presets[options.preset], options or {})
       else
         $.extend(true, @, $.rondell.defaults, options or {})
+
+      # Init some private variables
+      $.extend true, @,
+        _lastKeyEvent: 0
+        autoRotation:
+          _timer: -1              
+        controls:
+          _lastShift: 0
+        touch:
+          _start: undefined        
+          _end: undefined   
         
+      # Compute focused item size if not set
       @itemProperties.sizeFocused =
         width: @itemProperties.sizeFocused.width or @itemProperties.size.width * @scaling
         height: @itemProperties.sizeFocused.height or @itemProperties.size.height * @scaling
-        
+      
+      # Compute size if not set  
       @size = 
         width: @size.width or @center.left * 2
         height: @size.height or @center.top * 2
     
     # Animation functions, can be different for each rondell
-    funcLeft: (layerDiff, rondell) ->
+    funcLeft: (layerDiff, rondell, idx) ->
       rondell.center.left - rondell.itemProperties.size.width / 2.0 + Math.sin(layerDiff) * rondell.radius.x
-    funcTop: (layerDiff, rondell) ->
+    funcTop: (layerDiff, rondell, idx) ->
       rondell.center.top - rondell.itemProperties.size.height / 2.0 + Math.cos(layerDiff) * rondell.radius.y
-    funcDiff: (layerDiff, rondell) ->
+    funcDiff: (layerDiff, rondell, idx) ->
       Math.pow(Math.abs(layerDiff) / rondell.maxItems, 0.5) * Math.PI
-    funcOpacity: (layerDist, rondell) ->
+    funcOpacity: (layerDist, rondell, idx) ->
       if rondell.visibleItems > 1 then Math.max(0, 1.0 - Math.pow(layerDist / rondell.visibleItems, 2)) else 0
-    funcSize: (layerDist, rondell) ->
+    funcSize: (layerDist, rondell, idx) ->
       1
     
     showCaption: (layerNum) => 
@@ -310,13 +321,13 @@
         # Add hover and touch functions to container when we don't have touch support
         @container.bind('mouseover mouseout', @_hover)
         
-      @container.removeClass('initializing')
+      @container.removeClass "initializing"
           
       # Fire callback after initialization with rondell instance if callback was provided
       @initCallback?(@)
       
       # Move items to starting positions
-      @shiftTo(@currentLayer)
+      @shiftTo @currentLayer
       
     _onMobile: ->
       ###
@@ -396,7 +407,7 @@
         @hovering = false
         if paused and not @autoRotation.once
           @autoRotation.paused = false
-          @_autoShift()
+          @_autoShiftInit()
         @hideCaption(@currentLayer) unless @alwaysShowCaption
             
       # Show or hide controls if they exist
@@ -410,8 +421,9 @@
       
       # Move item to center position and fade in
       item.object.stop(true).show(0)
-      .css('z-index', @zIndex + @maxItems)
-      .addClass('rondellItemFocused')
+      .data("lastTarget", null)
+      .css("z-index", @zIndex + @maxItems)
+      .addClass("rondellItemFocused")
       .animate(
           width: itemFocusedWidth
           height: itemFocusedHeight
@@ -419,7 +431,7 @@
           top: @center.top - itemFocusedHeight / 2
           opacity: 1
         , @fadeTime, @funcEase, =>
-          @_autoShift()
+          @_autoShiftInit()
           @showCaption(layerNum) if @hovering or @alwaysShowCaption or @_onMobile()
       )
       
@@ -442,37 +454,47 @@
         layerDist = Math.abs(layerPos - @currentLayer)
 
       # Get the absolute layer number difference
-      layerDiff = @funcDiff(layerPos - @currentLayer, @)
+      layerDiff = @funcDiff(layerPos - @currentLayer, @, layerNum)
       layerDiff *= -1 if layerPos < @currentLayer
       
       itemWidth = item.sizeSmall.width * @funcSize(layerDiff, @)
       itemHeight = item.sizeSmall.height * @funcSize(layerDiff, @)
       
-      newX = @funcLeft(layerDiff, @) + (@itemProperties.size.width - itemWidth) / 2
-      newY = @funcTop(layerDiff, @) + (@itemProperties.size.height - itemHeight) / 2
+      newX = @funcLeft(layerDiff, @, layerNum) + (@itemProperties.size.width - itemWidth) / 2
+      newY = @funcTop(layerDiff, @, layerNum) + (@itemProperties.size.height - itemHeight) / 2
       
       newZ = @zIndex + (if layerDiff < 0 then layerPos else -layerPos)
       fadeTime = @fadeTime + @itemProperties.delay * layerDist
       isNew = item.object.hasClass('rondellItemNew')
+      newOpacity = @funcOpacity(layerDiff, @, layerNum)
         
       # Smooth animation when item is visible
-      if isNew or layerDist <= @visibleItems
+      if isNew or layerDist <= @visibleItems or newOpacity >= @opacityMin
         @hideCaption(layerNum)
         
-        newOpacity = @funcOpacity(layerDist, @)
-        item.object.show() if newOpacity >= @opacityMin
+        newTarget =
+          width: itemWidth
+          height: itemHeight
+          left: newX
+          top: newY
+          opacity: newOpacity 
+
+        lastTarget = item.object.data "lastTarget"
+        return if lastTarget \
+          and lastTarget.width is newTarget.width \
+          and lastTarget.height is newTarget.height \
+          and lastTarget.left is newTarget.left \
+          and lastTarget.top is newTarget.top \
+          and lastTarget.opacity is newOpacity
+
+        item.object.data "lastTarget", newTarget
 
         item.object.removeClass('rondellItemNew rondellItemFocused').stop(true)
-        .css('z-index', newZ)
-        .animate(
-            width: itemWidth
-            height: itemHeight
-            left: newX
-            top: newY
-            opacity: newOpacity 
-          , fadeTime, @funcEase, =>
-            if item.object.css('opacity') < @opacityMin then item.object.hide() else item.object.show()
-        )
+        .css
+          zIndex: newZ
+          display: "block"
+        .animate newTarget, fadeTime, @funcEase, =>
+          if item.object.css('opacity') < @opacityMin then item.object.hide() else item.object.show()
         
         item.hidden = false
         unless item.small
@@ -518,6 +540,7 @@
         @layerFadeIn(@currentLayer)
         
       @_refreshControls()
+      @onAfterShift? layerNum
         
     _refreshControls: =>
       return unless @controls.enabled
@@ -527,22 +550,23 @@
       
     shiftLeft: (e) => 
       e?.preventDefault()
-      @shiftTo(@currentLayer - 1) 
+      @shiftTo @currentLayer - 1
         
     shiftRight: (e) => 
       e?.preventDefault()
-      @shiftTo(@currentLayer + 1)
+      @shiftTo @currentLayer + 1
         
-    _autoShift: =>
+    _autoShiftInit: =>
       autoRotation = @autoRotation
       if @isActive() and autoRotation.enabled and autoRotation._timer < 0
-        # store timer id
-        autoRotation._timer = window.setTimeout( =>
-            @autoRotation._timer = -1
-            if @isActive() and not autoRotation.paused
-              if autoRotation.direction then @shiftRight() else @shiftLeft()
-          , autoRotation.delay
-        )
+        # store timer id and delay next shift
+        autoRotation._timer = window.setTimeout @_autoShift, autoRotation.delay
+
+    _autoShift: =>
+      # Kill timer id and shift if rondell is active
+      @autoRotation._timer = -1
+      if @isActive() and not autoRotation.paused
+        if autoRotation.direction then @shiftRight() else @shiftLeft()
         
     isActive: ->
       true
@@ -551,11 +575,17 @@
       Rondell.activeRondell is @id
     
     keyDown: (e) =>
+      # Ignore event if some time has passed since last keyevent
+      now = (new Date()).getTime()
+      return if @_lastKeyEvent > now - @keyDelay
+
       if @isActive() and @isFocused()
         # Clear current rotation timer on user interaction
         if @autoRotation._timer >= 0
           window.clearTimeout(@autoRotation._timer) 
           @autoRotation._timer = -1
+
+        @_lastKeyEvent = now
           
         switch e.which
           # arrow left
