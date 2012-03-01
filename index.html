@@ -842,6 +842,21 @@
             </div>
             
             <br class="clear"/>
+
+            <hr id="thumbGallery"/>
+
+            <div>
+                <h3>Show images from a webservice via an api.</h3>
+                <p>
+                    This demo fetches links &amp; images from my brothers great webservice 
+                    <a href="http://www.wookmark.com" target="_blank" title="Wookmark.com">wookmark.com</a>
+                    and creates a rondell from the data.
+                </p>
+            </div>
+            
+            <div>
+                <div id="wookmarkDemo3" class="centered" style="width: 800px;"></div>
+            </div>
             
             <hr id="options"/>
             
@@ -887,6 +902,11 @@
                     <td>fadeTime</td>
                     <td>300</td>
                     <td>Animation time</td>
+                </tr>
+                <tr>
+                    <td>keyDelay</td>
+                    <td>300</td>
+                    <td>Minimal time between keystrokes fire slide events</td>
                 </tr>
                 <tr>
                     <td>currentLayer</td>
@@ -1263,15 +1283,15 @@
                         if (text == 'success') {
                             var items = json,
                                 wookmarkDemo1 = $('#wookmarkDemo1'),
-                                wookmarkDemo2 = $('#wookmarkDemo2');
+                                wookmarkDemo2 = $('#wookmarkDemo2'),
+                                wookmarkDemo3 = $('#wookmarkDemo3');
                             
                             wookmarkDemo1.empty();
                             wookmarkDemo2.empty();
+                            wookmarkDemo3.empty();
                             
                             // Parsing returned json data
-                            $.each(items, function(idx, item) {
-                                if (idx >= 20) return false;
-                                
+                            $.each(items.slice(0, 24), function(idx, item) {
                                 // Create link container
                                 var newItem = $('<a/>')
                                 .attr({
@@ -1295,6 +1315,7 @@
                                 newItem.append(newImg);
                                 wookmarkDemo1.append(newItem);
                                 wookmarkDemo2.append(newItem.clone());
+                                wookmarkDemo3.append(newItem.clone());
                             });
                             
                             // Create wookmark carousel
@@ -1307,6 +1328,12 @@
                                 preset: 'gallery',
                                 theme: 'dark'
                             });
+                                
+                            // Create wookmark gallery
+                            $('a', wookmarkDemo3).rondell({
+                                preset: 'thumbGallery',
+                                theme: 'light'
+                            });
                         }
                     }
                 });
@@ -1315,7 +1342,7 @@
         <script type="text/javascript" src="lib/demohelpers.js"></script>
         <script type="text/javascript">
             var hostname = document.location.hostname;
-            //if (hostname && (hostname.indexOf('github') >= 0 || hostname.indexOf('sebastianhelzle') >= 0)) {
+            if (hostname && (hostname.indexOf('github') >= 0 || hostname.indexOf('sebastianhelzle') >= 0)) {
                 var pkBaseURL = (("https:" == document.location.protocol) ? "https://tracking.sebastianhelzle.net/" : "http://tracking.sebastianhelzle.net/");
                 document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
                 
@@ -1326,7 +1353,7 @@
                 s.async = true;
                 s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
                 t.parentNode.insertBefore(s, t);
-            //}
+            }
         </script>
         <!-- Piwik --> 
         <script type="text/javascript">
