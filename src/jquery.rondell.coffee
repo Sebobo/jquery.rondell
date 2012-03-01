@@ -64,8 +64,8 @@
         next: 'next'
       mousewheel:
         enabled: true
-        threshold: 5
-        minTimeBetweenShifts: 300
+        threshold: 2
+        minTimeBetweenShifts: 500
       touch:
         enabled: true
         preventDefaults: true   # Will call event.preventDefault() on touch events
@@ -189,11 +189,11 @@
         left: @center.left - item.sizeFocused.width / 2
         top: @center.top - item.sizeFocused.height / 2
       )
-      .bind('mouseover mouseout click', (e) =>
+      .bind('mouseenter mouseleave click', (e) =>
         switch e.type
-          when 'mouseover'
+          when 'mouseenter'
             item.object.addClass('rondellItemHovered') if item.object.is(':visible') and not item.hidden
-          when 'mouseout'
+          when 'mouseleave'
             item.object.removeClass('rondellItemHovered')
           when 'click'
             e.preventDefault() unless @currentLayer is layerNum
@@ -319,7 +319,7 @@
         @container.bind('touchstart touchmove touchend', @_onTouch) if @touch.enabled
       else
         # Add hover and touch functions to container when we don't have touch support
-        @container.bind('mouseover mouseout', @_hover)
+        @container.bind('mouseenter mouseleave', @_hover)
         
       @container.removeClass "initializing"
           
@@ -342,11 +342,11 @@
       Requires mousewheel plugin for jQuery. 
       ###
       return unless (@mousewheel.enabled and @isFocused())
-      
+
       now = (new Date()).getTime()
       return if now - @mousewheel._lastShift < @mousewheel.minTimeBetweenShifts
       
-      viewport = $(window)
+      viewport = $ window
       viewportTop = viewport.scrollTop()
       viewportBottom = viewportTop + viewport.height()
       
@@ -395,7 +395,7 @@
       
       # Start or stop auto rotation if enabled
       paused = @autoRotation.paused
-      if e.type is 'mouseover'
+      if e.type is 'mouseenter'
         # Set active rondell id if hovered
         Rondell.activeRondell = @id
         
@@ -459,25 +459,23 @@
       
       itemWidth = item.sizeSmall.width * @funcSize(layerDiff, @)
       itemHeight = item.sizeSmall.height * @funcSize(layerDiff, @)
-      
-      newX = @funcLeft(layerDiff, @, layerNum) + (@itemProperties.size.width - itemWidth) / 2
-      newY = @funcTop(layerDiff, @, layerNum) + (@itemProperties.size.height - itemHeight) / 2
-      
       newZ = @zIndex + (if layerDiff < 0 then layerPos else -layerPos)
+      
+      # Modify fading time by items distance to focused item
       fadeTime = @fadeTime + @itemProperties.delay * layerDist
-      isNew = item.object.hasClass('rondellItemNew')
-      newOpacity = @funcOpacity(layerDiff, @, layerNum)
+        
+      newTarget =
+        width: itemWidth
+        height: itemHeight
+        left: @funcLeft(layerDiff, @, layerNum) + (@itemProperties.size.width - itemWidth) / 2
+        top: @funcTop(layerDiff, @, layerNum) + (@itemProperties.size.height - itemHeight) / 2
+        opacity: 0
         
       # Smooth animation when item is visible
-      if isNew or layerDist <= @visibleItems or newOpacity >= @opacityMin
-        @hideCaption(layerNum)
-        
-        newTarget =
-          width: itemWidth
-          height: itemHeight
-          left: newX
-          top: newY
-          opacity: newOpacity 
+      if layerDist <= @visibleItems
+        @hideCaption layerNum
+
+        newTarget.opacity = @funcOpacity layerDiff, @, layerNum
 
         lastTarget = item.object.data "lastTarget"
         return if lastTarget \
@@ -485,44 +483,42 @@
           and lastTarget.height is newTarget.height \
           and lastTarget.left is newTarget.left \
           and lastTarget.top is newTarget.top \
-          and lastTarget.opacity is newOpacity
+          and lastTarget.opacity is newTarget.opacity
 
         item.object.data "lastTarget", newTarget
 
-        item.object.removeClass('rondellItemNew rondellItemFocused').stop(true)
+        item.object.removeClass("rondellItemNew rondellItemFocused").stop(true)
         .css
           zIndex: newZ
           display: "block"
         .animate newTarget, fadeTime, @funcEase, =>
-          if item.object.css('opacity') < @opacityMin then item.object.hide() else item.object.show()
+          if newTarget.opacity < @opacityMin
+            item.hidden = true
+            item.object.css "display", "none"
+          else
+            item.hidden = false
+            item.object.css "display", "block"
         
         item.hidden = false
         unless item.small
           item.small = true
           if item.icon and not item.resizeable
             margin = (@itemProperties.size.height - item.icon.height()) / 2
-            item.icon.stop(true).animate(
+            item.icon.stop(true).animate
                 marginTop: margin
                 marginBottom: margin
               , fadeTime
-            )
       else if item.hidden
         # Update position even if out of view to fix animation when reappearing
-        item.object.css(
-          left: newX
-          top: newY
-          'z-index': newZ
-        )
+        item.object.css newTarget
       else
         # Hide items which are moved out of view
         item.hidden = true
+
         item.object.stop(true)
         .css('z-index', newZ)
-        .animate(
-            opacity: 0
-          , fadeTime / 2, @funcEase, =>
-          @hideCaption(layerNum)
-        )
+        .animate newTarget, fadeTime / 2, @funcEase, =>
+          @hideCaption layerNum
 
     shiftTo: (layerNum) =>
       if @repeating 
@@ -565,8 +561,12 @@
     _autoShift: =>
       # Kill timer id and shift if rondell is active
       @autoRotation._timer = -1
-      if @isActive() and not autoRotation.paused
-        if autoRotation.direction then @shiftRight() else @shiftLeft()
+      if @isActive() and @isFocused() and not @autoRotation.paused
+        console.log "Autoshifting"
+        if @autoRotation.direction then @shiftRight() else @shiftLeft()
+      else
+        # Try to autoshift again after a while
+        @_autoShiftInit()
         
     isActive: ->
       true
