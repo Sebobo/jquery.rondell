@@ -302,69 +302,55 @@
             <hr id="gallerydemo"/>
             
             <div id="rondellGallery" class="column size3of4">
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/galery/band.jpg">
-                        <img class="resizeable" src="images/galery/band.jpg" alt="demo pic" />   
-                        <h3>Awesome concert</h3>
-                        <p>
-                            My favourite band.
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/galery/dog.jpg">
-                        <img class="resizeable" src="images/galery/dog.jpg" alt="demo pic" /> 
-                        <h3>My dog</h3>
-                        <p>
-                            Standing in front of a glass door and wants in.
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/galery/cat.jpg">
-                        <img class="resizeable" src="images/galery/cat.jpg" alt="demo pic" />
-                        <h3>My cat</h3>
-                        <p>
-                            Sleeping...
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/galery/boar.jpg">
-                        <img class="resizeable" src="images/galery/boar.jpg" alt="demo pic" />
-                        <h3>Dead pig on the wall</h3>
-                        <p>
-                            Hanging around.
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/galery/snow.jpg">
-                        <img class="resizeable" src="images/galery/snow.jpg" alt="demo pic" />
-                        <h3>Winter wonderland</h3>
-                        <p>
-                            The german alps.
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/galery/rabbit.jpg">
-                        <img class="resizeable" src="images/galery/rabbit.jpg" alt="demo pic" />
-                        <h3>Bunny</h3>
-                        <p>
-                            In my brothers garden.
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/galery/trash.jpg">
-                        <img class="resizeable" src="images/galery/trash.jpg" alt="demo pic" />
-                        <h3>Trash</h3>
-                        <p>
-                            Somewhere in the USA.
-                        </p>
-                    </a>
-                </div>
+                <a target="_blank" rel="rondell_1" href="images/galery/band.jpg">
+                    <img class="resizeable" src="images/galery/band.jpg" alt="demo pic" />   
+                    <h3>Awesome concert</h3>
+                    <p>
+                        My favourite band.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/dog.jpg">
+                    <img class="resizeable" src="images/galery/dog.jpg" alt="demo pic" /> 
+                    <h3>My dog</h3>
+                    <p>
+                        Standing in front of a glass door and wants in.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/cat.jpg">
+                    <img class="resizeable" src="images/galery/cat.jpg" alt="demo pic" />
+                    <h3>My cat</h3>
+                    <p>
+                        Sleeping...
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/boar.jpg">
+                    <img class="resizeable" src="images/galery/boar.jpg" alt="demo pic" />
+                    <h3>Dead pig on the wall</h3>
+                    <p>
+                        Hanging around.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/snow.jpg">
+                    <img class="resizeable" src="images/galery/snow.jpg" alt="demo pic" />
+                    <h3>Winter wonderland</h3>
+                    <p>
+                        The german alps.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/rabbit.jpg">
+                    <img class="resizeable" src="images/galery/rabbit.jpg" alt="demo pic" />
+                    <h3>Bunny</h3>
+                    <p>
+                        In my brothers garden.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/trash.jpg">
+                    <img class="resizeable" src="images/galery/trash.jpg" alt="demo pic" />
+                    <h3>Trash</h3>
+                    <p>
+                        Somewhere in the USA.
+                    </p>
+                </a>
             </div>
             
             <div class="column size1of4 last">
@@ -1223,26 +1209,27 @@
         <script type="text/javascript" language="javascript" src="lib/jquery.rondell.js"></script>
         <script type="text/javascript">
             $(function() {
-                //$('#rondellSimple, #rondellGallery, #rondellwookmarkDemo, #rondellMixed').hide();
+                var fancyboxOptions = {
+                    hideOnContentClick: false,
+                    padding: 10,
+                    scrolling: 'no',
+                    overlayColor: '#333',
+                    autoDimensions: false,
+                    onStart: function(items, idx) {
+                        return $(items[idx]).hasClass('rondellItemFocused');
+                    }
+                };
                 
                 $('#rondellSimple > div').rondell(); 
                 
-                $('#rondellGallery > div').rondell({
+                $('#rondellGallery > a').rondell({
                     preset: 'carousel',
                     isActive: function() {
                         return !$('#fancybox-wrap').is(':visible');
                     }
                 }); 
                 
-                $('#rondellGallery a').fancybox({
-                    hideOnContentClick: false,
-                    padding: 10,
-                    scrolling: 'no',
-                    overlayColor: '#333',
-                    onStart: function(items, idx) {
-                        return $(items[idx]).parent().hasClass('rondellItemFocused');
-                    }
-                });
+                $('#rondellGallery a').fancybox(fancyboxOptions);
 
                 $('#rondellTopDemo > img').rondell({
                     preset: 'carousel',
@@ -1271,7 +1258,7 @@
                     theme: 'dark'
                 });
                 
-                var rondellMixed = $('#rondellMixed > div').rondell({
+                $('#rondellMixed > div').rondell({
                     preset: 'pages',
                     theme: 'page'
                 });
@@ -1295,7 +1282,7 @@
                                 // Create link container
                                 var newItem = $('<a/>')
                                 .attr({
-                                    'href': item.url,
+                                    'href': item.image,//url,
                                     'title': item.title,
                                     'target': '_blank'
                                 })
@@ -1334,6 +1321,10 @@
                                 preset: 'thumbGallery',
                                 theme: 'light'
                             });
+
+                            $('#wookmarkDemo1 a').fancybox(fancyboxOptions);
+                            $('#wookmarkDemo2 a').fancybox(fancyboxOptions);
+                            $('#wookmarkDemo3 a').fancybox(fancyboxOptions);
                         }
                     }
                 });
