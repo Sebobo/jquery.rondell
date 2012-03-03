@@ -76,6 +76,19 @@
       preset: ''                # Configuration preset
       effect: null              # Special effect function for the focused item, not used currently
       onAfterShift: null
+      scrollbar:
+        start: 0
+        end: 100
+        stepSize: 1
+        position: 50
+        onScroll: undefined
+        scrollOnHover: false
+        scrollOnDrag: true
+        animationDuration: 400
+        easing: "easeInOutQuad"
+        drag:
+          dragging: false
+          lastDragEvent: 0
   
   ### Add default easing function for rondell to jQuery if missing ###
   unless $.easing.easeInOutQuad        
@@ -196,8 +209,10 @@
           when 'mouseenter' then @_onMouseEnterItem layerNum
           when 'mouseleave' then @_onMouseLeaveItem layerNum
           when 'click'
-            e.preventDefault() unless @currentLayer is layerNum
+            console.log layerNum
+            e.preventDefault() if @currentLayer isnt layerNum
             @shiftTo(layerNum) if item.object.is(':visible') and not item.hidden
+            return false
       )
       
       @loadedItems += 1
@@ -449,9 +464,9 @@
       .css
         zIndex: @zIndex + @maxItems
         display: "block"
-      .addClass("rondellItemFocused")
       .animate newTarget, @fadeTime, @funcEase, =>
         item.animating = false
+        item.object.addClass "rondellItemFocused"
         @_autoShiftInit()
         @showCaption(layerNum) if @hovering or @alwaysShowCaption or @_onMobile()
       
@@ -543,7 +558,7 @@
         .animate newTarget, fadeTime / 2, @funcEase, =>
           item.animating = false
           @hideCaption layerNum
-          
+
       item.lastTarget = newTarget
 
     shiftTo: (layerNum) =>
@@ -588,7 +603,6 @@
       # Kill timer id and shift if rondell is active
       @autoRotation._timer = -1
       if @isActive() and @isFocused() and not @autoRotation.paused
-        console.log "Autoshifting"
         if @autoRotation.direction then @shiftRight() else @shiftLeft()
       else
         # Try to autoshift again after a while
@@ -618,6 +632,84 @@
           when 37 then @shiftLeft(e)
           # arrow right 
           when 39 then @shiftRight(e) 
+
+
+  class RondellScrollbar
+    
+    constructor: (container, options) ->
+      @id = Wonderbar.wonderbarCount++
+      @container = container.addClass "rondell-scrollbar"
+      
+      $.extend true, @, $.rondell.defaults.scrollbar, options
+        
+      @_initControls()
+        
+    _initControls: =>
+      @scrollLeftControl = $("<div class=\"wonderbar-scroll-left\"/>")
+        .bind "click", @scrollLeft
+        
+      @scrollRightControl = $("<div class=\"wonderbar-scroll-right\"/>")
+        .bind "click", @scrollRight
+        
+      @scrollControl = $("<div class=\"wonderbar-scroll-control\"/>").css
+        left: @container.innerWidth() / 2
+        
+      @scrollBackground = $("<div class=\"wonderbar-background\"/>")
+        
+      @container.bind "mousedown mouseup click", @doControl
+      window.bind "mousemove", @doWindowControl
+        
+      @container.append @scrollBackground, @scrollLeftControl, @scrollRightControl, @scrollControl
+      
+    updatePosition: (position) =>
+      return if position < @start or position > @end or position is @position
+      
+      @position = position
+      
+      # Fire callback with new position
+      @onScroll?(position)
+      
+    scrollTo: (x, duration=@animationDuration) =>
+      innerWidth = @container.innerWidth()
+      return if x <= 0 or x >= innerWidth
+      
+      @scrollControl.stop(true).animate(
+        left: x
+      , duration, @easing)
+      
+      # Translate event coordinates to new position between start and end option
+      newPosition = Math.round(x / innerWidth * (@end - @start) + @start)
+      @updatePosition(newPosition) if newPosition isnt @position
+      
+    setPosition: (position) =>
+      return if position < @start or position > @end or position is @position
+      
+      @position = position 
+      
+      # Translate position to new position for control dot in container
+      @scrollTo(Math.round((position - @start) / (@end - @start) * @container.innerWidth()))
+
+    doWindowControl: (e) =>
+      switch e.type
+        when "mousemove"
+          return unless @drag.dragging
+          @scrollTo(e.offsetX, 0) if e.target is @container[0]
+      
+    doControl: (e) =>
+      e.preventDefault()
+      
+      switch e.type
+        when "mousedown" then @drag.dragging = e.target is @scrollControl[0]
+        when "mouseup" then @drag.dragging = false
+        when "click" then @scrollTo(e.offsetX) if e.target is @container[0]
+      
+    scrollLeft: (e) =>
+      e.preventDefault()
+      @setPosition(@position - @stepSize)
+      
+    scrollRight: (e) => 
+      e.preventDefault() 
+      @setPosition(@position + @stepSize)
   
   $.fn.rondell = (options={}, callback=undefined) ->
     # Create new rondell instance
