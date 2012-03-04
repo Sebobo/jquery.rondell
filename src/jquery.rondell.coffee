@@ -77,18 +77,24 @@
       effect: null              # Special effect function for the focused item, not used currently
       onAfterShift: null
       scrollbar:
+        _instance: null
+        enabled: false
+        orientation: "bottom"
         start: 0
         end: 100
         stepSize: 1
         position: 50
+        padding: 10
+        width: "100%"
+        repeating: false
         onScroll: undefined
         scrollOnHover: false
         scrollOnDrag: true
-        animationDuration: 400
+        animationDuration: 200
         easing: "easeInOutQuad"
-        drag:
-          dragging: false
-          lastDragEvent: 0
+        _drag:
+          _dragging: false
+          _lastDragEvent: 0
   
   ### Add default easing function for rondell to jQuery if missing ###
   unless $.easing.easeInOutQuad        
@@ -100,7 +106,7 @@
     @rondellCount: 0            # Globally stores the number of rondells for uuid creation
     @activeRondell: null        # Globally stores the last activated rondell for keyboard interaction
     
-    constructor: (options, numItems, initCallback=undefined) ->
+    constructor: (container, options, numItems, initCallback=undefined) ->
       @id = Rondell.rondellCount++
       @items = [] # Holds the items
       @maxItems = numItems
@@ -133,6 +139,26 @@
       @size = 
         width: @size.width or @center.left * 2
         height: @size.height or @center.top * 2
+
+      # Wrap elements in new container
+      @container = container.wrapAll($("<div class=\"rondellContainer initializing rondellTheme_#{@theme}\"/>").css(@size)).parent()
+      
+      # Show items hidden parent container to prevent graphical glitch
+      @container.parent().show() if @showContainer
+
+      # Create scrollbar
+      if @scrollbar.enabled
+        scrollbarContainer = $ "<div/>"
+        @container.append scrollbarContainer
+
+        $.extend true, @scrollbar,
+          onScroll: @shiftTo
+          start: 1
+          end: @maxItems
+          position: @currentLayer
+          repeating: @repeating
+
+        @scrollbar._instance = new RondellScrollbar(scrollbarContainer, @scrollbar)
     
     # Animation functions, can be different for each rondell
     funcLeft: (layerDiff, rondell, idx) ->
@@ -209,7 +235,6 @@
           when 'mouseenter' then @_onMouseEnterItem layerNum
           when 'mouseleave' then @_onMouseLeaveItem layerNum
           when 'click'
-            console.log layerNum
             e.preventDefault() if @currentLayer isnt layerNum
             @shiftTo(layerNum) if item.object.is(':visible') and not item.hidden
             return false
@@ -300,7 +325,7 @@
 
       if icon.width() > 0 or (icon[0].complete and icon[0].width > 0)
         # Image is already loaded (i.e. from cache)
-        @_onloadItem(itemIndex, obj) 
+        @_onloadItem itemIndex, obj
       else 
         # Create copy of the image and wait for the copy to load to get the real dimensions
         copy = $("<img style=\"display:none\"/>")
@@ -323,23 +348,21 @@
       controls = @controls
       if controls.enabled
         @controls._shiftLeft = $('<a class="rondellControl rondellShiftLeft" href="#"/>').text(@strings.prev).click(@shiftLeft)
-        .css(
+        .css
           left: controls.margin.x
           top: controls.margin.y
-          "z-index": @zIndex + @maxItems + 2
-        )
+          zIndex: @zIndex + @maxItems + 2
           
         @controls._shiftRight = $('<a class="rondellControl rondellShiftRight" href="#/"/>').text(@strings.next).click(@shiftRight)
-        .css(
+        .css
           right: controls.margin.x
           top: controls.margin.y
-          "z-index": @zIndex + @maxItems + 2
-        )
+          zIndex: @zIndex + @maxItems + 2
           
-        @container.append(@controls._shiftLeft, @controls._shiftRight)
+        @container.append @controls._shiftLeft, @controls._shiftRight
         
       # Attach keydown event to document for each rondell instance
-      $(document).keydown(@keyDown)
+      $(document).keydown @keyDown
         
       # Enable rondell traveling with mousewheel if plugin is available
       @container.bind('mousewheel', @_onMousewheel) if @mousewheel.enabled and $.fn.mousewheel?
@@ -470,12 +493,13 @@
         @_autoShiftInit()
         @showCaption(layerNum) if @hovering or @alwaysShowCaption or @_onMobile()
       
+      # If icon isn't resizeable animate margins
       if item.icon and not item.resizeable
         margin = (@itemProperties.sizeFocused.height - item.icon.height()) / 2
-        item.icon.stop(true).animate(
+        item.icon.stop(true).animate
             marginTop: margin
             marginBottom: margin
-          , @fadeTime)
+          , @fadeTime
           
     layerFadeOut: (layerNum) =>
       item = @_getItem(layerNum)
@@ -512,6 +536,7 @@
 
         newTarget.opacity = @funcOpacity layerDiff, @, layerNum
 
+        # Do nothing if target hasn't changed
         lastTarget = item.lastTarget
         return if lastTarget \
           and lastTarget.width is newTarget.width \
@@ -545,6 +570,7 @@
                 marginTop: margin
                 marginBottom: margin
               , fadeTime
+
       else if item.hidden
         # Update position even if out of view to fix animation when reappearing
         item.object.css newTarget
@@ -577,7 +603,12 @@
         @layerFadeIn(@currentLayer)
         
       @_refreshControls()
+
+      # Fire shift callback
       @onAfterShift? layerNum
+
+      # Update scrollbar
+      @scrollbar._instance.setPosition(layerNum, false) if @scrollbar.enabled
         
     _refreshControls: =>
       return unless @controls.enabled
@@ -615,111 +646,129 @@
       Rondell.activeRondell is @id
     
     keyDown: (e) =>
+      return unless @isActive() and @isFocused()
+
       # Ignore event if some time has passed since last keyevent
       now = (new Date()).getTime()
       return if @_lastKeyEvent > now - @keyDelay
 
-      if @isActive() and @isFocused()
-        # Clear current rotation timer on user interaction
-        if @autoRotation._timer >= 0
-          window.clearTimeout(@autoRotation._timer) 
-          @autoRotation._timer = -1
+      # Clear current rotation timer on user interaction
+      if @autoRotation._timer >= 0
+        window.clearTimeout @autoRotation._timer
+        @autoRotation._timer = -1
 
-        @_lastKeyEvent = now
-          
-        switch e.which
-          # arrow left
-          when 37 then @shiftLeft(e)
-          # arrow right 
-          when 39 then @shiftRight(e) 
+      @_lastKeyEvent = now
+        
+      switch e.which
+        # arrow left
+        when 37 then @shiftLeft(e)
+        # arrow right 
+        when 39 then @shiftRight(e) 
 
 
   class RondellScrollbar
     
     constructor: (container, options) ->
-      @id = Wonderbar.wonderbarCount++
       @container = container.addClass "rondell-scrollbar"
       
       $.extend true, @, $.rondell.defaults.scrollbar, options
+
+      @container.addClass("rondell-scrollbar-#{@orientation}")
+      .css "width", @width
         
       @_initControls()
-        
+
+      @_minX = @padding + @scrollLeftControl.outerWidth() + @scrollControl.outerWidth() / 2
+      @_maxX = @container.innerWidth() - @padding - @scrollRightControl.outerWidth() - @scrollControl.outerWidth() / 2
+
     _initControls: =>
-      @scrollLeftControl = $("<div class=\"wonderbar-scroll-left\"/>")
+      @scrollLeftControl = $("<div class=\"rondell-scrollbar-left\"/>")
         .bind "click", @scrollLeft
         
-      @scrollRightControl = $("<div class=\"wonderbar-scroll-right\"/>")
+      @scrollRightControl = $("<div class=\"rondell-scrollbar-right\"/>")
         .bind "click", @scrollRight
         
-      @scrollControl = $("<div class=\"wonderbar-scroll-control\"/>").css
+      @scrollControl = $("<div class=\"rondell-scrollbar-control\"/>").css
         left: @container.innerWidth() / 2
         
-      @scrollBackground = $("<div class=\"wonderbar-background\"/>")
+      @scrollBackground = $("<div class=\"rondell-scrollbar-background\"/>")
         
-      @container.bind "mousedown mouseup click", @doControl
-      window.bind "mousemove", @doWindowControl
+      @container.bind "mousedown click", @onControlEvent
+      $(window).bind "mousemove mouseup", @onWindowEvent
         
       @container.append @scrollBackground, @scrollLeftControl, @scrollRightControl, @scrollControl
       
-    updatePosition: (position) =>
+    updatePosition: (position, fireCallback=true) =>
       return if position < @start or position > @end or position is @position
       
       @position = position
-      
+
       # Fire callback with new position
-      @onScroll?(position)
+      @onScroll? position if fireCallback
       
-    scrollTo: (x, duration=@animationDuration) =>
-      innerWidth = @container.innerWidth()
-      return if x <= 0 or x >= innerWidth
+    scrollTo: (x, animate=true, fireCallback=true) =>
+      return if x < @_minX or x > @_maxX
       
-      @scrollControl.stop(true).animate(
-        left: x
-      , duration, @easing)
+      target = { left: x }
+      if animate
+        @scrollControl.stop(true).animate target, @animationDuration, @easing
+      else
+        @scrollControl.stop(true).css target
       
       # Translate event coordinates to new position between start and end option
-      newPosition = Math.round(x / innerWidth * (@end - @start) + @start)
-      @updatePosition(newPosition) if newPosition isnt @position
+      newPosition = Math.round((x - @_minX) / (@_maxX - @_minX) * (@end - @start)) + @start
+      @updatePosition(newPosition, fireCallback) if newPosition isnt @position
       
-    setPosition: (position) =>
+    setPosition: (position, fireCallback=true) =>
+      if @repeating
+        position = @end if position < @start
+        position = @start if position > @end
+
       return if position < @start or position > @end or position is @position
       
-      @position = position 
-      
       # Translate position to new position for control dot in container
-      @scrollTo(Math.round((position - @start) / (@end - @start) * @container.innerWidth()))
+      newX = Math.round((position - @start) / (@end - @start) * (@_maxX - @_minX)) + @_minX
+      @scrollTo newX, true, fireCallback
 
-    doWindowControl: (e) =>
-      switch e.type
-        when "mousemove"
-          return unless @drag.dragging
-          @scrollTo(e.offsetX, 0) if e.target is @container[0]
+    onWindowEvent: (e) =>
+      return unless @_drag._dragging
+
+      if e.type is "mouseup"
+        # Release drag on mouseup
+        @_drag._dragging = false
+        @scrollControl.removeClass "rondell-scrollbar-dragging"
+      else if e.type is "mousemove"
+        # Move scroll dot to new position
+        newX = 0
+        if @orientation is "top" or @orientation is "bottom"
+          newX = Math.max(@_minX, Math.min(@_maxX, e.pageX - @container.offset().left))
+        else
+          newX = Math.max(@_minX, Math.min(@_maxX, e.pageY - @container.offset().top))
+
+        @scrollTo newX, false
       
-    doControl: (e) =>
+    onControlEvent: (e) =>
       e.preventDefault()
-      
-      switch e.type
-        when "mousedown" then @drag.dragging = e.target is @scrollControl[0]
-        when "mouseup" then @drag.dragging = false
-        when "click" then @scrollTo(e.offsetX) if e.target is @container[0]
+
+      if e.type is "mousedown" and e.target is @scrollControl[0]
+        # Start drag event
+        @_drag._dragging = true
+        @scrollControl.addClass "rondell-scrollbar-dragging"
+      else if e.type is "click" and e.target is @scrollBackground[0] or e.target is @container[0]
+        # Jump to new position when clicking scroller background
+        @scrollTo(e.offsetX)
       
     scrollLeft: (e) =>
       e.preventDefault()
-      @setPosition(@position - @stepSize)
+      @setPosition @position - @stepSize
       
     scrollRight: (e) => 
       e.preventDefault() 
-      @setPosition(@position + @stepSize)
+      @setPosition @position + @stepSize
   
   $.fn.rondell = (options={}, callback=undefined) ->
     # Create new rondell instance
-    rondell = new Rondell(options, @length, callback)
-    
-    # Wrap elements in new container
-    rondell.container = @wrapAll($("<div class=\"rondellContainer initializing rondellTheme_#{rondell.theme}\"/>").css(rondell.size)).parent()
-      
-    # Show items hidden parent container to prevent graphical glitch
-    rondell.container.parent().show() if rondell.showContainer
+    rondell = new Rondell(@, options, @length, callback)
      
     # Setup each item
     @each (idx) ->
@@ -727,10 +776,10 @@
       itemIndex = idx + 1
       
       if obj.is('img') or $('img:first', obj).length
-        rondell._loadItem(itemIndex, obj)
+        rondell._loadItem itemIndex, obj
       else
         # Init item without an icon
-        rondell._initItem(itemIndex, 
+        rondell._initItem itemIndex, 
           object: obj 
           icon: null
           small: false 
@@ -738,7 +787,6 @@
           resizeable: false
           sizeSmall: rondell.itemProperties.size
           sizeFocused: rondell.itemProperties.sizeFocused
-        )
         
     # Return rondell instance
     rondell
