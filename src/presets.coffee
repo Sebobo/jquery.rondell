@@ -140,14 +140,18 @@
 
     thumbGallery:
       # Custom options
-      myColumns: 3
-      myRows: 3
-      myItemPadding: 5
+      special: 
+        columns: 3
+        rows: 3
+        groupSize: 10
+        itemPadding: 5
       # Standard rondell options
       visibleItems: 9
+      wrapIndices: false
+      currentLayer: 1
       center:
-        top: 200
-        left: 550
+        top: 215
+        left: 250
       size:
         height: 430
         width: 800
@@ -157,27 +161,50 @@
           x: 10
           y: 255
       itemProperties:
-        delay: 30
+        delay: 40
         sizeFocused: 
           width: 480
-          height: 390
+          height: 420
         size:
           width: 94
           height: 126 
       scrollbar:
         enabled: true
-        width: 300
-      funcTop: (l, r, i) ->
-        row = (i - 1) % r.myRows
-        r.myItemPadding + row * (r.itemProperties.size.height + r.myItemPadding)
-      funcLeft: (l, r, i) ->
-        column = Math.floor(r.myColumns / 2) + Math.ceil(i / r.myRows) - Math.ceil((i - l) / r.myRows)
-        r.myItemPadding + column * (r.itemProperties.size.width + r.myItemPadding)
+        style:
+          width: 292
+          right: 0
+          bottom: 0
       funcDiff: (d, r, i) ->
         Math.abs d
       funcOpacity: (l, r, i) ->
-        column = Math.floor(r.myColumns / 2) + Math.ceil(i / r.myRows) - Math.ceil((i - l) / r.myRows)
-        if column < 0 or column >= r.myColumns then 0 else 0.8
+        # Show items in the same group as the focused one
+        if Math.floor((i - 1) / r.special.groupSize) is \
+          Math.floor((i - 1 - l) / r.special.groupSize) then 0.8 else 0
+      funcTop: (l, r, i) ->
+        # Shift items right of the focused item and a special fix for the last item in the first group
+        if l > 0 or i is r.special.groupSize
+          i-- 
+          l--
+        # Hack to fix animation of the focused element in a group
+        i = 1 if i % r.special.groupSize is 0
+        # Compute items vertical offset
+        r.special.itemPadding + Math.floor(((i - 1) % r.special.groupSize) / r.special.rows) \
+          * (r.itemProperties.size.height + r.special.itemPadding)
+
+      funcLeft: (l, r, i) ->
+        # Shift elements right of the focused item and a special fix for the last item in the first group
+        if l > 0 or i is r.special.groupSize
+          i-- 
+          l--
+        # Hack to fix animation of the focused element in a group
+        i = 1 if i % r.special.groupSize is 0
+        # Get items column
+        column = ((i - 1) % r.special.groupSize) % r.special.columns
+        # Get the group difference
+        groupOffset = Math.floor((i - 1) / r.special.groupSize) - Math.floor((i - 1 - l) / r.special.groupSize)
+        # Compute final column positioning
+        500 + r.special.itemPadding + (column + r.special.columns * groupOffset) \
+          * (r.itemProperties.size.width + r.special.itemPadding)
         
     slider:
       visibleItems: 1
