@@ -108,6 +108,95 @@
   }
 }
 
+/* rondell scrollbar  */
+.rondell-scrollbar {
+  width: 100%;
+  height: 20px;
+  position: absolute;
+
+  &.rondell-scrollbar-bottom {
+    bottom: 10px;
+  }
+  
+  .rondell-scrollbar-background {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin: 0 10px;
+    background-color: #eee;
+    height: 1px;
+  }
+  
+  .rondell-scrollbar-left,
+  .rondell-scrollbar-right {
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    @include linear-gradient(#eee, #ccc);
+  }
+
+  .rondell-scrollbar-left {
+    left: 6px;
+  }
+  .rondell-scrollbar-right {
+    right: 6px;
+  }
+
+  .rondell-scrollbar-control,
+  .rondell-scrollbar-left,
+  .rondell-scrollbar-right {
+    cursor: pointer;
+    position: absolute;
+    border: 1px solid #ccc;
+    @include rounded(12px);
+  }
+
+  .rondell-scrollbar-control {
+    left: 50%;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    margin-left: -6px;
+    @include linear-gradient(#f00, #b00);
+    @include transition("-webkit-transform 0.1s ease-out");
+
+    &:active {
+      @include linear-gradient(#e00, #d00);      
+    }
+
+    &.rondell-scrollbar-dragging,
+    &:hover {
+      -webkit-transform:scale(1.33,1.33);
+    }
+  }
+}
+
+.boxshadow.rgba {
+  .rondell-scrollbar-control,
+  .rondell-scrollbar-left,
+  .rondell-scrollbar-right {
+    border: 0;
+    @include boxshadow(0 0 2px rgba(0, 0, 0, 0.5));
+
+    &:hover {
+      @include boxshadow(0 0 3px rgba(0, 0, 0, 0.5));
+    }
+  }
+
+  .rondell-scrollbar-control:active {
+    @include boxshadow(0 0 5px -1px rgba(0, 0, 0, 0.6));
+  }
+
+  .rondell-scrollbar-left,
+  .rondell-scrollbar-right {
+    &:active {
+      @include boxshadow(0 0 2px rgba(0, 0, 0, 0.3) inset);
+    } 
+  }
+}
+
+
 /* themes */
 
 /* default theme */
@@ -143,7 +232,13 @@
 /* light theme */
 .rondellTheme_light {
   .rondellContainer { background: #fff; }
-  .rondellItem { border: 0; }
+  .rondellItem { 
+    border: 0; 
+
+    &, img {
+      @include rounded(2px);
+    }
+  }
 }
 .boxshadow.rgba .rondellTheme_light .rondellItem {
   border: 0; 
@@ -317,4 +412,3 @@
     }
   }
 }  
-  
