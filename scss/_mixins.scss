@@ -38,10 +38,10 @@
 }
 
 @mixin transition($trans) {
-  -webkit-transition: $trans;
-     -moz-transition: $trans;
-      -ms-transition: $trans;
-          transition: $trans;
+  -webkit-transition: unquote($trans);
+     -moz-transition: unquote($trans);
+      -ms-transition: unquote($trans);
+          transition: unquote($trans);
 }
 
 @mixin gradient-bar($primaryColor, $secondaryColor) {
