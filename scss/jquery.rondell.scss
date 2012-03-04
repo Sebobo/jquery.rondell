@@ -159,15 +159,16 @@
     height: 12px;
     margin-left: -6px;
     @include linear-gradient(#f00, #b00);
-    @include transition("-webkit-transform 0.1s ease-out");
 
     &:active {
       @include linear-gradient(#e00, #d00);      
     }
-
     &.rondell-scrollbar-dragging,
     &:hover {
-      -webkit-transform:scale(1.33,1.33);
+      top: 3px;
+      width: 14px;
+      height: 14px;
+      margin-left: -7px;
     }
   }
 }

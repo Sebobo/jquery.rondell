@@ -44,6 +44,13 @@
           transition: unquote($trans);
 }
 
+@mixin transform($trans) {
+  -webkit-transform: unquote($trans);
+     -moz-transform: unquote($trans);
+      -ms-transform: unquote($trans);
+          transform: unquote($trans);
+}
+
 @mixin gradient-bar($primaryColor, $secondaryColor) {
   @include linear-gradient($primaryColor, $secondaryColor);
   text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
