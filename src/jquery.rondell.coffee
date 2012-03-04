@@ -46,6 +46,7 @@
           width: 0
           height: 0
       repeating: true           # Will show first item after last item and so on
+      wrapIndices: true         # Will modify relative item indices to fix positioning when repeating
       alwaysShowCaption: false  # Don't hide caption on mouseleave
       autoRotation:             # If the cursor leaves the rondell continue spinning
         enabled: false
@@ -64,7 +65,7 @@
         next: 'next'
       mousewheel:
         enabled: true
-        threshold: 2
+        threshold: 0
         minTimeBetweenShifts: 500
       touch:
         enabled: true
@@ -80,17 +81,23 @@
         _instance: null
         enabled: false
         orientation: "bottom"
-        start: 0
+        start: 1
         end: 100
         stepSize: 1
-        position: 50
+        position: 1
         padding: 10
-        width: "100%"
+        style:
+          width: "100%"
+          height: 20
+          left: "auto"
+          right: "auto"
+          top: "auto"
+          bottom: "auto"
         repeating: false
         onScroll: undefined
         scrollOnHover: false
         scrollOnDrag: true
-        animationDuration: 200
+        animationDuration: 300
         easing: "easeInOutQuad"
         _drag:
           _dragging: false
@@ -406,10 +413,11 @@
       
       selfYCenter = @container.offset().top + @container.outerHeight() / 2
       
-      if selfYCenter > viewportTop and selfYCenter < viewportBottom and Math.abs(dx) >= @mousewheel.threshold
+      if selfYCenter > viewportTop and selfYCenter < viewportBottom and Math.abs(dx) > @mousewheel.threshold
+        e.preventDefault()
         if dx < 0 then @shiftLeft() else @shiftRight()
         @mousewheel._lastShift = now
-      
+
     _onTouch: (e) =>
       return unless @touch.enabled
       
@@ -507,8 +515,8 @@
       layerDist = Math.abs(layerNum - @currentLayer)
       layerPos = layerNum
       
-      # Find new layer position
-      if layerDist > @visibleItems and layerDist > @maxItems / 2 and @repeating
+      # Find new layer position if rondell is repeating and indices are wrapped
+      if layerDist > @visibleItems and layerDist > @maxItems / 2 and @repeating and @wrapIndices
         if layerNum > @currentLayer then layerPos -= @maxItems else layerPos += @maxItems
         layerDist = Math.abs(layerPos - @currentLayer)
 
@@ -673,13 +681,14 @@
       
       $.extend true, @, $.rondell.defaults.scrollbar, options
 
-      @container.addClass("rondell-scrollbar-#{@orientation}")
-      .css "width", @width
+      @container.addClass("rondell-scrollbar-#{@orientation}").css @style
         
       @_initControls()
 
       @_minX = @padding + @scrollLeftControl.outerWidth() + @scrollControl.outerWidth() / 2
       @_maxX = @container.innerWidth() - @padding - @scrollRightControl.outerWidth() - @scrollControl.outerWidth() / 2
+
+      @setPosition @position, false, true
 
     _initControls: =>
       @scrollLeftControl = $("<div class=\"rondell-scrollbar-left\"/>")
@@ -719,12 +728,12 @@
       newPosition = Math.round((x - @_minX) / (@_maxX - @_minX) * (@end - @start)) + @start
       @updatePosition(newPosition, fireCallback) if newPosition isnt @position
       
-    setPosition: (position, fireCallback=true) =>
+    setPosition: (position, fireCallback=true, force=false) =>
       if @repeating
         position = @end if position < @start
         position = @start if position > @end
 
-      return if position < @start or position > @end or position is @position
+      return if not force and (position < @start or position > @end or position is @position)
       
       # Translate position to new position for control dot in container
       newX = Math.round((position - @start) / (@end - @start) * (@_maxX - @_minX)) + @_minX
