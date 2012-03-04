@@ -149,7 +149,7 @@
         top: 200
         left: 550
       size:
-        height: 400
+        height: 430
         width: 800
       controls:
         enabled: false
@@ -164,6 +164,9 @@
         size:
           width: 94
           height: 126 
+      scrollbar:
+        enabled: true
+        width: 300
       funcTop: (l, r, i) ->
         row = (i - 1) % r.myRows
         r.myItemPadding + row * (r.itemProperties.size.height + r.myItemPadding)
