@@ -109,12 +109,110 @@
   text-decoration: none;
 }
 
-/* themes */
-/* default theme */
-.rondellTheme_default .rondellItemHovered {
-  opacity: 1 !important;
+/* rondell scrollbar  */
+.rondell-scrollbar {
+  width: 100%;
+  height: 20px;
+  position: absolute;
+}
+.rondell-scrollbar.rondell-scrollbar-bottom {
+  bottom: 10px;
+}
+.rondell-scrollbar .rondell-scrollbar-background {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: 0 10px;
+  background-color: #eee;
+  height: 1px;
+}
+.rondell-scrollbar .rondell-scrollbar-left,
+.rondell-scrollbar .rondell-scrollbar-right {
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  background-repeat: repeat-x;
+  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: linear-gradient(top, #eeeeee, #cccccc);
+}
+.rondell-scrollbar .rondell-scrollbar-left {
+  left: 6px;
+}
+.rondell-scrollbar .rondell-scrollbar-right {
+  right: 6px;
+}
+.rondell-scrollbar .rondell-scrollbar-control,
+.rondell-scrollbar .rondell-scrollbar-left,
+.rondell-scrollbar .rondell-scrollbar-right {
+  cursor: pointer;
+  position: absolute;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  -o-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+}
+.rondell-scrollbar .rondell-scrollbar-control {
+  left: 50%;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  background-repeat: repeat-x;
+  background-image: -webkit-linear-gradient(top, red, #bb0000);
+  background-image: -moz-linear-gradient(top, red, #bb0000);
+  background-image: -ms-linear-gradient(top, red, #bb0000);
+  background-image: -o-linear-gradient(top, red, #bb0000);
+  background-image: linear-gradient(top, red, #bb0000);
+}
+.rondell-scrollbar .rondell-scrollbar-control:active {
+  background-repeat: repeat-x;
+  background-image: -webkit-linear-gradient(top, #ee0000, #dd0000);
+  background-image: -moz-linear-gradient(top, #ee0000, #dd0000);
+  background-image: -ms-linear-gradient(top, #ee0000, #dd0000);
+  background-image: -o-linear-gradient(top, #ee0000, #dd0000);
+  background-image: linear-gradient(top, #ee0000, #dd0000);
+}
+.rondell-scrollbar .rondell-scrollbar-control.rondell-scrollbar-dragging, .rondell-scrollbar .rondell-scrollbar-control:hover {
+  top: 3px;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
 }
 
+.boxshadow.rgba .rondell-scrollbar-control,
+.boxshadow.rgba .rondell-scrollbar-left,
+.boxshadow.rgba .rondell-scrollbar-right {
+  border: 0;
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+.boxshadow.rgba .rondell-scrollbar-control:hover,
+.boxshadow.rgba .rondell-scrollbar-left:hover,
+.boxshadow.rgba .rondell-scrollbar-right:hover {
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+.boxshadow.rgba .rondell-scrollbar-control:active {
+  -webkit-box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.6);
+}
+.boxshadow.rgba .rondell-scrollbar-left:active,
+.boxshadow.rgba .rondell-scrollbar-right:active {
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3) inset;
+  -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3) inset;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3) inset;
+}
+
+/* themes */
+/* default theme */
 .boxshadow.rgba .rondellTheme_default .rondellControl {
   -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
@@ -182,6 +280,12 @@
 .rondellTheme_light .rondellItem {
   border: 0;
 }
+.rondellTheme_light .rondellItem, .rondellTheme_light .rondellItem img {
+  border-radius: 2px;
+  -o-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+}
 
 .boxshadow.rgba .rondellTheme_light .rondellItem {
   border: 0;
@@ -202,9 +306,6 @@
 .rondellTheme_dark .rondellItem {
   border: 0;
   background: transparent;
-}
-.rondellTheme_dark .rondellItemHovered {
-  opacity: 1 !important;
 }
 .rondellTheme_dark .rondellCaption {
   margin: 5px;
