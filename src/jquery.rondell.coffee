@@ -47,6 +47,7 @@
           height: 0
       repeating: true           # Will show first item after last item and so on
       wrapIndices: true         # Will modify relative item indices to fix positioning when repeating
+      switchIndices: false      # After a shift the last focused item and the new one will switch indices
       alwaysShowCaption: false  # Don't hide caption on mouseleave
       autoRotation:             # If the cursor leaves the rondell continue spinning
         enabled: false
@@ -119,7 +120,7 @@
       @maxItems = numItems
       @loadedItems = 0
       @initCallback = initCallback
-      
+
       # Update rondell properties with new options
       if options?.preset of $.rondell.presets
         $.extend(true, @, $.rondell.defaults, $.rondell.presets[options.preset], options or {})
@@ -129,6 +130,8 @@
       # Init some private variables
       $.extend true, @,
         _lastKeyEvent: 0
+        _focusedIndex: @currentLayer
+        _itemIndices: {}
         autoRotation:
           _timer: -1              
         controls:
@@ -179,28 +182,32 @@
     funcSize: (layerDist, rondell, idx) ->
       1
     
-    showCaption: (layerNum) => 
+    showCaption: (idx) => 
       # Restore automatic height and show caption
-      $('.rondellCaption.overlay', @_getItem(layerNum).object)
-      .css(
+      @_getItem(idx).overlay?.stop(true).css
         height: 'auto'
         overflow: 'auto'
-      ).stop(true).fadeTo(300, 1)
+      .fadeTo 300, 1
       
-    hideCaption: (layerNum) =>
+    hideCaption: (idx) =>
       # Fix height before hiding the caption to avoid jumping text when the item changes its size
-      caption = $('.rondellCaption.overlay:visible', @_getItem(layerNum).object) 
-      caption.css(
-        height: caption.height()
+      overlay = @_getItem(idx).overlay
+      overlay?.filter(":visible").stop(true).css
+        height: overlay.height()
         overflow: 'hidden'
-      ).stop(true).fadeTo(200, 0)
+      .fadeTo 200, 0
       
     _getItem: (layerNum) =>
       @items[layerNum - 1]
       
     _initItem: (layerNum, item) =>
       @items[layerNum - 1] = item
-      
+
+      # Add some private variables
+      item.id = layerNum
+      item.animating = false
+      @_itemIndices[layerNum] = item.currentSlot = layerNum
+
       # If item is an img tag, wrap with div
       if item.object[0].nodeName.toLowerCase() is "img"
         item.object.wrap("<div/>")
@@ -221,13 +228,11 @@
 
       # Create overlay from caption if found
       if captionContent?.length
-        captionContainer = $('<div class="rondellCaption"></div>')
-        captionContainer.addClass('overlay') if item.icon
-        captionContent.wrapAll(captionContainer)
+        captionContent.wrapAll $('<div class="rondellCaption"></div>')
 
-      # Add some private variables
-      item.animating = false
-        
+        if item.icon
+          item.overlay = $(".rondellCaption", item.object).addClass('overlay') 
+
       # Init click events
       item.object
       .addClass("rondellItemNew #{@itemProperties.cssClass}")
@@ -237,30 +242,30 @@
         height: item.sizeSmall.height
         left: @center.left - item.sizeFocused.width / 2
         top: @center.top - item.sizeFocused.height / 2
-      .bind('mouseenter mouseleave click', (e) =>
+      .bind 'mouseenter mouseleave click', (e) =>
         switch e.type
-          when 'mouseenter' then @_onMouseEnterItem layerNum
-          when 'mouseleave' then @_onMouseLeaveItem layerNum
+          when 'mouseenter' then @_onMouseEnterItem item.id
+          when 'mouseleave' then @_onMouseLeaveItem item.id
           when 'click'
-            e.preventDefault() if @currentLayer isnt layerNum
-            @shiftTo(layerNum) if item.object.is(':visible') and not item.hidden
-            return false
-      )
+            if @_focusedItem.id isnt item.id
+              e.preventDefault() 
+              if not item.hidden and item.object.is(':visible')
+                @shiftTo item.currentSlot
       
       @loadedItems += 1
       
       @_start() if @loadedItems is @maxItems
 
-    _onMouseEnterItem: (itemIndex) =>
-      item = @_getItem(itemIndex)
+    _onMouseEnterItem: (idx) =>
+      item = @_getItem idx
       if not item.animating and not item.hidden and item.object.is(':visible')
-        item.object.addClass('rondellItemHovered').stop(true).animate
+        item.object.addClass("rondellItemHovered").stop(true).animate
             opacity: 1
           , @fadeTime, @funcEase
 
-    _onMouseLeaveItem: (itemIndex) =>
-      item = @_getItem(itemIndex)
-      item.object.removeClass('rondellItemHovered')
+    _onMouseLeaveItem: (idx) =>
+      item = @_getItem idx
+      item.object.removeClass "rondellItemHovered"
 
       if not item.animating and not item.hidden
         item.object.stop(true).animate
@@ -388,6 +393,7 @@
       @initCallback?(@)
       
       # Move items to starting positions
+      @_focusedItem ?= @_getItem @currentLayer
       @shiftTo @currentLayer
       
     _onMobile: ->
@@ -440,7 +446,7 @@
             if Math.abs(changeX) > @touch.threshold
               if changeX > 0
                 @shiftLeft()
-              if changeX < 0
+              else if changeX < 0
                 @shiftRight()
               
             # Reset end position
@@ -464,19 +470,21 @@
         @hovering = true
         unless paused
           @autoRotation.paused = true
-          @showCaption(@currentLayer)
+          @showCaption(@_focusedItem.id)
       else
         @hovering = false
         if paused and not @autoRotation.once
           @autoRotation.paused = false
           @_autoShiftInit()
-        @hideCaption(@currentLayer) unless @alwaysShowCaption
+        @hideCaption(@_focusedItem.id) unless @alwaysShowCaption
             
       # Show or hide controls if they exist
       @_refreshControls() if @controls.enabled
       
     layerFadeIn: (layerNum) =>
       item = @_getItem(layerNum)
+      @_focusedItem = item
+
       item.small = false
       itemFocusedWidth = item.sizeFocused.width
       itemFocusedHeight = item.sizeFocused.height
@@ -511,14 +519,15 @@
           
     layerFadeOut: (layerNum) =>
       item = @_getItem(layerNum)
+
+      # Make sure the items caption is hidden
+      @hideCaption layerNum
+
+      # Replace the items index with the actual slot the item is in
+      layerNum = item.currentSlot 
       
-      layerDist = Math.abs(layerNum - @currentLayer)
-      layerPos = layerNum
-      
-      # Find new layer position if rondell is repeating and indices are wrapped
-      if layerDist > @visibleItems and layerDist > @maxItems / 2 and @repeating and @wrapIndices
-        if layerNum > @currentLayer then layerPos -= @maxItems else layerPos += @maxItems
-        layerDist = Math.abs(layerPos - @currentLayer)
+      # Get the distance and relative index in relation to the focused element
+      [layerDist, layerPos] = @getRelativeItemPosition layerNum
 
       # Get the absolute layer number difference
       layerDiff = @funcDiff(layerPos - @currentLayer, @, layerNum)
@@ -531,6 +540,7 @@
       # Modify fading time by items distance to focused item
       fadeTime = @fadeTime + @itemProperties.delay * layerDist
         
+      # Get new target for animation
       newTarget =
         width: itemWidth
         height: itemHeight
@@ -540,7 +550,6 @@
         
       # Smooth animation when item is visible
       if layerDist <= @visibleItems
-        @hideCaption layerNum
 
         newTarget.opacity = @funcOpacity layerDiff, @, layerNum
 
@@ -553,14 +562,16 @@
           and lastTarget.top is newTarget.top \
           and lastTarget.opacity is newTarget.opacity
 
-        item.lastTarget = newTarget
         item.animating = true
+        item.hidden = false
 
+        # Move item to it's new target
         item.object.removeClass("rondellItemNew rondellItemFocused").stop(true)
         .css
           zIndex: newZ
           display: "block"
         .animate newTarget, fadeTime, @funcEase, =>
+          # Hide item if it isn't visible anymore
           item.animating = false
           if newTarget.opacity < @opacityMin
             item.hidden = true
@@ -568,8 +579,9 @@
           else
             item.hidden = false
             item.object.css "display", "block"
-        
-        item.hidden = false
+
+
+        # Recenter icon if it's now resizeable
         unless item.small
           item.small = true
           if item.icon and not item.resizeable
@@ -591,25 +603,52 @@
         .css('z-index', newZ)
         .animate newTarget, fadeTime / 2, @funcEase, =>
           item.animating = false
-          @hideCaption layerNum
 
+      # Store last target for this item
       item.lastTarget = newTarget
 
     shiftTo: (layerNum) =>
-      if @repeating 
-        # Update current layer number if carousel reached it's limit
-        if layerNum < 1 
-          layerNum = @maxItems
-        else if layerNum > @maxItems 
-          layerNum = 1
+      return unless layerNum
+
+      # Modify layer number when using index switch because
+      # we have to ignore the slot which was initially focused
+      if @switchIndices and layerNum isnt @currentLayer and @getIndexInRange(layerNum) is @_focusedItem.currentSlot
+        # Get items relative distance
+        [distance, relativeIndex] = @getRelativeItemPosition layerNum, true
+        if relativeIndex > @currentLayer
+          layerNum++ 
+        else
+          layerNum--
+
+      # Fix new layer number depending on the repeating option        
+      layerNum = @getIndexInRange layerNum
+
+      # Get the items id in the selected layer slot
+      newItemIndex = @_itemIndices[layerNum]
+
+      # Switch item indices if flag is set
+      if @switchIndices
+        newItem = @_getItem newItemIndex
+
+        # Switch indices in list
+        @_itemIndices[layerNum] = @_focusedItem.id
+        @_itemIndices[@_focusedItem.currentSlot] = newItemIndex
+
+        # Tell items about their new slots
+        newItem.currentSlot = @_focusedItem.currentSlot
+        @_focusedItem.currentSlot = layerNum
+
+        # Set new focused item
+        @_focusedItem = newItem
+
+      # Store the now active layer index
+      @currentLayer = layerNum
       
-      if layerNum > 0 and layerNum <= @maxItems
-        @currentLayer = layerNum
-        
-        # Hide all layers except the current layer
-        @layerFadeOut(i) for i in [1..@maxItems] when i isnt @currentLayer
-        @layerFadeIn(@currentLayer)
-        
+      # Move all items out of focus except the one we want to focus
+      @layerFadeOut(i) for i in [1..@maxItems] when i isnt newItemIndex
+      @layerFadeIn newItemIndex
+      
+      # Update buttons e.g. fadein/out
       @_refreshControls()
 
       # Fire shift callback
@@ -617,10 +656,37 @@
 
       # Update scrollbar
       @scrollbar._instance.setPosition(layerNum, false) if @scrollbar.enabled
+
+    getRelativeItemPosition: (idx, wrapIndices=@wrapIndices) =>
+      distance = Math.abs(idx - @currentLayer)
+      relativeIndex = idx
+      
+      # Find new layer position if rondell is repeating and indices are wrapped
+      if distance > @visibleItems and distance > @maxItems / 2 and @repeating and wrapIndices
+        if idx > @currentLayer 
+          relativeIndex -= @maxItems 
+        else 
+          relativeIndex += @maxItems
+        distance = Math.abs(relativeIndex - @currentLayer)
+
+      [distance, relativeIndex]
+
+    getIndexInRange: (idx) =>
+      if @repeating 
+        if idx < 1 
+          idx += @maxItems
+        else if idx > @maxItems 
+          idx -= @maxItems
+      else 
+        if idx < 1 
+          idx = 1 
+        else if idx > @maxItems
+          idx = @maxItems 
+      idx
         
     _refreshControls: =>
       return unless @controls.enabled
-      
+
       @controls._shiftLeft.stop().fadeTo(@controls.fadeTime, if (@currentLayer > 1 or @repeating) and @hovering then 1 else 0)
       @controls._shiftRight.stop().fadeTo(@controls.fadeTime, if (@currentLayer < @maxItems or @repeating) and @hovering then 1 else 0)
       
@@ -708,7 +774,7 @@
       @container.append @scrollBackground, @scrollLeftControl, @scrollRightControl, @scrollControl
       
     updatePosition: (position, fireCallback=true) =>
-      return if position < @start or position > @end or position is @position
+      return if not position or position is @position or position < @start or position > @end
       
       @position = position
 
@@ -718,11 +784,12 @@
     scrollTo: (x, animate=true, fireCallback=true) =>
       return if x < @_minX or x > @_maxX
       
+      scroller = @scrollControl.stop true
       target = { left: x }
       if animate
-        @scrollControl.stop(true).animate target, @animationDuration, @easing
+        scroller.animate target, @animationDuration, @easing
       else
-        @scrollControl.stop(true).css target
+        scroller.css target
       
       # Translate event coordinates to new position between start and end option
       newPosition = Math.round((x - @_minX) / (@_maxX - @_minX) * (@end - @start)) + @start
@@ -763,9 +830,11 @@
         # Start drag event
         @_drag._dragging = true
         @scrollControl.addClass "rondell-scrollbar-dragging"
-      else if e.type is "click" and e.target is @scrollBackground[0] or e.target is @container[0]
+      else if e.type is "click" and (e.target is @scrollBackground[0] or e.target is @container[0])
         # Jump to new position when clicking scroller background
-        @scrollTo(e.offsetX)
+        clickTarget = e.pageX - @container.offset().left
+        @scrollTo clickTarget
+        return false
       
     scrollLeft: (e) =>
       e.preventDefault()
