@@ -143,12 +143,13 @@
       special: 
         columns: 3
         rows: 3
-        groupSize: 10
+        groupSize: 9
         itemPadding: 5
       # Standard rondell options
       visibleItems: 9
       wrapIndices: false
       currentLayer: 1
+      switchIndices: true
       center:
         top: 215
         left: 250
@@ -174,34 +175,37 @@
           width: 292
           right: 0
           bottom: 0
+
       funcDiff: (d, r, i) ->
         Math.abs d
+
       funcOpacity: (l, r, i) ->
+        # Find current layers index for group comparison
+        currentLayerIndex = if r.currentLayer > r._focusedItem.currentSlot \
+            then r.currentLayer - 1 else r.currentLayer
+        # Modify items indices right of the selected slot to remove empty slot
+        i-- if i > r._focusedItem.currentSlot
         # Show items in the same group as the focused one
         if Math.floor((i - 1) / r.special.groupSize) is \
-          Math.floor((i - 1 - l) / r.special.groupSize) then 0.8 else 0
+          Math.floor((currentLayerIndex - 1) / r.special.groupSize) then 0.8 else 0
+
       funcTop: (l, r, i) ->
-        # Shift items right of the focused item and a special fix for the last item in the first group
-        if l > 0 or i is r.special.groupSize
-          i-- 
-          l--
-        # Hack to fix animation of the focused element in a group
-        i = 1 if i % r.special.groupSize is 0
+        # Modify items indices right of the selected slot to remove empty slot
+        i-- if i > r._focusedItem.currentSlot
         # Compute items vertical offset
         r.special.itemPadding + Math.floor(((i - 1) % r.special.groupSize) / r.special.rows) \
           * (r.itemProperties.size.height + r.special.itemPadding)
 
       funcLeft: (l, r, i) ->
-        # Shift elements right of the focused item and a special fix for the last item in the first group
-        if l > 0 or i is r.special.groupSize
-          i-- 
-          l--
-        # Hack to fix animation of the focused element in a group
-        i = 1 if i % r.special.groupSize is 0
+        # Find current layers index for group comparison
+        currentLayerIndex = if r.currentLayer > r._focusedItem.currentSlot \
+            then r.currentLayer - 1 else r.currentLayer
+        # Modify items indices right of the selected slot to remove empty slot
+        i-- if i > r._focusedItem.currentSlot
         # Get items column
         column = ((i - 1) % r.special.groupSize) % r.special.columns
         # Get the group difference
-        groupOffset = Math.floor((i - 1) / r.special.groupSize) - Math.floor((i - 1 - l) / r.special.groupSize)
+        groupOffset = Math.floor((i - 1) / r.special.groupSize) - Math.floor((currentLayerIndex - 1) / r.special.groupSize)
         # Compute final column positioning
         500 + r.special.itemPadding + (column + r.special.columns * groupOffset) \
           * (r.itemProperties.size.width + r.special.itemPadding)
