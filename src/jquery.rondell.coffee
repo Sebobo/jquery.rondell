@@ -2,8 +2,8 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 0.8.7
-  @date 02/03/2012
+  @version 0.9.0
+  @date 10/03/2012
   @category jQuery plugin
   @copyright (c) 2009-2012 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -12,7 +12,7 @@
 (($) ->
   ### Global rondell plugin properties ###
   $.rondell =
-    version: '0.9.0-beta'
+    version: '0.9.0'
     name: 'rondell'
     defaults:
       showContainer: true       # When the plugin has finished initializing $.show() will be called on the items container
@@ -79,7 +79,6 @@
       effect: null              # Special effect function for the focused item, not used currently
       onAfterShift: null
       scrollbar:
-        _instance: null
         enabled: false
         orientation: "bottom"
         start: 1
@@ -100,9 +99,6 @@
         scrollOnDrag: true
         animationDuration: 300
         easing: "easeInOutQuad"
-        _drag:
-          _dragging: false
-          _lastDragEvent: 0
   
   ### Add default easing function for rondell to jQuery if missing ###
   unless $.easing.easeInOutQuad        
@@ -138,7 +134,9 @@
           _lastShift: 0
         touch:
           _start: undefined        
-          _end: undefined   
+          _end: undefined  
+        scrollbar:
+          _instance: null 
         
       # Compute focused item size if not set
       @itemProperties.sizeFocused =
@@ -746,6 +744,10 @@
       @container = container.addClass "rondell-scrollbar"
       
       $.extend true, @, $.rondell.defaults.scrollbar, options
+      
+      @_drag =
+        _dragging: false
+        _lastDragEvent: 0
 
       @container.addClass("rondell-scrollbar-#{@orientation}").css @style
         

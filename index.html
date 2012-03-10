@@ -115,7 +115,9 @@
                 <h4>Usage</h4>
                 <pre>
 &lt;script type="text/javascript"&gt;
-    $('.myExample > .myItem').rondell([options][, callback]);
+
+$('.myContainer > .myItem').rondell([options][, callback]);
+
 &lt;/script&gt;</pre>
             </div>
 
@@ -125,7 +127,20 @@
             <div class="column size1of2">
                 <h5>New and improved in this version</h5>
                 <ul>
-                    <li><span class="label notice">Fix</span> TODO!!</li>
+                    <li><span class="label success">New</span> awesome preset <i>thumbgallery</i> which uses all the new options and features.</li>
+                    <li><span class="label success">New</span> Integrated my standalone scrollbar plugin (beta) into the rondell. See the <a href="#options" class="scrollToId" title="Options">options</a> for setting it up.</li>
+
+                    <li><span class="label success">New</span> Items absolute index as parameter for the animation functions.</li>
+                    <li><span class="label success">New</span> Option <i>switchIndices</i> which enabled switching the index of the last and new focused items.</li>
+                    <li><span class="label success">New</span> Option <i>keyDelay</i> which sets minimum time between keypress events are registered.</li>
+                    <li><span class="label success">New</span> Option <i>wrapIndices</i> allowing to disable item index wrapping used in the carousels.</li>
+                    <li><span class="label success">New</span> Opacity is now animated when hovering items.</li>
+
+                    <li><span class="label notice">Change</span> Improved performance</li>
+
+                    <li><span class="label notice">Fix</span> Bugfixes for items fading out or in</li>
+                    <li><span class="label notice">Fix</span> Disabled autorotation when rondell is not visible.</li>
+                    <li><span class="label notice">Fix</span> Horizontal mouse scroll event registering improved.</li>
                 </ul>
                 <br/>
                 <p>
@@ -200,6 +215,14 @@
                         <a href="http://www.modernizr.com/" title="Modernizr library">Modernizr</a> for browser capability fallbacks.<br/>
                         The library is included in the plugins <i>lib</i> folder.<br/> 
                     </li>
+                </ul>
+                <br/>
+                <h5>Roadmap for 1.0.0</h5>
+                <ul>
+                    <li>Asynchronous image loading</li>
+                    <li>Image cropping for uniform item sizes</li>
+                    <li>Improved themes</li>
+                    <li>CSS based buttons</li>
                 </ul>
             </div>
             
@@ -929,6 +952,21 @@
                     <td>How many items should be visible in each direction</td>
                 </tr>
                 <tr>
+                    <td>switchIndices</td>
+                    <td>false</td>
+                    <td>Enables switching the index of the last and new focused item.</td>
+                </tr>
+                <tr>
+                    <td>keyDelay</td>
+                    <td>300</td>
+                    <td>Minimum time between keypress events are registered.</td>
+                </tr>
+                <tr>
+                    <td>wrapIndices</td>
+                    <td>true</td>
+                    <td>Enabled index wrapping (used for carousels).</td>
+                </tr>
+                <tr>
                     <td>alwaysShowCaption</td>
                     <td>false</td>
                     <td>Should the overlay always be shown. By default it's only shown when hovering the rondell.</td>
@@ -1046,7 +1084,7 @@
                     <td>
                         The plugin contains some presets for the options to help you get started with your own rondell.<br/>
                         The current presets are based on the examples on this page and include:<br/>
-                        <i>carousel, products, pages, cubic</i>
+                        <i>carousel, products, pages, cubic, gallery, thumbGallery</i>
                     </td>
                 </tr>
                 <tr>
@@ -1089,6 +1127,37 @@
                         This is for removing the glitch when the plugin takes to long to load and all your items
                         are shown one under another.<br/>
                         You should set the css of your items container to <i>display:none</i>.
+                    </td>
+                </tr>
+                <tr>
+                    <td>scrollbar</td>
+                    <td>
+<pre>{ 
+    enabled: false,
+    orientation: "bottom",
+    start: 1,
+    end: 100,
+    stepSize: 1,
+    position: 1,
+    padding: 10,
+    style: {
+      width: "100%",
+      height: 20,
+      left: "auto",
+      right: "auto",
+      top: "auto",
+      bottom: "auto"
+    },
+    repeating: false,
+    onScroll: undefined,
+    scrollOnHover: false,
+    scrollOnDrag: true,
+    animationDuration: 300,
+    easing: "easeInOutQuad"
+}</pre>
+                    </td>
+                    <td>
+                        Scrollbar options description will be updated later when it's final.
                     </td>
                 </tr>
             </table>
@@ -1167,13 +1236,6 @@
             </div>
             
             <hr/>
-            
-            <h4>Coming up</h4>
-            
-            <ul>
-                <li>Effects for the focused item</li>
-                <li>Nicer controls</li>
-            </ul>
             
             <br/>
             <br/>
@@ -1288,7 +1350,7 @@
                                 // Create link container
                                 var newItem = $('<a/>')
                                 .attr({
-                                    'href': item.image,//url,
+                                    'href': item.url,
                                     'title': item.title,
                                     'target': '_blank'
                                 })
@@ -1327,10 +1389,6 @@
                                 preset: 'thumbGallery',
                                 theme: 'light'
                             });
-
-                            $('#wookmarkDemo1 a').fancybox(fancyboxOptions);
-                            $('#wookmarkDemo2 a').fancybox(fancyboxOptions);
-                            $('#wookmarkDemo3 a').fancybox(fancyboxOptions);
                         }
                     }
                 });

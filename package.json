@@ -1,6 +1,6 @@
 {
     "name": "rondell",
-    "version": "0.8.7",
+    "version": "0.9.0",
     "title": "jQuery.Rondell()",
     "author": {
         "name": "Sebastian Helzle",
@@ -22,7 +22,7 @@
         "carousel",
         "rondell"
     ],
-    "homepage": "http://sebobo.github.com/jquery.rondell",
+    "homepage": "http://projects.sebastianhelzle.net/jquery.rondell",
     "contributors": [
     ],
     "files": [

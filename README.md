@@ -43,7 +43,7 @@ If `myElement` is an image, it is directly used and the title will be used as te
 
 ### Options
 
-See the [documentation page](http://sebobo.github.com/jquery.rondell/) for the options.
+See the [documentation page](http://projects.sebastianhelzle.net/jquery.rondell/) for the options.
 
 Editing
 -------
