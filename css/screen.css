@@ -486,11 +486,11 @@ input[type=submit].btn::-moz-focus-inner {
 }
 
 .size1of3 {
-  width: 33.33%;
+  width: 33%;
 }
 
 .size2of3 {
-  width: 66.76%;
+  width: 66%;
 }
 
 code, pre {

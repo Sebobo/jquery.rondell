@@ -132,6 +132,7 @@
   top: 5px;
   width: 10px;
   height: 10px;
+  background-color: #ddd;
   background-repeat: repeat-x;
   background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
   background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
@@ -162,6 +163,7 @@
   width: 12px;
   height: 12px;
   margin-left: -6px;
+  background-color: #c00;
   background-repeat: repeat-x;
   background-image: -webkit-linear-gradient(top, red, #bb0000);
   background-image: -moz-linear-gradient(top, red, #bb0000);
@@ -170,6 +172,7 @@
   background-image: linear-gradient(top, red, #bb0000);
 }
 .rondell-scrollbar .rondell-scrollbar-control:active {
+  background: #d00;
   background-repeat: repeat-x;
   background-image: -webkit-linear-gradient(top, #ee0000, #dd0000);
   background-image: -moz-linear-gradient(top, #ee0000, #dd0000);
@@ -309,11 +312,9 @@
 }
 .rondellTheme_dark .rondellCaption {
   margin: 5px;
-  padding: 0;
   font-size: 12px;
 }
 .rondellTheme_dark .rondellCaption.overlay {
-  padding: 0 5px;
   background: #999;
   background: rgba(100, 100, 100, 0.6);
   border: 2px solid rgba(60, 60, 60, 0.4);

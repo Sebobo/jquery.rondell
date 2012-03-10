@@ -133,6 +133,7 @@
     top: 5px;
     width: 10px;
     height: 10px;
+    background-color: #ddd;
     @include linear-gradient(#eee, #ccc);
   }
 
@@ -158,9 +159,11 @@
     width: 12px;
     height: 12px;
     margin-left: -6px;
+    background-color: #c00;
     @include linear-gradient(#f00, #b00);
 
     &:active {
+      background: #d00;
       @include linear-gradient(#e00, #d00);      
     }
     &.rondell-scrollbar-dragging,
@@ -257,11 +260,9 @@
   }
   .rondellCaption { 
     margin: 5px; 
-    padding: 0; 
     font-size: 12px;
     
     &.overlay {
-      padding: 0 5px;
       background: #999;
       background: rgba(100, 100, 100, 0.6); 
       border: 2px solid rgba(60, 60, 60, 0.4);
