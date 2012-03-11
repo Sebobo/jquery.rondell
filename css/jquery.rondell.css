@@ -28,6 +28,15 @@
   color: #fff;
   text-decoration: none;
 }
+.rondellItem .crop {
+  border-radius: inherit;
+  -o-border-radius: inherit;
+  -moz-border-radius: inherit;
+  -webkit-border-radius: inherit;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
 .rondellItem img {
   vertical-align: bottom;
   display: block;
@@ -46,6 +55,10 @@
 
 .rondellItemFocused, .rondellItemFocused a {
   cursor: auto;
+}
+.rondellItemFocused img.rondellCropped {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .rondellCaption {
@@ -73,23 +86,11 @@
   display: none;
   color: #fafafa;
   background-color: #333;
-}
-
-.rgba .rondellCaption.overlay {
   background-color: rgba(0, 0, 0, 0.5);
-}
-
-.borderradius .rondellCaption.overlay {
   border-radius: 4px;
   -o-border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-}
-
-.boxshadow .rondellCaption.overlay {
-  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) inset;
-  -moz-box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) inset;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) inset;
 }
 
 .rondellControl {
@@ -284,10 +285,10 @@
   border: 0;
 }
 .rondellTheme_light .rondellItem, .rondellTheme_light .rondellItem img {
-  border-radius: 2px;
-  -o-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
+  border-radius: 3px;
+  -o-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
 }
 
 .boxshadow.rgba .rondellTheme_light .rondellItem {
@@ -305,20 +306,26 @@
 /* dark theme, good for preset 'products' */
 .rondellTheme_dark {
   background: #333;
+  border-radius: 5px;
+  -o-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  background-repeat: repeat-x;
+  background-image: -webkit-linear-gradient(top, #666666, #111111);
+  background-image: -moz-linear-gradient(top, #666666, #111111);
+  background-image: -ms-linear-gradient(top, #666666, #111111);
+  background-image: -o-linear-gradient(top, #666666, #111111);
+  background-image: linear-gradient(top, #666666, #111111);
 }
 .rondellTheme_dark .rondellItem {
   border: 0;
   background: transparent;
 }
 .rondellTheme_dark .rondellCaption {
-  margin: 5px;
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 0 0 3px #000;
   font-size: 12px;
-}
-.rondellTheme_dark .rondellCaption.overlay {
-  background: #999;
-  background: rgba(100, 100, 100, 0.6);
-  border: 2px solid rgba(60, 60, 60, 0.4);
-  text-shadow: 0 1px 2px #000;
 }
 .rondellTheme_dark .rondellControl {
   font-size: 0;
@@ -332,22 +339,6 @@
 }
 .rondellTheme_dark .rondellControl.rondellShiftLeft {
   background-position: 0 -28px;
-}
-
-.borderradius .rondellTheme_dark {
-  border-radius: 5px;
-  -o-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-
-.cssgradients .rondellTheme_dark {
-  background-repeat: repeat-x;
-  background-image: -webkit-linear-gradient(top, #666666, #111111);
-  background-image: -moz-linear-gradient(top, #666666, #111111);
-  background-image: -ms-linear-gradient(top, #666666, #111111);
-  background-image: -o-linear-gradient(top, #666666, #111111);
-  background-image: linear-gradient(top, #666666, #111111);
 }
 
 .boxshadow.rgba .rondellTheme_dark {
@@ -365,9 +356,19 @@
 /* page theme, good for preset 'pages' */
 .rondellTheme_page {
   border: 1px solid #ccc;
+  border-radius: 3px;
+  -o-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
 }
 .rondellTheme_page .rondellItem {
   border: 0;
+}
+.rondellTheme_page .rondellItem, .rondellTheme_page .rondellItem img {
+  border-radius: 3px;
+  -o-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
 }
 .rondellTheme_page .rondellControl {
   font-size: 0;
@@ -375,6 +376,10 @@
   color: transparent;
   width: 20px;
   height: 16px;
+  border-radius: 0 0 3px 0;
+  -o-border-radius: 0 0 3px 0;
+  -moz-border-radius: 0 0 3px 0;
+  -webkit-border-radius: 0 0 3px 0;
 }
 .rondellTheme_page .rondellControl.rondellShiftLeft, .rondellTheme_page .rondellControl.rondellShiftRight {
   background: url("../images/arrows.png") no-repeat 0 0;
@@ -390,31 +395,22 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-.borderradius .rondellTheme_page {
-  border-radius: 3px;
-  -o-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-}
-.borderradius .rondellTheme_page .rondellItem, .borderradius .rondellTheme_page .rondellItem img {
-  border-radius: 3px;
-  -o-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-}
-.borderradius .rondellTheme_page .rondellControl {
-  border-radius: 0 0 3px 0;
-  -o-border-radius: 0 0 3px 0;
-  -moz-border-radius: 0 0 3px 0;
-  -webkit-border-radius: 0 0 3px 0;
-}
-
 /* slider theme */
 .rondellTheme_slider {
   border: 1px solid #aaa;
+  border-radius: 2px;
+  -o-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
 }
 .rondellTheme_slider .rondellItem {
   border: 0;
+}
+.rondellTheme_slider .rondellItem, .rondellTheme_slider .rondellItem img {
+  border-radius: 2px;
+  -o-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
 }
 .rondellTheme_slider .rondellCaption {
   text-align: center;
@@ -432,17 +428,8 @@
   width: 15px;
   height: 30px;
   background-color: #666;
-  border: 1px solid #555;
-}
-.rondellTheme_slider .rondellControl:hover {
-  background-color: #888;
-}
-
-.rgba .rondellTheme_slider .rondellControl {
   background-color: rbga(50, 50, 50, 0.2);
-}
-
-.cssgradients .rondellTheme_slider .rondellControl {
+  border: 1px solid #555;
   background-repeat: repeat-x;
   background-image: -webkit-linear-gradient(top, #666666, #555555);
   background-image: -moz-linear-gradient(top, #666666, #555555);
@@ -450,13 +437,26 @@
   background-image: -o-linear-gradient(top, #666666, #555555);
   background-image: linear-gradient(top, #666666, #555555);
 }
-.cssgradients .rondellTheme_slider .rondellControl:hover {
+.rondellTheme_slider .rondellControl:hover {
+  background-color: #888;
   background-repeat: repeat-x;
   background-image: -webkit-linear-gradient(top, #777777, #555555);
   background-image: -moz-linear-gradient(top, #777777, #555555);
   background-image: -ms-linear-gradient(top, #777777, #555555);
   background-image: -o-linear-gradient(top, #777777, #555555);
   background-image: linear-gradient(top, #777777, #555555);
+}
+.rondellTheme_slider .rondellControl.rondellShiftLeft {
+  border-radius: 0 15px 15px 0;
+  -o-border-radius: 0 15px 15px 0;
+  -moz-border-radius: 0 15px 15px 0;
+  -webkit-border-radius: 0 15px 15px 0;
+}
+.rondellTheme_slider .rondellControl.rondellShiftRight {
+  border-radius: 15px 0 0 15px;
+  -o-border-radius: 15px 0 0 15px;
+  -moz-border-radius: 15px 0 0 15px;
+  -webkit-border-radius: 15px 0 0 15px;
 }
 
 .boxshadow.rgba .rondellTheme_slider {
@@ -473,29 +473,4 @@
   -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
   -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
-}
-
-.borderradius .rondellTheme_slider {
-  border-radius: 2px;
-  -o-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-}
-.borderradius .rondellTheme_slider .rondellItem, .borderradius .rondellTheme_slider .rondellItem img {
-  border-radius: 2px;
-  -o-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-}
-.borderradius .rondellTheme_slider .rondellControl.rondellShiftLeft {
-  border-radius: 0 15px 15px 0;
-  -o-border-radius: 0 15px 15px 0;
-  -moz-border-radius: 0 15px 15px 0;
-  -webkit-border-radius: 0 15px 15px 0;
-}
-.borderradius .rondellTheme_slider .rondellControl.rondellShiftRight {
-  border-radius: 15px 0 0 15px;
-  -o-border-radius: 15px 0 0 15px;
-  -moz-border-radius: 15px 0 0 15px;
-  -webkit-border-radius: 15px 0 0 15px;
 }
