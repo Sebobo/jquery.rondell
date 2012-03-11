@@ -78,6 +78,7 @@
       preset: ''                # Configuration preset
       effect: null              # Special effect function for the focused item, not used currently
       onAfterShift: null
+      cropThumbnails: false     
       scrollbar:
         enabled: false
         orientation: "bottom"
@@ -278,7 +279,7 @@
     
       itemSize = @itemProperties.size
       focusedSize = @itemProperties.sizeFocused
-      scaling = @scaling
+      croppedSize = itemSize
       
       # create size vars for the small and focused size
       foWidth = smWidth = copy?.width() or copy?[0].width or icon[0].width or icon.width()
@@ -291,13 +292,27 @@
       return unless smWidth and smHeight
     
       if isResizeable
-        # fit to small width
+        # Fit to small width
         smHeight *= itemSize.width / smWidth
         smWidth = itemSize.width
           
-        # fit to small height
+        # Fit to small height
         if smHeight > itemSize.height
           smWidth *= itemSize.height / smHeight
+          smHeight = itemSize.height
+
+        # Cropping will fill the thumbnail size in both dimensions
+        if @cropThumbnails
+          icon.wrap "<div class=\"crop\"/>"
+          croppedSize =
+            width: itemSize.width
+            height: itemSize.width / smWidth * smHeight
+          if croppedSize.height < itemSize.height
+            croppedSize =
+              width: itemSize.height / croppedSize.height * croppedSize.width
+              height: itemSize.height
+
+          smWidth = itemSize.width
           smHeight = itemSize.height
         
         # fit to focused width
@@ -316,19 +331,19 @@
         foHeight = focusedSize.height
         
       # Set vars in item array
-      @_initItem(layerNum, 
+      @_initItem layerNum, 
         object: obj 
         icon: icon
         small: false 
         hidden: false
         resizeable: isResizeable
+        croppedSize: croppedSize
         sizeSmall: 
           width: smWidth
           height: smHeight
         sizeFocused: 
           width: foWidth
           height: foHeight
-      )
       
     _loadItem: (itemIndex, obj) =>
       icon = if obj.is('img') then obj else $('img:first', obj)
@@ -506,7 +521,16 @@
         item.object.addClass "rondellItemFocused"
         @_autoShiftInit()
         @showCaption(layerNum) if @hovering or @alwaysShowCaption or @_onMobile()
-      
+
+      # Icon is animated separately if cropping is enabled
+      if @cropThumbnails
+        item.icon.stop(true).animate 
+            marginTop: 0
+            marginLeft: 0
+            width: newTarget.width
+            height: newTarget.height
+          , @fadeTime, @funcEase 
+
       # If icon isn't resizeable animate margins
       if item.icon and not item.resizeable
         margin = (@itemProperties.sizeFocused.height - item.icon.height()) / 2
@@ -578,6 +602,13 @@
             item.hidden = false
             item.object.css "display", "block"
 
+        # Icon is animated separately if cropping is enabled        
+        item.icon.stop(true).animate 
+            marginTop: (@itemProperties.size.height - item.croppedSize.height) / 2
+            marginLeft: (@itemProperties.size.width - item.croppedSize.width) / 2
+            width: item.croppedSize.width
+            height: item.croppedSize.height
+          , fadeTime, @funcEase if @cropThumbnails
 
         # Recenter icon if it's now resizeable
         unless item.small

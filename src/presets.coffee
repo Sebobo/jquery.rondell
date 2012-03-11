@@ -46,17 +46,20 @@
       center:
         left: 400 
         top: 100
+      size: 
+        width: 800
+        height: 200
       controls: 
         margin: 
           x: 210
           y: 158
-      funcTop: (layerDiff, rondell) ->
+      funcTop: (l, r, i) ->
         0
-      funcDiff: (layerDiff, rondell) ->
-        Math.abs(layerDiff) + 1
-      funcLeft: (layerDiff, rondell) ->
-        rondell.center.left + (layerDiff - 0.5) * rondell.itemProperties.size.width
-      funcOpacity: (layerDist, rondell) ->
+      funcDiff: (d, r, i) ->
+        Math.abs(d) + 1
+      funcLeft: (l, r, i) ->
+        r.center.left + (l - 0.5) * r.itemProperties.size.width
+      funcOpacity: (l, r, i) ->
         0.8
        
     pages:
@@ -110,7 +113,12 @@
           Math.pow((Math.PI - Math.abs(layerDiff)) / Math.PI, 3)
           
     gallery:
+      # Custom options
+      special: 
+        itemPadding: 2
+      # Standard rondell options
       visibleItems: 4
+      cropThumbnails: true
       center:
         top: 145
         left: 250
@@ -127,15 +135,15 @@
           width: 480
           height: 280
         size:
-          width: 100
+          width: 80
           height: 100 
-      funcTop: (layerDiff, rondell) ->
-        rondell.size.height - rondell.itemProperties.size.height - 5
-      funcDiff: (layerDiff, rondell) ->
-        Math.abs(layerDiff) - 0.5
-      funcLeft: (layerDiff, rondell) ->
-        rondell.center.left + (layerDiff - 0.5) * (rondell.itemProperties.size.width + 5)
-      funcOpacity: (layerDist, rondell) ->
+      funcTop: (l, r, i) ->
+        r.size.height - r.itemProperties.size.height - r.special.itemPadding
+      funcDiff: (d, r, i) ->
+        Math.abs(d) - 0.5
+      funcLeft: (l, r, i) ->
+        r.center.left + (l - 0.5) * (r.itemProperties.size.width + r.special.itemPadding)
+      funcOpacity: (l, r, i) ->
         0.8
 
     thumbGallery:
@@ -150,6 +158,7 @@
       wrapIndices: false
       currentLayer: 1
       switchIndices: true
+      cropThumbnails: true
       center:
         top: 215
         left: 250
