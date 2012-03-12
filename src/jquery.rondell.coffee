@@ -641,7 +641,7 @@
       item.lastTarget = newTarget
 
     shiftTo: (layerNum) =>
-      return unless layerNum
+      return unless layerNum?
 
       # Modify layer number when using index switch because
       # we have to ignore the slot which was initially focused
@@ -653,7 +653,7 @@
         else
           layerNum--
 
-      # Fix new layer number depending on the repeating option        
+      # Fix new layer number depending on the repeating option 
       layerNum = @getIndexInRange layerNum
 
       # Get the items id in the selected layer slot
