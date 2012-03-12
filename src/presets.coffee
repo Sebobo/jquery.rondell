@@ -153,12 +153,16 @@
         rows: 3
         groupSize: 9
         itemPadding: 5
+        thumbsOffset:
+          x: 500
+          y: 0 
       # Standard rondell options
       visibleItems: 9
       wrapIndices: false
       currentLayer: 1
       switchIndices: true
       cropThumbnails: true
+      showCaption: true
       center:
         top: 215
         left: 250
@@ -202,7 +206,8 @@
         # Modify items indices right of the selected slot to remove empty slot
         i-- if i > r._focusedItem.currentSlot
         # Compute items vertical offset
-        r.special.itemPadding + Math.floor(((i - 1) % r.special.groupSize) / r.special.rows) \
+        r.special.thumbsOffset.y + r.special.itemPadding \
+          + Math.floor(((i - 1) % r.special.groupSize) / r.special.rows) \
           * (r.itemProperties.size.height + r.special.itemPadding)
 
       funcLeft: (l, r, i) ->
@@ -214,9 +219,11 @@
         # Get items column
         column = ((i - 1) % r.special.groupSize) % r.special.columns
         # Get the group difference
-        groupOffset = Math.floor((i - 1) / r.special.groupSize) - Math.floor((currentLayerIndex - 1) / r.special.groupSize)
+        groupOffset = Math.floor((i - 1) / r.special.groupSize) \
+          - Math.floor((currentLayerIndex - 1) / r.special.groupSize)
         # Compute final column positioning
-        500 + r.special.itemPadding + (column + r.special.columns * groupOffset) \
+        r.special.thumbsOffset.x + r.special.itemPadding \
+          + (column + r.special.columns * groupOffset) \
           * (r.itemProperties.size.width + r.special.itemPadding)
         
     slider:

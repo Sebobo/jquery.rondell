@@ -49,6 +49,7 @@
       wrapIndices: true         # Will modify relative item indices to fix positioning when repeating
       switchIndices: false      # After a shift the last focused item and the new one will switch indices
       alwaysShowCaption: false  # Don't hide caption on mouseleave
+      captionsEnabled: true
       autoRotation:             # If the cursor leaves the rondell continue spinning
         enabled: false
         paused: false           # Can be used to pause the auto rotation with a play/pause button for example 
@@ -182,19 +183,21 @@
       1
     
     showCaption: (idx) => 
-      # Restore automatic height and show caption
-      @_getItem(idx).overlay?.stop(true).css
-        height: 'auto'
-        overflow: 'auto'
-      .fadeTo 300, 1
+      if @captionsEnabled
+        # Restore automatic height and show caption
+        @_getItem(idx).overlay?.stop(true).css
+          height: 'auto'
+          overflow: 'auto'
+        .fadeTo 300, 1
       
     hideCaption: (idx) =>
-      # Fix height before hiding the caption to avoid jumping text when the item changes its size
-      overlay = @_getItem(idx).overlay
-      overlay?.filter(":visible").stop(true).css
-        height: overlay.height()
-        overflow: 'hidden'
-      .fadeTo 200, 0
+      if @captionsEnabled
+        # Fix height before hiding the caption to avoid jumping text when the item changes its size
+        overlay = @_getItem(idx).overlay
+        overlay?.filter(":visible").stop(true).css
+          height: overlay.height()
+          overflow: 'hidden'
+        .fadeTo 200, 0
       
     _getItem: (layerNum) =>
       @items[layerNum - 1]
@@ -208,29 +211,30 @@
       @_itemIndices[layerNum] = item.currentSlot = layerNum
 
       # If item is an img tag, wrap with div
-      if item.object[0].nodeName.toLowerCase() is "img"
+      if item.object.is "img"
         item.object.wrap("<div/>")
         item.object = item.object.parent()
         item.icon = $('img:first', item.object)
       
-      # Wrap other content as overlay caption
-      captionContent = item.icon?.siblings()
-      if not (captionContent?.length or item.icon) and item.object.children().length
-        captionContent = item.object.children()
-        
-      # Or use title/alt texts as overlay caption
-      unless captionContent?.length 
-        caption = item.object.attr('title') or item.icon?.attr('title') or item.icon?.attr('alt')  
-        if caption
-          captionContent = $("<p>#{caption}</p>")
-          item.object.append(captionContent)
+      if @captionsEnabled
+        # Wrap other content as overlay caption
+        captionContent = item.icon?.siblings()
+        if not (captionContent?.length or item.icon) and item.object.children().length
+          captionContent = item.object.children()
+          
+        # Or use title/alt texts as overlay caption
+        unless captionContent?.length 
+          caption = item.object.attr('title') or item.icon?.attr('title') or item.icon?.attr('alt')  
+          if caption
+            captionContent = $("<p>#{caption}</p>")
+            item.object.append(captionContent)
 
-      # Create overlay from caption if found
-      if captionContent?.length
-        captionContent.wrapAll $('<div class="rondellCaption"></div>')
+        # Create overlay from caption if found
+        if captionContent?.length
+          captionContent.wrapAll $('<div class="rondellCaption"></div>')
 
-        if item.icon
-          item.overlay = $(".rondellCaption", item.object).addClass('overlay') 
+          if item.icon
+            item.overlay = $(".rondellCaption", item.object).addClass('overlay') 
 
       # Init click events
       item.object
