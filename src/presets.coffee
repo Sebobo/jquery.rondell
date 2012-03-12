@@ -162,7 +162,6 @@
       currentLayer: 1
       switchIndices: true
       cropThumbnails: true
-      showCaption: true
       center:
         top: 215
         left: 250
