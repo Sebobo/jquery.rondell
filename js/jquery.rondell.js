@@ -1198,6 +1198,7 @@
         scrollbar: {
           enabled: true,
           style: {
+            stepSize: 9,
             width: 292,
             right: 0,
             bottom: 0

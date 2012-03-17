@@ -31,7 +31,7 @@
   a { cursor:pointer; color: #fff; text-decoration: none; }
 
   .crop {
-    @include rounded(inherit);
+    @include border-radius(inherit);
     overflow: hidden;
     width: 100%;
     height: 100%;
@@ -91,7 +91,7 @@
     background-color: #333; 
     background-color: rgba(0, 0, 0, 0.5);
 
-    @include rounded(4px);
+    @include border-radius(4px);
   }
 }
 
@@ -156,7 +156,7 @@
     cursor: pointer;
     position: absolute;
     border: 1px solid #ccc;
-    @include rounded(12px);
+    @include border-radius(12px);
   }
 
   .rondell-scrollbar-control {
@@ -224,11 +224,11 @@
 } 
 .borderradius .rondellTheme_default {
   .rondellControl { 
-    @include rounded(3px); 
+    @include border-radius(3px); 
   }
   .rondellItem {
     &, img { 
-      @include rounded(3px); 
+      @include border-radius(3px); 
     }
   }
 }
@@ -246,7 +246,7 @@
     border: 0; 
 
     &, img {
-      @include rounded(3px);
+      @include border-radius(3px);
     }
   }
 }
@@ -259,7 +259,7 @@
 /* dark theme, good for preset 'products' */
 .rondellTheme_dark {
   background: #333;
-  @include rounded(5px);
+  @include border-radius(5px);
   @include linear-gradient(#666, #111);
      
   .rondellItem { 
@@ -300,12 +300,12 @@
 /* page theme, good for preset 'pages' */
 .rondellTheme_page {
   border: 1px solid #ccc;
-  @include rounded(3px);
+  @include border-radius(3px);
   
   .rondellItem {
     border: 0; 
     &, img { 
-      @include rounded(3px); 
+      @include border-radius(3px); 
     }
   } 
   .rondellControl {
@@ -314,7 +314,7 @@
     color: transparent;
     width: 20px;
     height: 16px;
-    @include rounded(0 0 3px 0);
+    @include border-radius(0 0 3px 0);
     
     &.rondellShiftLeft,
     &.rondellShiftRight {
@@ -333,12 +333,12 @@
 /* slider theme */
 .rondellTheme_slider {
   border: 1px solid #aaa;
-  @include rounded(2px);
+  @include border-radius(2px);
   
   .rondellItem {
     border: 0; 
     &, img { 
-      @include rounded(2px); 
+      @include border-radius(2px); 
     }
   }
   
@@ -369,10 +369,10 @@
       @include linear-gradient(#777777, #555555);
     }
     &.rondellShiftLeft {
-      @include rounded(0 15px 15px 0);
+      @include border-radius(0 15px 15px 0);
     }
     &.rondellShiftRight {
-      @include rounded(15px 0 0 15px);
+      @include border-radius(15px 0 0 15px);
     }
   }
 }

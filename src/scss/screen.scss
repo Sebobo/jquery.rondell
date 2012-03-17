@@ -109,7 +109,7 @@ img.inline { margin: 10px; }
   @include linear-gradient(#337edc, #0a5abf);
 }
 .borderradius .pageHeader {
-  @include rounded(8px 8px 0 0);
+  @include border-radius(8px 8px 0 0);
 }
 
 /* rondell demo stuff */
@@ -236,7 +236,7 @@ img.inline { margin: 10px; }
   display:none; 
   border:1px solid #eee; 
 }
-.borderradius #fancybox-wrap { @include rounded(5px); }
+.borderradius #fancybox-wrap { @include border-radius(5px); }
 .rgba.boxshadow #fancybox-wrap {
   @include boxshadow(0 1px 12px rgba(0, 0, 0, 0.6)); 
 }
