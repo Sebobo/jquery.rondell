@@ -1,0 +1,325 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <title>jQuery Rondell - Carousels</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="keywords" content="jquery,tooltip,popup,plugin,css3,open-source,mit-license,extension,overlay" />
+        <meta name="description" content="Sebastian Helzle's jQuery Rondell plugin" />
+        <meta http-equiv="content-language" content="en">
+        <link rel="stylesheet" href="../css/screen.css" type="text/css" media="all" title="Screen" />  
+        <link rel="stylesheet" href="../css/jquery.rondell.css" type="text/css" media="all" title="Screen" />  
+    </head>
+    <body>
+        <div class="pageHeader hasShadow">
+            
+            <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
+            
+            <p>
+                <b>Version 0.9.0</b> - Created by <a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle">Sebastian Helzle</a>
+            </p>
+            <br/>
+            <ul class="tabs">
+                <li>
+                    <a href="/" title="Projects overview">Home</a>
+                </li>
+                <li>
+                    <a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">
+                        Smallipop
+                    </a>
+                </li>
+                <li class="selected">
+                    <a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">
+                        Rondell
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="page hasShadow" id="introduction">
+            <div class="column size3of4">
+                <h2>Carousel examples</h2>
+                <p>
+                    TODO!
+                </p>
+            </div>
+
+            <div class="well column size1of4">
+                <ul class="nav nav-list">
+                    <li class="nav-header">
+                        Documentation
+                    </li>
+                    <li>
+                        <a href="../index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="../index.html#options">Options</a>
+                    </li>
+
+                    <li class="nav-header">
+                        Examples
+                    </li>
+                    <li class="active">
+                        <a href="#">Carousel</a>
+                    </li>
+                    <li>
+                        <a href="slider.html">Slider</a>
+                    </li>
+                    <li>
+                        <a href="scroller.html">Scroller</a>
+                    </li>
+                    <li>
+                        <a href="gallery.html">Gallery</a>
+                    </li>
+                    <li>
+                        <a href="thumbnails.html">Thumbnails</a>
+                    </li>
+                </ul>
+            </div>
+
+            <br class="clear"/>
+
+            <hr id="gallerydemosimple"/>
+            
+            <div class="column size1of4">
+                <h3>Simple carousel</h3>
+                
+                <p>
+                    This demo show how to display a gallery. Click an image to focus it.
+                </p>
+                <p>
+                    You can press arrow left and right on your keyboard to navigate through the images.
+                </p>
+                <p>
+                    Even swiping on touch devices is supported!
+                </p>
+                <br/>
+                <p>
+                    <a href="#demo1code" class="showCode" title="Show the code for the simple carousel">Click here to see how it's done</a>
+                </p>
+                <div class="hidden">
+                    <div id="demo1code">
+                        <p>
+                            The following code will create a simple carousel:
+                        </p>
+<pre>&lt;script type="text/javascript"&gt;
+    $(function() {
+        $('#rondellGallery > div').rondell(); 
+    });
+&lt;/script&gt;</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="rondellSimple" class="column size3of4 last">
+                <a target="_blank" rel="rondell_1" href="images/galery/band.jpg">
+                    <img class="resizeable" src="images/galery/band.jpg" alt="demo pic" />   
+                    <h5>Awesome concert</h5>
+                    <p>
+                        My favourite band.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/dog.jpg">
+                    <img class="resizeable" src="images/galery/dog.jpg" alt="demo pic" /> 
+                    <h5>My dog</h5>
+                    <p>
+                        Standing in front of a glass door and wants in.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/cat.jpg">
+                    <img class="resizeable" src="images/galery/cat.jpg" alt="demo pic" />
+                    <h5>My cat</h5>
+                    <p>
+                        Sleeping...
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/boar.jpg">
+                    <img class="resizeable" src="images/galery/boar.jpg" alt="demo pic" />
+                    <h5>Dead pig on the wall</h5>
+                    <p>
+                        Hanging around.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/snow.jpg">
+                    <img class="resizeable" src="images/galery/snow.jpg" alt="demo pic" />
+                    <h5>Winter wonderland</h5>
+                    <p>
+                        The german alps.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/rabbit.jpg">
+                    <img class="resizeable" src="images/galery/rabbit.jpg" alt="demo pic" />
+                    <h5>Bunny</h5>
+                    <p>
+                        In my brothers garden.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/trash.jpg">
+                    <img class="resizeable" src="images/galery/trash.jpg" alt="demo pic" />
+                    <h5>Trash</h5>
+                    <p>
+                        Somewhere in the USA.
+                    </p>
+                </a>
+            </div>
+            
+            <br class="clear"/>
+            
+            <hr id="gallerydemo"/>
+            
+            <div id="rondellGallery" class="column size3of4">
+                <a target="_blank" rel="rondell_1" href="images/galery/band.jpg">
+                    <img class="resizeable" src="images/galery/band.jpg" alt="demo pic" />   
+                    <h5>Awesome concert</h5>
+                    <p>
+                        My favourite band.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/dog.jpg">
+                    <img class="resizeable" src="images/galery/dog.jpg" alt="demo pic" /> 
+                    <h5>My dog</h5>
+                    <p>
+                        Standing in front of a glass door and wants in.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/cat.jpg">
+                    <img class="resizeable" src="images/galery/cat.jpg" alt="demo pic" />
+                    <h5>My cat</h5>
+                    <p>
+                        Sleeping...
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/boar.jpg">
+                    <img class="resizeable" src="images/galery/boar.jpg" alt="demo pic" />
+                    <h5>Dead pig on the wall</h5>
+                    <p>
+                        Hanging around.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/snow.jpg">
+                    <img class="resizeable" src="images/galery/snow.jpg" alt="demo pic" />
+                    <h5>Winter wonderland</h5>
+                    <p>
+                        The german alps.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/rabbit.jpg">
+                    <img class="resizeable" src="images/galery/rabbit.jpg" alt="demo pic" />
+                    <h5>Bunny</h5>
+                    <p>
+                        In my brothers garden.
+                    </p>
+                </a>
+                <a target="_blank" rel="rondell_1" href="images/galery/trash.jpg">
+                    <img class="resizeable" src="images/galery/trash.jpg" alt="demo pic" />
+                    <h5>Trash</h5>
+                    <p>
+                        Somewhere in the USA.
+                    </p>
+                </a>
+            </div>
+            
+            <div class="column size1of4 last">
+                <h3>Advanced carousel</h3>
+                
+                <p>
+                    This demo show how to display an advanced gallery. Click an image to focus it and a second click will open a lightbox.
+                </p>
+                <p>
+                    You can press arrow left and right on your keyboard to navigate through the images.
+                </p>
+                <p>
+                    The rondell will automatically continue to rotate through the gallery when your mouse leaves it's area.
+                </p>
+                <p>
+                    The lightbox is powered by <a href="http://www.fancybox.net" title="Fancybox">Fancybox</a>.
+                </p>
+                <br/>
+                <p>
+                    <a href="#demo2code" class="showCode" title="Show the code to create an advanced carousel">Click here to see how it's done</a>
+                </p>
+                <div class="hidden">
+                    <div id="demo2code">
+                        <p>
+                            The following code will create an advanced carousel:
+                        </p>
+                        <pre>
+&lt;script type="text/javascript"&gt;
+    $(function() {
+        // Create a rondell with the 'carousel' preset and set an option 
+        // to disable the rondell when the lightbox is active
+        
+        $('#rondellGallery > div').rondell({
+            preset: 'carousel',
+            isActive: function() {
+                return !$('#fancybox-wrap').is(':visible');
+            }
+        }); 
+                
+        // Initialize fancybox for links to full size images
+        
+        $('#rondellGallery a').fancybox({
+            hideOnContentClick: false,
+            padding: 10,
+            scrolling: 'no',
+            onStart: function(items, idx) {
+                return $(items[idx]).parent().hasClass('rondellItemFocused');
+            }
+        });
+    });
+&lt;/script&gt;</pre>
+                    </div>
+                </div>
+            </div>
+            <br class="clear"/>
+        </div>  
+        <br/>
+        <script type="text/javascript" src="../js/modernizr-2.0.6.min.js"></script> 
+        <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.fancybox-1.3.4.pack.js"></script> 
+        <script type="text/javascript" src="../js/jquery.mousewheel-3.0.6.min.js"></script> 
+        <script type="text/javascript" language="javascript" src="../js/jquery.rondell.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                var fancyboxOptions = {
+                    hideOnContentClick: false,
+                    padding: 10,
+                    scrolling: 'no',
+                    overlayColor: '#333',
+                    autoDimensions: false,
+                    onStart: function(items, idx) {
+                        return $(items[idx]).hasClass('rondellItemFocused');
+                    }
+                };
+                
+                $('#rondellSimple > a').rondell(); 
+                
+                $('#rondellGallery > a').rondell({
+                    preset: 'carousel',
+                    isActive: function() {
+                        return !$('#fancybox-wrap').is(':visible');
+                    }
+                }); 
+                
+                $('#rondellGallery a').fancybox(fancyboxOptions);
+            });
+        </script>
+        <script type="text/javascript" src="../js/demohelpers.js"></script>
+        <script type="text/javascript">
+            var hostname = document.location.hostname;
+            if (hostname && (hostname.indexOf('github') >= 0 || hostname.indexOf('sebastianhelzle') >= 0)) {
+                var pkBaseURL = (("https:" == document.location.protocol) ? "https://tracking.sebastianhelzle.net/" : "http://tracking.sebastianhelzle.net/");
+                document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+            }
+        </script>
+        <!-- Piwik --> 
+        <script type="text/javascript">
+            try {
+                var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 5);
+                piwikTracker.trackPageView();
+                piwikTracker.enableLinkTracking();
+            } catch( err ) {}
+        </script>
+        <noscript><p><img src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt="" /></p></noscript>
+        <!-- End Piwik Tracking Code -->
+    </body>
+</html>

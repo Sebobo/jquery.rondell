@@ -19,9 +19,19 @@
             </p>
             <br/>
             <ul class="tabs">
-                <li><a href="/" title="Projects overview">Home</a></li>
-                <li><a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">Smallipop</a></li>
-                <li class="selected"><a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">Rondell</a></li>
+                <li>
+                    <a href="/" title="Projects overview">Home</a>
+                </li>
+                <li>
+                    <a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">
+                        Smallipop
+                    </a>
+                </li>
+                <li class="selected">
+                    <a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">
+                        Rondell
+                    </a>
+                </li>
             </ul>
         </div>
         
@@ -71,7 +81,7 @@
                 </p>
             </div>
             <div class="column size1of2">
-                <img src="images/preview.png" class="hideOnJS" alt="Rondell preview" />
+                <img src="examples/preview.png" class="hideOnJS" alt="Rondell preview" />
 
                 <div id="rondellTopDemo" class="showOnJS"> 
                     <img class="resizeable" src="images/galery/band.jpg" alt="My favourite band" />   
@@ -128,35 +138,58 @@ $('.myContainer > .myItem').rondell([options][, callback]);
                 <h5>New and improved in this version</h5>
                 <ul>
                     <li>
-                        <span class="label success">New</span> awesome preset <i>thumbgallery</i>
+                        <span class="label success">New</span> 
+                        awesome preset <i>thumbgallery</i>
                         <br/>which uses all the new options and features.
                     </li>
                     <li>
-                        <span class="label success">New</span> Integrated my standalone scrollbar plugin (beta) into the rondell.<br/> 
+                        <span class="label success">New</span> 
+                        Integrated my standalone scrollbar plugin (beta) into the rondell.<br/> 
                         See the <a href="#options" class="scrollToId" title="Options">options</a> for setting it up.
                     </li>
-
                     <li>
-                        <span class="label success">New</span> Items absolute index as parameter for the animation functions.
+                        <span class="label success">New</span> 
+                        Items absolute index as parameter for the animation functions.
                     </li>
                     <li>
-                        <span class="label success">New</span> Option <i>switchIndices</i><br/> which enables switching the index of the last and new focused items.
+                        <span class="label success">New</span>
+                        Option <i>cropThumbnails</i>
+                        for image cropping to allow uniform size of thumbnails
                     </li>
                     <li>
-                        <span class="label success">New</span> Option <i>keyDelay</i><br/> 
+                        <span class="label success">New</span> 
+                        Option <i>switchIndices</i><br/> which enables switching the index of the last and new focused items.
+                    </li>
+                    <li>
+                        <span class="label success">New</span> 
+                        Option <i>keyDelay</i><br/> 
                         which sets minimum time between keypress events are registered.
                     </li>
                     <li>
-                        <span class="label success">New</span> Option <i>wrapIndices</i><br/>
+                        <span class="label success">New</span> 
+                        Option <i>wrapIndices</i><br/>
                         allowing to disable item index wrapping used in the carousels.
                     </li>
-                    <li><span class="label success">New</span> Opacity is now animated when hovering items.</li>
-
-                    <li><span class="label notice">Change</span> Improved performance</li>
-
-                    <li><span class="label notice">Fix</span> Bugfixes for items fading out or in</li>
-                    <li><span class="label notice">Fix</span> Disabled autorotation when rondell is not visible.</li>
-                    <li><span class="label notice">Fix</span> Horizontal mouse scroll event registering improved.</li>
+                    <li>
+                        <span class="label success">New</span> 
+                        Opacity is now animated when hovering items.
+                    </li>
+                    <li>
+                        <span class="label notice">Change</span> 
+                        Improved performance
+                    </li>
+                    <li>
+                        <span class="label notice">Fix</span> 
+                        Bugfixes for items fading out or in
+                    </li>
+                    <li>
+                        <span class="label notice">Fix</span> 
+                        Disabled autorotation when rondell is not visible.
+                    </li>
+                    <li>
+                        <span class="label notice">Fix</span> 
+                        Horizontal mouse scroll event registering improved.
+                    </li>
                 </ul>
                 <br/>
                 <p>
@@ -226,9 +259,13 @@ $('.myContainer > .myItem').rondell([options][, callback]);
             <div class="column size1of3 last">            
                 <h5>Dependencies</h5>
                 <ul>
-                    <li><a href="http://www.jQuery.com" title="jQuery">jQuery</a> version 1.5.2 or better</li>
                     <li>
-                        <a href="http://www.modernizr.com/" title="Modernizr library">Modernizr</a> for browser capability fallbacks.<br/>
+                        <a href="http://www.jQuery.com" title="jQuery">jQuery</a> 
+                        version 1.5.2 or better
+                    </li>
+                    <li>
+                        <a href="http://www.modernizr.com/" title="Modernizr library">Modernizr</a>
+                        for browser capability fallbacks.<br/>
                         The library is included in the plugins <i>lib</i> folder.<br/> 
                     </li>
                 </ul>
@@ -236,7 +273,6 @@ $('.myContainer > .myItem').rondell([options][, callback]);
                 <h5>Roadmap for 1.0.0</h5>
                 <ul>
                     <li>Asynchronous image loading</li>
-                    <li>Image cropping for uniform item sizes</li>
                     <li>Improved themes</li>
                     <li>CSS based buttons</li>
                 </ul>
@@ -244,214 +280,38 @@ $('.myContainer > .myItem').rondell([options][, callback]);
             
             <br class="clear"/>
 
-            <hr id="gallerydemosimple"/>
-            
-            <div class="column size1of4">
-                <h3>Simple carousel</h3>
-                
-                <p>
-                    This demo show how to display a gallery. Click an image to focus it.
-                </p>
-                <p>
-                    You can press arrow left and right on your keyboard to navigate through the images.
-                </p>
-                <p>
-                    Even swiping on touch devices is supported!
-                </p>
-                <br/>
-                <p>
-                    <a href="#demo1code" class="showCode" title="Show the code for the simple carousel">Click here to see how it's done</a>
-                </p>
-                <div class="hidden">
-                    <div id="demo1code">
-                        <p>
-                            The following code will create a simple carousel:
-                        </p>
-<pre>&lt;script type="text/javascript"&gt;
-    $(function() {
-        $('#rondellGallery > div').rondell(); 
-    });
-&lt;/script&gt;</pre>
-                    </div>
-                </div>
+            <div class="well size1of3">
+                <ul class="nav nav-list">
+                    <li class="nav-header">
+                        Documentation
+                    </li>
+                    <li class="active">
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Library</a>
+                    </li>
+
+                    <li class="nav-header">
+                        Examples
+                    </li>
+                    <li>
+                        <a href="examples/carousel.html">Carousel</a>
+                    </li>
+                    <li>
+                        <a href="#">Slider</a>
+                    </li>
+                    <li>
+                        <a href="#">Scroller</a>
+                    </li>
+                    <li>
+                        <a href="#">Gallery</a>
+                    </li>
+                    <li>
+                        <a href="#">Thumbnails</a>
+                    </li>
+                </ul>
             </div>
-            
-            <div id="rondellSimple" class="column size3of4 last">
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/galery/band.jpg">
-                        <img class="resizeable" src="images/galery/band.jpg" alt="demo pic" />   
-                        <h5>Awesome concert</h5>
-                        <p>
-                            My favourite band.
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/galery/dog.jpg">
-                        <img class="resizeable" src="images/galery/dog.jpg" alt="demo pic" /> 
-                        <h5>My dog</h5>
-                        <p>
-                            Standing in front of a glass door and wants in.
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/galery/cat.jpg">
-                        <img class="resizeable" src="images/galery/cat.jpg" alt="demo pic" />
-                        <h5>My cat</h5>
-                        <p>
-                            Sleeping...
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/galery/boar.jpg">
-                        <img class="resizeable" src="images/galery/boar.jpg" alt="demo pic" />
-                        <h5>Dead pig on the wall</h5>
-                        <p>
-                            Hanging around.
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/galery/snow.jpg">
-                        <img class="resizeable" src="images/galery/snow.jpg" alt="demo pic" />
-                        <h5>Winter wonderland</h5>
-                        <p>
-                            The german alps.
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/galery/rabbit.jpg">
-                        <img class="resizeable" src="images/galery/rabbit.jpg" alt="demo pic" />
-                        <h5>Bunny</h5>
-                        <p>
-                            In my brothers garden.
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a target="_blank" rel="rondell_1" href="images/galery/trash.jpg">
-                        <img class="resizeable" src="images/galery/trash.jpg" alt="demo pic" />
-                        <h5>Trash</h5>
-                        <p>
-                            Somewhere in the USA.
-                        </p>
-                    </a>
-                </div>
-            </div>
-            
-            <br class="clear"/>
-            
-            <hr id="gallerydemo"/>
-            
-            <div id="rondellGallery" class="column size3of4">
-                <a target="_blank" rel="rondell_1" href="images/galery/band.jpg">
-                    <img class="resizeable" src="images/galery/band.jpg" alt="demo pic" />   
-                    <h5>Awesome concert</h5>
-                    <p>
-                        My favourite band.
-                    </p>
-                </a>
-                <a target="_blank" rel="rondell_1" href="images/galery/dog.jpg">
-                    <img class="resizeable" src="images/galery/dog.jpg" alt="demo pic" /> 
-                    <h5>My dog</h5>
-                    <p>
-                        Standing in front of a glass door and wants in.
-                    </p>
-                </a>
-                <a target="_blank" rel="rondell_1" href="images/galery/cat.jpg">
-                    <img class="resizeable" src="images/galery/cat.jpg" alt="demo pic" />
-                    <h5>My cat</h5>
-                    <p>
-                        Sleeping...
-                    </p>
-                </a>
-                <a target="_blank" rel="rondell_1" href="images/galery/boar.jpg">
-                    <img class="resizeable" src="images/galery/boar.jpg" alt="demo pic" />
-                    <h5>Dead pig on the wall</h5>
-                    <p>
-                        Hanging around.
-                    </p>
-                </a>
-                <a target="_blank" rel="rondell_1" href="images/galery/snow.jpg">
-                    <img class="resizeable" src="images/galery/snow.jpg" alt="demo pic" />
-                    <h5>Winter wonderland</h5>
-                    <p>
-                        The german alps.
-                    </p>
-                </a>
-                <a target="_blank" rel="rondell_1" href="images/galery/rabbit.jpg">
-                    <img class="resizeable" src="images/galery/rabbit.jpg" alt="demo pic" />
-                    <h5>Bunny</h5>
-                    <p>
-                        In my brothers garden.
-                    </p>
-                </a>
-                <a target="_blank" rel="rondell_1" href="images/galery/trash.jpg">
-                    <img class="resizeable" src="images/galery/trash.jpg" alt="demo pic" />
-                    <h5>Trash</h5>
-                    <p>
-                        Somewhere in the USA.
-                    </p>
-                </a>
-            </div>
-            
-            <div class="column size1of4 last">
-                <h3>Advanced carousel</h3>
-                
-                <p>
-                    This demo show how to display an advanced gallery. Click an image to focus it and a second click will open a lightbox.
-                </p>
-                <p>
-                    You can press arrow left and right on your keyboard to navigate through the images.
-                </p>
-                <p>
-                    The rondell will automatically continue to rotate through the gallery when your mouse leaves it's area.
-                </p>
-                <p>
-                    The lightbox is powered by <a href="http://www.fancybox.net" title="Fancybox">Fancybox</a>.
-                </p>
-                <br/>
-                <p>
-                    <a href="#demo2code" class="showCode" title="Show the code to create an advanced carousel">Click here to see how it's done</a>
-                </p>
-                <div class="hidden">
-                    <div id="demo2code">
-                        <p>
-                            The following code will create an advanced carousel:
-                        </p>
-                        <pre>
-&lt;script type="text/javascript"&gt;
-    $(function() {
-        // Create a rondell with the 'carousel' preset and set an option 
-        // to disable the rondell when the lightbox is active
-        
-        $('#rondellGallery > div').rondell({
-            preset: 'carousel',
-            isActive: function() {
-                return !$('#fancybox-wrap').is(':visible');
-            }
-        }); 
-                
-        // Initialize fancybox for links to full size images
-        
-        $('#rondellGallery a').fancybox({
-            hideOnContentClick: false,
-            padding: 10,
-            scrolling: 'no',
-            onStart: function(items, idx) {
-                return $(items[idx]).parent().hasClass('rondellItemFocused');
-            }
-        });
-    });
-&lt;/script&gt;</pre>
-                    </div>
-                </div>
-            </div>
-            
-            <br class="clear"/>
             
             <hr id="sliderdemo"/>
             
