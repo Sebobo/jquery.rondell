@@ -16,7 +16,7 @@ pluginName = 'rondell'
 watch = require "watch"
 
 src =
-  sass: 'src/sass'
+  sass: 'src/scss'
   coffee: 'src/coffee'
 
 notify = (source, message) ->
