@@ -12,23 +12,24 @@ $baseFontFamily:    arial;
 $linkColor:         #0069d6;
 $linkColorHover:    darken($linkColor, 15);
 
-// Gray tones
-$black:             #000;
-$grayDark:          lighten($black, 25%);
-$gray:              lighten($black, 50%);
-$grayLight:         lighten($black, 75%);
-$grayLighter:       lighten($black, 90%);
-$white:             #fff;
+// Grays
+$black:                 #000 !default;
+$grayDarker:            #222 !default;
+$grayDark:              #333 !default;
+$gray:                  #555 !default;
+$grayLight:             #999 !default;
+$grayLighter:           #eee !default;
+$white:                 #fff !default;
 
-// Colors
-$blue:              #049CDB;
-$blueDark:          #0064CD;
-$green:             #46a546;
-$red:               #9d261d;
-$yellow:            #ffc40d;
-$orange:            #f89406;
-$pink:              #c3325f;
-$purple:            #7a43b6;
+// Accent colors
+$blue:                  #049cdb !default;
+$blueDark:              #0064cd !default;
+$green:                 #46a546 !default;
+$red:                   #9d261d !default;
+$yellow:                #ffc40d !default;
+$orange:                #f89406 !default;
+$pink:                  #c3325f !default;
+$purple:                #7a43b6 !default;
 
 // Reset 
 html {
@@ -54,7 +55,7 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
   &.success   { background-color: $green; }
   &.notice    { background-color: lighten($blue, 25%); }
 }
-.borderradius .label { @include rounded(3px); }
+.borderradius .label { @include border-radius(3px); }
 
 // Basic stuff
 .clear { 
@@ -175,21 +176,21 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
   } 
 }
 .borderradius .tabs li { 
-  @include rounded(6px 6px 0 0); 
-  &:before { @include rounded(0 0 6px 0); }
-  &:after { @include rounded(0 0 0 6px); }
+  @include border-radius(6px 6px 0 0); 
+  &:before { @include border-radius(0 0 6px 0); }
+  &:after { @include border-radius(0 0 0 6px); }
 }
-.boxshadow .tabs li {
-  @include boxshadow("0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #ffffff");
-  &:before { @include boxshadow(2px 2px 0 #d1d1d1); }
-  &:after { @include boxshadow(-2px 2px 0 #d1d1d1); }
+.box-shadow .tabs li {
+  @include box-shadow("0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #ffffff");
+  &:before { @include box-shadow(2px 2px 0 #d1d1d1); }
+  &:after { @include box-shadow(-2px 2px 0 #d1d1d1); }
   &:hover {
-    &:before { @include boxshadow(2px 2px 0 #dadada); }
-    &:after { @include boxshadow(-2px 2px 0 #dadada); }  
+    &:before { @include box-shadow(2px 2px 0 #dadada); }
+    &:after { @include box-shadow(-2px 2px 0 #dadada); }  
   }
   &.selected {
-    &:before { @include boxshadow(2px 2px 0 #ffffff); }
-    &:after { @include boxshadow(-2px 2px 0 #ffffff); }
+    &:before { @include box-shadow(2px 2px 0 #ffffff); }
+    &:after { @include box-shadow(-2px 2px 0 #ffffff); }
   }
 }
 
@@ -313,26 +314,26 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 }
 
 .borderradius .btn {
-  @include rounded(4px);
+  @include border-radius(4px);
   
   &.large {
-    @include rounded(6px);
+    @include border-radius(6px);
   }
 }
 .csstransitions .btn {
   @include transition(.1s linear all);
 }
-.boxshadow.rgba .btn {
-  @include boxshadow("inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)");
+.box-shadow.rgba .btn {
+  @include box-shadow("inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)");
   
   &.active,
   &:active {
-    @include boxshadow("inset 0 2px 4px rgba(0,0,0,.25), 0 1px 2px rgba(0,0,0,.05)");
+    @include box-shadow("inset 0 2px 4px rgba(0,0,0,.25), 0 1px 2px rgba(0,0,0,.05)");
   }
   
   &.disabled,
   &[disabled] {
-    @include boxshadow(none);
+    @include box-shadow(none);
   }
 }
 
@@ -383,7 +384,7 @@ code, pre {
 }
 .borderradius {
   code, pre {
-    @include rounded(3px);
+    @include border-radius(3px);
   }
 }
 code {
@@ -407,3 +408,87 @@ pre {
   border-color: rgba(0, 0, 0, .15);
 }
 
+// NAV BASE CLASS
+// ----------
+
+.nav {
+  margin-left: 0;
+  margin-bottom: $baseLineHeight;
+  list-style: none;
+
+  // Make links block level
+  & > li > a {
+    display: block;
+
+    &:hover {
+      text-decoration: none;
+      background-color: $grayLighter;
+    }
+  }
+
+  // Nav headers (for dropdowns and lists)
+  .nav-header {
+    display: block;
+    padding: 3px 15px;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: $baseLineHeight;
+    color: $grayLight;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    text-transform: uppercase;
+  }
+  // Space them out when they follow another list item (link)
+  li + .nav-header {
+    margin-top: 9px;
+  }
+}
+
+// NAV LIST
+.nav-list {
+  padding-left: 14px;
+  padding-right: 14px;
+  margin-bottom: 0;
+
+  li {
+    list-style: none;
+  }
+
+  & > li > a {
+    padding: 3px 15px;
+  }
+
+  & > li > a,
+  .nav-header {
+    margin-left:  -15px;
+    margin-right: -15px;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  }
+  
+  .active > a,
+  .active > a:hover {
+    color: $white;
+    text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+    background-color: $linkColor;
+  }
+  [class^="icon-"] {
+    margin-right: 2px;
+  }
+}
+
+// WELLS
+// -----
+
+.well {
+  min-height: 20px;
+  padding: 8px 0;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #eee;
+  border: 1px solid rgba(0,0,0,.05);
+  @include border-radius(4px);
+  @include box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
+  blockquote {
+    border-color: #ddd;
+    border-color: rgba(0,0,0,.15);
+  }
+}

@@ -5,7 +5,7 @@
   -webkit-border-radius: $radius;
 }
 
-@mixin boxshadow($shadow) {
+@mixin box-shadow($shadow) {
   -webkit-box-shadow: unquote($shadow); 
      -moz-box-shadow: unquote($shadow); 
           box-shadow: unquote($shadow);
