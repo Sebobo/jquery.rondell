@@ -119,7 +119,7 @@
       special: 
         itemPadding: 2
       # Standard rondell options
-      visibleItems: 4
+      visibleItems: 5
       theme: "dark"
       cropThumbnails: true
       center:
