@@ -171,15 +171,15 @@
         @scrollbar._instance = new RondellScrollbar(scrollbarContainer, @scrollbar)
     
     # Animation functions, can be different for each rondell
-    funcLeft: (layerDiff, rondell, idx) ->
-      rondell.center.left - rondell.itemProperties.size.width / 2.0 + Math.sin(layerDiff) * rondell.radius.x
-    funcTop: (layerDiff, rondell, idx) ->
-      rondell.center.top - rondell.itemProperties.size.height / 2.0 + Math.cos(layerDiff) * rondell.radius.y
-    funcDiff: (layerDiff, rondell, idx) ->
-      Math.pow(Math.abs(layerDiff) / rondell.maxItems, 0.5) * Math.PI
-    funcOpacity: (layerDist, rondell, idx) ->
-      if rondell.visibleItems > 1 then Math.max(0, 1.0 - Math.pow(layerDist / rondell.visibleItems, 2)) else 0
-    funcSize: (layerDist, rondell, idx) ->
+    funcLeft: (l, r, i) ->
+      r.center.left - r.itemProperties.size.width / 2.0 + Math.sin(l) * r.radius.x
+    funcTop: (l, r, i) ->
+      r.center.top - r.itemProperties.size.height / 2.0 + Math.cos(l) * r.radius.y
+    funcDiff: (d, r, i) ->
+      Math.pow(Math.abs(d) / r.maxItems, 0.5) * Math.PI
+    funcOpacity: (l, r, i) ->
+      if r.visibleItems > 1 then Math.max(0, 1.0 - Math.pow(l / r.visibleItems, 2)) else 0
+    funcSize: (l, r, i) ->
       1
     
     showCaption: (idx) => 
@@ -212,9 +212,9 @@
 
       # If item is an img tag, wrap with div
       if item.object.is "img"
-        item.object.wrap("<div/>")
+        item.object.wrap "<div/>"
         item.object = item.object.parent()
-        item.icon = $('img:first', item.object)
+        item.icon = $ 'img:first', item.object
       
       if @captionsEnabled
         # Wrap other content as overlay caption
@@ -226,8 +226,8 @@
         unless captionContent?.length 
           caption = item.object.attr('title') or item.icon?.attr('title') or item.icon?.attr('alt')  
           if caption
-            captionContent = $("<p>#{caption}</p>")
-            item.object.append(captionContent)
+            captionContent = $ "<p>#{caption}</p>"
+            item.object.append captionContent
 
         # Create overlay from caption if found
         if captionContent?.length
@@ -561,7 +561,7 @@
       
       itemWidth = item.sizeSmall.width * @funcSize(layerDiff, @)
       itemHeight = item.sizeSmall.height * @funcSize(layerDiff, @)
-      newZ = @zIndex + (if layerDiff < 0 then layerPos else -layerPos)
+      newZ = @zIndex - layerDist
       
       # Modify fading time by items distance to focused item
       fadeTime = @fadeTime + @itemProperties.delay * layerDist
