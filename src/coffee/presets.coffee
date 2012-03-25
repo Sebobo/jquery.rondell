@@ -35,6 +35,7 @@
       repeating: false
       alwaysShowCaption: true
       visibleItems: 4
+      theme: "dark"
       itemProperties:
         delay: 0
         size: 
@@ -67,6 +68,7 @@
         x: 0 
         y: 0
       scaling: 1
+      theme: "page"
       visibleItems: 1
       controls:
         margin:
@@ -118,6 +120,7 @@
         itemPadding: 2
       # Standard rondell options
       visibleItems: 4
+      theme: "dark"
       cropThumbnails: true
       center:
         top: 145
@@ -130,7 +133,7 @@
           x: 10
           y: 255
       itemProperties:
-        delay: 10
+        delay: 0
         sizeFocused: 
           width: 480
           height: 280
@@ -227,6 +230,7 @@
           * (r.itemProperties.size.width + r.special.itemPadding)
         
     slider:
+      theme: 'slider'
       visibleItems: 1
       fadeTime: 1000
       opacityMin: 0.01
