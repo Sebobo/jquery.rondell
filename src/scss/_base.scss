@@ -6,7 +6,7 @@
 // Base
 $baseFontSize:      13px;
 $baseLineHeight:    18px;
-$baseFontFamily:    arial;
+$baseFontFamily:    "Lucida Grade", arial;
 
 // Links
 $linkColor:         #0069d6;
@@ -68,6 +68,10 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 
 .centered { 
   margin: 0 auto; 
+}
+
+.center {
+  text-align: center;
 }
 
 .floatLeft { 
@@ -412,9 +416,9 @@ pre {
 // ----------
 
 .nav {
-  margin-left: 0;
-  margin-bottom: $baseLineHeight;
+  margin: 0 0 $baseLineHeight;
   list-style: none;
+  padding: 0;
 
   // Make links block level
   & > li > a {
@@ -425,53 +429,43 @@ pre {
       background-color: $grayLighter;
     }
   }
-
-  // Nav headers (for dropdowns and lists)
-  .nav-header {
-    display: block;
-    padding: 3px 15px;
-    font-size: 11px;
-    font-weight: bold;
-    line-height: $baseLineHeight;
-    color: $grayLight;
-    text-shadow: 0 1px 0 rgba(255,255,255,.5);
-    text-transform: uppercase;
-  }
-  // Space them out when they follow another list item (link)
-  li + .nav-header {
-    margin-top: 9px;
-  }
 }
 
-// NAV LIST
-.nav-list {
+// Common styles
+.nav-pills {
+  float: left;
   padding-left: 14px;
-  padding-right: 14px;
-  margin-bottom: 0;
 
-  li {
+  & li {
+    float: left;
     list-style: none;
   }
-
-  & > li > a {
-    padding: 3px 15px;
+  // Links rendered as pills
+  & li a {
+    text-shadow: 0 1px 1px $grayLighter;
+    padding: 8px 12px;
+    margin: 2px;
+    line-height: 14px;
+    @include border-radius(5px);
   }
 
-  & > li > a,
-  .nav-header {
-    margin-left:  -15px;
-    margin-right: -15px;
-    text-shadow: 0 1px 0 rgba(255,255,255,.5);
-  }
-  
-  .active > a,
-  .active > a:hover {
+  // Active state
+  & li.active a,
+  & li.active a:hover {
+    text-shadow: 0 1px 1px $gray;
     color: $white;
-    text-shadow: 0 -1px 0 rgba(0,0,0,.2);
     background-color: $linkColor;
+    @include box-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
   }
-  [class^="icon-"] {
-    margin-right: 2px;
+  & li a:hover {
+    background-color: $grayLighter; 
+  }
+
+  .spacer {
+    padding: 4px 0;
+    margin: 2px 0;
+    color: #ccc;
+    display: block;
   }
 }
 
@@ -491,4 +485,58 @@ pre {
     border-color: #ddd;
     border-color: rgba(0,0,0,.15);
   }
+}
+
+// Inline and block code styles
+code,
+pre {
+  padding: 0 3px 2px;
+  font-family: monospace;
+  font-size: $baseFontSize - 1;
+  color: $grayDark;
+  @include border-radius(3px);
+}
+
+// Inline code
+code {
+  padding: 3px 4px;
+  color: #d14;
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+}
+
+// Blocks of code
+pre {
+  display: block;
+  padding: ($baseLineHeight - 1) / 2;
+  margin: 0 0 $baseLineHeight / 2;
+  font-size: 12px;
+  line-height: $baseLineHeight;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc; // fallback for IE7-8
+  border: 1px solid rgba(0,0,0,.15);
+  @include border-radius(4px);
+  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+
+  // Make prettyprint styles more spaced out for readability
+  &.prettyprint {
+    margin-bottom: $baseLineHeight;
+  }
+
+  // Account for some code outputs that place code tags in pre tags
+  code {
+    padding: 0;
+    color: inherit;
+    background-color: transparent;
+    border: 0;
+  }
+}
+
+// Enable scrollable blocks of code
+.pre-scrollable {
+  max-height: 340px;
+  overflow-y: scroll;
 }
