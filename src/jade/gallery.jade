@@ -1,0 +1,121 @@
+extends includes/layout
+
+append head
+  title Gallery - jQuery Rondell
+
+append content
+  include includes/submenu
+  mixin submenu('Gallery')
+
+  br
+
+  #rondellGallery(style="height:400px;") &nbsp;
+
+  br
+  br
+
+  .center
+    h2 Preset - Gallery
+
+  hr
+  br
+
+  .size3of4
+    :markdown
+      This demo fetches links &amp; images from my brothers great webservice 
+      [wookmark.com](http://www.wookmark.com "Wookmark.com") 
+      and creates a rondell from the data.
+
+      The image titles are used as caption and clicking the 
+      focused element will open the wookmark in a new tab or window.
+
+      Here's how it's done
+
+    pre.
+      var galleryContainer = $("#rondellGallery");
+         
+      $.ajax({
+        url: 'http://www.wookmark.com/api/json',
+        dataType: 'jsonp',
+        success: function(json, text, xhqr) {
+          if (text == 'success') {
+            var items = json, newItem, newImg;
+                    
+            // Parsing returned json data
+            $.each(items, function(idx, item) {
+              if (idx >= 20) return false;
+                 
+              // Create link container
+              newItem = $('&lt;a/&gt;')
+              .css('opacity', 0)
+              .attr({
+                href: item.url,
+                title: item.title,
+                target: '_blank'
+              });
+                        
+              // Create image
+              newImg = $('&lt;img/&gt;')
+              .addClass('resizeable')
+              .attr({
+                src: item.preview,
+                alt: item.title,
+                width: item.width,
+                height: item.height
+              });
+                        
+              // Append image to link and link to container for the rondell
+              newItem.append(newImg);
+              galleryContainer.append(newItem);
+            });
+                        
+            // Create gallery 
+            $('a', galleryContainer).rondell({
+              preset: 'gallery'                             
+            });
+          }
+        }
+      });
+            
+  br.clear
+
+append js
+  :coffeescript
+    $ ->
+      galleryContainer = $("#rondellGallery").empty()
+
+      $.ajax
+        url: "http://www.wookmark.com/api/json"
+        dataType: "jsonp"
+        success: (json, text, xhqr) ->
+          if text is "success"
+            items = json
+                   
+            # Parsing returned json data
+            $.each items, (idx, item) ->
+              return false if idx >= 20
+      
+              # Create link container
+              newItem = $("<a/>")
+              .css("opacity", 0)
+              .attr
+                href: item.url
+                title: item.title
+                target: "_blank"
+                          
+              # Create image
+              newImg = $("<img/>")
+              .addClass("resizeable")
+              .attr
+                src: item.preview
+                alt: item.title
+                width: item.width
+                height: item.height
+                        
+              # Append image to link and link to container for the rondell
+              newItem.append newImg
+              galleryContainer.append newItem
+                        
+            # Create gallery 
+            $("a", galleryContainer).rondell
+              preset: "gallery"

@@ -1,0 +1,73 @@
+extends includes/layout
+
+append head
+  title Scroller - jQuery Rondell
+
+append content
+  include includes/submenu
+  mixin submenu('Scroller')
+
+  br
+
+  #rondellScroller.hidden
+    a(href="#", title="Dummy link to the cloud")
+      img(src="images/products/cloud.png", alt="cloud product")
+      h5 Your own cloud
+      p Buy your own cloud to do some really complicated stuff very fast!
+
+    a(href="#", title="Dummy link to the router")
+      img(src="images/products/router.png", alt="router product")
+      h5 The new router
+      p The router which can connect to anything without cables!
+
+    a(href="#", title="Dummy link to the client")
+      img(src="images/products/client.png", alt="client product")
+      h5 The green computer
+      :markdown
+        Our climate saver for only **999$**!
+
+    a(href="#", title="Dummy link to the client")
+      img(src="images/products/client3.png", alt="client product")
+      h5 The blue computer
+      :markdown
+        Makes you calm while working. Now only **1999$**!
+
+    a(href="#", title="Dummy link to the client")
+      img(src="images/products/client2.png", alt="client product")
+      h5 The pink computer
+      :markdown
+        For the girls. Only **599$**!
+
+    a(href="#", title="Dummy link to the unknown")
+      img(src="images/products/unknown.png", alt="unknown product")
+      h5 Surprise
+      p Order this and you will be surprised!
+
+  br
+  br
+
+  .center
+    h2 Preset - Scroller
+
+  hr
+  br
+
+  div
+    :markdown
+      Example how this plugin can be used for displaying 
+      products on a company page or webshop.
+      
+      Here's how it's done
+
+    pre.size1of2.
+      $("#rondellScroller > a").rondell({
+        preset: 'products'
+      });
+
+  br.clear
+
+append js
+  :coffeescript
+    $ ->
+      $("#rondellScroller > a").rondell
+        preset: 'products'

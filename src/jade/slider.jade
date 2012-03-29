@@ -1,0 +1,47 @@
+extends includes/layout
+
+append head
+  title Slider - jQuery Rondell
+
+append content
+  include includes/submenu
+  mixin submenu('Slider')
+
+  br
+
+  #rondellSlider.hidden
+    img(src="images/slider/pic1.png", alt="unicorn", title="A beautiful unicorn")
+    img(src="images/slider/pic2.png", alt="swan", title="Swan on the alpsee")
+    img(src="images/slider/pic3.png", alt="landscape", title="Great landscape")
+    img(src="images/slider/pic4.png", alt="mountains", title="Austrian mountains")
+
+  br
+  br
+
+  .center
+    h2 Preset - Slider
+
+  hr
+  br
+
+  .size3of4
+    :markdown
+      This demo shows how create a simple slider.
+
+      The auto-rotation stops while hovering and continues after the mouse leaves.
+      Try swiping over the rondell if you are using a touch device.
+      
+      Here's how it's done
+
+    pre.
+      $('#rondellSlider > img').rondell({
+        preset: 'slider'
+      });
+            
+  br.clear
+
+append js
+  :coffeescript
+    $ ->
+      $('#rondellSlider > img').rondell
+        preset: 'slider'

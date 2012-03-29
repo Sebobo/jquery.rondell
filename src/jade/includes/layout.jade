@@ -1,0 +1,69 @@
+version = 'Version 0.9.0'
+path = '../'
+
+!!! 5
+html.no-js
+  head
+    block head
+      meta(http-equiv="Content-Type", content="text/html; charset=utf-8")
+      meta(http-equiv="content-language", content="en")
+      meta(name="keywords", content="jquery,tooltip,popup,plugin,css3,open-source,mit-license,extension,overlay")
+      meta(name="description", content="Sebastian Helzle's jQuery Rondell plugin")
+
+      link(rel="stylesheet", href="#{path}css/screen.css", type="text/css", media="all", title="Screen")
+      link(rel="stylesheet", href="#{path}css/jquery.rondell.css", type="text/css", media="all", title="Screen")
+
+      script(src='#{path}js/modernizr-2.0.6.min.js')
+  body
+    .pageHeader.hasShadow
+      block pageHeader
+        h1#docustart Rondell - Display images and other content in a nice way
+        
+        p
+          b= version
+          | &nbsp- Created by 
+          a(href="http://www.sebastianhelzle.net", target="_blank", title="Sebastian Helzle IT-Consulting").
+            Sebastian Helzle
+
+        ul.tabs
+          li
+            a(href="/", title="Projects overview") Home
+          li
+            a(href="/jquery.smallipop", title="jQuery smallipop - A tooltip plugin") Smallipop
+          li.selected
+            a(href="/jquery.rondell", title="jQuery rondell - A graphical plugin") Rondell
+
+    #introduction.page.hasShadow
+      block content
+
+    br
+
+    block js
+      script(src='#{path}js/jquery-1.7.1.min.js')
+      script(src="#{path}js/jquery.fancybox-1.3.4.pack.js")
+      script(src="#{path}js/jquery.mousewheel-3.0.6.min.js")
+      script(src="#{path}js/jquery.rondell.js")
+      script(src="#{path}js/demohelpers.js")
+
+      :coffeescript
+        hostname = document.location.hostname
+
+        if hostname and (hostname.indexOf("github") > 0 or hostname.indexOf("sebastianhelzle") > 0)
+          protocol = document.location.protocol or "https:" 
+          pkBaseURL = "#{protocol}//tracking.sebastianhelzle.net/"
+
+          $.getScript "#{pkBaseURL}piwik.js", ->
+            console.log "loaded piwik"
+            try
+              piwikTracker = Piwik.getTracker "#{pkBaseURL}piwik.php", 5
+              piwikTracker.trackPageView()
+              piwikTracker.enableLinkTracking()
+            catch err
+              console?.log err
+
+      // Piwik
+      script
+      noscript
+        p
+          img(src="https://tracking.sebastianhelzle.net/piwik.php?idsite=5", style="border:0", alt="")
+      // End Piwik Tracking Code

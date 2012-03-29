@@ -1,0 +1,219 @@
+extends includes/layout
+
+append head
+  title Carousel - jQuery Rondell
+
+append content
+  include includes/submenu
+  mixin submenu('Carousel')
+
+  br
+
+  #rondellGallery.hidden
+    a(target="_blank", rel="rondell_1", href="images/galery/band.jpg", title="My favourite band")
+      img.resizeable(src="images/galery/band.jpg", alt="Band", title="My favourite band")
+      h5 Awesome concert
+      p My favourite band.
+
+    a(target="_blank", rel="rondell_1", href="images/galery/dog.jpg", title="My dog")
+      img.resizeable(src="images/galery/dog.jpg", alt="Dog", title="My dog")
+      h5 My dog
+      p Standing in front of a glass door and wants in.
+
+    a(target="_blank", rel="rondell_1", href="images/galery/cat.jpg", title="My cat")
+      img.resizeable(src="images/galery/cat.jpg", alt="Cat", title="My cat")
+      h5 My cat
+      p Sleeping...
+
+    a(target="_blank", rel="rondell_1", href="images/galery/boar.jpg", title="Boar")
+      img.resizeable(src="images/galery/boar.jpg", alt="Boar", title="Boar")
+      h5 Dead boar on the wall
+      p Hanging around.
+
+    a(target="_blank", rel="rondell_1", href="images/galery/snow.jpg", title="Snow")
+      img.resizeable(src="images/galery/snow.jpg", alt="Snow", title="Snow")
+      h5 Winter wonderland
+      p The german alps.
+
+    a(target="_blank", rel="rondell_1", href="images/galery/rabbit.jpg", title="Rabbit")
+      img.resizeable(src="images/galery/rabbit.jpg", alt="Rabbit", title="Rabbit")
+      h5 Bunny
+      p In my brothers garden.
+
+    a(target="_blank", rel="rondell_1", href="images/galery/trash.jpg", title="")
+      img.resizeable(src="images/galery/trash.jpg", alt="Trash", title="Trash")
+      h5 Trash
+      p Somewhere in the USA.
+
+  br
+  br
+
+  .center
+    h2 Preset - Carousel
+
+  hr
+  br
+
+  .size3of4
+    :markdown
+      This demo show how to display an advanced gallery. 
+      Click an image to focus it and a second click will open a lightbox.
+      
+      You can press arrow left and right on your keyboard to navigate through the images.
+      The rondell will automatically continue to rotate through the gallery when 
+      your mouse leaves it's area.
+      
+      The lightbox is powered by [Fancybox](http://www.fancybox.net "Fancybox").
+      
+      Here's how it's done
+
+    pre.
+      // Create a rondell with the 'carousel' preset and set an option 
+      // to disable the rondell when the lightbox is active
+      $('#rondellGallery > a').rondell({
+        preset: "carousel",
+        isActive: function() {
+          return !$("#fancybox-wrap").is(":visible");
+        }
+      }); 
+                
+      // Initialize fancybox for links to full size images
+      $('#rondellGallery > a').fancybox({
+        hideOnContentClick: false,
+        padding: 10,
+        scrolling: "no",
+        onStart: function(items, idx) {
+          return $(items[idx]).parent().hasClass("rondellItemFocused");
+        }
+      });
+            
+  br
+  hr
+  br
+
+  #rondellCubic.hidden
+
+  .center
+    h2 Preset - Cubic
+
+  hr
+  br
+
+  .size3of4
+    :markdown
+      This demo fetches links & images from my brothers great webservice 
+      [wookmark.com](http://www.wookmark.com "Wookmark.com")
+      and creates a rondell from the data.
+
+      This example shows a carousel with a cubic function for the animation.
+      The images titles are used as caption and clicking the focused 
+      element will open the wookmark in a new tab or window.
+
+      Here's how it's done
+
+    pre.
+      $.ajax({
+        url: 'http://www.wookmark.com/api/json',
+        dataType: 'jsonp',
+        success: function(json, text, xhqr) {
+          if (text == 'success') {
+            var items = json,
+                rondellContainer = $('#rondellCubic').empty();
+            
+            // Parsing returned json data
+            $.each(items, function(idx, item) {
+              if (idx >= 20) return false;
+              
+              // Create link container
+              var newItem = $('&lt;a/&gt;')
+              .css('opacity', 0)
+              .attr({
+                href: item.url,
+                title: item.title,
+                target: '_blank'
+              });
+              
+              // Create image
+              var newImg = $('&lt;img/&gt;')
+              .addClass('resizeable')
+              .attr({
+                src: item.preview,
+                alt: item.title,
+                width: item.width,
+                height: item.height
+              });
+              
+              // Append image to link and link to container for the rondell
+              newItem.append(newImg);
+              rondellContainer.append(newItem);
+            });
+                
+            // Create wookmark carousel 
+            $('a', rondellContainer).rondell({
+              preset: 'cubic'                               
+            });
+          }
+        }
+      });
+
+  br.clear
+
+append js
+  :coffeescript
+    $ ->
+      fancyboxOptions =
+        hideOnContentClick: false
+        padding: 10
+        scrolling: "no"
+        overlayColor: "#333"
+        autoDimensions: false
+        onStart: (items, idx) ->
+          $(items[idx]).hasClass "rondellItemFocused"
+      
+      $("#rondellGallery > a").rondell
+        preset: "carousel"
+        isActive: ->
+          not $("#fancybox-wrap").is ":visible"
+      
+      $("#rondellGallery > a").fancybox fancyboxOptions
+
+
+      # Create wookmark carousel
+      rondellContainer = $("#rondellCubic").empty()
+
+      $.ajax
+        url: "http://www.wookmark.com/api/json"
+        dataType: "jsonp"
+        success: (json, text, xhqr) ->
+          if text is "success"
+            items = json
+                   
+            # Parsing returned json data
+            $.each items, (idx, item) ->
+              return false if idx >= 20
+      
+              # Create link container
+              newItem = $("<a/>")
+              .css("opacity", 0)
+              .attr
+                href: item.url
+                title: item.title
+                target: "_blank"
+                          
+              # Create image
+              newImg = $("<img/>")
+              .addClass("resizeable")
+              .attr
+                src: item.preview
+                alt: item.title
+                width: item.width
+                height: item.height
+                        
+              # Append image to link and link to container for the rondell
+              newItem.append newImg
+              rondellContainer.append newItem
+                        
+            # Create gallery 
+            $("a", rondellContainer).rondell
+              preset: "cubic"
+

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/screen.css" type="text/css" media="all" title="Screen">
     <link rel="stylesheet" href="../css/jquery.rondell.css" type="text/css" media="all" title="Screen">
     <script src="../js/modernizr-2.0.6.min.js"></script>
-    <title>Carousel - jQuery Rondell
+    <title>Gallery - jQuery Rondell
     </title>
   </head>
   <body>
@@ -40,13 +40,13 @@
           </li>
           <li><span class="spacer">|</span>
           </li>
-          <li class="active"><a href="carousel.html">Carousel</a>
+          <li><a href="carousel.html">Carousel</a>
           </li>
           <li><a href="slider.html">Slider</a>
           </li>
           <li><a href="scroller.html">Scroller</a>
           </li>
-          <li><a href="gallery.html">Gallery</a>
+          <li class="active"><a href="gallery.html">Gallery</a>
           </li>
           <li><a href="thumbnails.html">Thumbnails</a>
           </li>
@@ -54,103 +54,36 @@
           </li>
         </ul><br class="clear">
       </div><br>
-      <div id="rondellGallery" class="hidden"><a target="_blank" rel="rondell_1" href="images/galery/band.jpg" title="My favourite band"><img src="images/galery/band.jpg" alt="Band" title="My favourite band" class="resizeable">
-          <h5>Awesome concert
-          </h5>
-          <p>My favourite band.
-          </p></a><a target="_blank" rel="rondell_1" href="images/galery/dog.jpg" title="My dog"><img src="images/galery/dog.jpg" alt="Dog" title="My dog" class="resizeable">
-          <h5>My dog
-          </h5>
-          <p>Standing in front of a glass door and wants in.
-          </p></a><a target="_blank" rel="rondell_1" href="images/galery/cat.jpg" title="My cat"><img src="images/galery/cat.jpg" alt="Cat" title="My cat" class="resizeable">
-          <h5>My cat
-          </h5>
-          <p>Sleeping...
-          </p></a><a target="_blank" rel="rondell_1" href="images/galery/boar.jpg" title="Boar"><img src="images/galery/boar.jpg" alt="Boar" title="Boar" class="resizeable">
-          <h5>Dead boar on the wall
-          </h5>
-          <p>Hanging around.
-          </p></a><a target="_blank" rel="rondell_1" href="images/galery/snow.jpg" title="Snow"><img src="images/galery/snow.jpg" alt="Snow" title="Snow" class="resizeable">
-          <h5>Winter wonderland
-          </h5>
-          <p>The german alps.
-          </p></a><a target="_blank" rel="rondell_1" href="images/galery/rabbit.jpg" title="Rabbit"><img src="images/galery/rabbit.jpg" alt="Rabbit" title="Rabbit" class="resizeable">
-          <h5>Bunny
-          </h5>
-          <p>In my brothers garden.
-          </p></a><a target="_blank" rel="rondell_1" href="images/galery/trash.jpg" title=""><img src="images/galery/trash.jpg" alt="Trash" title="Trash" class="resizeable">
-          <h5>Trash
-          </h5>
-          <p>Somewhere in the USA.
-          </p></a>
+      <div id="rondellGallery" style="height:400px;">&nbsp;
       </div><br><br>
       <div class="center">
-        <h2>Preset - Carousel
+        <h2>Preset - Gallery
         </h2>
       </div>
       <hr><br>
-      <div class="size3of4"><p>This demo show how to display an advanced gallery. 
-Click an image to focus it and a second click will open a lightbox.</p>
-
-<p>You can press arrow left and right on your keyboard to navigate through the images.
-The rondell will automatically continue to rotate through the gallery when 
-your mouse leaves it&#39;s area.</p>
-
-<p>The lightbox is powered by <a href="http://www.fancybox.net" title="Fancybox">Fancybox</a>.</p>
-
-<p>Here&#39;s how it&#39;s done</p>
-        <pre>// Create a rondell with the 'carousel' preset and set an option 
-// to disable the rondell when the lightbox is active
-$('#rondellGallery &gt; a').rondell({
-  preset: &quot;carousel&quot;,
-  isActive: function() {
-    return !$(&quot;#fancybox-wrap&quot;).is(&quot;:visible&quot;);
-  }
-}); 
-
-// Initialize fancybox for links to full size images
-$('#rondellGallery &gt; a').fancybox({
-  hideOnContentClick: false,
-  padding: 10,
-  scrolling: &quot;no&quot;,
-  onStart: function(items, idx) {
-    return $(items[idx]).parent().hasClass(&quot;rondellItemFocused&quot;);
-  }
-});
-
-</pre>
-      </div><br>
-      <hr><br>
-      <div id="rondellCubic" class="hidden">
-      </div>
-      <div class="center">
-        <h2>Preset - Cubic
-        </h2>
-      </div>
-      <hr><br>
-      <div class="size3of4"><p>This demo fetches links &amp; images from my brothers great webservice 
-<a href="http://www.wookmark.com" title="Wookmark.com">wookmark.com</a>
+      <div class="size3of4"><p>This demo fetches links &amp;amp; images from my brothers great webservice 
+<a href="http://www.wookmark.com" title="Wookmark.com">wookmark.com</a> 
 and creates a rondell from the data.</p>
 
-<p>This example shows a carousel with a cubic function for the animation.
-The images titles are used as caption and clicking the focused 
-element will open the wookmark in a new tab or window.</p>
+<p>The image titles are used as caption and clicking the 
+focused element will open the wookmark in a new tab or window.</p>
 
 <p>Here&#39;s how it&#39;s done</p>
-        <pre>$.ajax({
+        <pre>var galleryContainer = $(&quot;#rondellGallery&quot;);
+
+$.ajax({
   url: 'http://www.wookmark.com/api/json',
   dataType: 'jsonp',
   success: function(json, text, xhqr) {
     if (text == 'success') {
-      var items = json,
-          rondellContainer = $('#rondellCubic').empty();
+      var items = json, newItem, newImg;
 
       // Parsing returned json data
       $.each(items, function(idx, item) {
         if (idx &gt;= 20) return false;
 
         // Create link container
-        var newItem = $('&lt;a/&gt;')
+        newItem = $('&lt;a/&gt;')
         .css('opacity', 0)
         .attr({
           href: item.url,
@@ -159,7 +92,7 @@ element will open the wookmark in a new tab or window.</p>
         });
 
         // Create image
-        var newImg = $('&lt;img/&gt;')
+        newImg = $('&lt;img/&gt;')
         .addClass('resizeable')
         .attr({
           src: item.preview,
@@ -170,12 +103,12 @@ element will open the wookmark in a new tab or window.</p>
 
         // Append image to link and link to container for the rondell
         newItem.append(newImg);
-        rondellContainer.append(newItem);
+        galleryContainer.append(newItem);
       });
 
-      // Create wookmark carousel 
-      $('a', rondellContainer).rondell({
-        preset: 'cubic'                               
+      // Create gallery 
+      $('a', galleryContainer).rondell({
+        preset: 'gallery'                             
       });
     }
   }
@@ -222,25 +155,8 @@ element will open the wookmark in a new tab or window.</p>
 (function() {
 
   $(function() {
-    var fancyboxOptions, rondellContainer;
-    fancyboxOptions = {
-      hideOnContentClick: false,
-      padding: 10,
-      scrolling: "no",
-      overlayColor: "#333",
-      autoDimensions: false,
-      onStart: function(items, idx) {
-        return $(items[idx]).hasClass("rondellItemFocused");
-      }
-    };
-    $("#rondellGallery > a").rondell({
-      preset: "carousel",
-      isActive: function() {
-        return !$("#fancybox-wrap").is(":visible");
-      }
-    });
-    $("#rondellGallery > a").fancybox(fancyboxOptions);
-    rondellContainer = $("#rondellCubic").empty();
+    var galleryContainer;
+    galleryContainer = $("#rondellGallery").empty();
     return $.ajax({
       url: "http://www.wookmark.com/api/json",
       dataType: "jsonp",
@@ -263,10 +179,10 @@ element will open the wookmark in a new tab or window.</p>
               height: item.height
             });
             newItem.append(newImg);
-            return rondellContainer.append(newItem);
+            return galleryContainer.append(newItem);
           });
-          return $("a", rondellContainer).rondell({
-            preset: "cubic"
+          return $("a", galleryContainer).rondell({
+            preset: "gallery"
           });
         }
       }

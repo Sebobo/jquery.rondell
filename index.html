@@ -1,1367 +1,366 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js">
-    <head>
-        <title>jQuery Rondell</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <meta name="keywords" content="jquery,tooltip,popup,plugin,css3,open-source,mit-license,extension,overlay" />
-        <meta name="description" content="Sebastian Helzle's jQuery Rondell plugin" />
-        <meta http-equiv="content-language" content="en">
-        <link rel="stylesheet" href="css/screen.css" type="text/css" media="all" title="Screen" />  
-        <link rel="stylesheet" href="css/jquery.rondell.css" type="text/css" media="all" title="Screen" />  
-    </head>
-    <body>
-        <div class="pageHeader hasShadow">
-            
-            <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
-            
-            <p>
-                <b>Version 0.9.0</b> - Created by <a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle">Sebastian Helzle</a>
-            </p>
-            <br/>
-            <ul class="tabs">
-                <li>
-                    <a href="/" title="Projects overview">Home</a>
-                </li>
-                <li>
-                    <a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">
-                        Smallipop
-                    </a>
-                </li>
-                <li class="selected">
-                    <a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">
-                        Rondell
-                    </a>
-                </li>
-            </ul>
+  <head>
+    <title>Overview - jQuery Rondell
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="content-language" content="en">
+    <meta name="keywords" content="jquery,tooltip,popup,plugin,css3,open-source,mit-license,extension,overlay">
+    <meta name="description" content="Sebastian Helzle's jQuery Rondell plugin">
+    <link rel="stylesheet" href="css/screen.css" type="text/css" media="all" title="Screen">
+    <link rel="stylesheet" href="css/jquery.rondell.css" type="text/css" media="all" title="Screen">
+    <script src="js/modernizr-2.0.6.min.js"></script>
+  </head>
+  <body>
+    <div class="pageHeader hasShadow">
+      <h1 id="docustart">Rondell - Display images and other content in a nice way
+      </h1>
+      <p><b>Version 0.9.0</b>&nbsp- Created by 
+<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">Sebastian Helzle
+
+</a>
+      </p>
+      <ul class="tabs">
+        <li><a href="/" title="Projects overview">Home</a>
+        </li>
+        <li><a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">Smallipop</a>
+        </li>
+        <li class="selected"><a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">Rondell</a>
+        </li>
+      </ul>
+    </div>
+    <div id="introduction" class="page hasShadow">
+      <div class="subnav centered">
+        <ul class="nav nav-pills">
+          <li class="active"><a href="index.html">Overview</a>
+          </li>
+          <li><a href="examples/installation.html">Installation</a>
+          </li>
+          <li><a href="examples/options.html">Options</a>
+          </li>
+          <li><span class="spacer">|</span>
+          </li>
+          <li><a href="examples/carousel.html">Carousel</a>
+          </li>
+          <li><a href="examples/slider.html">Slider</a>
+          </li>
+          <li><a href="examples/scroller.html">Scroller</a>
+          </li>
+          <li><a href="examples/gallery.html">Gallery</a>
+          </li>
+          <li><a href="examples/thumbnails.html">Thumbnails</a>
+          </li>
+          <li><a href="examples/pages.html">Pages</a>
+          </li>
+        </ul><br class="clear">
+      </div>
+      <div id="introduction" class="column size1of2">
+        <h3 class="hidden">About
+        </h3><p>This is a <a href="http://www.jquery.com" title="jQuery">jQuery</a> plugin for displaying galeries
+and other content the way <em>you</em> want.</p>
+
+<p>The rondell demos can be controlled with your keyboard,
+by clicking the controls or by clicking the rondell items.</p>
+
+<p>Touching items on a phone or tablet computer will work too!</p>
+
+<p>The plugin has been tested with and should work fine with:
+IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+</p>
+
+<p>Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php" title="MIT licence">MIT license</a>.</p>
+        <p><a href="https://github.com/Sebobo/jquery.rondell/zipball/0.8.7" title="Rondell zip download" class="btn success">Download rondell now
+</a>&nbsp;
+<a href="https://github.com/Sebobo/jquery.rondell" title="Rondell source at github" class="btn">Visit rondell at github
+
+</a>
+        </p>
+      </div>
+      <div class="column size1of2"><img src="examples/preview.png" alt="Rondell preview" class="hideOnJS">
+        <div id="rondellTopDemo" class="showOnJS hidden"><img src="examples/images/galery/band.jpg" alt="My favourite band" class="resizeable"><img src="examples/images/galery/dog.jpg" alt="My dog" class="resizeable"><img src="examples/images/galery/cat.jpg" alt="My cat" class="resizeable"><img src="examples/images/galery/boar.jpg" alt="Dead boar" class="resizeable"><img src="examples/images/galery/snow.jpg" alt="Winter wonderland" class="resizeable"><img src="examples/images/galery/rabbit.jpg" alt="The white rabbit" class="resizeable"><img src="examples/images/galery/trash.jpg" alt="Trash" class="resizeable">
         </div>
-        
-        <div class="side-menu">
-            <h2>Table of contents</h2>
-            <ul>
-                <li><a class="scrollToId current" href="#introduction">Introduction</a></li>  
-                <li><a class="scrollToId" href="#gallerydemosimple">Simple carousel</a></li> 
-                <li><a class="scrollToId" href="#gallerydemo">Advanced carousel</a></li> 
-                <li><a class="scrollToId" href="#sliderdemo">Slider</a></li>
-                <li><a class="scrollToId" href="#productsdemo">Product scroller</a></li>
-                <li><a class="scrollToId" href="#stuffdemo">Mixed content</a></li>
-                <li><a class="scrollToId" href="#wookmark">Using a webservice</a></li>
-                <li><a class="scrollToId" href="#options">Options</a></li> 
-                <li><a class="scrollToId" href="#installation">Installation</a></li>
-            </ul>
+      </div><br class="clear"><br>
+      <div class="column">
+        <!-- Flattr button BEGIN --><a rev="flattr;button:compact;" href="http://sebobo.github.com/jquery.rondell" class="FlattrButton hidden"></a>
+        <noscript><a href="http://flattr.com/thing/460088/jQuery-Rondell-by-Sebastian-Helzle" target="_blank"><img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0"></a>
+        </noscript>
+        <!-- Flattr button END-->
+      </div>
+      <div class="column last">
+        <!-- AddThis Button BEGIN-->
+        <div class="addthis_toolbox addthis_default_style"><a class="addthis_button_preferred_1"></a><a class="addthis_button_preferred_2"></a><a class="addthis_button_preferred_3"></a><a class="addthis_button_preferred_4"></a><a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
         </div>
-        
-        <div class="page hasShadow" id="introduction">
-            <div class="column size1of2">
-                <h3 class="hidden">About</h3>
-                <p>
-                    This is a <a href="http://www.jquery.com" title="jQuery">jQuery</a> plugin for displaying galeries<br/> 
-                    and other content the way <b>you</b> want.<br/>
-                    <br/>
-                    The rondell demos can be controlled with your keyboard,<br/> 
-                    by clicking the controls or by clicking the rondell items.<br/>
-                    <br/>
-                    Touching items on a phone or tablet computer will work too! 
-                </p>
-                
-                <p>
-                    The plugin has been tested with and should work fine with:<br/>
-                    IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+
-                </p>
-                
-                <p>
-                    Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php" title="MIT licence">MIT</a> license.
-                </p>
-                
-                <br/>
-                
-                <p>
-                    <a href="https://github.com/Sebobo/jquery.rondell/zipball/0.8.7" title="Rondell zip download" class="btn success">Download rondell now</a>
-                    &nbsp;
-                    <a href="https://github.com/Sebobo/jquery.rondell" title="Rondell source at github" class="btn">Visit rondell at github</a>
-                </p>
-            </div>
-            <div class="column size1of2">
-                <img src="examples/preview.png" class="hideOnJS" alt="Rondell preview" />
+        <!-- AddThis Button END-->
+      </div><br><br id="usage">
+      <div class="size1of2">
+        <h4>Usage
+        </h4>
+        <pre>&lt;script type=&quot;text/javascript&quot;&gt;
 
-                <div id="rondellTopDemo" class="showOnJS"> 
-                    <img class="resizeable" src="images/galery/band.jpg" alt="My favourite band" />   
-                    <img class="resizeable" src="images/galery/dog.jpg" alt="My dog" /> 
-                    <img class="resizeable" src="images/galery/cat.jpg" alt="My cat" />
-                    <img class="resizeable" src="images/galery/boar.jpg" alt="Dead boar" />
-                    <img class="resizeable" src="images/galery/snow.jpg" alt="Winter wonderland" />
-                    <img class="resizeable" src="images/galery/rabbit.jpg" alt="The white rabbit" />
-                    <img class="resizeable" src="images/galery/trash.jpg" alt="Trash" />
-                </div>
-            </div>
-            
-            <br class="clear"/>
-            <br/>
-            <div>
-                <div class="column">
-                    <!-- Flattr button BEGIN -->
-                    <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://sebobo.github.com/jquery.rondell"></a>
-                    <noscript><a href="http://flattr.com/thing/460088/jQuery-Rondell-by-Sebastian-Helzle" target="_blank">
-                    <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
-                    <!-- Flattr button END -->
-                </div>
-                <div class="column last">
-                    <!-- AddThis Button BEGIN -->
-                    <div class="addthis_toolbox addthis_default_style">
-                        <a class="addthis_button_preferred_1"></a>
-                        <a class="addthis_button_preferred_2"></a>
-                        <a class="addthis_button_preferred_3"></a>
-                        <a class="addthis_button_preferred_4"></a>
-                        <a class="addthis_button_compact"></a>
-                        <a class="addthis_counter addthis_bubble_style"></a>
-                    </div>
-                    <!-- AddThis Button END -->
-                </div>
-            </div>
+  $('.myContainer &gt; .myItem').rondell([options][, callback]);
 
-            <br/>
-            <br id="usage"/>
-            
-            <div class="size1of2">
-                <h4>Usage</h4>
-                <pre>
-&lt;script type="text/javascript"&gt;
+&lt;/script&gt;
 
-$('.myContainer > .myItem').rondell([options][, callback]);
+</pre>
+      </div><br>
+      <div class="column size2of3">
+        <h5>New and improved in this version
+        </h5>
+        <ul>
+          <li><span class="label success">New</span>&nbsp;awesome preset 
+<i>thumbgallery</i><br>which uses all the new options and features.
 
-&lt;/script&gt;</pre>
-            </div>
+          </li>
+          <li><span class="label success">New</span>&nbsp;Integrated my standalone scrollbar plugin (beta) into the rondell.
+<br>See the 
+<a href="examples/options.html" title="Options">options</a>&nbsp;for setting it up.
 
-            <br class="clear"/>
-            <br/>
-            
-            <div class="column size2of3">
-                <h5>New and improved in this version</h5>
-                <ul>
-                    <li>
-                        <span class="label success">New</span> 
-                        awesome preset <i>thumbgallery</i>
-                        <br/>which uses all the new options and features.
-                    </li>
-                    <li>
-                        <span class="label success">New</span> 
-                        Integrated my standalone scrollbar plugin (beta) into the rondell.<br/> 
-                        See the <a href="#options" class="scrollToId" title="Options">options</a> for setting it up.
-                    </li>
-                    <li>
-                        <span class="label success">New</span> 
-                        Items absolute index as parameter for the animation functions.
-                    </li>
-                    <li>
-                        <span class="label success">New</span>
-                        Option <i>cropThumbnails</i>
-                        for image cropping to allow uniform size of thumbnails
-                    </li>
-                    <li>
-                        <span class="label success">New</span> 
-                        Option <i>switchIndices</i><br/> which enables switching the index of the last and new focused items.
-                    </li>
-                    <li>
-                        <span class="label success">New</span> 
-                        Option <i>keyDelay</i><br/> 
-                        which sets minimum time between keypress events are registered.
-                    </li>
-                    <li>
-                        <span class="label success">New</span> 
-                        Option <i>wrapIndices</i><br/>
-                        allowing to disable item index wrapping used in the carousels.
-                    </li>
-                    <li>
-                        <span class="label success">New</span> 
-                        Opacity is now animated when hovering items.
-                    </li>
-                    <li>
-                        <span class="label notice">Change</span> 
-                        Improved performance
-                    </li>
-                    <li>
-                        <span class="label notice">Fix</span> 
-                        Bugfixes for items fading out or in
-                    </li>
-                    <li>
-                        <span class="label notice">Fix</span> 
-                        Disabled autorotation when rondell is not visible.
-                    </li>
-                    <li>
-                        <span class="label notice">Fix</span> 
-                        Horizontal mouse scroll event registering improved.
-                    </li>
-                </ul>
-                <br/>
-                <p>
-                    <a href="#changelog" class="collapsor" title="Collapse code">+ Click here to see changes in the last versions</a>
-                </p>
-                <ul id="changelog" class="collapsible">
-                    <li>
-                        <h6>0.8.7</h6>
-                        <ul>
-                            <li><span class="label notice">Fix</span> Wrong image sizes when rondell items are all images.</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <h6>0.8.6</h6>
-                        <ul>
-                            <li><span class="label success">New</span> Added slider preset.</li>
-                            <li><span class="label success">New</span> Added random start option.</li>
-                            <li><span class="label notice">Change</span> Improved some presets and themes.</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <h6>0.8.5</h6>
-                        <ul>
-                            <li>Fixed a bug in image size computations and improved performance.</li>
-                            <li>Moved more default options into presets.</li>
-                            <li>Improved dark theme text readability.</li>
-                            <li>New gallery example and preset.</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <h6>0.8.4</h6>
-                        <ul>
-                            <li>
-                                <b>Mousewheel (x-axis) support</b> allows you to traverse left and right in the rondell. 
-                                (Requires the optional <a href="https://github.com/brandonaaron/jquery-mousewheel" title="jQuery mousewheel">jQuery mousewheel plugin</a>)
-                            </li>
-                            <li>
-                                Controls hide if autorotation is disabled and shifting is impossible. (See the <a href="#productsdemo" class="scrollToId" title="Products demo">products demo</a>)
-                            </li>
-                            <li>
-                                Items are now displayed in the order you provide them.
-                            </li>
-                            <li>
-                                Starting item index is now customizeable by providing the <i>currentLayer</i> option. (See the <a href="#options" class="scrollToId" title="List of options">options</a>)
-                            </li>
-                        </ul>
-                    <li>
-                        <h6>0.8.3</h6>
-                        <ul>
-                            <li><b>A size function</b> to simulate a depth effect. (See the <a href="#options" class="scrollToId" title="List of options">options</a>)</li>
-                            <li><b>Presets</b> for the plugins options which contain the necessary settings to setup the plugin like the examples on this page.</li>
-                            <li><b>Themes</b> are now included in the plugins css file to help you make your rondell look like one of my examples.</li>
-                            <li><b>A callback</b> when the plugin has finished loading. (See <a href="#usage" class="scrollToId" title="Usage example">usage</a>)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <h6>0.8.2</h6>
-                        <ul>
-                            <li><b>Touch controls for mobile devices</b> - Swipe left and right to move the rondell.</li>
-                            <li><b>Reliable image loading</b> - The previous versions had sometimes problems getting the correct image sizes for some browsers and configurations.</li>
-                            <li>And some minor fixes and code improvements.</li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="column size1of3 last">            
-                <h5>Dependencies</h5>
-                <ul>
-                    <li>
-                        <a href="http://www.jQuery.com" title="jQuery">jQuery</a> 
-                        version 1.5.2 or better
-                    </li>
-                    <li>
-                        <a href="http://www.modernizr.com/" title="Modernizr library">Modernizr</a>
-                        for browser capability fallbacks.<br/>
-                        The library is included in the plugins <i>lib</i> folder.<br/> 
-                    </li>
-                </ul>
-                <br/>
-                <h5>Roadmap for 1.0.0</h5>
-                <ul>
-                    <li>Asynchronous image loading</li>
-                    <li>Improved themes</li>
-                    <li>CSS based buttons</li>
-                </ul>
-            </div>
-            
-            <br class="clear"/>
+          </li>
+          <li><span class="label success">New</span>&nbsp;Items absolute index as parameter for the animation functions.
 
-            <div class="well size1of3">
-                <ul class="nav nav-list">
-                    <li class="nav-header">
-                        Documentation
-                    </li>
-                    <li class="active">
-                        <a href="#">Home</a>
-                    </li>
-                    <li>
-                        <a href="#">Library</a>
-                    </li>
+          </li>
+          <li><span class="label success">New</span>&nbsp;Option 
+<i>cropThumbnails</i>&nbsp;for image cropping to allow uniform size of thumbnails
 
-                    <li class="nav-header">
-                        Examples
-                    </li>
-                    <li>
-                        <a href="examples/carousel.html">Carousel</a>
-                    </li>
-                    <li>
-                        <a href="#">Slider</a>
-                    </li>
-                    <li>
-                        <a href="#">Scroller</a>
-                    </li>
-                    <li>
-                        <a href="#">Gallery</a>
-                    </li>
-                    <li>
-                        <a href="#">Thumbnails</a>
-                    </li>
-                </ul>
-            </div>
-            
-            <hr id="sliderdemo"/>
-            
-            <div class="column size1of4">
-                <h3>Slider</h3>
-                
-                <p>
-                    This demo shows how create a slider.
-                </p>
-                <p>
-                    The auto-rotation stops while hovering and continues after the mouse leaves.
-                </p>
-                <p>
-                    Also works great on touch devices like the previous examples.
-                </p>
-                <br/>
-                <p>
-                    <a href="#demo3code" class="showCode" title="Show the code for the slider">Click here to see how it's done</a>
-                </p>
-                <div class="hidden">
-                    <div id="demo3code">
-                        <p>
-                            The following code will create a slider out of a list of images.
-                        </p>
-<pre>&lt;script type="text/javascript"&gt;
-    $(function() {
-        $('#rondellSlider > img').rondell({
-            preset: 'slider',
-            theme: 'slider'
-        });
+          </li>
+          <li><span class="label success">New</span>&nbsp;Option 
+<i>switchIndices</i><br>which enables switching the index of the last and new focused items.
+
+          </li>
+          <li><span class="label success">New</span>&nbsp;Option 
+<i>keyDelay</i><br>which sets minimum time between keypress events are registered.
+
+          </li>
+          <li><span class="label success">New</span>&nbsp;Option 
+<i>wrapIndices</i><br>allowing to disable item index wrapping used in the carousels.
+
+          </li>
+          <li><span class="label success">New</span>&nbsp;Opacity is now animated when hovering items.
+
+          </li>
+          <li><span class="label notice">Change</span>&nbsp;Improved performance
+
+          </li>
+          <li><span class="label notice">Fix</span>&nbsp;Bugfixes for items fading out or in
+
+          </li>
+          <li><span class="label notice">Fix</span>&nbsp;Disabled autorotation when rondell is not visible.
+
+          </li>
+          <li><span class="label notice">Fix</span>&nbsp;Horizontal mouse scroll event registering improved.
+
+          </li>
+        </ul><br>
+        <p><a href="#changelog" title="Collapse code" class="showCode">Click here to see changes in the last versions
+
+</a>
+        </p>
+        <div class="hidden">
+          <ul id="changelog">
+            <li>
+              <h6>0.8.7
+              </h6>
+              <ul>
+                <li><span class="label notice">Fix</span>&nbsp;Wrong image sizes when rondell items are all images.
+
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h6>0.8.6
+              </h6>
+              <ul>
+                <li><span class="label success">New</span>&nbsp;Added slider preset.
+
+                </li>
+                <li><span class="label success">New</span>&nbsp;Added random start option.
+
+                </li>
+                <li><span class="label notice">Change</span>&nbsp;Improved some presets and themes.
+
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h6>0.8.5
+              </h6>
+              <ul>
+                <li>Fixed a bug in image size computations and improved performance.
+                </li>
+                <li>Moved more default options into presets.
+                </li>
+                <li>Improved dark theme text readability.
+                </li>
+                <li>New gallery example and preset.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h6>0.8.4
+              </h6>
+              <ul>
+                <li><b>Mousewheel (x-axis) support</b>&nbsp;allows you to traverse left and right in the rondell. (Requires the optional 
+<a href="https://github.com/brandonaaron/jquery-mousewheel" title="jQuery mousewheel">jQuery mousewheel plugin
+</a>)
+
+                </li>
+                <li>Controls hide if autorotation is disabled and shifting is impossible. (See the 
+<a href="examples/scroller.html" title="Products demo">products demo</a>)
+
+                </li>
+                <li>Items are now displayed in the order you provide them.
+
+                </li>
+                <li>Starting item index is now customizeable by providing the 
+<i>currentLayer</i>option. (See the 
+<a href="examples/options.html" title="List of options">options</a>)
+
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h6>0.8.3
+              </h6>
+              <ul>
+                <li><b>A size function</b>&nbsp;to simulate a depth effect. (See the 
+<a href="examples/options.html" title="List of options">options</a>)
+
+                </li>
+                <li><b>Presets</b>&nbsp;for the plugins options which contain the necessary settings to setup the plugin 
+like the examples on this page.
+
+                </li>
+                <li><b>Themes</b>&nbsp;are now included in the plugins css file to help you make your rondell look 
+like one of my examples.
+
+                </li>
+                <li><b>A callback</b>&nbsp;when the plugin has finished loading. (See 
+<a href="#usage" title="Usage example" class="scrollToId">usage</a>)
+
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h6>0.8.2
+              </h6>
+              <ul>
+                <li><b>Touch controls for mobile devices</b>&nbsp;- Swipe left and right to move the rondell.
+
+                </li>
+                <li><b>Reliable image loading</b>&nbsp;- The previous versions had sometimes problems getting the correct image sizes 
+for some browsers and configurations.
+
+                </li>
+                <li>And some minor fixes and code improvements.
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="column size1of3 last">
+        <h5>Roadmap for 1.0.0
+        </h5>
+        <ul>
+          <li>Asynchronous image loading
+          </li>
+          <li>Improved themes
+          </li>
+          <li>CSS based controls
+          </li>
+          <li>CSS animations
+          </li>
+        </ul><br>
+        <h5>Dependencies
+        </h5>
+        <ul>
+          <li><a href="http://www.jQuery.com" title="jQuery">jQuery</a>&nbsp;version 1.5.2 or better
+
+          </li>
+          <li><a href="http://www.modernizr.com/" title="Modernizr library">Modernizr</a>&nbsp;for browser capability fallbacks.
+<br>The library is included in the plugins 
+<i>lib</i>&nbsp;folder.
+
+          </li>
+        </ul>
+      </div><br class="clear">
+      <hr><br>
+      <h4>Feedback is welcome!
+      </h4>
+      <p>Please send me suggestions, ideas for improvement or anything else to 
+<a href="mailto:sebastian@helzle.net" title="Send me a mail">sebastian@helzle.net</a>&nbsp;or 
+<a href="http://twitter.com/#!/sebobo" target="_blank" title="Sebobo at twitter">@sebobo</a>
+      </p><br class="clear"><br>
+      <h4>Have fun and check out my other plugins
+      </h4>
+      <p><a href="http://projects.sebastianhelzle.net/jquery.smallipop" title="smallipop - a better tooltip plugin" class="btn primary">jQuery smallipop
+
+</a>
+      </p><br>
+      <p>jQuery Rondell is powered by 
+<a href="http://jashkenas.github.com/coffee-script/" target="_blank" title="Coffeescript">coffeescript
+</a>,
+<a href="http://sass-lang.com/" target="_blank" title="Sass">sass</a>&nbsp;and 
+<a href="http://www.jquery.com" target="_blank" title="jQuery">jQuery</a>.
+
+      </p><br>
+    </div><br>
+    <script src="js/jquery-1.7.1.min.js"></script>
+    <script src="js/jquery.fancybox-1.3.4.pack.js"></script>
+    <script src="js/jquery.mousewheel-3.0.6.min.js"></script>
+    <script src="js/jquery.rondell.js"></script>
+    <script src="js/demohelpers.js"></script><script type="text/javascript">
+(function() {
+  var hostname, pkBaseURL, protocol;
+
+  hostname = document.location.hostname;
+
+  if (hostname && (hostname.indexOf("github") > 0 || hostname.indexOf("sebastianhelzle") > 0)) {
+    protocol = document.location.protocol || "https:";
+    pkBaseURL = "" + protocol + "//tracking.sebastianhelzle.net/";
+    $.getScript("" + pkBaseURL + "piwik.js", function() {
+      var piwikTracker;
+      console.log("loaded piwik");
+      try {
+        piwikTracker = Piwik.getTracker("" + pkBaseURL + "piwik.php", 5);
+        piwikTracker.trackPageView();
+        return piwikTracker.enableLinkTracking();
+      } catch (err) {
+        return typeof console !== "undefined" && console !== null ? console.log(err) : void 0;
+      }
     });
-&lt;/script&gt;</pre>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="column size3of4 last">
-                <div id="rondellSlider" class="centered">
-                    <img src="images/slider/pic1.png" alt="demo pic 1" title="A beautiful unicorn" />
-                    <img src="images/slider/pic2.png" alt="demo pic 2" title="Swan on the alpsee"/>
-                    <img src="images/slider/pic3.png" alt="demo pic 3" title="Great landscape"/>
-                    <img src="images/slider/pic4.png" alt="demo pic 4" title="Austrian mountains"/>
-                </div>
-            </div>
-            
-            <br/>
-            
-            <hr id="productsdemo"/>
-            
-            <h3>Product scroller</h3>
-            
-            <p>
-                Example how this plugin can be used for displaying products on a company page or webshop.
-            </p>
-            <br/>
-            <p>
-                <a href="#demo4code" class="showCode" title="Show the code for the product scroller">Click here to see how it's done</a>
-            </p>
-            <div class="hidden">
-                <div id="demo4code"> 
-                    <p>
-                        The following code will create a product scroller.
-                    </p>
-<pre>$('#rondellProducts > div').rondell({
-    preset: 'products',
-    theme: 'dark'
-});</pre>
-                </div>
-            </div>
-            <br/>
-            
-            <div id="rondellProducts" class="centered">
-                <div>
-                    <a href="#rondellProducts" title="Dummy link to the cloud">
-                        <img src="images/products/cloud.png" alt="cloud product" />
-                        <h5>Your own cloud</h5>
-                        <p>
-                            Buy your own cloud to do some really complicated stuff very fast!
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a href="#rondellProducts" title="Dummy link to the router">
-                        <img src="images/products/router.png" alt="router product" />
-                        <h5>The new router</h5>
-                        <p>
-                            The router which can connect to anything without cables!
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a href="#rondellProducts" title="Dummy link to the client">
-                        <img src="images/products/client.png" alt="client product" />
-                        <h5>The green computer</h5>
-                        <p>
-                            Our climate saver for only <b>999$</b>!
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a href="#rondellProducts" title="Dummy link to the client">
-                        <img src="images/products/client3.png" alt="client product" />
-                        <h5>The blue computer</h5>
-                        <p>
-                            Makes you calm while working. Now only <b>1999$</b>!
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a href="#rondellProducts" title="Dummy link to the client">
-                        <img src="images/products/client2.png" alt="client product" />
-                        <h5>The pink computer</h5>
-                        <p>
-                            For the girls. Only <b>599$</b>!
-                        </p>
-                    </a>
-                </div>
-                <div>
-                    <a href="#rondellProducts" title="Dummy link to the unknown">
-                        <img src="images/products/unknown.png" alt="unknown product" />
-                        <h5>Surprise</h5>
-                        <p>
-                            Order this and you will be surprised!
-                        </p>
-                    </a>
-                </div>
-            </div>
-            
-            <br/>
-        
-            <hr id="stuffdemo"/>
-            
-            <div class="column size1of3">
-                <h3>Full size text &amp; images</h3>
-                
-                <p>
-                    This demo show how to display a mix of text and images as slider.<br/>
-                    If an item contains no image, the item's content is displayed normally and can be scrolled.<br/>
-                    If the item contains an image, the caption is displayed as overlay.
-                </p>
-                <p>
-                    You can press arrow left and right on your keyboard to navigate through the images.<br/>
-                    Automatic rotation is disabled in this demo.
-                </p>
-                <br/>
-                <p>
-                    <a href="#demo5code" class="showCode" title="Show the code for the full size slider">Click here to see how it's done</a>
-                </p>
-                <div class="hidden">
-                    <div id="demo5code">
-                        <p>
-                            The following code will create a slider which can contain about any kind of content.
-                        </p>
-<pre>&lt;script type="text/javascript"&gt;
-    $(function() {
-        var rondellMixed = $('#rondellMixed > div').rondell({
-            preset: 'pages',
-            theme: 'page'
-        });
+  }
+
+}).call(this);
+</script>
+    <!-- Piwik-->
+    <script></script>
+    <noscript>
+      <p><img src="https://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt="">
+      </p>
+    </noscript>
+    <!-- End Piwik Tracking Code--><script type="text/javascript">
+(function() {
+
+  $(function() {
+    return $("#rondellTopDemo > img").rondell({
+      preset: "carousel",
+      radius: {
+        x: 130
+      },
+      center: {
+        left: 200,
+        top: 110
+      },
+      itemProperties: {
+        size: {
+          width: 100,
+          height: 100
+        }
+      }
     });
-&lt;/script&gt;</pre>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="column size2of3 last">
-                <div id="rondellMixed" class="centered">
-                    <div>
-                        <img class="resizeable" src="images/page/water.png" alt="Waterfall" />
-                        <h2>Waterfall</h2>
-                        <p>
-                            Waterfalls are commonly formed when a river is young.
-                            At these times the channel is often narrow and deep. 
-                            When the river courses over resistant bedrock, erosion happens slowly, 
-                            while downstream the erosion occurs more rapidly.
-                            As the watercourse increases its velocity at the edge of the waterfall, 
-                            it plucks material from the riverbed.
-                        </p>
-                        <p> 
-                            Whirlpools created in the turbulence as well as sand and stones carried by the watercourse increase the erosion capacity.
-                            This causes the waterfall to carve deeper into the bed and to recede upstream. Often over time, 
-                            the waterfall will recede back to form a canyon or gorge downstream as it recedes upstream, 
-                            and it will carve deeper into the ridge above it. 
-                            The rate of retreat for a waterfall can be as high as one and half meters per year.
-                        </p>
-                        <a href="http://en.wikipedia.org/wiki/Waterfall" title="Waterfall">Read more</a>
-                    </div>
-                    <div>
-                        <img class="resizeable" src="images/page/mountains.png" alt="Mountains" />
-                        <h2>Mountains</h2>
-                        <p>
-                            A mountain is a large landform that stretches above the surrounding land in a 
-                            limited area usually in the form of a peak. A mountain is generally steeper than a hill. 
-                            The adjective montane is used to describe mountainous areas and things associated with them. 
-                            The study of mountains is called Orography. Exogeology deals with planetary mountains, 
-                            which in that branch of science are usually called montes (singular—mons).
-                        </p>
-                        <p> 
-                            The highest mountain on Earth based from sea level is Mount Everest (8,848 m (29,029 ft)) 
-                            in the Himalayas of Asia. The highest known mountain in the Solar System is 
-                            Olympus Mons on the planet Mars at 21,171 m (69,459 ft).
-                        </p>
-                        <a href="http://en.wikipedia.org/wiki/Mountains" title="Mountains">Read more</a>
-                    </div>
-                    <div>
-                        <img src="images/page/ranseier.jpg" alt="Karl Ranseier" />
-                        <h2>Karl Ranseier</h2>
-                        <p>
-                            Karl Ranseier ist eine fiktive Person, die im Rahmen der Samstag-Nacht-News von 
-                            Stefan Jürgens in einer Trauerrede gewürdigt wurde. Erfunden wurde die Figur von Jacky Dreksler, 
-                            aus dessen Privatalbum auch das Foto Ranseiers stammt, das immer zu Beginn der Rubrik gezeigt wurde. 
-                            Der Name „Ranseier“ ist eine Idee Hugo Egon Balders.
-                        </p>
-                        <a href="http://de.wikipedia.org/wiki/Karl_Ranseier#Karl_Ranseier" title="Wikipedia">Karl Ranseier bei Wikipedia</a>
-                    </div>
-                    <div>
-                        <h2>Some text</h2>
-                        <p>
-                            You can put <b>any</b> content you like in here.
-                        </p>
-                        <p>
-                            Also long text!
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-                            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
-                            sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-                            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
-                            sanctus est Lorem ipsum dolor sit amet.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-                            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
-                            sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-                            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
-                            sanctus est Lorem ipsum dolor sit amet.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-                            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
-                            sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-                            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-                            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
-                            sanctus est Lorem ipsum dolor sit amet.
-                        </p>
-                        <p>
-                            <b>Nice!</b>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            
-            <br class="clear"/>
-            
-            <hr id="wookmark"/>
-            
-            <div class="column size3of4">
-                <div id="wookmarkDemo1"></div>
-            </div>
-            
-            <div class="column size1of4 last">
-                <h3>A carousel based using images retrieved via api from wookmark.com.</h3>
-                <p>
-                    This demo fetches links &amp; images from my brothers great webservice 
-                    <a href="http://www.wookmark.com" target="_blank" title="Wookmark.com">wookmark.com</a>
-                    and creates a rondell from the data.
-                </p>
-                <p>
-                    This example shows a carousel with a cubic function.<br/>
-                    The link and img titles are used as caption and clicking the focused element will open the wookmark in a new tab or window.
-                </p>
-                <br/>
-                <p>
-                    <a href="#demo6code" class="showCode" title="Show the code for the wookmark example">Click here to see how it's done</a>
-                </p>
-                <div class="hidden">
-                    <div id="demo6code"> 
-                        <p>
-                            The following code will create a carousel with images found on wookmark.com.
-                        </p>
-<pre>&lt;script type="text/javascript"&gt;
-    $(function() {                
-        $.ajax({
-            url: 'http://www.wookmark.com/api/json',
-            dataType: 'jsonp',
-            success: function(json, text, xhqr) {
-                if (text == 'success') {
-                    var items = json,
-                        wookmarkDemo = $('#wookmarkDemo'),
-                    
-                    wookmarkDemo.empty();
-                    
-                    // Parsing returned json data
-                    $.each(items, function(idx, item) {
-                        if (idx >= 20) return false;
-                        
-                        // Create link container
-                        var newItem = $('&lt;a/&gt;')
-                        .attr({
-                            'href': item.url,
-                            'title': item.title,
-                            'target': '_blank'
-                        })
-                        .css('opacity', 0);
-                        
-                        // Create image
-                        var newImg = $('&lt;img/&gt;')
-                        .attr({
-                            'src': item.preview,
-                            'alt': item.title,
-                            'width': item.width,
-                            'height': item.height
-                        })
-                        .addClass('resizeable');
-                        
-                        // Append image to link and link to container for the rondell
-                        newItem.append(newImg);
-                        wookmarkDemo.append(newItem);
-                    });
-                        
-                    // Create wookmark carousel 
-                    $('a', wookmarkDemo).rondell({
-                        preset: 'cubic'                               
-                    });
-                }
-            }
-        });
-    });
-&lt;/script&gt;</pre>
-                    </div>
-                </div>
-            </div>
-            
-            <br class="clear"/>
-            
-            <hr id="wookmark2"/>
-            
-            <div class="column size1of3">
-                <h3>A sliding gallery using images from wookmark.com.</h3>
-                <p>
-                    This demo fetches links &amp; images from my brothers great webservice 
-                    <a href="http://www.wookmark.com" target="_blank" title="Wookmark.com">wookmark.com</a>
-                    and creates a rondell from the data.
-                </p>
-                <p>
-                    This example uses the dark theme and a gallery layout.<br/>
-                    The link and img titles are used as caption and clicking the focused element will open the wookmark in a new tab or window.
-                </p>
-                <br/>
-                <p>
-                    <a href="#demo6code" class="showCode" title="Show the code for the wookmark example">Click here to see how it's done</a>
-                </p>
-                <div class="hidden">
-                    <div id="demo6code"> 
-                        <p>
-                            The following code will create a gallery out of images found on wookmark.com.
-                        </p>
-<pre>&lt;script type="text/javascript"&gt;
-    $(function() {                
-        $.ajax({
-            url: 'http://www.wookmark.com/api/json',
-            dataType: 'jsonp',
-            success: function(json, text, xhqr) {
-                if (text == 'success') {
-                    var items = json,
-                        wookmarkDemo = $('#wookmarkDemo'),
-                    
-                    wookmarkDemo.empty();
-                    
-                    // Parsing returned json data
-                    $.each(items, function(idx, item) {
-                        if (idx >= 20) return false;
-                        
-                        // Create link container
-                        var newItem = $('&lt;a/&gt;')
-                        .attr({
-                            'href': item.url,
-                            'title': item.title,
-                            'target': '_blank'
-                        })
-                        .css('opacity', 0);
-                        
-                        // Create image
-                        var newImg = $('&lt;img/&gt;')
-                        .attr({
-                            'src': item.preview,
-                            'alt': item.title,
-                            'width': item.width,
-                            'height': item.height
-                        })
-                        .addClass('resizeable');
-                        
-                        // Append image to link and link to container for the rondell
-                        newItem.append(newImg);
-                        wookmarkDemo.append(newItem);
-                    });
-                        
-                    // Create wookmark carousel 
-                    $('a', wookmarkDemo).rondell({
-                        preset: 'gallery',
-                        theme: 'dark'                               
-                    });
-                }
-            }
-        });
-    });
-&lt;/script&gt;</pre>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="column size2of3 last">
-                <div id="wookmarkDemo2" class="centered" style="width: 500px;"></div>
-            </div>
-            
-            <br class="clear"/>
+  });
 
-            <hr id="thumbGallery"/>
-
-            <div class="column size1of2 last">
-                <h3>A gallery with thumbnails using images from wookmark.com.</h3>
-                <p>
-                    This demo fetches links &amp; images from my brothers great webservice 
-                    <a href="http://www.wookmark.com" target="_blank" title="Wookmark.com">wookmark.com</a>
-                    and creates a thumbnail gallery from the data.
-                </p>
-                <p>
-                    This gallery still uses the same plugin as the other demos but uses the absolute item index to minimize movement and distraction when focusing items.
-                </p>
-                <p>
-                    The scrollbar allows fast movement through the whole gallery and the user sees his progress when going through the images.
-                </p>
-                <br/>
-                <p>
-                    <a href="#demo7code" class="showCode" title="Show the code for the wookmark example">Click here to see how it's done</a>
-                </p>
-                <div class="hidden">
-                    <div id="demo7code"> 
-                        <p>
-                            The following code will create a gallery out of images found on wookmark.com.
-                        </p>
-<pre>&lt;script type="text/javascript"&gt;
-    $(function() {                
-        $.ajax({
-            url: 'http://www.wookmark.com/api/json',
-            dataType: 'jsonp',
-            success: function(json, text, xhqr) {
-                if (text == 'success') {
-                    var items = json,
-                        wookmarkDemo = $('#wookmarkDemo'),
-                    
-                    wookmarkDemo.empty();
-                    
-                    // Parsing returned json data
-                    $.each(items, function(idx, item) {
-                        if (idx >= 20) return false;
-                        
-                        // Create link container
-                        var newItem = $('&lt;a/&gt;')
-                        .attr({
-                            'href': item.url,
-                            'title': item.title,
-                            'target': '_blank'
-                        })
-                        .css('opacity', 0);
-                        
-                        // Create image
-                        var newImg = $('&lt;img/&gt;')
-                        .attr({
-                            'src': item.preview,
-                            'alt': item.title,
-                            'width': item.width,
-                            'height': item.height
-                        })
-                        .addClass('resizeable');
-                        
-                        // Append image to link and link to container for the rondell
-                        newItem.append(newImg);
-                        wookmarkDemo.append(newItem);
-                    });
-                        
-                    // Create wookmark carousel 
-                    $('a', wookmarkDemo).rondell({
-                        preset: 'thumbGallery',
-                        theme: 'light'                               
-                    });
-                }
-            }
-        });
-    });
-&lt;/script&gt;</pre>
-                    </div>
-                </div>
-            </div>
-            <br/>
-            <div>
-                <div id="wookmarkDemo3" style="width: 800px;"></div>
-            </div>
-            
-            <hr id="options"/>
-            
-            <h3>Options</h3>
-            
-            <table class="options" summary="Options for the jQuery rondell plugin">
-                <tr>
-                    <th width="140">Key</th>
-                    <th width="300">Default value</th>
-                    <th>Description</th>
-                </tr>
-                <tr>
-                    <td>radius</td>
-                    <td>{ x: 300, y: 300 }</td>
-                    <td>The radius the rondell animation will use</td>
-                </tr>
-                <tr>
-                    <td>center</td>
-                    <td>{ x: 400, y: 350 }</td>
-                    <td>The center of the rondell animation</td>
-                </tr>
-                <tr>
-                    <td>size</td>
-                    <td>{ width: null, height: null }</td>
-                    <td>(Optional) Will be center * 2 if left unset</td>
-                </tr>
-                <tr>
-                    <td>scaling</td>
-                    <td>2</td>
-                    <td>Scaled size of the focused item</td>
-                </tr>
-                <tr>
-                    <td>opacityMin</td>
-                    <td>0.05</td>
-                    <td>Items which have less than this opacity are set to <i>display: none</i></td>
-                </tr>
-                <tr>
-                    <td>zIndex</td>
-                    <td>1000</td>
-                    <td>All elements of the rondell will use this z-index and add their depth to it</td>
-                </tr>
-                <tr>
-                    <td>fadeTime</td>
-                    <td>300</td>
-                    <td>Animation time</td>
-                </tr>
-                <tr>
-                    <td>keyDelay</td>
-                    <td>300</td>
-                    <td>Minimal time between keystrokes fire slide events</td>
-                </tr>
-                <tr>
-                    <td>currentLayer</td>
-                    <td>0</td>
-                    <td>
-                        Index of the item which should be focused at the start.<br/>
-                        If left at 0 it will automatically be set to half the item count.
-                    </td>
-                </tr>
-                <tr>
-                    <td>resizeableClass</td>
-                    <td>'resizeable'</td>
-                    <td><i>img</i> tags with this class are resized when animated</td>
-                </tr>
-                <tr>
-                    <td>smallClass</td>
-                    <td>'itemSmall'</td>
-                    <td>css class for unfocused items</td>
-                </tr>
-                <tr>
-                    <td>hiddenClass</td>
-                    <td>'itemHidden'</td>
-                    <td>css class for hidden items</td>
-                </tr>
-                <tr>
-                    <td>visibleItems</td>
-                    <td>'auto'</td>
-                    <td>How many items should be visible in each direction</td>
-                </tr>
-                <tr>
-                    <td>switchIndices</td>
-                    <td>false</td>
-                    <td>Enables switching the index of the last and new focused item.</td>
-                </tr>
-                <tr>
-                    <td>keyDelay</td>
-                    <td>300</td>
-                    <td>Minimum time between keypress events are registered.</td>
-                </tr>
-                <tr>
-                    <td>wrapIndices</td>
-                    <td>true</td>
-                    <td>Enabled index wrapping (used for carousels).</td>
-                </tr>
-                <tr>
-                    <td>alwaysShowCaption</td>
-                    <td>false</td>
-                    <td>Should the overlay always be shown. By default it's only shown when hovering the rondell.</td>
-                </tr>
-                <tr>
-                    <td>repeating</td>
-                    <td>true</td>
-                    <td>Rondell will cycle forever</td>
-                </tr>
-                <tr>
-                    <td>itemProperties</td>
-                    <td>
-<pre>{ 
-    delay: 100,
-    cssClass: 'rondellItem',
-    size: {
-        width: 150,
-        height: 150
-    },
-    sizeFocused: { 
-        width: 0,
-        height: 0
-    }
-}</pre> 
-                    </td>
-                    <td>
-                        <i>delay</i> is an offset between the start of the animation for each item when all items shift.<br/>
-                        <i>cssClass</i> is the class which each item gets after initializing.<br/>
-                        <i>size</i> is the standard size for non-focused items.<br/>
-                        <i>sizeFocused</i> is the size of the focused element and will be calculated automatically from the <i>scaling</i> parameter if not set or 0.<br/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>autoRotation</td>
-                    <td>
-<pre>{ 
-    enabled: false,
-    direction: 0,
-    once: false,
-    delay: 5000
-}</pre> 
-                    </td>
-                    <td>
-                        Set <i>enabled</i> to <i>true</i> if you want the rondell to spin every few seconds.<br/>
-                        Set <i>direction</i> to '1' if you want the rondell to rotate to the right in autorotation mode.<br/> 
-                        Set <i>once</i> to true if the rondell should not start autorotation after the user has hovered the rondell.<br/>
-                        <i>delay</i> is the time between rotation steps.
-                    </td>
-                </tr>
-                <tr>
-                    <td>controls</td>
-                    <td>
-<pre>{ 
-    enabled: true,
-    fadeTime: 400,
-    margin: {
-        x: 20,
-        y: 20
-    }
-}</pre> 
-                    </td>
-                    <td>
-                        Set <i>enabled</i> to <i>false</i> if you want to use custom controls like in 
-                        <a href="rondellMixed" title="Mixed content example">example 3</a>.<br/>
-                        <i>fadeTime</i> controls the animation speed for the built-in controls when hovering over the rondell.<br>
-                        <i>margin</i> controls the distance of the 'prev' and 'next' button to the sides of the rondell. 
-                    </td>
-                </tr>
-                <tr>
-                    <td>strings</td>
-                    <td>
-<pre>{ 
-    prev: 'prev',
-    next: 'next'
-}</pre> 
-                    </td>
-                    <td>
-                        Strings for the built-in controls.
-                    </td>
-                </tr>
-                <tr>
-                    <td>funcEase</td>
-                    <td>'easeInOutQuad'</td>
-                    <td>jQuery easing function name for the movement of items</td>
-                </tr>
-                <tr>
-                    <td>touch</td>
-                    <td>
-<pre>{ 
-    enabled: true,
-    preventDefaults: true,
-    threshold: 100
-}</pre> 
-                    </td>
-                    <td>
-                        Touch controls for swiping on mobile devices are enabled by default.<br/>
-                        <i>preventDefaults</i> will prevent clicking and scrolling while your swipe.<br/>
-                        <i>threshold</i> is the distance in pixels the finger has to travel, before a swipe is registered.<br/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>theme</td>
-                    <td>default</td>
-                    <td>
-                        Theme which will be used for the rondell.<br/>
-                        The rondell css file already includes some themes:<br/>  
-                        <i>default, light, dark, page</i><br/>
-                        <br/>
-                        Take a look at the <i>jquery.rondell.css</i> if you want to customize a theme. 
-                    </td>
-                </tr>
-                <tr>
-                    <td>preset</td>
-                    <td>''</td>
-                    <td>
-                        The plugin contains some presets for the options to help you get started with your own rondell.<br/>
-                        The current presets are based on the examples on this page and include:<br/>
-                        <i>carousel, products, pages, cubic, gallery, thumbGallery</i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>effect</td>
-                    <td>''</td>
-                    <td>Currently not used.</td>
-                </tr>
-                <tr>
-                    <td>randomStart</td>
-                    <td>false</td>
-                    <td>Will select a random item to start with.</td>
-                </tr>
-                <tr>
-                    <td>
-                        funcLeft<br/>
-                        funcTop<br/>
-                        funcOpacity<br/>
-                        funcSize<br/>
-                        funcDiff
-                    </td>
-                    <td></td>
-                    <td>
-                        These functions will be called by the plugin when animating the rondell items.<br/>
-                        At first <i>funcDiff</i> is called for each item with the absolute distance from the center 
-                        item to calculate the relative distance between the items. The second parameter is 
-                        the rondell object itself.<br/>
-                        The return value will be used to call the other four functions. Each with the new relative distance
-                        as first parameter and the rondell object as second parameter.<br/>
-                        The rondell object can be used to access all of the options in the rondell.<br/>
-                        I will provide an in-depth tutorial at a later date. In the meantime please use the advanced examples as a
-                        base for your own customization or send me a message and I'll try to help. 
-                    </td>
-                </tr>
-                <tr>
-                    <td>showContainer</td>
-                    <td>true</td>
-                    <td>
-                        When the plugin has finished loading it will automatically 
-                        show the parent of the items you selected.<br/>
-                        This is for removing the glitch when the plugin takes to long to load and all your items
-                        are shown one under another.<br/>
-                        You should set the css of your items container to <i>display:none</i>.
-                    </td>
-                </tr>
-                <tr>
-                    <td>scrollbar</td>
-                    <td>
-<pre>{ 
-    enabled: false,
-    orientation: "bottom",
-    start: 1,
-    end: 100,
-    stepSize: 1,
-    position: 1,
-    padding: 10,
-    style: {
-      width: "100%",
-      height: 20,
-      left: "auto",
-      right: "auto",
-      top: "auto",
-      bottom: "auto"
-    },
-    repeating: false,
-    onScroll: undefined,
-    scrollOnHover: false,
-    scrollOnDrag: true,
-    animationDuration: 300,
-    easing: "easeInOutQuad"
-}</pre>
-                    </td>
-                    <td>
-                        Scrollbar options description will be updated later when it's final.
-                    </td>
-                </tr>
-            </table>
-            
-            <hr id="installation"/>
-            
-            <div>
-                <h3>Installation</h3>
-
-                <h6>Prequisites</h6>
-
-                <ul>
-                    <li>
-                        <b><a href="http://www.jquery.com" target="_blank" title="jQuery library">jQuery</a></b>
-                        <span class="label important">Important</span><br/>
-                        1.5.2 or better<br/>
-                        Provided with the download.
-                    </li>
-                    <li>
-                        <b><a href="http://www.modernizr.com" target="_blank" title="Modernizr library">Modernizr</a></b>
-                        <span class="label warning">Optional but recommended</span><br/>
-                        This library tests the browser for feature support and provides this information to the plugin and stylesheets.<br/> 
-                        We use this for css fallbacks in our themes and touch detection.<br/>
-                        Provided with the download.
-                    </li>
-                    <li>
-                        The <b>jQuery mousewheel plugin</b>
-                        <span class="label notice">Optional</span><br/>
-                        If you want to use the mouse horizontal scroll events to control the rondell.<br/>
-                        Provided with the download.
-                    </li>
-                    <li>
-                        <b><a href="http://fancybox.net/" target="_blank" title="jQuery library">jQuery fancybox 1.3.4</a></b>
-                        <span class="label notice">Optional</span><br/>
-                        If you want to have a lightbox like in some of my examples. You can use a different one too, but this on has been tested.<br/>
-                        Provided with the download.
-                    </li>
-                </ul>
-                <p>
-                    The plugins are provided in the <i>lib</i> folder. 
-                    
-                    If you don't want to use the <i>Modernizr</i> library you should remove the<br/> 
-                    <i>.cssgradients</i>, <i>.borderradius</i>, <i>.rgba</i> and <i>.boxshadow</i> classes in <i>css/jquery.smallipop.css</i>
-                    to have css3 effects.
-                </p>
-                
-                <br/>
-                
-                <h6>Required files</h6>
-
-                <p>1. Copy <i>js/jquery.rondell.js</i> to your javascript folder.</p>
-                <p>2. Copy <i>js/jquery-x.x.x.min.js</i> to your javascript folder if you don't use jQuery already.</p>
-                <p>3. Copy <i>js/modernizr-x.x.x.js</i> to your javascript folder if you don't use modernizr already.</p>
-                <p>4. Copy <i>css/jquery.rondell.css</i> to your css folder.</p>
-                
-                <p>There are minified versions of the rondell files for production in the lib and css folders too.</p>
-                
-                <br/>
-                
-                <h6>Modify your html header</h6>
-                
-                <p>Add these lines to the header (or footer in case of the javascripts) of your html file and replace x.x.x with the correct versions</p>
-                <pre>
-&lt;link rel="stylesheet" href="css/jquery.rondell.css" type="text/css" media="all" title="Screen"/&gt;   
-&lt;script type="text/javascript" src="js/jquery-x.x.x.min.js"&gt;&lt;/script&gt;   
-&lt;script type="text/javascript" src="js/modernizr-x.x.x.min.js"&gt;&lt;/script&gt;   
-&lt;script type="text/javascript" src="js/jquery.rondell.js"&gt;&lt;/script&gt;</pre>
-
-                <br/>
-                
-                <h4>Get started!</h4>
-                <p>
-                    Setup your images html and use the code of one of my examples to create your own rondell.<br/>
-                    Experiment with the various options and send me a message if you want to share your great work.
-                </p>
-            </div>
-            
-            <hr/>
-            
-            <br/>
-            <br/>
-
-            <h4>Feedback is welcome!</h4>            
-            <p>
-                Please send me suggestions, ideas for improvement or anything else to 
-                <a href="mailto:sebastian@helzle.net" title="Send me a mail">sebastian@helzle.net</a>
-                or <a href="http://twitter.com/#!/sebobo" target="_blank" title="Sebobo at twitter">@sebobo</a>
-            </p>
-            
-            <br/>
-            <br/>
-            
-            <h4>Have fun and check out my other plugins</h4>
-            <br/>
-            <p>
-                <a href="/jquery.smallipop" class="btn primary" title="smallipop - a better tooltip plugin">jQuery smallipop</a>
-            </p>
-            
-            <br/>
-            
-            <p>
-                All images are my own except the one of Karl Ranseier, which is available as public domain.
-            </p>
-            
-            <p>
-                jQuery Rondell is powered by 
-                <a href="http://jashkenas.github.com/coffee-script/" target="_blank" title="Coffeescript">coffeescript</a>, 
-                <a href="http://sass-lang.com/" target="_blank" title="Sass">sass</a>
-                and <a href="http://www.jquery.com" target="_blank" title="jQuery">jQuery</a>.
-            </p>
-    	</div>  
-    	<br/>
-        <script type="text/javascript" src="js/modernizr-2.0.6.min.js"></script> 
-        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script> 
-        <script type="text/javascript" src="js/jquery.mousewheel-3.0.6.min.js"></script> 
-        <script type="text/javascript" language="javascript" src="js/jquery.rondell.js"></script>
-        <script type="text/javascript">
-            $(function() {
-                var fancyboxOptions = {
-                    hideOnContentClick: false,
-                    padding: 10,
-                    scrolling: 'no',
-                    overlayColor: '#333',
-                    autoDimensions: false,
-                    onStart: function(items, idx) {
-                        return $(items[idx]).hasClass('rondellItemFocused');
-                    }
-                };
-                
-                $('#rondellSimple > div').rondell(); 
-                
-                $('#rondellGallery > a').rondell({
-                    preset: 'carousel',
-                    isActive: function() {
-                        return !$('#fancybox-wrap').is(':visible');
-                    }
-                }); 
-                
-                $('#rondellGallery a').fancybox(fancyboxOptions);
-
-                $('#rondellTopDemo > img').rondell({
-                    preset: 'carousel',
-                    radius: {
-                        x: 130
-                    },
-                    center: {
-                        left: 200,
-                        top: 110
-                    },
-                    itemProperties: {
-                        size: {
-                            width: 100,
-                            height: 100
-                        }
-                    }
-                });
-                
-                $('#rondellSlider > img').rondell({
-                    preset: 'slider',
-                    theme: 'slider'
-                });
-                
-                $('#rondellProducts > div').rondell({
-                    preset: 'products',
-                    theme: 'dark'
-                });
-                
-                $('#rondellMixed > div').rondell({
-                    preset: 'pages',
-                    theme: 'page'
-                });
-                
-                $.ajax({
-                    url: 'http://www.wookmark.com/api/json',
-                    dataType: 'jsonp',
-                    success: function(json, text, xhqr) {
-                        if (text == 'success') {
-                            var items = json,
-                                wookmarkDemo1 = $('#wookmarkDemo1'),
-                                wookmarkDemo2 = $('#wookmarkDemo2'),
-                                wookmarkDemo3 = $('#wookmarkDemo3');
-                            
-                            wookmarkDemo1.empty();
-                            wookmarkDemo2.empty();
-                            wookmarkDemo3.empty();
-                            
-                            // Parsing returned json data
-                            $.each(items.slice(0, 24), function(idx, item) {
-                                // Create link container
-                                var newItem = $('<a/>')
-                                .attr({
-                                    'href': item.url,
-                                    'title': item.title,
-                                    'target': '_blank'
-                                })
-                                .css('opacity', 0);
-                                
-                                // Create image
-                                var newImg = $('<img/>')
-                                .attr({
-                                    'src': item.preview,
-                                    'alt': item.title,
-                                    'width': item.width,
-                                    'height': item.height
-                                })
-                                .addClass('resizeable');
-                                
-                                // Append image to link and link to container for the rondell
-                                newItem.append(newImg);
-                                wookmarkDemo1.append(newItem);
-                                wookmarkDemo2.append(newItem.clone());
-                                wookmarkDemo3.append(newItem.clone());
-                            });
-                            
-                            // Create wookmark carousel
-                            $('a', wookmarkDemo1).rondell({
-                                preset: 'cubic'            
-                            });
-                                
-                            // Create wookmark gallery
-                            $('a', wookmarkDemo2).rondell({
-                                preset: 'gallery',
-                                theme: 'dark'
-                            });
-                                
-                            // Create wookmark gallery
-                            $('a', wookmarkDemo3).rondell({
-                                preset: 'thumbGallery',
-                                theme: 'light'
-                            });
-                        }
-                    }
-                });
-            });
-        </script>
-        <script type="text/javascript" src="js/demohelpers.js"></script>
-        <script type="text/javascript">
-            var hostname = document.location.hostname;
-            if (hostname && (hostname.indexOf('github') >= 0 || hostname.indexOf('sebastianhelzle') >= 0)) {
-                var pkBaseURL = (("https:" == document.location.protocol) ? "https://tracking.sebastianhelzle.net/" : "http://tracking.sebastianhelzle.net/");
-                document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-                
-                document.write(unescape("%3Cscript src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=sebobo' type='text/javascript'%3E%3C/script%3E"));
-                
-                var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
-                s.type = 'text/javascript';
-                s.async = true;
-                s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
-                t.parentNode.insertBefore(s, t);
-            }
-        </script>
-        <!-- Piwik --> 
-        <script type="text/javascript">
-            try {
-                var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 5);
-                piwikTracker.trackPageView();
-                piwikTracker.enableLinkTracking();
-            } catch( err ) {}
-        </script>
-        <noscript><p><img src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt="" /></p></noscript>
-        <!-- End Piwik Tracking Code -->
-    </body>
+}).call(this);
+</script>
+  </body>
 </html>

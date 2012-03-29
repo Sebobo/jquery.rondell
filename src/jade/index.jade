@@ -1,0 +1,293 @@
+extends includes/layout
+
+prepend head
+  path = ''
+  title Overview - jQuery Rondell
+
+append content
+  include includes/submenu
+  mixin submenu('Overview', true)
+  
+  #introduction.column.size1of2
+    h3.hidden About
+    :markdown
+      This is a [jQuery](http://www.jquery.com "jQuery") plugin for displaying galeries
+      and other content the way *you* want.
+      
+      The rondell demos can be controlled with your keyboard,
+      by clicking the controls or by clicking the rondell items.
+      
+      Touching items on a phone or tablet computer will work too!
+                  
+      The plugin has been tested with and should work fine with:
+      IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+
+    
+      Licensed under the [MIT license](http://www.opensource.org/licenses/mit-license.php "MIT licence").
+
+    p  
+      a.btn.success(href="https://github.com/Sebobo/jquery.rondell/zipball/0.8.7", title="Rondell zip download").
+        Download rondell now
+      | &nbsp;
+      a.btn(href="https://github.com/Sebobo/jquery.rondell", title="Rondell source at github").
+        Visit rondell at github
+
+  .column.size1of2
+    img.hideOnJS(src="examples/preview.png", alt="Rondell preview")
+
+    #rondellTopDemo.showOnJS.hidden
+      img.resizeable(src="examples/images/galery/band.jpg", alt="My favourite band")
+      img.resizeable(src="examples/images/galery/dog.jpg", alt="My dog")
+      img.resizeable(src="examples/images/galery/cat.jpg", alt="My cat")
+      img.resizeable(src="examples/images/galery/boar.jpg", alt="Dead boar")
+      img.resizeable(src="examples/images/galery/snow.jpg", alt="Winter wonderland")
+      img.resizeable(src="examples/images/galery/rabbit.jpg", alt="The white rabbit")
+      img.resizeable(src="examples/images/galery/trash.jpg", alt="Trash")
+            
+  br.clear
+  br
+  .column
+    // Flattr button BEGIN 
+    a.FlattrButton.hidden(rev="flattr;button:compact;", href="http://sebobo.github.com/jquery.rondell")
+    noscript
+      a(href="http://flattr.com/thing/460088/jQuery-Rondell-by-Sebastian-Helzle", target="_blank")
+        img(src="http://api.flattr.com/button/flattr-badge-large.png", alt="Flattr this", title="Flattr this", border="0")
+    // Flattr button END
+  .column.last
+    // AddThis Button BEGIN
+    .addthis_toolbox.addthis_default_style
+      a.addthis_button_preferred_1
+      a.addthis_button_preferred_2
+      a.addthis_button_preferred_3
+      a.addthis_button_preferred_4
+      a.addthis_button_compact
+      a.addthis_counter.addthis_bubble_style
+    // AddThis Button END
+
+  br
+  br#usage
+        
+  .size1of2
+    h4 Usage
+    pre.
+      &lt;script type="text/javascript"&gt;
+
+        $('.myContainer > .myItem').rondell([options][, callback]);
+
+      &lt;/script&gt;
+
+  br
+        
+  .column.size2of3
+    h5 New and improved in this version
+    ul
+      li
+        span.label.success New
+        | &nbsp;awesome preset 
+        i thumbgallery
+        br
+        | which uses all the new options and features.
+      li
+        span.label.success New
+        | &nbsp;Integrated my standalone scrollbar plugin (beta) into the rondell.
+        br
+        | See the 
+        a(href="examples/options.html", title="Options") options
+        | &nbsp;for setting it up.
+      li
+        span.label.success New
+        | &nbsp;Items absolute index as parameter for the animation functions.
+      li
+        span.label.success New
+        | &nbsp;Option 
+        i cropThumbnails
+        | &nbsp;for image cropping to allow uniform size of thumbnails
+      li
+        span.label.success New
+        | &nbsp;Option 
+        i switchIndices
+        br 
+        | which enables switching the index of the last and new focused items.
+      li
+        span.label.success New
+        | &nbsp;Option 
+        i keyDelay
+        br 
+        | which sets minimum time between keypress events are registered.
+      li
+        span.label.success New
+        | &nbsp;Option 
+        i wrapIndices
+        br
+        | allowing to disable item index wrapping used in the carousels.
+      li
+        span.label.success New
+        | &nbsp;Opacity is now animated when hovering items.
+      li
+        span.label.notice Change
+        | &nbsp;Improved performance
+      li
+        span.label.notice Fix
+        | &nbsp;Bugfixes for items fading out or in
+      li
+        span.label.notice Fix
+        | &nbsp;Disabled autorotation when rondell is not visible.
+      li
+        span.label.notice Fix
+        | &nbsp;Horizontal mouse scroll event registering improved.
+    br
+    p
+      a.showCode(href="#changelog", title="Collapse code").
+        Click here to see changes in the last versions
+
+    .hidden
+      ul#changelog
+        li
+          h6 0.8.7
+          ul
+            li
+              span.label.notice Fix
+              | &nbsp;Wrong image sizes when rondell items are all images.
+        li
+          h6 0.8.6
+          ul
+            li
+              span.label.success New
+              | &nbsp;Added slider preset.
+            li
+              span.label.success New
+              | &nbsp;Added random start option.
+            li
+              span.label.notice Change
+              | &nbsp;Improved some presets and themes.
+        li
+          h6 0.8.5
+          ul
+            li Fixed a bug in image size computations and improved performance.
+            li Moved more default options into presets.
+            li Improved dark theme text readability.
+            li New gallery example and preset.
+        li
+          h6 0.8.4
+          ul
+            li
+              b Mousewheel (x-axis) support
+              | &nbsp;allows you to traverse left and right in the rondell. (Requires the optional 
+              a(href="https://github.com/brandonaaron/jquery-mousewheel", title="jQuery mousewheel").
+                jQuery mousewheel plugin
+              | )
+            li
+              | Controls hide if autorotation is disabled and shifting is impossible. (See the 
+              a(href="examples/scroller.html", title="Products demo") products demo
+              | )
+            li
+              | Items are now displayed in the order you provide them.
+            li
+              | Starting item index is now customizeable by providing the 
+              i currentLayer
+              | option. (See the 
+              a(href="examples/options.html", title="List of options") options
+              | )
+        li
+          h6 0.8.3
+          ul
+            li 
+              b A size function
+              | &nbsp;to simulate a depth effect. (See the 
+              a(href="examples/options.html", title="List of options") options
+              | )
+            li 
+              b Presets
+              | &nbsp;for the plugins options which contain the necessary settings to setup the plugin 
+              | like the examples on this page.
+            li 
+              b Themes
+              | &nbsp;are now included in the plugins css file to help you make your rondell look 
+              | like one of my examples.
+            li 
+              b A callback
+              | &nbsp;when the plugin has finished loading. (See 
+              a.scrollToId(href="#usage", title="Usage example") usage
+              | )
+        li
+          h6 0.8.2
+          ul
+            li 
+              b Touch controls for mobile devices
+              | &nbsp;- Swipe left and right to move the rondell.
+            li 
+              b Reliable image loading
+              | &nbsp;- The previous versions had sometimes problems getting the correct image sizes 
+              | for some browsers and configurations.
+            li And some minor fixes and code improvements.
+        
+  .column.size1of3.last
+    h5 Roadmap for 1.0.0
+    ul
+      li Asynchronous image loading
+      li Improved themes
+      li CSS based controls
+      li CSS animations
+    br
+    h5 Dependencies
+    ul
+      li
+          a(href="http://www.jQuery.com", title="jQuery") jQuery
+          | &nbsp;version 1.5.2 or better
+      li
+          a(href="http://www.modernizr.com/", title="Modernizr library") Modernizr
+          | &nbsp;for browser capability fallbacks.
+          br
+          | The library is included in the plugins 
+          i lib
+          | &nbsp;folder.
+      
+  br.clear
+  hr
+  br
+
+  h4 Feedback is welcome!
+  p
+    | Please send me suggestions, ideas for improvement or anything else to 
+    a(href="mailto:sebastian@helzle.net", title="Send me a mail") sebastian@helzle.net
+    | &nbsp;or 
+    a(href="http://twitter.com/#!/sebobo", target="_blank", title="Sebobo at twitter") @sebobo
+    
+  br.clear
+  br
+  
+  h4 Have fun and check out my other plugins
+  p
+    a.btn.primary(href="http://projects.sebastianhelzle.net/jquery.smallipop", title="smallipop - a better tooltip plugin").
+      jQuery smallipop
+  
+  br
+  
+  p
+    | jQuery Rondell is powered by 
+    a(href="http://jashkenas.github.com/coffee-script/", target="_blank", title="Coffeescript").
+      coffeescript
+    | ,
+    a(href="http://sass-lang.com/", target="_blank", title="Sass") sass
+    | &nbsp;and 
+    a(href="http://www.jquery.com", target="_blank", title="jQuery") jQuery
+    | .
+
+  br
+
+prepend js
+  path = ''
+
+append js
+  :coffeescript
+    $ ->
+      $("#rondellTopDemo > img").rondell
+        preset: "carousel"
+        radius:
+          x: 130
+        center:
+          left: 200
+          top: 110
+        itemProperties:
+          size:
+            width: 100
+            height: 100

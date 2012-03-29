@@ -50,7 +50,9 @@ compileJade = (filename, callback) ->
   result = "Bad compile on #{filename} jade template!"
 
   if fn
-    fs.writeFileSync "#{out.html}/#{filename}".replace(".jade", ".html"), fn()
+    # Write index to root, all other files to output folder
+    target = if filename.indexOf("index") >= 0 then filename else "#{out.html}/#{filename}"
+    fs.writeFileSync target.replace(".jade", ".html"), fn()
     result = "#{filename} successfully compiled!"
 
   notify "JADE", result

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="content-language" content="en">
+    <meta name="keywords" content="jquery,tooltip,popup,plugin,css3,open-source,mit-license,extension,overlay">
+    <meta name="description" content="Sebastian Helzle's jQuery Rondell plugin">
+    <link rel="stylesheet" href="../css/screen.css" type="text/css" media="all" title="Screen">
+    <link rel="stylesheet" href="../css/jquery.rondell.css" type="text/css" media="all" title="Screen">
+    <script src="../js/modernizr-2.0.6.min.js"></script>
+    <title>Options - jQuery Rondell
+    </title>
+  </head>
+  <body>
+    <div class="pageHeader hasShadow">
+      <h1 id="docustart">Rondell - Display images and other content in a nice way
+      </h1>
+      <p><b>Version 0.9.0</b>&nbsp- Created by 
+<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">Sebastian Helzle
+
+</a>
+      </p>
+      <ul class="tabs">
+        <li><a href="/" title="Projects overview">Home</a>
+        </li>
+        <li><a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">Smallipop</a>
+        </li>
+        <li class="selected"><a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">Rondell</a>
+        </li>
+      </ul>
+    </div>
+    <div id="introduction" class="page hasShadow">
+      <div class="subnav centered">
+        <ul class="nav nav-pills">
+          <li><a href="../index.html">Overview</a>
+          </li>
+          <li><a href="installation.html">Installation</a>
+          </li>
+          <li class="active"><a href="options.html">Options</a>
+          </li>
+          <li><span class="spacer">|</span>
+          </li>
+          <li><a href="carousel.html">Carousel</a>
+          </li>
+          <li><a href="slider.html">Slider</a>
+          </li>
+          <li><a href="scroller.html">Scroller</a>
+          </li>
+          <li><a href="gallery.html">Gallery</a>
+          </li>
+          <li><a href="thumbnails.html">Thumbnails</a>
+          </li>
+          <li><a href="pages.html">Pages</a>
+          </li>
+        </ul><br class="clear">
+      </div><br>
+      <div class="center">
+        <h2>Options
+        </h2>
+      </div>
+      <hr><br>
+      <table summary="Options for the jQuery rondell plugin" class="options">
+        <tr>
+          <th width="140">Key
+          </th>
+          <th width="300">Default value
+          </th>
+          <th>Description
+          </th>
+        </tr>
+        <tr>
+          <td>radius
+          </td>
+          <td>
+            <pre>{ x: 300, y: 300 }
+</pre>
+          </td>
+          <td>The radius the rondell animation will use
+          </td>
+        </tr>
+        <tr>
+          <td>center
+          </td>
+          <td>
+            <pre>{ x: 400, y: 350 }
+</pre>
+          </td>
+          <td>The center of the rondell animation
+          </td>
+        </tr>
+        <tr>
+          <td>size
+          </td>
+          <td>
+            <pre>{ width: null, height: null }
+</pre>
+          </td>
+          <td><p><strong>Optional</strong> Will be computed by using the values of the <em>center</em> option if left unset</p>
+          </td>
+        </tr>
+        <tr>
+          <td>scaling
+          </td>
+          <td>2
+          </td>
+          <td>Scaled size of the focused item
+          </td>
+        </tr>
+        <tr>
+          <td>opacityMin
+          </td>
+          <td>0.05
+          </td>
+          <td><p>Items with opacity smaller than this will be hidden</p>
+          </td>
+        </tr>
+        <tr>
+          <td>zIndex
+          </td>
+          <td>1000
+          </td>
+          <td>All elements of the rondell will use this z-index and add their depth to it
+          </td>
+        </tr>
+        <tr>
+          <td>fadeTime
+          </td>
+          <td>300
+          </td>
+          <td>Animation time
+          </td>
+        </tr>
+        <tr>
+          <td>keyDelay
+          </td>
+          <td>300
+          </td>
+          <td>Minimal time between keystrokes fire slide events
+          </td>
+        </tr>
+        <tr>
+          <td>currentLayer
+          </td>
+          <td>0
+          </td>
+          <td><p>Index of the item which should be focused at the start.</p>
+
+<p>If left at 0 it will automatically be set to half the item count.</p>
+          </td>
+        </tr>
+        <tr>
+          <td>resizeableClass
+          </td>
+          <td>'resizeable'
+          </td>
+          <td><p><em>img</em> tags with this class are resized when animated</p>
+          </td>
+        </tr>
+        <tr>
+          <td>smallClass
+          </td>
+          <td>'itemSmall'
+          </td>
+          <td>css class for unfocused items
+          </td>
+        </tr>
+        <tr>
+          <td>hiddenClass
+          </td>
+          <td>'itemHidden'
+          </td>
+          <td>css class for hidden items
+          </td>
+        </tr>
+        <tr>
+          <td>visibleItems
+          </td>
+          <td>'auto'
+          </td>
+          <td>How many items should be visible in each direction
+          </td>
+        </tr>
+        <tr>
+          <td>switchIndices
+          </td>
+          <td>false
+          </td>
+          <td>Enables switching the index of the last and new focused item.
+          </td>
+        </tr>
+        <tr>
+          <td>keyDelay
+          </td>
+          <td>300
+          </td>
+          <td>Minimum time between keypress events are registered.
+          </td>
+        </tr>
+        <tr>
+          <td>wrapIndices
+          </td>
+          <td>true
+          </td>
+          <td>Enabled index wrapping (used for carousels).
+          </td>
+        </tr>
+        <tr>
+          <td>alwaysShowCaption
+          </td>
+          <td>false
+          </td>
+          <td><p>Should the overlay always be shown. 
+By default it&#39;s only shown when hovering the rondell.</p>
+          </td>
+        </tr>
+        <tr>
+          <td>repeating
+          </td>
+          <td>true
+          </td>
+          <td>Rondell will cycle forever
+          </td>
+        </tr>
+        <tr>
+          <td>itemProperties
+          </td>
+          <td>
+            <pre>{ 
+    delay: 100,
+    cssClass: 'rondellItem',
+    size: {
+        width: 150,
+        height: 150
+    },
+    sizeFocused: { 
+        width: 0,
+        height: 0
+    }
+}
+
+</pre>
+          </td>
+          <td><p><em>delay</em> is an offset between the start of the animation for each item when all items shift.</p>
+
+<p><em>cssClass</em> is the class which each item gets after initializing.</p>
+
+<p><em>size</em> is the standard size for non-focused items.</p>
+
+<p><em>sizeFocused</em> is the size of the focused element and will be calculated automatically from the </p>
+
+<p><em>scaling</em> parameter if not set or <em>0</em>.</p>
+          </td>
+        </tr>
+        <tr>
+          <td>autoRotation
+          </td>
+          <td>
+            <pre>{ 
+  enabled: false,
+  direction: 0,
+  once: false,
+  delay: 5000
+}
+</pre>
+          </td>
+          <td><p>Set <em>enabled</em> to <em>true</em> if you want the rondell to spin every few seconds.</p>
+
+<p>Set <em>direction</em> to <em>1</em> if you want the rondell to rotate to the right in autorotation mode.</p>
+
+<p>Set <em>once</em> to true if the rondell should not start autorotation after the user has hovered the rondell.</p>
+
+<p><em>delay</em> is the time between rotation steps.</p>
+          </td>
+        </tr>
+        <tr>
+          <td>controls
+          </td>
+          <td>
+            <pre>{ 
+  enabled: true,
+  fadeTime: 400,
+  margin: {
+      x: 20,
+      y: 20
+  }
+}
+</pre>
+          </td>
+          <td><p>Set <em>enabled</em> to <em>false</em> if you want to use custom controls.
+<em>fadeTime</em> controls the animation speed for the built-in controls when hovering over the rondell.
+<em>margin</em> controls the distance of the <em>prev</em> and <em>next</em> button to the sides of the rondell. </p>
+          </td>
+        </tr>
+        <tr>
+          <td>strings
+          </td>
+          <td>
+            <pre>{ 
+  prev: 'prev',
+  next: 'next'
+}
+</pre>
+          </td>
+          <td>Strings for the built-in controls.
+          </td>
+        </tr>
+        <tr>
+          <td>funcEase
+          </td>
+          <td>'easeInOutQuad'
+          </td>
+          <td>jQuery easing function name for the movement of items
+          </td>
+        </tr>
+        <tr>
+          <td>touch
+          </td>
+          <td>
+            <pre>{ 
+  enabled: true,
+  preventDefaults: true,
+  threshold: 100
+}
+</pre>
+          </td>
+          <td><p>Touch controls for swiping on mobile devices are enabled by default.</p>
+
+<p><em>preventDefaults</em> will prevent clicking and scrolling while your swipe.</p>
+
+<p><em>threshold</em> is the distance in pixels the finger has to travel, before a swipe is registered.</p>
+          </td>
+        </tr>
+        <tr>
+          <td>theme
+          </td>
+          <td>default
+          </td>
+          <td><p>Theme which will be used for the rondell.</p>
+
+<p>The rondell css file already includes some themes:
+<em>default, light, dark, page</em></p>
+
+<p>Take a look at the <em>jquery.rondell.css</em> if you want to customize a theme. </p>
+          </td>
+        </tr>
+        <tr>
+          <td>preset
+          </td>
+          <td>-
+          </td>
+          <td><p>The plugin contains some presets for the options to help you get started with your own rondell.</p>
+
+<p>The current presets are based on the examples on this page and include:</p>
+
+<p><em>carousel, products, pages, cubic, gallery, thumbGallery</em></p>
+          </td>
+        </tr>
+        <tr>
+          <td>randomStart
+          </td>
+          <td>false
+          </td>
+          <td>Will select a random item to start with.
+          </td>
+        </tr>
+        <tr>
+          <td><p>funcLeft</p>
+
+<p>funcTop</p>
+
+<p>funcOpacity</p>
+
+<p>funcSize</p>
+
+<p>funcDiff</p>
+          </td>
+          <td>see presets source
+          </td>
+          <td><p>These functions will be called by the plugin when animating the rondell items.</p>
+
+<p>At first <em>funcDiff</em> is called for each item with the absolute distance from the center 
+item to calculate the relative distance between the items. The second parameter is 
+the rondell object itself.</p>
+
+<p>The return value will be used to call the other four functions. Each with the new relative distance
+as first parameter and the rondell object as second parameter.</p>
+
+<p>The rondell object can be used to access all of the options in the rondell.
+I will provide an in-depth tutorial at a later date. In the meantime please use the advanced examples as a
+base for your own customization or send me a message and I&#39;ll try to help. </p>
+          </td>
+        </tr>
+        <tr>
+          <td>showContainer
+          </td>
+          <td>true
+          </td>
+          <td><p>When the plugin has finished loading it will automatically 
+show the parent of the items you selected.</p>
+
+<p>This is for removing the glitch when the plugin takes to long to load and all your items
+are shown one under another.</p>
+
+<p>You should set the css of your items container to <em>display:none</em>.</p>
+          </td>
+        </tr>
+        <tr>
+          <td>scrollbar
+          </td>
+          <td>
+            <pre>{ 
+  enabled: false,
+  orientation: &quot;bottom&quot;,
+  start: 1,
+  end: 100,
+  stepSize: 1,
+  position: 1,
+  padding: 10,
+  style: {
+    width: &quot;100%&quot;,
+    height: 20,
+    left: &quot;auto&quot;,
+    right: &quot;auto&quot;,
+    top: &quot;auto&quot;,
+    bottom: &quot;auto&quot;
+  },
+  repeating: false,
+  onScroll: undefined,
+  scrollOnHover: false,
+  scrollOnDrag: true,
+  animationDuration: 300,
+  easing: &quot;easeInOutQuad&quot;
+}
+</pre>
+          </td>
+          <td>Scrollbar options description will be updated later when it's final.
+          </td>
+        </tr>
+      </table>
+    </div><br>
+    <script src="../js/jquery-1.7.1.min.js"></script>
+    <script src="../js/jquery.fancybox-1.3.4.pack.js"></script>
+    <script src="../js/jquery.mousewheel-3.0.6.min.js"></script>
+    <script src="../js/jquery.rondell.js"></script>
+    <script src="../js/demohelpers.js"></script><script type="text/javascript">
+(function() {
+  var hostname, pkBaseURL, protocol;
+
+  hostname = document.location.hostname;
+
+  if (hostname && (hostname.indexOf("github") > 0 || hostname.indexOf("sebastianhelzle") > 0)) {
+    protocol = document.location.protocol || "https:";
+    pkBaseURL = "" + protocol + "//tracking.sebastianhelzle.net/";
+    $.getScript("" + pkBaseURL + "piwik.js", function() {
+      var piwikTracker;
+      console.log("loaded piwik");
+      try {
+        piwikTracker = Piwik.getTracker("" + pkBaseURL + "piwik.php", 5);
+        piwikTracker.trackPageView();
+        return piwikTracker.enableLinkTracking();
+      } catch (err) {
+        return typeof console !== "undefined" && console !== null ? console.log(err) : void 0;
+      }
+    });
+  }
+
+}).call(this);
+</script>
+    <!-- Piwik-->
+    <script></script>
+    <noscript>
+      <p><img src="https://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt="">
+      </p>
+    </noscript>
+    <!-- End Piwik Tracking Code-->
+  </body>
+</html>

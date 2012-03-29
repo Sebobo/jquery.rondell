@@ -1,0 +1,312 @@
+extends includes/layout
+
+append head
+  title Options - jQuery Rondell
+
+append content
+  include includes/submenu
+  mixin submenu('Options')
+
+  br
+  .center
+    h2 Options
+  hr
+  br
+            
+  table.options(summary="Options for the jQuery rondell plugin")
+    tr
+      th(width="140") Key
+      th(width="300") Default value
+      th Description
+    tr
+      td radius
+      td 
+        pre.
+          { x: 300, y: 300 }
+      td The radius the rondell animation will use
+    tr
+      td center
+      td 
+        pre.
+          { x: 400, y: 350 }
+      td The center of the rondell animation
+    tr
+      td size
+      td 
+        pre.
+          { width: null, height: null }
+      td 
+        :markdown
+          **Optional** Will be computed by using the values of the *center* option if left unset
+
+    tr
+      td scaling
+      td 2
+      td Scaled size of the focused item
+    tr
+      td opacityMin
+      td 0.05
+      td
+        :markdown
+          Items with opacity smaller than this will be hidden
+
+    tr
+      td zIndex
+      td 1000
+      td All elements of the rondell will use this z-index and add their depth to it
+    tr
+      td fadeTime
+      td 300
+      td Animation time
+    tr
+      td keyDelay
+      td 300
+      td Minimal time between keystrokes fire slide events
+    tr
+      td currentLayer
+      td 0
+      td
+        :markdown
+          Index of the item which should be focused at the start.
+          
+          If left at 0 it will automatically be set to half the item count.
+
+    tr
+      td resizeableClass
+      td 'resizeable'
+      td
+        :markdown
+          *img* tags with this class are resized when animated
+
+    tr
+      td smallClass
+      td 'itemSmall'
+      td css class for unfocused items
+    tr
+      td hiddenClass
+      td 'itemHidden'
+      td css class for hidden items
+    tr
+      td visibleItems
+      td 'auto'
+      td How many items should be visible in each direction
+    tr
+      td switchIndices
+      td false
+      td Enables switching the index of the last and new focused item.
+    tr
+      td keyDelay
+      td 300
+      td Minimum time between keypress events are registered.
+    tr
+      td wrapIndices
+      td true
+      td Enabled index wrapping (used for carousels).
+    tr
+      td alwaysShowCaption
+      td false
+      td
+        :markdown
+          Should the overlay always be shown. 
+          By default it's only shown when hovering the rondell.
+    tr
+      td repeating
+      td true
+      td Rondell will cycle forever
+
+    tr
+      td itemProperties
+      td
+        pre.
+          { 
+              delay: 100,
+              cssClass: 'rondellItem',
+              size: {
+                  width: 150,
+                  height: 150
+              },
+              sizeFocused: { 
+                  width: 0,
+                  height: 0
+              }
+          }
+
+      td
+        :markdown
+          *delay* is an offset between the start of the animation for each item when all items shift.
+          
+          *cssClass* is the class which each item gets after initializing.
+          
+          *size* is the standard size for non-focused items.
+          
+          *sizeFocused* is the size of the focused element and will be calculated automatically from the 
+          
+          *scaling* parameter if not set or *0*.
+
+    tr
+      td autoRotation
+      td
+        pre.
+          { 
+            enabled: false,
+            direction: 0,
+            once: false,
+            delay: 5000
+          }
+      td
+        :markdown
+          Set *enabled* to *true* if you want the rondell to spin every few seconds.
+
+          Set *direction* to *1* if you want the rondell to rotate to the right in autorotation mode.
+          
+          Set *once* to true if the rondell should not start autorotation after the user has hovered the rondell.
+          
+          *delay* is the time between rotation steps.
+
+    tr
+      td controls
+      td
+        pre.
+          { 
+            enabled: true,
+            fadeTime: 400,
+            margin: {
+                x: 20,
+                y: 20
+            }
+          }
+      td
+        :markdown
+          Set *enabled* to *false* if you want to use custom controls.
+          *fadeTime* controls the animation speed for the built-in controls when hovering over the rondell.
+          *margin* controls the distance of the *prev* and *next* button to the sides of the rondell. 
+    
+    tr
+      td strings
+      td
+        pre.
+            { 
+              prev: 'prev',
+              next: 'next'
+            }
+      td Strings for the built-in controls.
+    
+    tr
+      td funcEase
+      td 'easeInOutQuad'
+      td jQuery easing function name for the movement of items
+
+    tr
+      td touch
+      td
+        pre.
+            { 
+              enabled: true,
+              preventDefaults: true,
+              threshold: 100
+            }
+      td
+        :markdown
+          Touch controls for swiping on mobile devices are enabled by default.
+          
+          *preventDefaults* will prevent clicking and scrolling while your swipe.
+          
+          *threshold* is the distance in pixels the finger has to travel, before a swipe is registered.
+      
+    tr
+      td theme
+      td default
+      td
+        :markdown
+          Theme which will be used for the rondell.
+          
+          The rondell css file already includes some themes:
+          *default, light, dark, page*
+
+          Take a look at the *jquery.rondell.css* if you want to customize a theme. 
+        
+    tr
+      td preset
+      td -
+      td
+        :markdown
+          The plugin contains some presets for the options to help you get started with your own rondell.
+          
+          The current presets are based on the examples on this page and include:
+          
+          *carousel, products, pages, cubic, gallery, thumbGallery*
+
+    tr
+      td randomStart
+      td false
+      td Will select a random item to start with.
+
+    tr
+      td
+        :markdown
+          funcLeft
+
+          funcTop
+
+          funcOpacity
+
+          funcSize
+
+          funcDiff
+      td see presets source
+      td
+        :markdown
+          These functions will be called by the plugin when animating the rondell items.
+          
+          At first *funcDiff* is called for each item with the absolute distance from the center 
+          item to calculate the relative distance between the items. The second parameter is 
+          the rondell object itself.
+
+          The return value will be used to call the other four functions. Each with the new relative distance
+          as first parameter and the rondell object as second parameter.
+          
+          The rondell object can be used to access all of the options in the rondell.
+          I will provide an in-depth tutorial at a later date. In the meantime please use the advanced examples as a
+          base for your own customization or send me a message and I'll try to help. 
+      
+    tr
+      td showContainer
+      td true
+      td
+        :markdown
+          When the plugin has finished loading it will automatically 
+          show the parent of the items you selected.
+
+          This is for removing the glitch when the plugin takes to long to load and all your items
+          are shown one under another.
+          
+          You should set the css of your items container to *display:none*.
+        
+    tr
+      td scrollbar
+      td 
+        pre.
+            { 
+              enabled: false,
+              orientation: "bottom",
+              start: 1,
+              end: 100,
+              stepSize: 1,
+              position: 1,
+              padding: 10,
+              style: {
+                width: "100%",
+                height: 20,
+                left: "auto",
+                right: "auto",
+                top: "auto",
+                bottom: "auto"
+              },
+              repeating: false,
+              onScroll: undefined,
+              scrollOnHover: false,
+              scrollOnDrag: true,
+              animationDuration: 300,
+              easing: "easeInOutQuad"
+            }
+      td Scrollbar options description will be updated later when it's final.

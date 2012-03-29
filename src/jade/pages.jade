@@ -1,0 +1,126 @@
+extends includes/layout
+
+append head
+  title Pages - jQuery Rondell
+
+append content
+  include includes/submenu
+  mixin submenu('Pages')
+
+  br
+
+  #rondellPages.hidden
+    div
+      img.resizeable(src="images/page/water.png", alt="Waterfall")
+      h2 Waterfall
+      :markdown
+        Waterfalls are commonly formed when a river is young.
+        At these times the channel is often narrow and deep. 
+        When the river courses over resistant bedrock, erosion happens slowly, 
+        while downstream the erosion occurs more rapidly.
+        As the watercourse increases its velocity at the edge of the waterfall, 
+        it plucks material from the riverbed.
+
+        Whirlpools created in the turbulence as well as sand and stones carried by the watercourse increase the erosion capacity.
+        This causes the waterfall to carve deeper into the bed and to recede upstream. Often over time, 
+        the waterfall will recede back to form a canyon or gorge downstream as it recedes upstream, 
+        and it will carve deeper into the ridge above it. 
+        The rate of retreat for a waterfall can be as high as one and half meters per year.
+      
+        [Read more](http://en.wikipedia.org/wiki/Waterfall "Waterfall") 
+
+    div
+      img.resizeable(src="images/page/mountains.png", alt="Mountains")
+      h2 Mountains
+      :markdown
+        A mountain is a large landform that stretches above the surrounding land in a 
+        limited area usually in the form of a peak. A mountain is generally steeper than a hill. 
+        The adjective montane is used to describe mountainous areas and things associated with them. 
+        The study of mountains is called Orography. Exogeology deals with planetary mountains, 
+        which in that branch of science are usually called montes (singular—mons).
+
+        The highest mountain on Earth based from sea level is Mount Everest (8,848 m (29,029 ft)) 
+        in the Himalayas of Asia. The highest known mountain in the Solar System is 
+        Olympus Mons on the planet Mars at 21,171 m (69,459 ft).
+
+        [Read more](http://en.wikipedia.org/wiki/Mountains "Mountains")
+
+    div
+      img(src="images/page/ranseier.jpg", alt="Karl Ranseier")
+      h2 Karl Ranseier
+      :markdown
+        Karl Ranseier ist eine fiktive Person, die im Rahmen der Samstag-Nacht-News von 
+        Stefan Jürgens in einer Trauerrede gewürdigt wurde. Erfunden wurde die Figur von Jacky Dreksler, 
+        aus dessen Privatalbum auch das Foto Ranseiers stammt, das immer zu Beginn der Rubrik gezeigt wurde. 
+        Der Name „Ranseier“ ist eine Idee Hugo Egon Balders.
+      
+        [Karl Ranseier bei Wikipedia](http://de.wikipedia.org/wiki/Karl_Ranseier#Karl_Ranseier "Wikipedia")
+
+    div
+      :markdown
+        ## Some text
+        
+        You can put **any** content you like in here.
+
+        Also long text!
+
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+        sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+        sanctus est Lorem ipsum dolor sit amet.
+
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+        sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+        sanctus est Lorem ipsum dolor sit amet.
+
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+        sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+        sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata 
+        sanctus est Lorem ipsum dolor sit amet.
+
+        **Nice!**
+
+  br
+  br
+
+  .center
+    h2 Preset - Pages
+
+  hr
+  br
+
+  .size3of4
+    :markdown
+      This demo show how to display a mix of text and images as slider.
+
+      If an item contains no image, the item's content is displayed normally and can be scrolled.
+      And if the item contains an image, the caption is displayed as overlay.
+
+      You can press arrow left and right on your keyboard to navigate through the images.
+      Automatic rotation is disabled in this demo.
+
+      Here's how it's done
+
+    pre.
+      $("#rondellPages > div").rondell({
+        preset: "pages"
+      });
+            
+  br.clear
+
+append js
+  :coffeescript
+    $ ->
+      $("#rondellPages > div").rondell
+        preset: "pages"
+

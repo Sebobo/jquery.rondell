@@ -1,0 +1,125 @@
+extends includes/layout
+
+append head
+  title Thumbnails - jQuery Rondell
+
+append content
+  include includes/submenu
+  mixin submenu('Thumbnails')
+
+  br
+
+  #rondellThumbnails(style="height:430px;") &nbsp;
+
+  br
+  br
+
+  .center
+    h2 Preset - Gallery with thumbnails
+
+  hr
+
+  .size2of3
+    :markdown
+      This example fetches links and images from my brothers great webservice 
+      [wookmark.com](http://www.wookmark.com "Wookmark.com")
+      and creates a thumbnail gallery from the data.
+      The gallery still uses the same plugin as the other demos but
+      uses the absolute item index to minimize movement and distraction when focusing items.
+      
+      The scrollbar allows fast movement through the whole gallery 
+      and the user sees his progress when going through the images.
+      You can use the option *switchIndices* to disable direct item switching if you want to
+      keep the items order.
+
+      Here's how it's done
+
+  .size3of4
+    pre.
+      var rondellContainer = $("#rondellThumbnails");
+         
+      $.ajax({
+        url: 'http://www.wookmark.com/api/json',
+        dataType: 'jsonp',
+        success: function(json, text, xhqr) {
+          if (text == 'success') {
+            var items = json, newItem, newImg;
+                    
+            // Parsing returned json data
+            $.each(items, function(idx, item) {
+              if (idx >= 24) return false;
+                 
+              // Create link container
+              newItem = $('&lt;a/&gt;')
+              .css('opacity', 0)
+              .attr({
+                href: item.url,
+                title: item.title,
+                target: '_blank'
+              });
+                        
+              // Create image
+              newImg = $('&lt;img/&gt;')
+              .addClass('resizeable')
+              .attr({
+                src: item.preview,
+                alt: item.title,
+                width: item.width,
+                height: item.height
+              });
+                        
+              // Append image to link and link to container for the rondell
+              newItem.append(newImg);
+              rondellContainer.append(newItem);
+            });
+                        
+            // Create gallery 
+            $('a', rondellContainer).rondell({
+              preset: "thumbGallery"
+            });
+          }
+        }
+      });
+            
+  br.clear
+
+append js
+  :coffeescript
+    $ ->
+      rondellContainer = $("#rondellThumbnails").empty()
+
+      $.ajax
+        url: "http://www.wookmark.com/api/json"
+        dataType: "jsonp"
+        success: (json, text, xhqr) ->
+          if text is "success"
+            items = json
+                   
+            # Parsing returned json data
+            $.each items, (idx, item) ->
+              return false if idx >= 24
+      
+              # Create link container
+              newItem = $("<a/>")
+              .css("opacity", 0)
+              .attr
+                href: item.url
+                title: item.title
+                target: "_blank"
+                          
+              # Create image
+              newImg = $("<img/>")
+              .addClass("resizeable")
+              .attr
+                src: item.preview
+                alt: item.title
+                width: item.width
+                height: item.height
+                        
+              # Append image to link and link to container for the rondell
+              newItem.append newImg
+              rondellContainer.append newItem
+                        
+            # Create gallery 
+            $("a", rondellContainer).rondell
+              preset: "thumbGallery"
