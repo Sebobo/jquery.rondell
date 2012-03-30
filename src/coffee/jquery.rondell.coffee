@@ -129,7 +129,7 @@
       $.extend true, @,
         _lastKeyEvent: 0
         _focusedIndex: @currentLayer
-        _itemIndices: {}
+        _itemIndices: { 0: 0 }
         autoRotation:
           _timer: -1              
         controls:
@@ -343,11 +343,11 @@
         resizeable: isResizeable
         croppedSize: croppedSize
         sizeSmall: 
-          width: smWidth
-          height: smHeight
+          width: Math.round smWidth
+          height: Math.round smHeight
         sizeFocused: 
-          width: foWidth
-          height: foHeight
+          width: Math.round foWidth
+          height: Math.round foHeight
       
     _loadItem: (itemIndex, obj) =>
       icon = if obj.is('img') then obj else $('img:first', obj)
@@ -411,6 +411,7 @@
       
       # Move items to starting positions
       @_focusedItem ?= @_getItem @currentLayer
+      @_focusedItem.currentSlot = 0 if @switchIndices
       @shiftTo @currentLayer
       
     _onMobile: ->
@@ -794,13 +795,13 @@
       @setPosition @position, false, true
 
     _initControls: =>
-      @scrollLeftControl = $("<div class=\"rondell-scrollbar-left\"/>")
+      @scrollLeftControl = $("<div class=\"rondell-scrollbar-left\"><span class=\"rondell-scrollbar-inner\">&nbsp;</span></div>")
         .bind "click", @scrollLeft
         
-      @scrollRightControl = $("<div class=\"rondell-scrollbar-right\"/>")
+      @scrollRightControl = $("<div class=\"rondell-scrollbar-right\"><span class=\"rondell-scrollbar-inner\">&nbsp;</span></div>")
         .bind "click", @scrollRight
         
-      @scrollControl = $("<div class=\"rondell-scrollbar-control\"/>").css
+      @scrollControl = $("<div class=\"rondell-scrollbar-control\">&nbsp;</div>").css
         left: @container.innerWidth() / 2
         
       @scrollBackground = $("<div class=\"rondell-scrollbar-background\"/>")
