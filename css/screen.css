@@ -805,15 +805,10 @@ img.inline {
 .pageHeader {
   background: #267be4;
   color: #fafafa;
-}
-.pageHeader h1 {
-  padding-top: 16px;
-}
-.pageHeader p a {
-  color: #fff;
-}
-
-.cssgradients .pageHeader {
+  border-radius: 8px 8px 0 0;
+  -o-border-radius: 8px 8px 0 0;
+  -moz-border-radius: 8px 8px 0 0;
+  -webkit-border-radius: 8px 8px 0 0;
   background-repeat: repeat-x;
   background-image: -webkit-linear-gradient(top, #337edc, #0a5abf);
   background-image: -moz-linear-gradient(top, #337edc, #0a5abf);
@@ -821,12 +816,11 @@ img.inline {
   background-image: -o-linear-gradient(top, #337edc, #0a5abf);
   background-image: linear-gradient(top, #337edc, #0a5abf);
 }
-
-.borderradius .pageHeader {
-  border-radius: 8px 8px 0 0;
-  -o-border-radius: 8px 8px 0 0;
-  -moz-border-radius: 8px 8px 0 0;
-  -webkit-border-radius: 8px 8px 0 0;
+.pageHeader h1 {
+  padding-top: 16px;
+}
+.pageHeader p a {
+  color: #fff;
 }
 
 /* rondell demo stuff */
@@ -943,16 +937,10 @@ img.inline {
   z-index: 1101;
   display: none;
   border: 1px solid #eee;
-}
-
-.borderradius #fancybox-wrap {
   border-radius: 5px;
   -o-border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-}
-
-.rgba.box-shadow #fancybox-wrap {
   -webkit-box-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
   box-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);

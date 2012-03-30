@@ -180,7 +180,9 @@
         $.extend(true, this, {
           _lastKeyEvent: 0,
           _focusedIndex: this.currentLayer,
-          _itemIndices: {},
+          _itemIndices: {
+            0: 0
+          },
           autoRotation: {
             _timer: -1
           },
@@ -219,27 +221,27 @@
         }
       }
 
-      Rondell.prototype.funcLeft = function(layerDiff, rondell, idx) {
-        return rondell.center.left - rondell.itemProperties.size.width / 2.0 + Math.sin(layerDiff) * rondell.radius.x;
+      Rondell.prototype.funcLeft = function(l, r, i) {
+        return r.center.left - r.itemProperties.size.width / 2.0 + Math.sin(l) * r.radius.x;
       };
 
-      Rondell.prototype.funcTop = function(layerDiff, rondell, idx) {
-        return rondell.center.top - rondell.itemProperties.size.height / 2.0 + Math.cos(layerDiff) * rondell.radius.y;
+      Rondell.prototype.funcTop = function(l, r, i) {
+        return r.center.top - r.itemProperties.size.height / 2.0 + Math.cos(l) * r.radius.y;
       };
 
-      Rondell.prototype.funcDiff = function(layerDiff, rondell, idx) {
-        return Math.pow(Math.abs(layerDiff) / rondell.maxItems, 0.5) * Math.PI;
+      Rondell.prototype.funcDiff = function(d, r, i) {
+        return Math.pow(Math.abs(d) / r.maxItems, 0.5) * Math.PI;
       };
 
-      Rondell.prototype.funcOpacity = function(layerDist, rondell, idx) {
-        if (rondell.visibleItems > 1) {
-          return Math.max(0, 1.0 - Math.pow(layerDist / rondell.visibleItems, 2));
+      Rondell.prototype.funcOpacity = function(l, r, i) {
+        if (r.visibleItems > 1) {
+          return Math.max(0, 1.0 - Math.pow(l / r.visibleItems, 2));
         } else {
           return 0;
         }
       };
 
-      Rondell.prototype.funcSize = function(layerDist, rondell, idx) {
+      Rondell.prototype.funcSize = function(l, r, i) {
         return 1;
       };
 
@@ -400,12 +402,12 @@
           resizeable: isResizeable,
           croppedSize: croppedSize,
           sizeSmall: {
-            width: smWidth,
-            height: smHeight
+            width: Math.round(smWidth),
+            height: Math.round(smHeight)
           },
           sizeFocused: {
-            width: foWidth,
-            height: foHeight
+            width: Math.round(foWidth),
+            height: Math.round(foHeight)
           }
         });
       };
@@ -465,6 +467,7 @@
         if (this._focusedItem == null) {
           this._focusedItem = this._getItem(this.currentLayer);
         }
+        if (this.switchIndices) this._focusedItem.currentSlot = 0;
         return this.shiftTo(this.currentLayer);
       };
 
@@ -617,7 +620,7 @@
         if (layerPos < this.currentLayer) layerDiff *= -1;
         itemWidth = item.sizeSmall.width * this.funcSize(layerDiff, this);
         itemHeight = item.sizeSmall.height * this.funcSize(layerDiff, this);
-        newZ = this.zIndex + (layerDiff < 0 ? layerPos : -layerPos);
+        newZ = this.zIndex - layerDist;
         fadeTime = this.fadeTime + this.itemProperties.delay * layerDist;
         newTarget = {
           width: itemWidth,
@@ -833,9 +836,9 @@
       }
 
       RondellScrollbar.prototype._initControls = function() {
-        this.scrollLeftControl = $("<div class=\"rondell-scrollbar-left\"/>").bind("click", this.scrollLeft);
-        this.scrollRightControl = $("<div class=\"rondell-scrollbar-right\"/>").bind("click", this.scrollRight);
-        this.scrollControl = $("<div class=\"rondell-scrollbar-control\"/>").css({
+        this.scrollLeftControl = $("<div class=\"rondell-scrollbar-left\"><span class=\"rondell-scrollbar-inner\">&nbsp;</span></div>").bind("click", this.scrollLeft);
+        this.scrollRightControl = $("<div class=\"rondell-scrollbar-right\"><span class=\"rondell-scrollbar-inner\">&nbsp;</span></div>").bind("click", this.scrollRight);
+        this.scrollControl = $("<div class=\"rondell-scrollbar-control\">&nbsp;</div>").css({
           left: this.container.innerWidth() / 2
         });
         this.scrollBackground = $("<div class=\"rondell-scrollbar-background\"/>");
@@ -1002,6 +1005,7 @@
         repeating: false,
         alwaysShowCaption: true,
         visibleItems: 4,
+        theme: "dark",
         itemProperties: {
           delay: 0,
           size: {
@@ -1046,6 +1050,7 @@
           y: 0
         },
         scaling: 1,
+        theme: "page",
         visibleItems: 1,
         controls: {
           margin: {
@@ -1113,7 +1118,8 @@
         special: {
           itemPadding: 2
         },
-        visibleItems: 4,
+        visibleItems: 5,
+        theme: "dark",
         cropThumbnails: true,
         center: {
           top: 145,
@@ -1130,7 +1136,7 @@
           }
         },
         itemProperties: {
-          delay: 10,
+          delay: 0,
           sizeFocused: {
             width: 480,
             height: 280
@@ -1197,8 +1203,8 @@
         },
         scrollbar: {
           enabled: true,
+          stepSize: 9,
           style: {
-            stepSize: 9,
             width: 292,
             right: 0,
             bottom: 0
@@ -1231,6 +1237,7 @@
         }
       },
       slider: {
+        theme: 'slider',
         visibleItems: 1,
         fadeTime: 1000,
         opacityMin: 0.01,
