@@ -20,7 +20,6 @@
   position: absolute; 
   display: block; 
   border: 1px solid #ccc; 
-  background: #fff; 
   cursor: pointer;
   overflow: hidden;
   text-decoration:none;
@@ -81,6 +80,8 @@
   text-decoration:none;
   
   a { text-decoration: underline; }
+
+  p { margin: 4px 0; }
   
   &.overlay {
     top: auto;
@@ -136,15 +137,28 @@
   
   .rondell-scrollbar-left,
   .rondell-scrollbar-right {
-    top: 5px;
-    width: 10px;
-    height: 10px;
+    top: 2px;
+    width: 16px;
+    height: 16px;
     background-color: #ddd;
-    @include linear-gradient(#eee, #ccc);
+    @include linear-gradient(#eee, #ddd);
+    &:active {
+      @include linear-gradient(#ccc, #ddd);
+    }
+  }
+
+  .rondell-scrollbar-inner {
+    width: 14px;
+    height: 14px;
+    display: block;
+    background: url('../images/arrows.png') no-repeat 0 0;
   }
 
   .rondell-scrollbar-left {
     left: 6px;
+    .rondell-scrollbar-inner {
+      background-position: 0 -16px;
+    }
   }
   .rondell-scrollbar-right {
     right: 6px;
@@ -182,208 +196,20 @@
   }
 }
 
-.box-shadow.rgba {
-  .rondell-scrollbar-control,
-  .rondell-scrollbar-left,
-  .rondell-scrollbar-right {
+.boxshadow.rgba {
+  .rondell-scrollbar-control {
     border: 0;
     @include box-shadow(0 0 2px rgba(0, 0, 0, 0.5));
-
-    &:hover {
-      @include box-shadow(0 0 3px rgba(0, 0, 0, 0.5));
-    }
+    &:hover { @include box-shadow(0 0 3px rgba(0, 0, 0, 0.5)); }
+    &:active { @include box-shadow(0 0 5px -1px rgba(0, 0, 0, 0.6)); }
   }
-
-  .rondell-scrollbar-control:active {
-    @include box-shadow(0 0 5px -1px rgba(0, 0, 0, 0.6));
-  }
-
   .rondell-scrollbar-left,
   .rondell-scrollbar-right {
-    &:active {
-      @include box-shadow(0 0 2px rgba(0, 0, 0, 0.3) inset);
-    } 
-  }
-}
-
-
-/* themes */
-
-/* default theme */
-.box-shadow.rgba .rondellTheme_default {
-  .rondellControl { 
-    @include box-shadow(0 0 1px rgba(0, 0, 0, 0.3));
-    
-    &:hover { @include box-shadow(0 0 2px rgba(0, 0, 0, 0.3)); } 
-  }
-  .rondellItem { 
     border: 0;
-    @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.4));    
-    &:hover { @include box-shadow(0 1px 2px rgba(0, 0, 0, 0.3)); }
-  }
-} 
-.borderradius .rondellTheme_default {
-  .rondellControl { 
-    @include border-radius(3px); 
-  }
-  .rondellItem {
-    &, img { 
-      @include border-radius(3px); 
-    }
-  }
-}
-.cssgradients .rondellTheme_default .rondellControl { 
-  @include linear-gradient(#fcfcfc, #f9f9f9);
-  
-  &:hover { @include linear-gradient(#fafafa, #f5f5f5); }
-  &:active { @include linear-gradient(#f5f5f5, #fafafa); }
-}
-
-/* light theme */
-.rondellTheme_light {
-  .rondellContainer { background: #fff; }
-  .rondellItem { 
-    border: 0; 
-
-    &, img {
-      @include border-radius(3px);
-    }
-  }
-}
-.box-shadow.rgba .rondellTheme_light .rondellItem {
-  border: 0; 
-  @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.4));    
-  &:hover { @include box-shadow(0 1px 2px rgba(0, 0, 0, 0.3)); }
-}
-
-/* dark theme, good for preset 'products' */
-.rondellTheme_dark {
-  background: #333;
-  @include border-radius(5px);
-  @include linear-gradient(#666, #111);
-     
-  .rondellItem { 
-    border: 0; 
-    background: transparent;
-  }
-  .rondellCaption { 
-    text-align: center;
-    font-weight: bold;
-    text-shadow: 0 0 3px #000;
-    font-size: 12px;
-  }
-  .rondellControl {
-    font-size: 0;  
-    color: transparent;
-    padding: 0;
-    width: 28px;
-    height: 28px;
-    
-    &.rondellShiftLeft,
-    &.rondellShiftRight {
-      background: url('../images/buttons.png') no-repeat 0 0;
-    }
-    &.rondellShiftLeft {
-      background-position: 0 -28px;
-    }
-  }
-}
-.box-shadow.rgba .rondellTheme_dark {
-  border: 0;
-  @include box-shadow(0 1px 5px rgba(0, 0, 0, 0.6) inset);
-  
-  .rondellControl {
-    @include box-shadow(none);
+    @include box-shadow(0 0 2px rgba(0, 0, 0, 0.3)); 
+    &:hover { @include box-shadow(0 0 3px rgba(0, 0, 0, 0.5)); }
+    &:active { @include box-shadow(0 0 2px rgba(0, 0, 0, 0.3) inset); }
   }
 }
 
-/* page theme, good for preset 'pages' */
-.rondellTheme_page {
-  border: 1px solid #ccc;
-  @include border-radius(3px);
-  
-  .rondellItem {
-    border: 0; 
-    &, img { 
-      @include border-radius(3px); 
-    }
-  } 
-  .rondellControl {
-    font-size: 0;  
-    padding: 0;
-    color: transparent;
-    width: 20px;
-    height: 16px;
-    @include border-radius(0 0 3px 0);
-    
-    &.rondellShiftLeft,
-    &.rondellShiftRight {
-      background: url('../images/arrows.png') no-repeat 0 0;
-    }
-    &.rondellShiftRight {
-      background-position: 0 -16px;
-    }
-  }
-}
-.box-shadow.rgba .rondellTheme_page {
-  border: 0;
-  @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
-} 
-
-/* slider theme */
-.rondellTheme_slider {
-  border: 1px solid #aaa;
-  @include border-radius(2px);
-  
-  .rondellItem {
-    border: 0; 
-    &, img { 
-      @include border-radius(2px); 
-    }
-  }
-  
-  .rondellCaption {
-    text-align: center;
-    font-weight: bold;
-    text-shadow: 0 0 3px #000;
-    font-size: 14px;
-    
-    &.overlay {
-      background: transparent;
-    }
-  }
-  
-  .rondellControl {
-    font-size: 0;  
-    color: transparent;
-    padding: 0;
-    width: 15px;
-    height: 30px;
-    background-color: #666;
-    background-color: rbga(50, 50, 50, 0.2);    
-    border: 1px solid #555;
-    @include linear-gradient(#666666, #555555);
-  
-    &:hover {
-      background-color: #888;
-      @include linear-gradient(#777777, #555555);
-    }
-    &.rondellShiftLeft {
-      @include border-radius(0 15px 15px 0);
-    }
-    &.rondellShiftRight {
-      @include border-radius(15px 0 0 15px);
-    }
-  }
-}
-.box-shadow.rgba .rondellTheme_slider {
-  @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
-  
-  .rondellCaption {
-    @include box-shadow(none);
-  }
-  
-  .rondellControl {
-    @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.7));
-  }
-} 
+@import "themes";
