@@ -186,8 +186,8 @@
           height: 126 
       scrollbar:
         enabled: true
+        stepSize: 9 # Should be same as group size in special options
         style:
-          stepSize: 9
           width: 292
           right: 0
           bottom: 0
