@@ -72,8 +72,8 @@
       visibleItems: 1
       controls:
         margin:
-          x: 5
-          y: 5
+          x: 0
+          y: 0
       strings: 
         prev: ' '
         next: ' '
@@ -189,8 +189,8 @@
         stepSize: 9 # Should be same as group size in special options
         style:
           width: 292
-          right: 0
-          bottom: 0
+          right: 3
+          bottom: 5
 
       funcDiff: (d, r, i) ->
         Math.abs d
