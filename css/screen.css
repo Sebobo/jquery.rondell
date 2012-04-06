@@ -256,37 +256,37 @@ legend {
   -webkit-border-radius: 0 0 0 6px;
 }
 
-.box-shadow .tabs li {
+.boxshadow .tabs li {
   -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #ffffff;
   -moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #ffffff;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #ffffff;
 }
-.box-shadow .tabs li:before {
+.boxshadow .tabs li:before {
   -webkit-box-shadow: 2px 2px 0 #d1d1d1;
   -moz-box-shadow: 2px 2px 0 #d1d1d1;
   box-shadow: 2px 2px 0 #d1d1d1;
 }
-.box-shadow .tabs li:after {
+.boxshadow .tabs li:after {
   -webkit-box-shadow: -2px 2px 0 #d1d1d1;
   -moz-box-shadow: -2px 2px 0 #d1d1d1;
   box-shadow: -2px 2px 0 #d1d1d1;
 }
-.box-shadow .tabs li:hover:before {
+.boxshadow .tabs li:hover:before {
   -webkit-box-shadow: 2px 2px 0 #dadada;
   -moz-box-shadow: 2px 2px 0 #dadada;
   box-shadow: 2px 2px 0 #dadada;
 }
-.box-shadow .tabs li:hover:after {
+.boxshadow .tabs li:hover:after {
   -webkit-box-shadow: -2px 2px 0 #dadada;
   -moz-box-shadow: -2px 2px 0 #dadada;
   box-shadow: -2px 2px 0 #dadada;
 }
-.box-shadow .tabs li.selected:before {
+.boxshadow .tabs li.selected:before {
   -webkit-box-shadow: 2px 2px 0 white;
   -moz-box-shadow: 2px 2px 0 white;
   box-shadow: 2px 2px 0 white;
 }
-.box-shadow .tabs li.selected:after {
+.boxshadow .tabs li.selected:after {
   -webkit-box-shadow: -2px 2px 0 white;
   -moz-box-shadow: -2px 2px 0 white;
   box-shadow: -2px 2px 0 white;
