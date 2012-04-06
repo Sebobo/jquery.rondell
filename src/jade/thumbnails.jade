@@ -12,6 +12,15 @@ append content
   #rondellThumbnails(style="height:430px;") &nbsp;
 
   br
+
+  .center
+    a#selectDefaultTheme.label(href="#") default
+    | &nbsp;-
+    a#selectLightTheme.label.warning(href="#") light
+    | &nbsp;-
+    a#selectDarkTheme.label.inverse(href="#") dark
+
+  br.clear
   br
 
   .center
@@ -19,7 +28,7 @@ append content
 
   hr
 
-  .size2of3
+  .size2of3.centered
     :markdown
       This example fetches links and images from my brothers great webservice 
       [wookmark.com](http://www.wookmark.com "Wookmark.com")
@@ -34,7 +43,7 @@ append content
 
       Here's how it's done
 
-  .size3of4
+  .size2of3.centered
     pre.
       var rondellContainer = $("#rondellThumbnails");
          
@@ -86,6 +95,7 @@ append content
 append js
   :coffeescript
     $ ->
+      # Rondell init code
       rondellContainer = $("#rondellThumbnails").empty()
 
       $.ajax
@@ -123,3 +133,15 @@ append js
             # Create gallery 
             $("a", rondellContainer).rondell
               preset: "thumbGallery"
+
+      # Themepicker code
+      $("#selectDefaultTheme").click ->
+        rondellContainer.find(".rondellContainer").removeClass("rondellTheme_dark rondellTheme_light").addClass("rondellTheme_default")
+        return false
+      $("#selectLightTheme").click ->
+        rondellContainer.find(".rondellContainer").removeClass("rondellTheme_dark rondellTheme_default").addClass("rondellTheme_light")
+        return false
+      $("#selectDarkTheme").click ->
+        rondellContainer.find(".rondellContainer").removeClass("rondellTheme_default rondellTheme_light").addClass("rondellTheme_dark")
+        return false
+

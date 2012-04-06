@@ -467,7 +467,6 @@
         if (this._focusedItem == null) {
           this._focusedItem = this._getItem(this.currentLayer);
         }
-        if (this.switchIndices) this._focusedItem.currentSlot = 0;
         return this.shiftTo(this.currentLayer);
       };
 
@@ -680,36 +679,37 @@
         return item.lastTarget = newTarget;
       };
 
-      Rondell.prototype.shiftTo = function(layerNum) {
+      Rondell.prototype.shiftTo = function(idx, keepOrder) {
         var distance, i, newItem, newItemIndex, relativeIndex, _ref, _ref2;
-        if (layerNum == null) return;
-        if (this.switchIndices && layerNum !== this.currentLayer && this.getIndexInRange(layerNum) === this._focusedItem.currentSlot) {
-          _ref = this.getRelativeItemPosition(layerNum, true), distance = _ref[0], relativeIndex = _ref[1];
+        if (keepOrder == null) keepOrder = false;
+        if (idx == null) return;
+        if (!keepOrder && this.switchIndices && idx !== this.currentLayer && this.getIndexInRange(idx) === this._focusedItem.currentSlot) {
+          _ref = this.getRelativeItemPosition(idx, true), distance = _ref[0], relativeIndex = _ref[1];
           if (relativeIndex > this.currentLayer) {
-            layerNum++;
+            idx++;
           } else {
-            layerNum--;
+            idx--;
           }
         }
-        layerNum = this.getIndexInRange(layerNum);
-        newItemIndex = this._itemIndices[layerNum];
+        idx = this.getIndexInRange(idx);
+        newItemIndex = this._itemIndices[idx];
         if (this.switchIndices) {
           newItem = this._getItem(newItemIndex);
-          this._itemIndices[layerNum] = this._focusedItem.id;
+          this._itemIndices[idx] = this._focusedItem.id;
           this._itemIndices[this._focusedItem.currentSlot] = newItemIndex;
           newItem.currentSlot = this._focusedItem.currentSlot;
-          this._focusedItem.currentSlot = layerNum;
+          this._focusedItem.currentSlot = idx;
           this._focusedItem = newItem;
         }
-        this.currentLayer = layerNum;
+        this.currentLayer = idx;
         for (i = 1, _ref2 = this.maxItems; 1 <= _ref2 ? i <= _ref2 : i >= _ref2; 1 <= _ref2 ? i++ : i--) {
           if (i !== newItemIndex) this.layerFadeOut(i);
         }
         this.layerFadeIn(newItemIndex);
         this._refreshControls();
-        if (typeof this.onAfterShift === "function") this.onAfterShift(layerNum);
+        if (typeof this.onAfterShift === "function") this.onAfterShift(idx);
         if (this.scrollbar.enabled) {
-          return this.scrollbar._instance.setPosition(layerNum, false);
+          return this.scrollbar._instance.setPosition(idx, false);
         }
       };
 
@@ -854,7 +854,7 @@
         }
         this.position = position;
         if (fireCallback) {
-          return typeof this.onScroll === "function" ? this.onScroll(position) : void 0;
+          return typeof this.onScroll === "function" ? this.onScroll(position, true) : void 0;
         }
       };
 
@@ -1054,8 +1054,8 @@
         visibleItems: 1,
         controls: {
           margin: {
-            x: 5,
-            y: 5
+            x: 0,
+            y: 0
           }
         },
         strings: {
@@ -1206,8 +1206,8 @@
           stepSize: 9,
           style: {
             width: 292,
-            right: 0,
-            bottom: 0
+            right: 3,
+            bottom: 5
           }
         },
         funcDiff: function(d, r, i) {

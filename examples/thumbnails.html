@@ -55,13 +55,17 @@
         </ul><br class="clear">
       </div><br>
       <div id="rondellThumbnails" style="height:430px;">&nbsp;
-      </div><br><br>
+      </div><br>
+      <div class="center"><a id="selectDefaultTheme" href="#" class="label">default</a>&nbsp;-
+<a id="selectLightTheme" href="#" class="label warning">light</a>&nbsp;-
+<a id="selectDarkTheme" href="#" class="label inverse">dark</a>
+      </div><br class="clear"><br>
       <div class="center">
         <h2>Preset - Gallery with thumbnails
         </h2>
       </div>
       <hr>
-      <div class="size2of3"><p>This example fetches links and images from my brothers great webservice 
+      <div class="size2of3 centered"><p>This example fetches links and images from my brothers great webservice 
 <a href="http://www.wookmark.com" title="Wookmark.com">wookmark.com</a>
 and creates a thumbnail gallery from the data.
 The gallery still uses the same plugin as the other demos but
@@ -74,7 +78,7 @@ keep the items order.</p>
 
 <p>Here&#39;s how it&#39;s done</p>
       </div>
-      <div class="size3of4">
+      <div class="size2of3 centered">
         <pre>var rondellContainer = $(&quot;#rondellThumbnails&quot;);
 
 $.ajax({
@@ -163,7 +167,7 @@ $.ajax({
   $(function() {
     var rondellContainer;
     rondellContainer = $("#rondellThumbnails").empty();
-    return $.ajax({
+    $.ajax({
       url: "http://www.wookmark.com/api/json",
       dataType: "jsonp",
       success: function(json, text, xhqr) {
@@ -192,6 +196,18 @@ $.ajax({
           });
         }
       }
+    });
+    $("#selectDefaultTheme").click(function() {
+      rondellContainer.find(".rondellContainer").removeClass("rondellTheme_dark rondellTheme_light").addClass("rondellTheme_default");
+      return false;
+    });
+    $("#selectLightTheme").click(function() {
+      rondellContainer.find(".rondellContainer").removeClass("rondellTheme_dark rondellTheme_default").addClass("rondellTheme_light");
+      return false;
+    });
+    return $("#selectDarkTheme").click(function() {
+      rondellContainer.find(".rondellContainer").removeClass("rondellTheme_default rondellTheme_light").addClass("rondellTheme_dark");
+      return false;
     });
   });
 
