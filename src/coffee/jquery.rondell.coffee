@@ -411,7 +411,6 @@
       
       # Move items to starting positions
       @_focusedItem ?= @_getItem @currentLayer
-      @_focusedItem.currentSlot = 0 if @switchIndices
       @shiftTo @currentLayer
       
     _onMobile: ->
@@ -615,7 +614,7 @@
             height: item.croppedSize.height
           , fadeTime, @funcEase if @cropThumbnails
 
-        # Recenter icon if it's now resizeable
+        # Recenter icon if unless it's resizeable
         unless item.small
           item.small = true
           if item.icon and not item.resizeable
@@ -641,42 +640,39 @@
       # Store last target for this item
       item.lastTarget = newTarget
 
-    shiftTo: (layerNum) =>
-      return unless layerNum?
+    shiftTo: (idx, keepOrder=false) =>
+      return unless idx?
 
       # Modify layer number when using index switch because
       # we have to ignore the slot which was initially focused
-      if @switchIndices and layerNum isnt @currentLayer and @getIndexInRange(layerNum) is @_focusedItem.currentSlot
+      if not keepOrder and @switchIndices and idx isnt @currentLayer and @getIndexInRange(idx) is @_focusedItem.currentSlot
         # Get items relative distance
-        [distance, relativeIndex] = @getRelativeItemPosition layerNum, true
-        if relativeIndex > @currentLayer
-          layerNum++ 
-        else
-          layerNum--
+        [distance, relativeIndex] = @getRelativeItemPosition idx, true
+        if relativeIndex > @currentLayer then idx++ else idx--
 
-      # Fix new layer number depending on the repeating option 
-      layerNum = @getIndexInRange layerNum
+      # Fix new layer number depending on the repeating option
+      idx = @getIndexInRange idx
 
       # Get the items id in the selected layer slot
-      newItemIndex = @_itemIndices[layerNum]
+      newItemIndex = @_itemIndices[idx]
 
       # Switch item indices if flag is set
       if @switchIndices
         newItem = @_getItem newItemIndex
 
         # Switch indices in list
-        @_itemIndices[layerNum] = @_focusedItem.id
+        @_itemIndices[idx] = @_focusedItem.id
         @_itemIndices[@_focusedItem.currentSlot] = newItemIndex
 
         # Tell items about their new slots
         newItem.currentSlot = @_focusedItem.currentSlot
-        @_focusedItem.currentSlot = layerNum
+        @_focusedItem.currentSlot = idx
 
         # Set new focused item
         @_focusedItem = newItem
 
       # Store the now active layer index
-      @currentLayer = layerNum
+      @currentLayer = idx
       
       # Move all items out of focus except the one we want to focus
       @layerFadeOut(i) for i in [1..@maxItems] when i isnt newItemIndex
@@ -686,10 +682,10 @@
       @_refreshControls()
 
       # Fire shift callback
-      @onAfterShift? layerNum
+      @onAfterShift? idx
 
-      # Update scrollbar
-      @scrollbar._instance.setPosition(layerNum, false) if @scrollbar.enabled
+      # Update scrollbar with unmodified idx to prevent jumps
+      @scrollbar._instance.setPosition(idx, false) if @scrollbar.enabled
 
     getRelativeItemPosition: (idx, wrapIndices=@wrapIndices) =>
       distance = Math.abs(idx - @currentLayer)
@@ -817,7 +813,7 @@
       @position = position
 
       # Fire callback with new position
-      @onScroll? position if fireCallback
+      @onScroll? position, true if fireCallback
       
     scrollTo: (x, animate=true, fireCallback=true) =>
       return if x < @_minX or x > @_maxX
