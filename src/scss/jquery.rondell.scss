@@ -140,8 +140,8 @@
     top: 2px;
     width: 16px;
     height: 16px;
-    background-color: #ddd;
-    @include linear-gradient(#eee, #ddd);
+    background-color: #ccc;
+    @include linear-gradient(#ccc, #bbb);
     &:active {
       @include linear-gradient(#ccc, #ddd);
     }

@@ -94,6 +94,9 @@ legend {
 .label.notice {
   background-color: #62cffc;
 }
+.label.inverse {
+  background-color: black;
+}
 
 .borderradius .label {
   border-radius: 3px;

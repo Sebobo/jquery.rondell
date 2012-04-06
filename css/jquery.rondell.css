@@ -135,13 +135,13 @@
   top: 2px;
   width: 16px;
   height: 16px;
-  background-color: #ddd;
+  background-color: #ccc;
   background-repeat: repeat-x;
-  background-image: -webkit-linear-gradient(top, #eeeeee, #dddddd);
-  background-image: -moz-linear-gradient(top, #eeeeee, #dddddd);
-  background-image: -ms-linear-gradient(top, #eeeeee, #dddddd);
-  background-image: -o-linear-gradient(top, #eeeeee, #dddddd);
-  background-image: linear-gradient(top, #eeeeee, #dddddd);
+  background-image: -webkit-linear-gradient(top, #cccccc, #bbbbbb);
+  background-image: -moz-linear-gradient(top, #cccccc, #bbbbbb);
+  background-image: -ms-linear-gradient(top, #cccccc, #bbbbbb);
+  background-image: -o-linear-gradient(top, #cccccc, #bbbbbb);
+  background-image: linear-gradient(top, #cccccc, #bbbbbb);
 }
 .rondell-scrollbar .rondell-scrollbar-left:active,
 .rondell-scrollbar .rondell-scrollbar-right:active {
@@ -394,17 +394,22 @@
   padding: 0;
   color: transparent;
   width: 20px;
-  height: 16px;
-  border-radius: 0 0 3px 0;
-  -o-border-radius: 0 0 3px 0;
-  -moz-border-radius: 0 0 3px 0;
-  -webkit-border-radius: 0 0 3px 0;
+  height: 20px;
+  border: 1px solid #bbc;
 }
 .rondellTheme_page .rondellControl.rondellShiftLeft, .rondellTheme_page .rondellControl.rondellShiftRight {
-  background: url("../images/arrows.png") no-repeat 0 0;
+  background: #ccccdd url("../images/arrows.png") no-repeat 2px 2px;
+  border-radius: 0 3px 0 6px;
+  -o-border-radius: 0 3px 0 6px;
+  -moz-border-radius: 0 3px 0 6px;
+  -webkit-border-radius: 0 3px 0 6px;
 }
 .rondellTheme_page .rondellControl.rondellShiftLeft {
-  background-position: 0 -16px;
+  background-position: 2px -14px;
+  border-radius: 3px 0 6px 0;
+  -o-border-radius: 3px 0 6px 0;
+  -moz-border-radius: 3px 0 6px 0;
+  -webkit-border-radius: 3px 0 6px 0;
 }
 
 .boxshadow.rgba .rondellTheme_page {
@@ -412,6 +417,12 @@
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+.boxshadow.rgba .rondellTheme_page .rondellControl {
+  border: 0;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* slider theme */
