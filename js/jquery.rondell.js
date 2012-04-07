@@ -104,6 +104,7 @@
           start: 1,
           end: 100,
           stepSize: 1,
+          keepStepOrder: true,
           position: 1,
           padding: 10,
           style: {
@@ -212,7 +213,6 @@
           this.container.append(scrollbarContainer);
           $.extend(true, this.scrollbar, {
             onScroll: this.shiftTo,
-            start: 1,
             end: this.maxItems,
             position: this.currentLayer,
             repeating: this.repeating
@@ -680,7 +680,7 @@
       };
 
       Rondell.prototype.shiftTo = function(idx, keepOrder) {
-        var distance, i, newItem, newItemIndex, relativeIndex, _ref, _ref2;
+        var distance, i, newItem, newItemIndex, relativeIndex, scrollbarIdx, _ref, _ref2;
         if (keepOrder == null) keepOrder = false;
         if (idx == null) return;
         if (!keepOrder && this.switchIndices && idx !== this.currentLayer && this.getIndexInRange(idx) === this._focusedItem.currentSlot) {
@@ -709,7 +709,11 @@
         this._refreshControls();
         if (typeof this.onAfterShift === "function") this.onAfterShift(idx);
         if (this.scrollbar.enabled) {
-          return this.scrollbar._instance.setPosition(idx, false);
+          scrollbarIdx = idx;
+          if (idx === this._focusedItem.currentSlot) {
+            scrollbarIdx = this._focusedItem.currentSlot + 1;
+          }
+          return this.scrollbar._instance.setPosition(scrollbarIdx, false);
         }
       };
 
@@ -902,10 +906,11 @@
         } else if (e.type === "mousemove") {
           newX = 0;
           if (this.orientation === "top" || this.orientation === "bottom") {
-            newX = Math.max(this._minX, Math.min(this._maxX, e.pageX - this.container.offset().left));
+            newX = e.pageX - this.container.offset().left;
           } else {
-            newX = Math.max(this._minX, Math.min(this._maxX, e.pageY - this.container.offset().top));
+            newX = e.pageY - this.container.offset().top;
           }
+          newX = Math.max(this._minX, Math.min(this._maxX, newX));
           return this.scrollTo(newX, false);
         }
       };
@@ -924,13 +929,29 @@
       };
 
       RondellScrollbar.prototype.scrollLeft = function(e) {
+        var newPosition;
         e.preventDefault();
-        return this.setPosition(this.position - this.stepSize);
+        newPosition = this.position - this.stepSize;
+        if (this.keepStepOrder && this.stepSize > 1) {
+          if (newPosition >= this.start) {
+            newPosition -= (newPosition - this.start) % this.stepSize;
+          } else if (this.repeating) {
+            newPosition = this.start + Math.floor((this.end - this.start) / this.stepSize) * this.stepSize;
+            console.log(newPosition);
+          }
+        }
+        return this.setPosition(newPosition);
       };
 
       RondellScrollbar.prototype.scrollRight = function(e) {
+        var newPosition;
         e.preventDefault();
-        return this.setPosition(this.position + this.stepSize);
+        newPosition = this.position + this.stepSize;
+        if (this.keepStepOrder && this.stepSize > 1) {
+          newPosition -= (newPosition - this.start) % this.stepSize;
+          if (this.repeating && newPosition > this.end) newPosition = this.start;
+        }
+        return this.setPosition(newPosition);
       };
 
       return RondellScrollbar;
@@ -1204,6 +1225,7 @@
         scrollbar: {
           enabled: true,
           stepSize: 9,
+          start: 2,
           style: {
             width: 292,
             right: 3,

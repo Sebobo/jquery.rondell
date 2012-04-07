@@ -86,6 +86,7 @@
         start: 1
         end: 100
         stepSize: 1
+        keepStepOrder: true
         position: 1
         padding: 10
         style:
@@ -163,7 +164,6 @@
 
         $.extend true, @scrollbar,
           onScroll: @shiftTo
-          start: 1
           end: @maxItems
           position: @currentLayer
           repeating: @repeating
@@ -685,7 +685,12 @@
       @onAfterShift? idx
 
       # Update scrollbar with unmodified idx to prevent jumps
-      @scrollbar._instance.setPosition(idx, false) if @scrollbar.enabled
+      if @scrollbar.enabled
+        scrollbarIdx = idx
+        # Fix scrollbar index position for unreachable focus item index
+        if idx is @_focusedItem.currentSlot
+          scrollbarIdx =  @_focusedItem.currentSlot + 1 
+        @scrollbar._instance.setPosition(scrollbarIdx, false)
 
     getRelativeItemPosition: (idx, wrapIndices=@wrapIndices) =>
       distance = Math.abs(idx - @currentLayer)
@@ -824,7 +829,7 @@
         scroller.animate target, @animationDuration, @easing
       else
         scroller.css target
-      
+
       # Translate event coordinates to new position between start and end option
       newPosition = Math.round((x - @_minX) / (@_maxX - @_minX) * (@end - @start)) + @start
       @updatePosition(newPosition, fireCallback) if newPosition isnt @position
@@ -851,9 +856,10 @@
         # Move scroll dot to new position
         newX = 0
         if @orientation is "top" or @orientation is "bottom"
-          newX = Math.max(@_minX, Math.min(@_maxX, e.pageX - @container.offset().left))
+          newX = e.pageX - @container.offset().left
         else
-          newX = Math.max(@_minX, Math.min(@_maxX, e.pageY - @container.offset().top))
+          newX = e.pageY - @container.offset().top
+        newX = Math.max(@_minX, Math.min(@_maxX, newX))
 
         @scrollTo newX, false
       
@@ -872,11 +878,24 @@
       
     scrollLeft: (e) =>
       e.preventDefault()
-      @setPosition @position - @stepSize
+      newPosition = @position - @stepSize
+      if @keepStepOrder and @stepSize > 1
+        if newPosition >= @start
+          newPosition -= (newPosition - @start) % @stepSize
+        else if @repeating
+          # Move to max position if new position is smaller than start
+          newPosition = @start + Math.floor((@end - @start) / @stepSize) * @stepSize
+          console.log newPosition
+      @setPosition newPosition
       
-    scrollRight: (e) => 
-      e.preventDefault() 
-      @setPosition @position + @stepSize
+    scrollRight: (e) =>
+      e.preventDefault()
+      newPosition = @position + @stepSize
+      if @keepStepOrder and @stepSize > 1
+        newPosition -= (newPosition - @start) % @stepSize
+        if @repeating and newPosition > @end
+          newPosition = @start
+      @setPosition newPosition
   
   $.fn.rondell = (options={}, callback=undefined) ->
     # Create new rondell instance
