@@ -51,7 +51,7 @@ Editing
 Read this chapter if you want to modify or extend the rondell.
 
 The plugin is written in [coffeescript](http://jashkenas.github.com/coffee-script/) and the css with [sass](http://sass-lang.com/).
-The sources are provided in the `src` and `scss` folders.  
+The sources are provided in the `src` folder.  
 
 So you can either work with the compiled `.js` and `.css` files in your project or use the coffeescript and sass files.
 

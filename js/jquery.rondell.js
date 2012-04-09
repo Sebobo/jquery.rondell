@@ -3,8 +3,8 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 0.9.0
-  @date 10/03/2012
+  @version 0.9.1
+  @date 04/09/2012
   @category jQuery plugin
   @copyright (c) 2009-2012 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -18,7 +18,7 @@
     */
     var Rondell, RondellScrollbar;
     $.rondell = {
-      version: '0.9.0',
+      version: '0.9.1',
       name: 'rondell',
       defaults: {
         showContainer: true,
@@ -937,7 +937,6 @@
             newPosition -= (newPosition - this.start) % this.stepSize;
           } else if (this.repeating) {
             newPosition = this.start + Math.floor((this.end - this.start) / this.stepSize) * this.stepSize;
-            console.log(newPosition);
           }
         }
         return this.setPosition(newPosition);
