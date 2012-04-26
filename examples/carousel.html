@@ -15,7 +15,7 @@
     <div class="pageHeader hasShadow">
       <h1 id="docustart">Rondell - Display images and other content in a nice way
       </h1>
-      <p><b>Version 0.9.1</b>&nbsp- Created by 
+      <p><b>Version 0.9.2</b>&nbsp- Created by 
 <a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">Sebastian Helzle
 
 </a>
@@ -54,31 +54,31 @@
           </li>
         </ul><br class="clear">
       </div><br>
-      <div id="rondellGallery" class="hidden"><a target="_blank" rel="rondell_1" href="images/galery/band.jpg" title="My favourite band"><img src="images/galery/band.jpg" alt="Band" title="My favourite band" class="resizeable">
+      <div id="rondellGallery" class="hidden"><a target="_blank" rel="rondell_1" href="images/galery/band.jpg" title="My favourite band"><img src="images/galery/band.jpg" alt="Band" title="My favourite band">
           <h5>Awesome concert
           </h5>
           <p>My favourite band.
-          </p></a><a target="_blank" rel="rondell_1" href="images/galery/dog.jpg" title="My dog"><img src="images/galery/dog.jpg" alt="Dog" title="My dog" class="resizeable">
+          </p></a><a target="_blank" rel="rondell_1" href="images/galery/dog.jpg" title="My dog"><img src="images/galery/dog.jpg" alt="Dog" title="My dog">
           <h5>My dog
           </h5>
           <p>Standing in front of a glass door and wants in.
-          </p></a><a target="_blank" rel="rondell_1" href="images/galery/cat.jpg" title="My cat"><img src="images/galery/cat.jpg" alt="Cat" title="My cat" class="resizeable">
+          </p></a><a target="_blank" rel="rondell_1" href="images/galery/cat.jpg" title="My cat"><img src="images/galery/cat.jpg" alt="Cat" title="My cat">
           <h5>My cat
           </h5>
           <p>Sleeping...
-          </p></a><a target="_blank" rel="rondell_1" href="images/galery/boar.jpg" title="Boar"><img src="images/galery/boar.jpg" alt="Boar" title="Boar" class="resizeable">
+          </p></a><a target="_blank" rel="rondell_1" href="images/galery/boar.jpg" title="Boar"><img src="images/galery/boar.jpg" alt="Boar" title="Boar">
           <h5>Dead boar on the wall
           </h5>
           <p>Hanging around.
-          </p></a><a target="_blank" rel="rondell_1" href="images/galery/snow.jpg" title="Snow"><img src="images/galery/snow.jpg" alt="Snow" title="Snow" class="resizeable">
+          </p></a><a target="_blank" rel="rondell_1" href="images/galery/snow.jpg" title="Snow"><img src="images/galery/snow.jpg" alt="Snow" title="Snow">
           <h5>Winter wonderland
           </h5>
           <p>The german alps.
-          </p></a><a target="_blank" rel="rondell_1" href="images/galery/rabbit.jpg" title="Rabbit"><img src="images/galery/rabbit.jpg" alt="Rabbit" title="Rabbit" class="resizeable">
+          </p></a><a target="_blank" rel="rondell_1" href="images/galery/rabbit.jpg" title="Rabbit"><img src="images/galery/rabbit.jpg" alt="Rabbit" title="Rabbit">
           <h5>Bunny
           </h5>
           <p>In my brothers garden.
-          </p></a><a target="_blank" rel="rondell_1" href="images/galery/trash.jpg" title=""><img src="images/galery/trash.jpg" alt="Trash" title="Trash" class="resizeable">
+          </p></a><a target="_blank" rel="rondell_1" href="images/galery/trash.jpg" title=""><img src="images/galery/trash.jpg" alt="Trash" title="Trash">
           <h5>Trash
           </h5>
           <p>Somewhere in the USA.
@@ -160,7 +160,6 @@ element will open the wookmark in a new tab or window.</p>
 
         // Create image
         var newImg = $('&lt;img/&gt;')
-        .addClass('resizeable')
         .attr({
           src: item.preview,
           alt: item.title,
@@ -256,7 +255,7 @@ element will open the wookmark in a new tab or window.</p>
               title: item.title,
               target: "_blank"
             });
-            newImg = $("<img/>").addClass("resizeable").attr({
+            newImg = $("<img/>").attr({
               src: item.preview,
               alt: item.title,
               width: item.width,

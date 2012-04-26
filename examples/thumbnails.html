@@ -15,7 +15,7 @@
     <div class="pageHeader hasShadow">
       <h1 id="docustart">Rondell - Display images and other content in a nice way
       </h1>
-      <p><b>Version 0.9.1</b>&nbsp- Created by 
+      <p><b>Version 0.9.2</b>&nbsp- Created by 
 <a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">Sebastian Helzle
 
 </a>
@@ -103,7 +103,6 @@ $.ajax({
 
         // Create image
         newImg = $('&lt;img/&gt;')
-        .addClass('resizeable')
         .attr({
           src: item.preview,
           alt: item.title,
@@ -182,7 +181,7 @@ $.ajax({
               title: item.title,
               target: "_blank"
             });
-            newImg = $("<img/>").addClass("resizeable").attr({
+            newImg = $("<img/>").attr({
               src: item.preview,
               alt: item.title,
               width: item.width,

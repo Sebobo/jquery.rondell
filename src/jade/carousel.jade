@@ -11,37 +11,37 @@ append content
 
   #rondellGallery.hidden
     a(target="_blank", rel="rondell_1", href="images/galery/band.jpg", title="My favourite band")
-      img.resizeable(src="images/galery/band.jpg", alt="Band", title="My favourite band")
+      img(src="images/galery/band.jpg", alt="Band", title="My favourite band")
       h5 Awesome concert
       p My favourite band.
 
     a(target="_blank", rel="rondell_1", href="images/galery/dog.jpg", title="My dog")
-      img.resizeable(src="images/galery/dog.jpg", alt="Dog", title="My dog")
+      img(src="images/galery/dog.jpg", alt="Dog", title="My dog")
       h5 My dog
       p Standing in front of a glass door and wants in.
 
     a(target="_blank", rel="rondell_1", href="images/galery/cat.jpg", title="My cat")
-      img.resizeable(src="images/galery/cat.jpg", alt="Cat", title="My cat")
+      img(src="images/galery/cat.jpg", alt="Cat", title="My cat")
       h5 My cat
       p Sleeping...
 
     a(target="_blank", rel="rondell_1", href="images/galery/boar.jpg", title="Boar")
-      img.resizeable(src="images/galery/boar.jpg", alt="Boar", title="Boar")
+      img(src="images/galery/boar.jpg", alt="Boar", title="Boar")
       h5 Dead boar on the wall
       p Hanging around.
 
     a(target="_blank", rel="rondell_1", href="images/galery/snow.jpg", title="Snow")
-      img.resizeable(src="images/galery/snow.jpg", alt="Snow", title="Snow")
+      img(src="images/galery/snow.jpg", alt="Snow", title="Snow")
       h5 Winter wonderland
       p The german alps.
 
     a(target="_blank", rel="rondell_1", href="images/galery/rabbit.jpg", title="Rabbit")
-      img.resizeable(src="images/galery/rabbit.jpg", alt="Rabbit", title="Rabbit")
+      img(src="images/galery/rabbit.jpg", alt="Rabbit", title="Rabbit")
       h5 Bunny
       p In my brothers garden.
 
     a(target="_blank", rel="rondell_1", href="images/galery/trash.jpg", title="")
-      img.resizeable(src="images/galery/trash.jpg", alt="Trash", title="Trash")
+      img(src="images/galery/trash.jpg", alt="Trash", title="Trash")
       h5 Trash
       p Somewhere in the USA.
 
@@ -135,7 +135,6 @@ append content
               
               // Create image
               var newImg = $('&lt;img/&gt;')
-              .addClass('resizeable')
               .attr({
                 src: item.preview,
                 alt: item.title,
@@ -202,7 +201,6 @@ append js
                           
               # Create image
               newImg = $("<img/>")
-              .addClass("resizeable")
               .attr
                 src: item.preview
                 alt: item.title
