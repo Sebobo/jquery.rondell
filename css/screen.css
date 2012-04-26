@@ -791,9 +791,16 @@ img.inline {
 }
 
 .hasShadow {
-  -webkit-box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.4);
+}
+
+.rounded {
+  border-radius: 5px;
+  -o-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 
 .page,
@@ -827,28 +834,8 @@ img.inline {
 }
 
 /* rondell demo stuff */
-.rondellContainer {
-  display: none;
-}
-
-.rondellContainer {
+.rondell-container {
   margin: 0 auto;
-}
-
-#rondellMixed .controlShiftLeft,
-#rondellMixed .controlShiftRight {
-  opacity: 0.6;
-  position: absolute;
-  left: -100px;
-  top: 168px;
-}
-#rondellMixed .controlShiftLeft:hover,
-#rondellMixed .controlShiftRight:hover {
-  opacity: 1;
-}
-#rondellMixed .controlShiftRight {
-  left: auto;
-  right: -100px;
 }
 
 /* Sidemenu */
