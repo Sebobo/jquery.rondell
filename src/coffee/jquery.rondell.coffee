@@ -2,7 +2,7 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 0.9.1
+  @version 0.9.2
   @date 04/09/2012
   @category jQuery plugin
   @copyright (c) 2009-2012 Sebastian Helzle (www.sebastianhelzle.net)
@@ -12,13 +12,30 @@
 (($) ->
   ### Global rondell plugin properties ###
   $.rondell =
-    version: '0.9.1'
+    version: '0.9.2'
     name: 'rondell'
     defaults:
       showContainer: true       # When the plugin has finished initializing $.show() will be called on the items container
-      resizeableClass: 'resizeable'
-      smallClass: 'itemSmall'
-      hiddenClass: 'itemHidden'
+      classes:
+        container: "rondell-container"
+        initializing: "rondell-initializing"
+        themePrefix: "rondell-theme"
+        caption: "rondell-caption"
+        noScale: "no-scale"
+        item: "rondell-item"
+        resizeable: "rondell-item-resizeable"
+        small: "rondell-item-small"
+        hidden: "rondell-item-hidden"
+        loading: "rondell-item-loading"
+        isNew: "rondell-item-new"
+        hovered: "rondell-item-hovered"
+        overlay: "rondell-item-overlay"
+        focused: "rondell-item-focused"
+        crop: "rondell-item-crop"
+        error: "rondell-item-error"
+        control: "rondell-control"
+        shiftLeft: "rondell-shift-left"
+        shiftRight: "rondell-shift-right"
       currentLayer: 0           # Active layer number in a rondell instance
       container: null           # Container object wrapping the rondell items
       radius:                   # Radius for the default circle function
@@ -38,7 +55,6 @@
       zIndex: 1000              # All elements of the rondell will use this z-index and add their depth to it
       itemProperties:           # Default properties for each item
         delay: 100              # Time offset between the animation of each item
-        cssClass: 'rondellItem' # Identifier for each item
         size: 
           width: 150
           height: 150
@@ -65,6 +81,7 @@
       strings: # String for the controls 
         prev: 'prev'
         next: 'next'
+        loadingError: 'An error occured while loading <b>%s</b>'
       mousewheel:
         enabled: true
         threshold: 0
@@ -102,6 +119,14 @@
         scrollOnDrag: true
         animationDuration: 300
         easing: "easeInOutQuad"
+        classes: 
+          container: "rondell-scrollbar"
+          control: "rondell-scrollbar-control"
+          dragging: "rondell-scrollbar-dragging"
+          background: "rondell-scrollbar-background"
+          scrollLeft: "rondell-scrollbar-left"
+          scrollRight: "rondell-scrollbar-right"
+          scrollInner: "rondell-scrollbar-inner"
   
   ### Add default easing function for rondell to jQuery if missing ###
   unless $.easing.easeInOutQuad        
@@ -113,18 +138,21 @@
     @rondellCount: 0            # Globally stores the number of rondells for uuid creation
     @activeRondell: null        # Globally stores the last activated rondell for keyboard interaction
     
-    constructor: (container, options, numItems, initCallback=undefined) ->
-      @id = Rondell.rondellCount++
+    constructor: (items, options, numItems, initCallback=undefined) ->
+      @id = ++Rondell.rondellCount
       @items = [] # Holds the items
       @maxItems = numItems
       @loadedItems = 0
       @initCallback = initCallback
 
+      # First rondell should be active at the start
+      Rondell.activeRondell = @id if @id is 1
+
       # Update rondell properties with new options
       if options?.preset of $.rondell.presets
-        $.extend(true, @, $.rondell.defaults, $.rondell.presets[options.preset], options or {})
+        $.extend true, @, $.rondell.defaults, $.rondell.presets[options.preset], options or {}
       else
-        $.extend(true, @, $.rondell.defaults, options or {})
+        $.extend true, @, $.rondell.defaults, options or {}
 
       # Init some private variables
       $.extend true, @,
@@ -143,16 +171,19 @@
         
       # Compute focused item size if not set
       @itemProperties.sizeFocused =
-        width: @itemProperties.sizeFocused.width or @itemProperties.size.width * @scaling
-        height: @itemProperties.sizeFocused.height or @itemProperties.size.height * @scaling
-      
+       width: @itemProperties.sizeFocused.width or @itemProperties.size.width * @scaling
+       height: @itemProperties.sizeFocused.height or @itemProperties.size.height * @scaling
+
       # Compute size if not set  
       @size = 
         width: @size.width or @center.left * 2
         height: @size.height or @center.top * 2
 
-      # Wrap elements in new container
-      @container = container.wrapAll($("<div class=\"rondellContainer initializing rondellTheme_#{@theme}\"/>").css(@size)).parent()
+      # Wrap elements in new container and add some css
+      containerWrap = $("<div/>").css(@size)
+      .addClass("#{@classes.initializing} #{@classes.container} #{@classes.themePrefix}-#{@theme}")
+
+      @container = items.wrapAll(containerWrap).parent()
       
       # Show items hidden parent container to prevent graphical glitch
       @container.parent().show() if @showContainer
@@ -196,25 +227,48 @@
         overlay = @_getItem(idx).overlay
         overlay?.filter(":visible").stop(true).css
           height: overlay.height()
-          overflow: 'hidden'
+          overflow: "hidden"
         .fadeTo 200, 0
       
-    _getItem: (layerNum) =>
-      @items[layerNum - 1]
-      
-    _initItem: (layerNum, item) =>
-      @items[layerNum - 1] = item
+    _getItem: (idx) =>
+      @items[idx - 1]
+
+    _addItem: (idx, item) =>
+      @items[idx - 1] = item
 
       # Add some private variables
-      item.id = layerNum
+      item.id = idx
       item.animating = false
-      @_itemIndices[layerNum] = item.currentSlot = layerNum
+      @_itemIndices[idx] = item.currentSlot = idx
+
+      # Init click events
+      item.object
+      .addClass("#{@classes.isNew} #{@classes.item}")
+      .css
+        opacity: 0
+        width: item.sizeSmall.width
+        height: item.sizeSmall.height
+        left: @center.left - item.sizeFocused.width / 2
+        top: @center.top - item.sizeFocused.height / 2
+      .bind "mouseenter mouseleave click", (e) =>
+        switch e.type
+          when "mouseenter" then @_onMouseEnterItem item.id
+          when "mouseleave" then @_onMouseLeaveItem item.id
+          when "click"
+            if @_focusedItem.id isnt item.id
+              e.preventDefault() 
+              if not item.hidden and item.object.is ":visible"
+                @shiftTo item.currentSlot
+
+    _initItem: (idx) =>
+      item = @_getItem idx
+
+      item.object.removeClass @classes.loading
 
       # If item is an img tag, wrap with div
       if item.object.is "img"
-        item.object.wrap "<div/>"
-        item.object = item.object.parent()
-        item.icon = $ 'img:first', item.object
+        item.object = item.object.wrap "<div/>"
+        item.icon = $ "img:first", item.object
       
       if @captionsEnabled
         # Wrap other content as overlay caption
@@ -224,78 +278,113 @@
           
         # Or use title/alt texts as overlay caption
         unless captionContent?.length 
-          caption = item.object.attr('title') or item.icon?.attr('title') or item.icon?.attr('alt')  
+          caption = item.object.attr("title") or item.icon?.attr("title") or item.icon?.attr("alt")
           if caption
-            captionContent = $ "<p>#{caption}</p>"
+            # Create caption block
+            captionContent = $("<p/>").text caption
             item.object.append captionContent
 
         # Create overlay from caption if found
         if captionContent?.length
-          captionContent.wrapAll $('<div class="rondellCaption"></div>')
+          captionWrap = (captionContent.wrapAll("<div/>")).parent().addClass @classes.caption
+          item.overlay = captionWrap.addClass(@classes.overlay) if item.icon
 
-          if item.icon
-            item.overlay = $(".rondellCaption", item.object).addClass('overlay') 
-
-      # Init click events
-      item.object
-      .addClass("rondellItemNew #{@itemProperties.cssClass}")
-      .css
-        opacity: 0
-        width: item.sizeSmall.width
-        height: item.sizeSmall.height
-        left: @center.left - item.sizeFocused.width / 2
-        top: @center.top - item.sizeFocused.height / 2
-      .bind 'mouseenter mouseleave click', (e) =>
-        switch e.type
-          when 'mouseenter' then @_onMouseEnterItem item.id
-          when 'mouseleave' then @_onMouseLeaveItem item.id
-          when 'click'
-            if @_focusedItem.id isnt item.id
-              e.preventDefault() 
-              if not item.hidden and item.object.is(':visible')
-                @shiftTo item.currentSlot
-      
-      @loadedItems += 1
-      
-      @_start() if @loadedItems is @maxItems
+      if idx is @currentLayer
+        @layerFadeIn idx
+      else
+        @layerFadeOut idx, true
 
     _onMouseEnterItem: (idx) =>
       item = @_getItem idx
-      if not item.animating and not item.hidden and item.object.is(':visible')
-        item.object.addClass("rondellItemHovered").stop(true).animate
+      if not item.animating and not item.hidden and item.object.is(":visible")
+        item.object.addClass(@itemHoveredClass).stop(true).animate
             opacity: 1
           , @fadeTime, @funcEase
 
     _onMouseLeaveItem: (idx) =>
       item = @_getItem idx
-      item.object.removeClass "rondellItemHovered"
+      item.object.removeClass @classes.hovered
 
       if not item.animating and not item.hidden
         item.object.stop(true).animate
             opacity: item.lastTarget.opacity
           , @fadeTime, @funcEase
       
-    _onloadItem: (itemIndex, obj, copy=undefined) =>
-      icon = if obj.is('img') then obj else $('img:first', obj)
+    _loadItem: (idx, obj) =>
+      # Check whether item has an icon and load it asynchronous
+      icon = if obj.is("img") then obj else $("img:first", obj)
+
+      # Init item without an icon
+      @_addItem idx, 
+        object: obj 
+        icon: if icon.length then icon else null
+        small: false 
+        hidden: false
+        resizeable: not icon.hasClass @classes.noScale
+        croppedSize: @itemProperties.size
+        sizeSmall: @itemProperties.size
+        sizeFocused: @itemProperties.sizeFocused
+
+      if icon.length
+        # Add loading class
+        obj.addClass @classes.loading
+
+        if icon.width() > 0 or (icon[0].complete and icon[0].width > 0)
+          # Image is already loaded (i.e. from cache)
+          @_onloadItem idx
+        else 
+          # Create copy of the image and wait for the copy to load to get the real dimensions
+          iconCopy = $ "<img style=\"display:none\"/>"
+          $("body").append iconCopy
+
+          iconCopy.one("load", =>
+            @_onloadItem idx, iconCopy
+          ).one("error", =>
+            iconCopy.remove()
+            @_onItemError idx
+          ).attr "src", icon.attr("src")
+      else
+        @_initItem idx
+
+      # Start rondell after adding each item
+      @_start() if ++@loadedItems is @maxItems
+
+    _onItemError: (idx) =>
+      item = @_getItem idx
+
+      # Create error message with image url
+      errorString = @strings.loadingError.replace "%s", item.icon.attr("src")
+
+      # Remove broken icon
+      item.icon.remove()
+
+      # Display error message in item
+      item.object
+      .removeClass(@classes.loading)
+      .addClass(@classes.error)
+      .html "<p>#{errorString}</p>"
+
+    _onloadItem: (idx, iconCopy=undefined) =>
+      item = @_getItem idx
+      icon = item.icon
       
-      isResizeable = icon.hasClass @resizeableClass
-      layerNum = itemIndex
-    
       itemSize = @itemProperties.size
       focusedSize = @itemProperties.sizeFocused
       croppedSize = itemSize
-      
+
       # create size vars for the small and focused size
-      foWidth = smWidth = copy?.width() or copy?[0].width or icon[0].width or icon.width()
-      foHeight = smHeight = copy?.height() or copy?[0].height or icon[0].height or icon.height()
-      
+      foWidth = smWidth = iconWidth = iconCopy?.width() or iconCopy?[0].width or icon[0].width or icon.width()
+      foHeight = smHeight = iconHeight = iconCopy?.height() or iconCopy?[0].height or icon[0].height or icon.height()
+
       # Delete copy, not needed anymore
-      copy?.remove()
+      iconCopy?.remove()
       
       # Return if width and height can't be resolved
       return unless smWidth and smHeight
-    
-      if isResizeable
+
+      if item.resizeable
+        icon.addClass @classes.resizeable
+
         # Fit to small width
         smHeight *= itemSize.width / smWidth
         smWidth = itemSize.width
@@ -307,7 +396,9 @@
 
         # Cropping will fill the thumbnail size in both dimensions
         if @cropThumbnails
-          icon.wrap "<div class=\"crop\"/>"
+          cropWrap = $("<div/>").addClass @classes.crop
+          icon.wrap cropWrap
+
           croppedSize =
             width: itemSize.width
             height: itemSize.width / smWidth * smHeight
@@ -334,34 +425,20 @@
         foWidth = focusedSize.width
         foHeight = focusedSize.height
         
-      # Set vars in item array
-      @_initItem layerNum, 
-        object: obj 
-        icon: icon
-        small: false 
-        hidden: false
-        resizeable: isResizeable
+      # Update item with new size values and properties
+      $.extend item,
         croppedSize: croppedSize
+        iconWidth: iconWidth
+        iconHeight: iconHeight
         sizeSmall: 
           width: Math.round smWidth
           height: Math.round smHeight
         sizeFocused: 
           width: Math.round foWidth
           height: Math.round foHeight
-      
-    _loadItem: (itemIndex, obj) =>
-      icon = if obj.is('img') then obj else $('img:first', obj)
-
-      if icon.width() > 0 or (icon[0].complete and icon[0].width > 0)
-        # Image is already loaded (i.e. from cache)
-        @_onloadItem itemIndex, obj
-      else 
-        # Create copy of the image and wait for the copy to load to get the real dimensions
-        copy = $("<img style=\"display:none\"/>")
-        $('body').append(copy)
-        copy.one("load", =>
-          @_onloadItem(itemIndex, obj, copy)
-        ).attr("src", icon.attr("src"))
+        
+      # Finally init item
+      @_initItem idx
       
     _start: =>
       # Set currentlayer to the middle item or leave it be if set before and index exists
@@ -371,18 +448,24 @@
         @currentLayer = Math.max(0, Math.min(@currentLayer or Math.round(@maxItems / 2), @maxItems))
       
       # Set visibleItems to half the maxItems if set to auto
-      @visibleItems = Math.max(2, Math.floor(@maxItems / 2)) if @visibleItems is 'auto'
+      @visibleItems = Math.max(2, Math.floor(@maxItems / 2)) if @visibleItems is "auto"
       
       # Create controls
       controls = @controls
       if controls.enabled
-        @controls._shiftLeft = $('<a class="rondellControl rondellShiftLeft" href="#"/>').text(@strings.prev).click(@shiftLeft)
+        @controls._shiftLeft = $("<a href=\"#/\"/>")
+        .addClass("#{@classes.control} #{@classes.shiftLeft}")
+        .text(@strings.prev)
+        .click(@shiftLeft)
         .css
           left: controls.margin.x
           top: controls.margin.y
           zIndex: @zIndex + @maxItems + 2
           
-        @controls._shiftRight = $('<a class="rondellControl rondellShiftRight" href="#/"/>').text(@strings.next).click(@shiftRight)
+        @controls._shiftRight = $("<a href=\"#/\"/>")
+        .addClass("#{@classes.control} #{@classes.shiftRight}")
+        .text(@strings.next)
+        .click(@shiftRight)
         .css
           right: controls.margin.x
           top: controls.margin.y
@@ -394,17 +477,17 @@
       $(document).keydown @keyDown
         
       # Enable rondell traveling with mousewheel if plugin is available
-      @container.bind('mousewheel', @_onMousewheel) if @mousewheel.enabled and $.fn.mousewheel?
+      @container.bind("mousewheel", @_onMousewheel) if @mousewheel.enabled and $.fn.mousewheel?
       
       # Use modernizr feature detection to enable touch device support
       if @_onMobile()
         # Enable swiping
-        @container.bind('touchstart touchmove touchend', @_onTouch) if @touch.enabled
+        @container.bind("touchstart touchmove touchend", @_onTouch) if @touch.enabled
       else
         # Add hover and touch functions to container when we don't have touch support
-        @container.bind('mouseenter mouseleave', @_hover)
+        @container.bind("mouseenter mouseleave", @_hover)
         
-      @container.removeClass "initializing"
+      @container.removeClass @classes.initializing
           
       # Fire callback after initialization with rondell instance if callback was provided
       @initCallback?(@)
@@ -447,16 +530,16 @@
       touch = e.originalEvent.touches[0] or e.originalEvent.changedTouches[0]
       
       switch e.type
-        when 'touchstart'
+        when "touchstart"
           @touch._start = 
             x: touch.pageX
             y: touch.pageY
-        when 'touchmove'
+        when "touchmove"
           e.preventDefault() if @touch.preventDefaults
           @touch._end =
             x: touch.pageX
             y: touch.pageY
-        when 'touchend'
+        when "touchend"
           if @touch._start and @touch._end
             # Check if delta x is greater than our threshold for swipe detection
             changeX = @touch._end.x - @touch._start.x
@@ -480,7 +563,7 @@
       
       # Start or stop auto rotation if enabled
       paused = @autoRotation.paused
-      if e.type is 'mouseenter'
+      if e.type is "mouseenter"
         # Set active rondell id if hovered
         Rondell.activeRondell = @id
         
@@ -522,7 +605,7 @@
         display: "block"
       .animate newTarget, @fadeTime, @funcEase, =>
         item.animating = false
-        item.object.addClass "rondellItemFocused"
+        item.object.addClass @classes.focused
         @_autoShiftInit()
         @showCaption(layerNum) if @hovering or @alwaysShowCaption or @_onMobile()
 
@@ -537,13 +620,13 @@
 
       # If icon isn't resizeable animate margins
       if item.icon and not item.resizeable
-        margin = (@itemProperties.sizeFocused.height - item.icon.height()) / 2
+        margin = (@itemProperties.sizeFocused.height - item.iconHeight) / 2
         item.icon.stop(true).animate
             marginTop: margin
             marginBottom: margin
           , @fadeTime
           
-    layerFadeOut: (layerNum) =>
+    layerFadeOut: (layerNum, force=false) =>
       item = @_getItem(layerNum)
 
       # Make sure the items caption is hidden
@@ -576,12 +659,11 @@
         
       # Smooth animation when item is visible
       if layerDist <= @visibleItems
-
         newTarget.opacity = @funcOpacity layerDiff, @, layerNum
 
         # Do nothing if target hasn't changed
         lastTarget = item.lastTarget
-        return if lastTarget \
+        return if not force and lastTarget \
           and lastTarget.width is newTarget.width \
           and lastTarget.height is newTarget.height \
           and lastTarget.left is newTarget.left \
@@ -592,7 +674,8 @@
         item.hidden = false
 
         # Move item to it's new target
-        item.object.removeClass("rondellItemNew rondellItemFocused").stop(true)
+        item.object.stop(true)
+        .removeClass("#{@classes.isNew} #{@classes.focused}")
         .css
           zIndex: newZ
           display: "block"
@@ -606,23 +689,25 @@
             item.hidden = false
             item.object.css "display", "block"
 
-        # Icon is animated separately if cropping is enabled        
-        item.icon.stop(true).animate 
-            marginTop: (@itemProperties.size.height - item.croppedSize.height) / 2
-            marginLeft: (@itemProperties.size.width - item.croppedSize.width) / 2
-            width: item.croppedSize.width
-            height: item.croppedSize.height
-          , fadeTime, @funcEase if @cropThumbnails
+        # Icon is animated separately if cropping is enabled
+        if @cropThumbnails
+          item.icon.stop(true).animate 
+              marginTop: (@itemProperties.size.height - item.croppedSize.height) / 2
+              marginLeft: (@itemProperties.size.width - item.croppedSize.width) / 2
+              width: item.croppedSize.width
+              height: item.croppedSize.height
+            , fadeTime, @funcEase 
 
-        # Recenter icon if unless it's resizeable
+        # Recenter icon unless it's resizeable
         unless item.small
           item.small = true
-          if item.icon and not item.resizeable
-            margin = (@itemProperties.size.height - item.icon.height()) / 2
-            item.icon.stop(true).animate
-                marginTop: margin
-                marginBottom: margin
-              , fadeTime
+
+        if item.icon and not item.resizeable
+          margin = (@itemProperties.size.height - item.iconHeight) / 2
+          item.icon.stop(true).animate
+              marginTop: margin
+              marginBottom: margin
+            , fadeTime
 
       else if item.hidden
         # Update position even if out of view to fix animation when reappearing
@@ -778,15 +863,15 @@
   class RondellScrollbar
     
     constructor: (container, options) ->
-      @container = container.addClass "rondell-scrollbar"
-      
       $.extend true, @, $.rondell.defaults.scrollbar, options
+
+      @container = container.addClass @classes.container
       
       @_drag =
         _dragging: false
         _lastDragEvent: 0
 
-      @container.addClass("rondell-scrollbar-#{@orientation}").css @style
+      @container.addClass("#{@classes.container}-#{@orientation}").css @style
         
       @_initControls()
 
@@ -796,16 +881,20 @@
       @setPosition @position, false, true
 
     _initControls: =>
-      @scrollLeftControl = $("<div class=\"rondell-scrollbar-left\"><span class=\"rondell-scrollbar-inner\">&nbsp;</span></div>")
-        .bind "click", @scrollLeft
+      scrollControlTemplate = "<div><span class=\"#{@classes.scrollInner}\">&nbsp;</span></div>"
+
+      @scrollLeftControl = $(scrollControlTemplate)
+      .addClass(@classes.scrollLeft)
+      .bind "click", @scrollLeft
         
-      @scrollRightControl = $("<div class=\"rondell-scrollbar-right\"><span class=\"rondell-scrollbar-inner\">&nbsp;</span></div>")
-        .bind "click", @scrollRight
+      @scrollRightControl = $(scrollControlTemplate)
+      .addClass(@classes.scrollRight)
+      .bind "click", @scrollRight
         
-      @scrollControl = $("<div class=\"rondell-scrollbar-control\">&nbsp;</div>").css
+      @scrollControl = $("<div>&nbsp;</div>").addClass(@classes.control).css
         left: @container.innerWidth() / 2
         
-      @scrollBackground = $("<div class=\"rondell-scrollbar-background\"/>")
+      @scrollBackground = $("<div/>").addClass @classes.background
         
       @container.bind "mousedown click", @onControlEvent
       $(window).bind "mousemove mouseup", @onWindowEvent
@@ -851,7 +940,7 @@
       if e.type is "mouseup"
         # Release drag on mouseup
         @_drag._dragging = false
-        @scrollControl.removeClass "rondell-scrollbar-dragging"
+        @scrollControl.removeClass @classes.dragging
       else if e.type is "mousemove"
         # Move scroll dot to new position
         newX = 0
@@ -869,7 +958,7 @@
       if e.type is "mousedown" and e.target is @scrollControl[0]
         # Start drag event
         @_drag._dragging = true
-        @scrollControl.addClass "rondell-scrollbar-dragging"
+        @scrollControl.addClass @classes.dragging
       else if e.type is "click" and (e.target is @scrollBackground[0] or e.target is @container[0])
         # Jump to new position when clicking scroller background
         clickTarget = e.pageX - @container.offset().left
@@ -902,21 +991,7 @@
      
     # Setup each item
     @each (idx) ->
-      obj = $(@)
-      itemIndex = idx + 1
-      
-      if obj.is('img') or $('img:first', obj).length
-        rondell._loadItem itemIndex, obj
-      else
-        # Init item without an icon
-        rondell._initItem itemIndex, 
-          object: obj 
-          icon: null
-          small: false 
-          hidden: false
-          resizeable: false
-          sizeSmall: rondell.itemProperties.size
-          sizeFocused: rondell.itemProperties.sizeFocused
+      rondell._loadItem idx + 1, $(@)
         
     # Return rondell instance
     rondell
