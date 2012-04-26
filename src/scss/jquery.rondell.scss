@@ -1,14 +1,14 @@
 @import "mixins";
 
 // container which holds all items
-.rondellContainer {
+.rondell-container {
   overflow: hidden;
   display: block;
   position: relative;
   
   font-size: 12px;
   
-  &.initializing {
+  &.rondell-initializing {
     background: url('../images/loader.gif') no-repeat 50% 50%;
     
     * { display:none; }
@@ -16,7 +16,7 @@
 }
 
 // design for each item
-.rondellItem {
+.rondell-item {
   position: absolute; 
   display: block; 
   border: 1px solid #ccc; 
@@ -29,19 +29,19 @@
 
   a { cursor:pointer; color: #fff; text-decoration: none; }
 
-  .crop {
+  .rondell-item-crop {
     @include border-radius(inherit);
     overflow: hidden;
     width: 100%;
     height: 100%;
   }
-    
+  
   img {
     vertical-align: bottom; 
     display: block; 
     margin: 0 auto;
     
-    &.resizeable {
+    &.rondell-item-resizeable {
       width: 100%; 
       height: 100%;
     }
@@ -54,17 +54,34 @@
   } 
 }
 
-.rondellItemFocused {
-  &, a { cursor: auto; }
+.rondell-item-loading {
+  background: #d9d9d9 url('../images/item-loader.gif') no-repeat center center !important;
+  @include border-radius(5px);
 
-  img.rondellCropped {
-    width: 100% !important;
-    height: 100% !important;
+  * {
+    display: none !important;
   }
 }
 
+.rondell-item-error {
+  background: #b33 !important;
+  background-color: rgba(200, 0, 0, 0.1) !important;
+  @include border-radius(5px);
+
+  p {
+    color: #333;
+    text-align: center;
+    font-size: 18px;
+    padding: 20px;
+  }
+}
+
+.rondell-item-focused {
+  &, a { cursor: auto; }
+}
+
 // caption element over selected item
-.rondellCaption {
+.rondell-caption {
   position: absolute; 
   margin: 5px; 
   padding: 5px; 
@@ -83,7 +100,7 @@
 
   p { margin: 4px 0; }
   
-  &.overlay {
+  &.rondell-item-overlay {
     top: auto;
     position: absolute;
     padding: 3px 8px; 
@@ -97,7 +114,7 @@
 }
 
 // controls design
-.rondellControl {
+.rondell-control {
   position: absolute;
   font-size: 12px; 
   font-weight: bold; 
