@@ -3,7 +3,7 @@
   
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
   @category jQuery plugin
-  @copyright (c) 2009-2011 Sebastian Helzle (www.sebastianhelzle.net)
+  @copyright (c) 2009-2012 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
 ###
 
@@ -13,7 +13,7 @@
   
     carousel:
       autoRotation:
-        enabled: true
+        enabled: false
         direction: 1
         once: false
         delay: 5000
@@ -28,8 +28,8 @@
           y: 260
       randomStart: true
       currentLayer: 1
-      funcSize: (layerDiff, rondell) ->
-        (rondell.maxItems / Math.abs(layerDiff)) / rondell.maxItems
+      funcSize: (l, r, i) ->
+        r.maxItems / Math.abs(l) / r.maxItems
       
     products:
       repeating: false
@@ -84,12 +84,12 @@
         size:  
           width: 400 
           height: 400
-      funcTop: (layerDiff, rondell) ->
-          rondell.center.top - rondell.itemProperties.size.height / 2
-      funcLeft: (layerDiff, rondell) ->
-          rondell.center.left + layerDiff * rondell.itemProperties.size.width
-      funcDiff: (layerDiff, rondell) ->
-          Math.abs(layerDiff) + 0.5
+      funcTop: (l, r, i) ->
+          r.center.top - r.itemProperties.size.height / 2
+      funcLeft: (l, r, i) ->
+          r.center.left + l * r.itemProperties.size.width
+      funcDiff: (l, r, i) ->
+          Math.abs(l) + 0.5
       
     cubic:
       center: 
@@ -107,12 +107,12 @@
         margin:
           x: 70
           y: 330
-      funcTop: (layerDiff, rondell) ->
-          rondell.center.top - rondell.itemProperties.size.height / 2 + Math.pow(layerDiff / 2, 3) * rondell.radius.x
-      funcLeft: (layerDiff, rondell) ->
-          rondell.center.left - rondell.itemProperties.size.width / 2 + Math.sin(layerDiff) * rondell.radius.x
-      funcSize: (layerDiff, rondell) ->
-          Math.pow((Math.PI - Math.abs(layerDiff)) / Math.PI, 3)
+      funcTop: (l, r, i) ->
+          r.center.top - r.itemProperties.size.height / 2 + Math.pow(l / 2, 3) * r.radius.x
+      funcLeft: (l, r, i) ->
+          r.center.left - r.itemProperties.size.width / 2 + Math.sin(l) * r.radius.x
+      funcSize: (l, r, i) ->
+          Math.pow((Math.PI - Math.abs(l)) / Math.PI, 3)
           
     gallery:
       # Custom options
@@ -254,11 +254,11 @@
         size:
           width: 600
           height: 300
-      funcTop: (layerDiff, rondell) ->
+      funcTop: (l, r, i) ->
         0
-      funcLeft: (layerDiff, rondell) ->
+      funcLeft: (l, r, i) ->
         0
-      funcOpacity: (layerDist, rondell) ->
+      funcOpacity: (l, r, i) ->
         0.02
           
 )(jQuery) 
