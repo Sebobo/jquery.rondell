@@ -60,9 +60,27 @@ append content
       Here's how it's done
 
     pre.
-      $("#rondellScroller > a").rondell({
-        preset: 'products'
-      });
+      <div id="rondellScroller">
+        <a href="#" title="Dummy link to the cloud">
+          <img src="images/products/cloud.png" alt="cloud product" class="no-scale">
+          <h5>Your own cloud</h5>
+          <p>Buy your own cloud to do some really complicated stuff very fast!</p>
+        </a>
+        <a href="#" title="Dummy link to the router">
+          <img src="images/products/router.png" alt="router product" class="no-scale">
+          <h5>The new router</h5>
+          <p>The router which can connect to anything without cables!</p>
+        </a>
+
+        ...
+        
+      </div>
+
+      <script type="text/javascript">
+        $("#rondellScroller > a").rondell({
+          preset: 'products'
+        });
+      </script>
 
   br.clear
 

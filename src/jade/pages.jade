@@ -112,9 +112,22 @@ append content
       Here's how it's done
 
     pre.
-      $("#rondellPages > div").rondell({
-        preset: "pages"
-      });
+      <div id="rondellPages">
+        <div>
+          <img src="images/page/water.png" alt="Waterfall">
+          <h2>Waterfall</h2>
+          <p>...</p>
+        </div>
+
+        ...
+
+      </div>
+
+      <script type="text/javascript">
+        $("#rondellPages > div").rondell({
+          preset: "pages"
+        });
+      </script>
             
   br.clear
 

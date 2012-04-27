@@ -83,9 +83,27 @@
 products on a company page or webshop.</p>
 
 <p>Here&#39;s how it&#39;s done</p>
-        <pre>$(&quot;#rondellScroller &gt; a&quot;).rondell({
-  preset: 'products'
-});
+        <pre>&lt;div id=&quot;rondellScroller&quot;&gt;
+  &lt;a href=&quot;#&quot; title=&quot;Dummy link to the cloud&quot;&gt;
+    &lt;img src=&quot;images/products/cloud.png&quot; alt=&quot;cloud product&quot; class=&quot;no-scale&quot;&gt;
+    &lt;h5&gt;Your own cloud&lt;/h5&gt;
+    &lt;p&gt;Buy your own cloud to do some really complicated stuff very fast!&lt;/p&gt;
+  &lt;/a&gt;
+  &lt;a href=&quot;#&quot; title=&quot;Dummy link to the router&quot;&gt;
+    &lt;img src=&quot;images/products/router.png&quot; alt=&quot;router product&quot; class=&quot;no-scale&quot;&gt;
+    &lt;h5&gt;The new router&lt;/h5&gt;
+    &lt;p&gt;The router which can connect to anything without cables!&lt;/p&gt;
+  &lt;/a&gt;
+
+  ...
+
+&lt;/div&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+  $(&quot;#rondellScroller &gt; a&quot;).rondell({
+    preset: 'products'
+  });
+&lt;/script&gt;
 
 </pre>
       </div><br class="clear">

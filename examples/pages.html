@@ -142,9 +142,22 @@ And if the item contains an image, the caption is displayed as overlay.</p>
 Automatic rotation is disabled in this demo.</p>
 
 <p>Here&#39;s how it&#39;s done</p>
-        <pre>$(&quot;#rondellPages &gt; div&quot;).rondell({
-  preset: &quot;pages&quot;
-});
+        <pre>&lt;div id=&quot;rondellPages&quot;&gt;
+  &lt;div&gt;
+    &lt;img src=&quot;images/page/water.png&quot; alt=&quot;Waterfall&quot;&gt;
+    &lt;h2&gt;Waterfall&lt;/h2&gt;
+    &lt;p&gt;...&lt;/p&gt;
+  &lt;/div&gt;
+
+  ...
+
+&lt;/div&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+  $(&quot;#rondellPages &gt; div&quot;).rondell({
+    preset: &quot;pages&quot;
+  });
+&lt;/script&gt;
 
 </pre>
       </div><br class="clear">

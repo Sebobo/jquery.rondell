@@ -32,49 +32,53 @@ append content
       Here's how it's done
 
     pre.
-      var galleryContainer = $("#rondellGallery");
-         
-      $.ajax({
-        url: 'http://www.wookmark.com/api/json',
-        dataType: 'jsonp',
-        success: function(json, text, xhqr) {
-          if (text == 'success') {
-            var items = json, newItem, newImg;
-                    
-            // Parsing returned json data
-            $.each(items, function(idx, item) {
-              if (idx >= 20) return false;
-                 
-              // Create link container
-              newItem = $('&lt;a/&gt;')
-              .css('opacity', 0)
-              .attr({
-                href: item.url,
-                title: item.title,
-                target: '_blank'
+      <div id="rondellGallery" style="height:400px;">&nbsp;</div>
+      
+      <script type="text/javascript">
+        var galleryContainer = $("#rondellGallery");
+           
+        $.ajax({
+          url: 'http://www.wookmark.com/api/json',
+          dataType: 'jsonp',
+          success: function(json, text, xhqr) {
+            if (text == 'success') {
+              var items = json, newItem, newImg;
+                      
+              // Parsing returned json data
+              $.each(items, function(idx, item) {
+                if (idx >= 20) return false;
+                   
+                // Create link container
+                newItem = $('&lt;a/&gt;')
+                .css('opacity', 0)
+                .attr({
+                  href: item.url,
+                  title: item.title,
+                  target: '_blank'
+                });
+                          
+                // Create image
+                newImg = $('&lt;img/&gt;')
+                .attr({
+                  src: item.preview,
+                  alt: item.title,
+                  width: item.width,
+                  height: item.height
+                });
+                          
+                // Append image to link and link to container for the rondell
+                newItem.append(newImg);
+                galleryContainer.append(newItem);
               });
-                        
-              // Create image
-              newImg = $('&lt;img/&gt;')
-              .attr({
-                src: item.preview,
-                alt: item.title,
-                width: item.width,
-                height: item.height
+                          
+              // Create gallery 
+              $('a', galleryContainer).rondell({
+                preset: 'gallery'                             
               });
-                        
-              // Append image to link and link to container for the rondell
-              newItem.append(newImg);
-              galleryContainer.append(newItem);
-            });
-                        
-            // Create gallery 
-            $('a', galleryContainer).rondell({
-              preset: 'gallery'                             
-            });
+            }
           }
-        }
-      });
+        });
+      </script>
             
   br.clear
 
