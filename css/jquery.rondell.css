@@ -489,6 +489,13 @@
   background-image: -o-linear-gradient(top, #666666, #555555);
   background-image: linear-gradient(top, #666666, #555555);
 }
+.rondell-theme-slider .rondell-control span {
+  background: url("../images/arrows.png") no-repeat 0 0;
+  display: block;
+  height: 16px;
+  width: 16px;
+  margin-top: 7px;
+}
 .rondell-theme-slider .rondell-control:hover {
   background-color: #888;
   background-repeat: repeat-x;
@@ -503,6 +510,9 @@
   -o-border-radius: 0 15px 15px 0;
   -moz-border-radius: 0 15px 15px 0;
   -webkit-border-radius: 0 15px 15px 0;
+}
+.rondell-theme-slider .rondell-control.rondell-shift-left span {
+  background-position: 0 -16px;
 }
 .rondell-theme-slider .rondell-control.rondell-shift-right {
   border-radius: 15px 0 0 15px;

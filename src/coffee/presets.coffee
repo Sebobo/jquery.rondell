@@ -247,6 +247,9 @@
         margin: 
           x: -1
           y: 135
+      strings:
+        prev: '<span>&nbsp;</span>'
+        next: '<span>&nbsp;</span>'
       itemProperties:
         sizeFocused:
           width: 600

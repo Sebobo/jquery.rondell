@@ -158,6 +158,14 @@
     background-color: rbga(50, 50, 50, 0.2);    
     border: 1px solid #555;
     @include linear-gradient(#666666, #555555);
+
+    span {
+      background: url('../images/arrows.png') no-repeat 0 0;
+      display: block;
+      height: 16px;
+      width: 16px;
+      margin-top: 7px;
+    }
   
     &:hover {
       background-color: #888;
@@ -165,6 +173,10 @@
     }
     &.rondell-shift-left {
       @include border-radius(0 15px 15px 0);
+
+      span {
+        background-position: 0 -16px;
+      }
     }
     &.rondell-shift-right {
       @include border-radius(15px 0 0 15px);
