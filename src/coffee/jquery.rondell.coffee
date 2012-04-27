@@ -241,6 +241,11 @@
       item.animating = false
       @_itemIndices[idx] = item.currentSlot = idx
 
+      # If item is an img tag, wrap with div
+      if item.object.is "img"
+        item.object = item.object.wrap("<div/>").parent()
+        item.icon = $ "img:first", item.object
+
       # Init click events
       item.object
       .addClass("#{@classes.isNew} #{@classes.item}")
@@ -264,11 +269,6 @@
       item = @_getItem idx
 
       item.object.removeClass @classes.loading
-
-      # If item is an img tag, wrap with div
-      if item.object.is "img"
-        item.object = item.object.wrap "<div/>"
-        item.icon = $ "img:first", item.object
       
       if @captionsEnabled
         # Wrap other content as overlay caption
@@ -289,6 +289,7 @@
           captionWrap = (captionContent.wrapAll("<div/>")).parent().addClass @classes.caption
           item.overlay = captionWrap.addClass(@classes.overlay) if item.icon
 
+      # Move item to initial position
       if idx is @currentLayer
         @layerFadeIn idx
       else
@@ -455,7 +456,7 @@
       if controls.enabled
         @controls._shiftLeft = $("<a href=\"#/\"/>")
         .addClass("#{@classes.control} #{@classes.shiftLeft}")
-        .text(@strings.prev)
+        .html(@strings.prev)
         .click(@shiftLeft)
         .css
           left: controls.margin.x
@@ -464,7 +465,7 @@
           
         @controls._shiftRight = $("<a href=\"#/\"/>")
         .addClass("#{@classes.control} #{@classes.shiftRight}")
-        .text(@strings.next)
+        .html(@strings.next)
         .click(@shiftRight)
         .css
           right: controls.margin.x

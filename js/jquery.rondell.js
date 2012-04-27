@@ -345,6 +345,10 @@
         item.id = idx;
         item.animating = false;
         this._itemIndices[idx] = item.currentSlot = idx;
+        if (item.object.is("img")) {
+          item.object = item.object.wrap("<div/>").parent();
+          item.icon = $("img:first", item.object);
+        }
         return item.object.addClass("" + this.classes.isNew + " " + this.classes.item).css({
           opacity: 0,
           width: item.sizeSmall.width,
@@ -372,10 +376,6 @@
         var caption, captionContent, captionWrap, item, _ref, _ref1, _ref2;
         item = this._getItem(idx);
         item.object.removeClass(this.classes.loading);
-        if (item.object.is("img")) {
-          item.object = item.object.wrap("<div/>");
-          item.icon = $("img:first", item.object);
-        }
         if (this.captionsEnabled) {
           captionContent = (_ref = item.icon) != null ? _ref.siblings() : void 0;
           if (!((captionContent != null ? captionContent.length : void 0) || item.icon) && item.object.children().length) {
@@ -549,12 +549,12 @@
         }
         controls = this.controls;
         if (controls.enabled) {
-          this.controls._shiftLeft = $("<a href=\"#/\"/>").addClass("" + this.classes.control + " " + this.classes.shiftLeft).text(this.strings.prev).click(this.shiftLeft).css({
+          this.controls._shiftLeft = $("<a href=\"#/\"/>").addClass("" + this.classes.control + " " + this.classes.shiftLeft).html(this.strings.prev).click(this.shiftLeft).css({
             left: controls.margin.x,
             top: controls.margin.y,
             zIndex: this.zIndex + this.maxItems + 2
           });
-          this.controls._shiftRight = $("<a href=\"#/\"/>").addClass("" + this.classes.control + " " + this.classes.shiftRight).text(this.strings.next).click(this.shiftRight).css({
+          this.controls._shiftRight = $("<a href=\"#/\"/>").addClass("" + this.classes.control + " " + this.classes.shiftRight).html(this.strings.next).click(this.shiftRight).css({
             right: controls.margin.x,
             top: controls.margin.y,
             zIndex: this.zIndex + this.maxItems + 2
@@ -1456,6 +1456,10 @@
             x: -1,
             y: 135
           }
+        },
+        strings: {
+          prev: '<span>&nbsp;</span>',
+          next: '<span>&nbsp;</span>'
         },
         itemProperties: {
           sizeFocused: {
