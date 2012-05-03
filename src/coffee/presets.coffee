@@ -19,6 +19,7 @@
         delay: 5000
       radius: 
         x: 240
+        y: 50
       center:
         left: 340 
         top: 160
@@ -29,7 +30,7 @@
       randomStart: true
       currentLayer: 1
       funcSize: (l, r, i) ->
-        r.maxItems / Math.abs(l) / r.maxItems
+        1 / Math.abs(l)
       
     products:
       repeating: false
