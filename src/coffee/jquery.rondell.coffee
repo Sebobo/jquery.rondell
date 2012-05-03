@@ -27,7 +27,6 @@
         small: "rondell-item-small"
         hidden: "rondell-item-hidden"
         loading: "rondell-item-loading"
-        isNew: "rondell-item-new"
         hovered: "rondell-item-hovered"
         overlay: "rondell-item-overlay"
         focused: "rondell-item-focused"
@@ -201,6 +200,9 @@
 
         @scrollbar._instance = new RondellScrollbar(scrollbarContainer, @scrollbar)
     
+    log: (msg) ->
+      console?.log msg
+
     # Animation functions, can be different for each rondell
     funcLeft: (l, r, i) ->
       r.center.left - r.itemProperties.size.width / 2.0 + Math.sin(l) * r.radius.x
@@ -235,11 +237,14 @@
 
     _addItem: (idx, item) =>
       @items[idx - 1] = item
+      @_itemIndices[idx] = idx
 
       # Add some private variables
-      item.id = idx
-      item.animating = false
-      @_itemIndices[idx] = item.currentSlot = idx
+      $.extend item,
+        id: idx
+        animating: false
+        isNew: true
+        currentSlot: idx
 
       # If item is an img tag, wrap with div
       if item.object.is "img"
@@ -248,7 +253,8 @@
 
       # Init click events
       item.object
-      .addClass("#{@classes.isNew} #{@classes.item}")
+      .addClass("#{@classes.item}")
+      .data("item", item)
       .css
         opacity: 0
         width: item.sizeSmall.width
@@ -676,7 +682,7 @@
 
         # Move item to it's new target
         item.object.stop(true)
-        .removeClass("#{@classes.isNew} #{@classes.focused}")
+        .removeClass(@classes.focused)
         .css
           zIndex: newZ
           display: "block"
