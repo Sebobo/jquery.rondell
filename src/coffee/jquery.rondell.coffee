@@ -214,6 +214,31 @@
       if r.visibleItems > 1 then Math.max(0, 1.0 - Math.pow(l / r.visibleItems, 2)) else 0
     funcSize: (l, r, i) ->
       1
+
+    fitContainer: (r) ->
+      parentContainer = r.container.parent()
+      newWidth = parentContainer.innerWidth()
+      newHeight = parentContainer.innerHeight()
+
+      r.log newWidth
+      r.log newHeight
+
+      $.extend true, r,
+        size:
+          width: newWidth
+          height: newHeight
+        center:
+          left: newWidth / 2
+          top: newHeight / 2
+        radius:
+          x: newWidth / 2 - r.itemProperties.size.width
+          y: newHeight / 2 - r.itemProperties.size.height
+
+      r.container.css
+        width: newWidth
+        height: newHeight
+
+      r.shiftTo r.currentLayer
     
     showCaption: (idx) => 
       if @captionsEnabled
@@ -261,15 +286,6 @@
         height: item.sizeSmall.height
         left: @center.left - item.sizeFocused.width / 2
         top: @center.top - item.sizeFocused.height / 2
-      .bind "mouseenter mouseleave click", (e) =>
-        switch e.type
-          when "mouseenter" then @_onMouseEnterItem item.id
-          when "mouseleave" then @_onMouseLeaveItem item.id
-          when "click"
-            if @_focusedItem.id isnt item.id
-              e.preventDefault() 
-              if not item.hidden and item.object.is ":visible"
-                @shiftTo item.currentSlot
 
     _initItem: (idx) =>
       item = @_getItem idx
@@ -479,20 +495,8 @@
           zIndex: @zIndex + @maxItems + 2
           
         @container.append @controls._shiftLeft, @controls._shiftRight
-        
-      # Attach keydown event to document for each rondell instance
-      $(document).keydown @keyDown
-        
-      # Enable rondell traveling with mousewheel if plugin is available
-      @container.bind("mousewheel", @_onMousewheel) if @mousewheel.enabled and $.fn.mousewheel?
-      
-      # Use modernizr feature detection to enable touch device support
-      if @_onMobile()
-        # Enable swiping
-        @container.bind("touchstart touchmove touchend", @_onTouch) if @touch.enabled
-      else
-        # Add hover and touch functions to container when we don't have touch support
-        @container.bind("mouseenter mouseleave", @_hover)
+
+      @bindEvents()
         
       @container.removeClass @classes.initializing
           
@@ -502,7 +506,40 @@
       # Move items to starting positions
       @_focusedItem ?= @_getItem @currentLayer
       @shiftTo @currentLayer
+
+    bindEvents: =>
+      # Attach keydown event to document for each rondell instance
+      $(document).keydown @keyDown
+        
+      # Enable rondell traveling with mousewheel if plugin is available
+      if @mousewheel.enabled and $.fn.mousewheel?
+        @container.bind "mousewheel", @_onMousewheel
       
+      # Use modernizr feature detection to enable touch device support
+      if @_onMobile()
+        # Enable swiping
+        @container.bind("touchstart touchmove touchend", @_onTouch) if @touch.enabled
+      else
+        # Add hover and touch functions to container when we don't have touch support
+        @container.bind "mouseenter mouseleave", @_hover
+
+      rondell = @
+
+      # Delegate click and mouse events events to rondell items      
+      @container
+      .delegate ".#{@classes.item}", "click", (e) ->
+        item = $(@).data "item"
+        unless rondell._focusedItem.id is item.id
+          e.preventDefault() 
+          if not item.hidden and item.object.is ":visible"
+            rondell.shiftTo item.currentSlot
+      .delegate ".#{@classes.item}", "mouseenter mouseleave", (e) ->
+          item = $(@).data "item"
+          if e.type is "mouseenter" 
+            rondell._onMouseEnterItem item.id
+          else 
+            rondell._onMouseLeaveItem item.id
+
     _onMobile: ->
       ###
       Mobile device detection. 
@@ -515,7 +552,7 @@
       Allows rondell traveling with mousewheel.
       Requires mousewheel plugin for jQuery. 
       ###
-      return unless (@mousewheel.enabled and @isFocused())
+      return unless @mousewheel.enabled and @isFocused()
 
       now = (new Date()).getTime()
       return if now - @mousewheel._lastShift < @mousewheel.minTimeBetweenShifts
@@ -892,21 +929,23 @@
 
       @scrollLeftControl = $(scrollControlTemplate)
       .addClass(@classes.scrollLeft)
-      .bind "click", @scrollLeft
+      .click @scrollLeft
         
       @scrollRightControl = $(scrollControlTemplate)
       .addClass(@classes.scrollRight)
-      .bind "click", @scrollRight
+      .click @scrollRight
         
-      @scrollControl = $("<div>&nbsp;</div>").addClass(@classes.control).css
-        left: @container.innerWidth() / 2
+      @scrollControl = $("<div class=\"#{@classes.control}\">&nbsp;</div>")
+      .css("left", @container.innerWidth() / 2)
+      .mousedown @onDragStart
         
-      @scrollBackground = $("<div/>").addClass @classes.background
+      @scrollBackground = $ "<div class=\"#{@classes.background}\"/>"
         
-      @container.bind "mousedown click", @onControlEvent
-      $(window).bind "mousemove mouseup", @onWindowEvent
-        
+      # Append scrollbar controls to dom
       @container.append @scrollBackground, @scrollLeftControl, @scrollRightControl, @scrollControl
+
+      # Attach scrollbar click event
+      @container.add(@scrollBackground).click @onScrollbarClick
       
     updatePosition: (position, fireCallback=true) =>
       return if not position or position is @position or position < @start or position > @end
@@ -920,7 +959,9 @@
       return if x < @_minX or x > @_maxX
       
       scroller = @scrollControl.stop true
-      target = { left: x }
+      target =
+        left: x
+
       if animate
         scroller.animate target, @animationDuration, @easing
       else
@@ -941,36 +982,38 @@
       newX = Math.round((position - @start) / (@end - @start) * (@_maxX - @_minX)) + @_minX
       @scrollTo newX, true, fireCallback
 
-    onWindowEvent: (e) =>
+    onDrag: (e) =>
+      e.preventDefault()
       return unless @_drag._dragging
 
       if e.type is "mouseup"
         # Release drag on mouseup
         @_drag._dragging = false
         @scrollControl.removeClass @classes.dragging
-      else if e.type is "mousemove"
+        # Bind mouse events to window for dragging
+        $(window).unbind "mousemove mouseup", @onDrag
+      else
         # Move scroll dot to new position
         newX = 0
-        if @orientation is "top" or @orientation is "bottom"
+        if @orientation in ["top", "bottom"]
           newX = e.pageX - @container.offset().left
         else
           newX = e.pageY - @container.offset().top
         newX = Math.max(@_minX, Math.min(@_maxX, newX))
 
         @scrollTo newX, false
-      
-    onControlEvent: (e) =>
-      e.preventDefault()
 
-      if e.type is "mousedown" and e.target is @scrollControl[0]
-        # Start drag event
-        @_drag._dragging = true
-        @scrollControl.addClass @classes.dragging
-      else if e.type is "click" and (e.target is @scrollBackground[0] or e.target is @container[0])
-        # Jump to new position when clicking scroller background
-        clickTarget = e.pageX - @container.offset().left
-        @scrollTo clickTarget
-        return false
+    onDragStart: (e) =>
+      e.preventDefault()
+      # Start drag event
+      @_drag._dragging = true
+      @scrollControl.addClass @classes.dragging
+      # Bind mouse events to window for dragging
+      $(window).bind "mousemove mouseup", @onDrag
+      
+    onScrollbarClick: (e) =>
+      # Jump to new position when clicking scroller background
+      @scrollTo e.pageX - @container.offset().left
       
     scrollLeft: (e) =>
       e.preventDefault()
