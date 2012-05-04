@@ -77,8 +77,10 @@ append content
       </div>
 
       <script type="text/javascript">
-        $("#rondellScroller > a").rondell({
-          preset: 'products'
+        $(function() {
+          $("#rondellScroller > *").rondell({
+            preset: 'products'
+          });
         });
       </script>
 
@@ -87,5 +89,5 @@ append content
 append js
   :coffeescript
     $ ->
-      $("#rondellScroller > a").rondell
+      $("#rondellScroller > *").rondell
         preset: 'products'

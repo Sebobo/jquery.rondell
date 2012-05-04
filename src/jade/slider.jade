@@ -42,8 +42,10 @@ append content
       </div>
 
       <script type="text/javascript">
-        $('#rondellSlider > img').rondell({
-          preset: 'slider'
+        $(function() {
+          $('#rondellSlider > *').rondell({
+            preset: 'slider'
+          });
         });
       </script>
             
@@ -52,5 +54,5 @@ append content
 append js
   :coffeescript
     $ ->
-      $('#rondellSlider > img').rondell
+      $('#rondellSlider > *').rondell
         preset: 'slider'

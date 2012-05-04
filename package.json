@@ -1,6 +1,6 @@
 {
     "name": "rondell",
-    "version": "0.9.1",
+    "version": "0.9.2",
     "title": "jQuery.Rondell()",
     "author": {
         "name": "Sebastian Helzle",
@@ -26,10 +26,11 @@
     "contributors": [
     ],
     "files": [
-        "lib",
+        "js",
         "css",
+        "examples",
         "images",
-        "scss",
+        "src",
         "index.html",
         "README.md",
         "Cakefile"

@@ -48,48 +48,28 @@ append content
       <div id="rondellThumbnails" style="height:430px;">&nbsp;</div>
 
       <script type="text/javascript">
-        var rondellContainer = $("#rondellThumbnails");
-           
-        $.ajax({
-          url: 'http://www.wookmark.com/api/json',
-          dataType: 'jsonp',
-          success: function(json, text, xhqr) {
-            if (text == 'success') {
-              var items = json, newItem, newImg;
-                      
-              // Parsing returned json data
-              $.each(items, function(idx, item) {
-                if (idx >= 24) return false;
-                   
-                // Create link container
-                newItem = $('&lt;a/&gt;')
-                .css('opacity', 0)
-                .attr({
-                  href: item.url,
-                  title: item.title,
-                  target: '_blank'
+        $(function() {
+          $.ajax({
+            url: "http://www.wookmark.com/api/json",
+            dataType: "jsonp",
+            success: function(data, text, xhqr) {
+              var item, rondellContent = "", i;
+              if (text === "success") {
+                for (i = 0; i < 24; i++) {
+                  item = data[i];
+                  rondellContent += ' \\
+                    <a href="'+item.url+'" title="'+item.title+'" \\
+                      target="_blank" style="display:none"> \\
+                      <img src="'+item.preview+'" title="'+item.title+'" width="'+item.width+'" height="'+item.height+'"/> \\
+                    </a> \\
+                  ';
+                }
+                $("#rondellThumbnails").html(rondellContent).children().rondell({
+                  preset: "thumbGallery"
                 });
-                          
-                // Create image
-                newImg = $('&lt;img/&gt;')
-                .attr({
-                  src: item.preview,
-                  alt: item.title,
-                  width: item.width,
-                  height: item.height
-                });
-                          
-                // Append image to link and link to container for the rondell
-                newItem.append(newImg);
-                rondellContainer.append(newItem);
-              });
-                          
-              // Create gallery 
-              $('a', rondellContainer).rondell({
-                preset: "thumbGallery"
-              });
+              }
             }
-          }
+          });
         });
       </script>
             
@@ -98,42 +78,23 @@ append content
 append js
   :coffeescript
     $ ->
-      # Rondell init code
-      rondellContainer = $("#rondellThumbnails").empty()
-
       $.ajax
         url: "http://www.wookmark.com/api/json"
         dataType: "jsonp"
-        success: (json, text, xhqr) ->
+        success: (data, text, xhqr) ->
           if text is "success"
-            items = json
+            rondellContent = ""
                    
-            # Parsing returned json data
-            $.each items, (idx, item) ->
-              return false if idx >= 24
-      
-              # Create link container
-              newItem = $("<a/>")
-              .css("opacity", 0)
-              .attr
-                href: item.url
-                title: item.title
-                target: "_blank"
+            # Create link and image from each item data
+            for item in data[0..24]
+              rondellContent += "
+                <a href=\"#{item.url}\" title=\"#{item.title}\" target=\"_blank\" style=\"display:none\">
+                  <img src=\"#{item.preview}\" title=\"#{item.title}\" width=\"#{item.width}\" height=\"#{item.height}\"/>
+                </a>
+              ";
                           
-              # Create image
-              newImg = $("<img/>")
-              .attr
-                src: item.preview
-                alt: item.title
-                width: item.width
-                height: item.height
-                        
-              # Append image to link and link to container for the rondell
-              newItem.append newImg
-              rondellContainer.append newItem
-                        
-            # Create gallery 
-            $("a", rondellContainer).rondell
+            # Append items to rondell and init rondell
+            $("#rondellThumbnails").html(rondellContent).children().rondell
               preset: "thumbGallery"
 
       # Themepicker code
