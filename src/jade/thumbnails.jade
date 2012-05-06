@@ -41,7 +41,29 @@ append content
       You can use the option *switchIndices* to disable direct item switching if you want to
       keep the items order.
 
-      Here's how it's done
+      Here's how it's done for a simple gallery with some predefined images
+
+  .size2of3.centered
+    pre.
+      <div id="rondellThumbnails">
+        <img src="images/slider/pic1.png" alt="unicorn" title="A beautiful unicorn">
+
+        ...
+
+      </div>
+
+      <script type="text/javascript">
+        $(function() {
+          $("#rondellThumbnails > *").rondell({
+            preset: "thumbGallery"
+          });
+        });
+      </script>
+
+  br
+  .size2of3.centered
+    :markdown
+      Here's how you use images loaded from an api
 
   .size2of3.centered
     pre.
@@ -99,12 +121,13 @@ append js
 
       # Themepicker code
       $("#selectDefaultTheme").click ->
-        rondellContainer.find(".rondellContainer").removeClass("rondellTheme_dark rondellTheme_light").addClass("rondellTheme_default")
-        return false
+        $("#rondellThumbnails .rondellContainer").removeClass("rondellTheme_dark rondellTheme_light").addClass("rondellTheme_default")
+        false
       $("#selectLightTheme").click ->
-        rondellContainer.find(".rondellContainer").removeClass("rondellTheme_dark rondellTheme_default").addClass("rondellTheme_light")
-        return false
+        $("#rondellThumbnails .rondellContainer").removeClass("rondellTheme_dark rondellTheme_default").addClass("rondellTheme_light")
+        false
       $("#selectDarkTheme").click ->
-        rondellContainer.find(".rondellContainer").removeClass("rondellTheme_default rondellTheme_light").addClass("rondellTheme_dark")
-        return false
+        console.log "test"
+        $("#rondellThumbnails .rondellContainer").removeClass("rondellTheme_default rondellTheme_light").addClass("rondellTheme_dark")
+        false
 

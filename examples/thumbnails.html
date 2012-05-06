@@ -76,7 +76,27 @@ and the user sees his progress when going through the images.
 You can use the option <em>switchIndices</em> to disable direct item switching if you want to
 keep the items order.</p>
 
-<p>Here&#39;s how it&#39;s done</p>
+<p>Here&#39;s how it&#39;s done for a simple gallery with some predefined images</p>
+      </div>
+      <div class="size2of3 centered">
+        <pre>&lt;div id=&quot;rondellThumbnails&quot;&gt;
+  &lt;img src=&quot;images/slider/pic1.png&quot; alt=&quot;unicorn&quot; title=&quot;A beautiful unicorn&quot;&gt;
+
+  ...
+
+&lt;/div&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+  $(function() {
+    $(&quot;#rondellThumbnails &gt; *&quot;).rondell({
+      preset: &quot;thumbGallery&quot;
+    });
+  });
+&lt;/script&gt;
+
+</pre>
+      </div><br>
+      <div class="size2of3 centered"><p>Here&#39;s how you use images loaded from an api</p>
       </div>
       <div class="size2of3 centered">
         <pre>&lt;div id=&quot;rondellThumbnails&quot; style=&quot;height:430px;&quot;&gt;&nbsp;&lt;/div&gt;
@@ -167,15 +187,16 @@ keep the items order.</p>
       }
     });
     $("#selectDefaultTheme").click(function() {
-      rondellContainer.find(".rondellContainer").removeClass("rondellTheme_dark rondellTheme_light").addClass("rondellTheme_default");
+      $("#rondellThumbnails .rondellContainer").removeClass("rondellTheme_dark rondellTheme_light").addClass("rondellTheme_default");
       return false;
     });
     $("#selectLightTheme").click(function() {
-      rondellContainer.find(".rondellContainer").removeClass("rondellTheme_dark rondellTheme_default").addClass("rondellTheme_light");
+      $("#rondellThumbnails .rondellContainer").removeClass("rondellTheme_dark rondellTheme_default").addClass("rondellTheme_light");
       return false;
     });
     return $("#selectDarkTheme").click(function() {
-      rondellContainer.find(".rondellContainer").removeClass("rondellTheme_default rondellTheme_light").addClass("rondellTheme_dark");
+      console.log("test");
+      $("#rondellThumbnails .rondellContainer").removeClass("rondellTheme_default rondellTheme_light").addClass("rondellTheme_dark");
       return false;
     });
   });
