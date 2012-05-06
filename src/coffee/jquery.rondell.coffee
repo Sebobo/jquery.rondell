@@ -156,6 +156,7 @@
       # Init some private variables
       $.extend true, @,
         _lastKeyEvent: 0
+        _windowFocused: true
         _focusedIndex: @currentLayer
         _itemIndices: { 0: 0 }
         autoRotation:
@@ -510,7 +511,10 @@
     bindEvents: =>
       # Attach keydown event to document for each rondell instance
       $(document).keydown @keyDown
-        
+
+      # Attach window focus event to window do disable rondell when window is inactive
+      $(window).blur(@onWindowBlur).focus(@onWindowFocus)
+
       # Enable rondell traveling with mousewheel if plugin is available
       if @mousewheel.enabled and $.fn.mousewheel?
         @container.bind "mousewheel", @_onMousewheel
@@ -876,12 +880,18 @@
       else
         # Try to autoshift again after a while
         @_autoShiftInit()
+
+    onWindowFocus: =>
+      @_windowFocused = true
+
+    onWindowBlur: =>
+      @_windowFocused = false
         
     isActive: ->
       true
       
     isFocused: =>
-      Rondell.activeRondell is @id
+      @_windowFocused and Rondell.activeRondell is @id
     
     keyDown: (e) =>
       return unless @isActive() and @isFocused()
