@@ -13,7 +13,7 @@
   
     carousel:
       autoRotation:
-        enabled: false
+        enabled: true
         direction: 1
         once: false
         delay: 5000
