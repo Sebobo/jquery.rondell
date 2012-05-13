@@ -8,7 +8,7 @@
 ###
 
 (($) ->
-  $.rondell = $.rondell or {}    
+  $.rondell ||= {}
   $.rondell.presets =
   
     carousel:
