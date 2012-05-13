@@ -155,6 +155,8 @@
 
       # Init some private variables
       $.extend true, @,
+        _dimensions: 
+          computed: false
         _lastKeyEvent: 0
         _windowFocused: true
         _focusedIndex: @currentLayer
@@ -216,254 +218,98 @@
     funcSize: (l, r, i) ->
       1
 
-    fitContainer: (r) ->
+    fitToContainer: (r) ->
+      # Get new max size
       parentContainer = r.container.parent()
       newWidth = parentContainer.innerWidth()
       newHeight = parentContainer.innerHeight()
 
-      r.log newWidth
-      r.log newHeight
+      @log newWidth
+      @log newHeight
 
+      # Check if size relations have been stored before and create them if not
+      unless r._dimensions.computed
+        [oldWidth, oldHeight] = r.size
+
+        $.extend true, r._dimensions
+          computed: true
+          center:
+            left: r.center.left / oldWidth
+            top: r.center.top / oldHeight
+          radius:
+            x: r.radius.x / oldWidth
+            y: r.radius.y / oldHeight
+          controls:
+            margin:
+              x: r.controls.margin.x / oldWidth
+              y: r.controls.margin.y / oldHeight
+          itemProperties
+            size:
+              width: r.itemProperties.size.width / oldWidth
+              height: r.itemProperties.size.height / oldHeight
+            sizeFocused:
+              width: r.itemProperties.sizeFocused.width / oldWidth
+              height: r.itemProperties.sizeFocused.height / oldHeight
+
+      # Update rondell dimensions
       $.extend true, r,
         size:
           width: newWidth
           height: newHeight
         center:
-          left: newWidth / 2
-          top: newHeight / 2
+          left: r._dimensions.center.left * newWidth
+          top: r._dimensions.center.top * newHeight
         radius:
-          x: newWidth / 2 - r.itemProperties.size.width
-          y: newHeight / 2 - r.itemProperties.size.height
+          x: r._dimensions.radius.x * newWidth
+          y: r._dimensions.radius.y * newHeight
+        controls:
+          margin:
+            x: r._dimensions.controls.margin.x * newWidth
+            y: r._dimensions.controls.margin.y * newHeight
+        itemProperties
+          size:
+            width: r._dimensions.itemProperties.size.width * newWidth
+            height: r._dimensions.itemProperties.size.height * newHeight
+          sizeFocused:
+            width: r._dimensions.itemProperties.sizeFocused.width * newWidth
+            height: r._dimensions.itemProperties.sizeFocused.height * newHeight
 
-      r.container.css
-        width: newWidth
-        height: newHeight
+      # Fit container
+      r.container.css r.size
 
+      # Move everything to a new position
       r.shiftTo r.currentLayer
-    
-    showCaption: (idx) => 
-      if @captionsEnabled
-        # Restore automatic height and show caption
-        @_getItem(idx).overlay?.stop(true).css
-          height: 'auto'
-          overflow: 'auto'
-        .fadeTo 300, 1
-      
-    hideCaption: (idx) =>
-      if @captionsEnabled
-        # Fix height before hiding the caption to avoid jumping text when the item changes its size
-        overlay = @_getItem(idx).overlay
-        overlay?.filter(":visible").stop(true).css
-          height: overlay.height()
-          overflow: "hidden"
-        .fadeTo 200, 0
+
+    _onMouseEnterItem: (idx) =>
+      @_getItem(idx).onMouseEnter()
+
+    _onMouseLeaveItem: (idx) =>
+      @_getItem(idx).onMouseLeave()
       
     _getItem: (idx) =>
       @items[idx - 1]
 
-    _addItem: (idx, item) =>
+    _loadItem: (idx, obj) =>
+      # Create new rondell item and store a reference
+      item = new $.rondell.RondellItem(idx, obj, @)
       @items[idx - 1] = item
       @_itemIndices[idx] = idx
 
-      # Add some private variables
-      $.extend item,
-        id: idx
-        animating: false
-        isNew: true
-        currentSlot: idx
+      # Initialize item
+      item.init()
 
-      # If item is an img tag, wrap with div
-      if item.object.is "img"
-        item.object = item.object.wrap("<div/>").parent()
-        item.icon = $ "img:first", item.object
-
-      # Init click events
-      item.object
-      .addClass("#{@classes.item}")
-      .data("item", item)
-      .css
-        opacity: 0
-        width: item.sizeSmall.width
-        height: item.sizeSmall.height
-        left: @center.left - item.sizeFocused.width / 2
-        top: @center.top - item.sizeFocused.height / 2
-
-    _initItem: (idx) =>
-      item = @_getItem idx
-
-      item.object.removeClass @classes.loading
-      
-      if @captionsEnabled
-        # Wrap other content as overlay caption
-        captionContent = item.icon?.siblings()
-        if not (captionContent?.length or item.icon) and item.object.children().length
-          captionContent = item.object.children()
-          
-        # Or use title/alt texts as overlay caption
-        unless captionContent?.length 
-          caption = item.object.attr("title") or item.icon?.attr("title") or item.icon?.attr("alt")
-          if caption
-            # Create caption block
-            captionContent = $("<p/>").text caption
-            item.object.append captionContent
-
-        # Create overlay from caption if found
-        if captionContent?.length
-          captionWrap = (captionContent.wrapAll("<div/>")).parent().addClass @classes.caption
-          item.overlay = captionWrap.addClass(@classes.overlay) if item.icon
-
-      # Move item to initial position
-      if idx is @currentLayer
-        @layerFadeIn idx
-      else
-        @layerFadeOut idx, true
-
-    _onMouseEnterItem: (idx) =>
-      item = @_getItem idx
-      if not item.animating and not item.hidden and item.object.is(":visible")
-        item.object.addClass(@itemHoveredClass).stop(true).animate
-            opacity: 1
-          , @fadeTime, @funcEase
-
-    _onMouseLeaveItem: (idx) =>
-      item = @_getItem idx
-      item.object.removeClass @classes.hovered
-
-      if not item.animating and not item.hidden
-        item.object.stop(true).animate
-            opacity: item.lastTarget.opacity
-          , @fadeTime, @funcEase
-      
-    _loadItem: (idx, obj) =>
-      # Check whether item has an icon and load it asynchronous
-      icon = if obj.is("img") then obj else $("img:first", obj)
-
-      # Init item without an icon
-      @_addItem idx, 
-        object: obj 
-        icon: if icon.length then icon else null
-        small: false 
-        hidden: false
-        resizeable: not icon.hasClass @classes.noScale
-        croppedSize: @itemProperties.size
-        sizeSmall: @itemProperties.size
-        sizeFocused: @itemProperties.sizeFocused
-
-      if icon.length
-        # Add loading class
-        obj.addClass @classes.loading
-
-        if icon.width() > 0 or (icon[0].complete and icon[0].width > 0)
-          # Image is already loaded (i.e. from cache)
-          @_onloadItem idx
-        else 
-          # Create copy of the image and wait for the copy to load to get the real dimensions
-          iconCopy = $ "<img style=\"display:none\"/>"
-          $("body").append iconCopy
-
-          iconCopy.one("load", =>
-            @_onloadItem idx, iconCopy
-          ).one("error", =>
-            iconCopy.remove()
-            @_onItemError idx
-          ).attr "src", icon.attr("src")
-      else
-        @_initItem idx
-
-      # Start rondell after adding each item
+      # Start rondell after adding the last item
       @_start() if ++@loadedItems is @maxItems
 
-    _onItemError: (idx) =>
+    onItemInit: (idx) =>
       item = @_getItem idx
-
-      # Create error message with image url
-      errorString = @strings.loadingError.replace "%s", item.icon.attr("src")
-
-      # Remove broken icon
-      item.icon.remove()
-
-      # Display error message in item
-      item.object
-      .removeClass(@classes.loading)
-      .addClass(@classes.error)
-      .html "<p>#{errorString}</p>"
-
-    _onloadItem: (idx, iconCopy=undefined) =>
-      item = @_getItem idx
-      icon = item.icon
-      
-      itemSize = @itemProperties.size
-      focusedSize = @itemProperties.sizeFocused
-      croppedSize = itemSize
-
-      # create size vars for the small and focused size
-      foWidth = smWidth = iconWidth = iconCopy?.width() or iconCopy?[0].width or icon[0].width or icon.width()
-      foHeight = smHeight = iconHeight = iconCopy?.height() or iconCopy?[0].height or icon[0].height or icon.height()
-
-      # Delete copy, not needed anymore
-      iconCopy?.remove()
-      
-      # Return if width and height can't be resolved
-      return unless smWidth and smHeight
-
-      if item.resizeable
-        icon.addClass @classes.resizeable
-
-        # Fit to small width
-        smHeight *= itemSize.width / smWidth
-        smWidth = itemSize.width
-          
-        # Fit to small height
-        if smHeight > itemSize.height
-          smWidth *= itemSize.height / smHeight
-          smHeight = itemSize.height
-
-        # Cropping will fill the thumbnail size in both dimensions
-        if @cropThumbnails
-          cropWrap = $("<div/>").addClass @classes.crop
-          icon.wrap cropWrap
-
-          croppedSize =
-            width: itemSize.width
-            height: itemSize.width / smWidth * smHeight
-          if croppedSize.height < itemSize.height
-            croppedSize =
-              width: itemSize.height / croppedSize.height * croppedSize.width
-              height: itemSize.height
-
-          smWidth = itemSize.width
-          smHeight = itemSize.height
-        
-        # fit to focused width
-        foHeight *= focusedSize.width / foWidth
-        foWidth = focusedSize.width
-        
-        # fit to focused height
-        if foHeight > focusedSize.height
-          foWidth *= focusedSize.height / foHeight
-          foHeight = focusedSize.height
+      # Move item to initial position
+      if idx is @currentLayer
+        item.prepareFadeIn()
       else
-        # scale to given sizes
-        smWidth = itemSize.width
-        smHeight = itemSize.height
-        foWidth = focusedSize.width
-        foHeight = focusedSize.height
-        
-      # Update item with new size values and properties
-      $.extend item,
-        croppedSize: croppedSize
-        iconWidth: iconWidth
-        iconHeight: iconHeight
-        sizeSmall: 
-          width: Math.round smWidth
-          height: Math.round smHeight
-        sizeFocused: 
-          width: Math.round foWidth
-          height: Math.round foHeight
-        
-      # Finally init item
-      @_initItem idx
-      
+        item.prepareFadeOut()
+      item.runAnimations true
+
     _start: =>
       # Set currentlayer to the middle item or leave it be if set before and index exists
       if @randomStart
@@ -618,161 +464,17 @@
         @hovering = true
         unless paused
           @autoRotation.paused = true
-          @showCaption(@_focusedItem.id)
+          @_focusedItem.showCaption()
       else
         @hovering = false
         if paused and not @autoRotation.once
           @autoRotation.paused = false
           @_autoShiftInit()
-        @hideCaption(@_focusedItem.id) unless @alwaysShowCaption
+        @_focusedItem.hideCaption() unless @alwaysShowCaption
             
       # Show or hide controls if they exist
       @_refreshControls() if @controls.enabled
       
-    layerFadeIn: (layerNum) =>
-      item = @_getItem(layerNum)
-      @_focusedItem = item
-
-      item.small = false
-      itemFocusedWidth = item.sizeFocused.width
-      itemFocusedHeight = item.sizeFocused.height
-
-      newTarget =
-        width: itemFocusedWidth
-        height: itemFocusedHeight
-        left: @center.left - itemFocusedWidth / 2
-        top: @center.top - itemFocusedHeight / 2
-        opacity: 1
-      item.lastTarget = newTarget
-      item.animating = true
-      
-      # Move item to center position and fade in
-      item.object.stop(true)
-      .css
-        zIndex: @zIndex + @maxItems
-        display: "block"
-      .animate newTarget, @fadeTime, @funcEase, =>
-        item.animating = false
-        item.object.addClass @classes.focused
-        @_autoShiftInit()
-        @showCaption(layerNum) if @hovering or @alwaysShowCaption or @_onMobile()
-
-      # Icon is animated separately if cropping is enabled
-      if @cropThumbnails
-        item.icon.stop(true).animate 
-            marginTop: 0
-            marginLeft: 0
-            width: newTarget.width
-            height: newTarget.height
-          , @fadeTime, @funcEase 
-
-      # If icon isn't resizeable animate margins
-      if item.icon and not item.resizeable
-        margin = (@itemProperties.sizeFocused.height - item.iconHeight) / 2
-        item.icon.stop(true).animate
-            marginTop: margin
-            marginBottom: margin
-          , @fadeTime
-          
-    layerFadeOut: (layerNum, force=false) =>
-      item = @_getItem(layerNum)
-
-      # Make sure the items caption is hidden
-      @hideCaption layerNum
-
-      # Replace the items index with the actual slot the item is in
-      layerNum = item.currentSlot 
-      
-      # Get the distance and relative index in relation to the focused element
-      [layerDist, layerPos] = @getRelativeItemPosition layerNum
-
-      # Get the absolute layer number difference
-      layerDiff = @funcDiff(layerPos - @currentLayer, @, layerNum)
-      layerDiff *= -1 if layerPos < @currentLayer
-      
-      itemWidth = item.sizeSmall.width * @funcSize(layerDiff, @)
-      itemHeight = item.sizeSmall.height * @funcSize(layerDiff, @)
-      newZ = @zIndex - layerDist
-      
-      # Modify fading time by items distance to focused item
-      fadeTime = @fadeTime + @itemProperties.delay * layerDist
-        
-      # Get new target for animation
-      newTarget =
-        width: itemWidth
-        height: itemHeight
-        left: @funcLeft(layerDiff, @, layerNum) + (@itemProperties.size.width - itemWidth) / 2
-        top: @funcTop(layerDiff, @, layerNum) + (@itemProperties.size.height - itemHeight) / 2
-        opacity: 0
-        
-      # Smooth animation when item is visible
-      if layerDist <= @visibleItems
-        newTarget.opacity = @funcOpacity layerDiff, @, layerNum
-
-        # Do nothing if target hasn't changed
-        lastTarget = item.lastTarget
-        return if not force and lastTarget \
-          and lastTarget.width is newTarget.width \
-          and lastTarget.height is newTarget.height \
-          and lastTarget.left is newTarget.left \
-          and lastTarget.top is newTarget.top \
-          and lastTarget.opacity is newTarget.opacity
-
-        item.animating = true
-        item.hidden = false
-
-        # Move item to it's new target
-        item.object.stop(true)
-        .removeClass(@classes.focused)
-        .css
-          zIndex: newZ
-          display: "block"
-        .animate newTarget, fadeTime, @funcEase, =>
-          # Hide item if it isn't visible anymore
-          item.animating = false
-          if newTarget.opacity < @opacityMin
-            item.hidden = true
-            item.object.css "display", "none"
-          else
-            item.hidden = false
-            item.object.css "display", "block"
-
-        # Icon is animated separately if cropping is enabled
-        if @cropThumbnails
-          item.icon.stop(true).animate 
-              marginTop: (@itemProperties.size.height - item.croppedSize.height) / 2
-              marginLeft: (@itemProperties.size.width - item.croppedSize.width) / 2
-              width: item.croppedSize.width
-              height: item.croppedSize.height
-            , fadeTime, @funcEase 
-
-        # Recenter icon unless it's resizeable
-        unless item.small
-          item.small = true
-
-        if item.icon and not item.resizeable
-          margin = (@itemProperties.size.height - item.iconHeight) / 2
-          item.icon.stop(true).animate
-              marginTop: margin
-              marginBottom: margin
-            , fadeTime
-
-      else if item.hidden
-        # Update position even if out of view to fix animation when reappearing
-        item.object.css newTarget
-      else
-        # Hide items which are moved out of view
-        item.hidden = true
-        item.animating = true
-
-        item.object.stop(true)
-        .css('z-index', newZ)
-        .animate newTarget, fadeTime / 2, @funcEase, =>
-          item.animating = false
-
-      # Store last target for this item
-      item.lastTarget = newTarget
-
     shiftTo: (idx, keepOrder=false) =>
       return unless idx?
 
@@ -806,10 +508,16 @@
 
       # Store the now active layer index
       @currentLayer = idx
-      
-      # Move all items out of focus except the one we want to focus
-      @layerFadeOut(i) for i in [1..@maxItems] when i isnt newItemIndex
-      @layerFadeIn newItemIndex
+
+      # Prepare animation targets for all items
+      @_focusedItem.prepareFadeIn()
+      item.prepareFadeOut() for item in @items when item isnt @_focusedItem
+
+      # Run all animations
+      item.runAnimations() for item in @items
+
+      # Prepare next shift
+      @_autoShiftInit()
       
       # Update buttons e.g. fadein/out
       @_refreshControls()
