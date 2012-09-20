@@ -22,18 +22,18 @@ append content
 
   .size2of3.centered
     :markdown
-      This demo fetches links &amp; images from my brothers great webservice 
-      [wookmark.com](http://www.wookmark.com "Wookmark.com") 
+      This demo fetches links &amp; images from my brothers great webservice
+      [wookmark.com](http://www.wookmark.com "Wookmark.com")
       and creates a rondell from the data.
 
-      The image titles are used as caption and clicking the 
+      The image titles are used as caption and clicking the
       focused element will open the wookmark in a new tab or window.
 
       Here's how it's done
 
     pre.
       <div id="rondellGallery" style="height:400px;">&nbsp;</div>
-      
+
       <script type="text/javascript">
         $(function() {
           $.ajax({
@@ -59,7 +59,7 @@ append content
           });
         });
       </script>
-            
+
   br.clear
 
 append js
@@ -71,7 +71,7 @@ append js
         success: (data, text, xhqr) ->
           if text is "success"
             rondellContent = ""
-                   
+
             # Create link and image from each item data
             for item in data[0..24]
               rondellContent += "
@@ -79,7 +79,7 @@ append js
                   <img src=\"#{item.preview}\" title=\"#{item.title}\" width=\"#{item.width}\" height=\"#{item.height}\"/>
                 </a>
               ";
-                          
+
             # Append items to rondell and init rondell
             $("#rondellGallery").html(rondellContent).children().rondell
               preset: "gallery"

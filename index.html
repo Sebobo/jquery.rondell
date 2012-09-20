@@ -79,24 +79,34 @@ IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+</p>
       <div class="column size2of3">
         <h5>New and improved in this version</h5>
         <ul>
-          <li><span class="label success">New</span>&nbsp;awesome preset<a href="examples/thumbnails.html" title="Thumbnail gallery demo">thumbgallery</a><br>which uses all the new options and features.</li>
-          <li><span class="label success">New</span>&nbsp;Integrated my standalone scrollbar plugin (beta) into the rondell.<br>See the<a href="examples/options.html" title="Options">options</a>&nbsp;for setting it up.</li>
-          <li><span class="label success">New</span>&nbsp;Items absolute index as parameter for the animation functions.</li>
-          <li><span class="label success">New</span>&nbsp;Option<i>cropThumbnails</i>&nbsp;for image cropping to allow uniform size of thumbnails</li>
-          <li><span class="label success">New</span>&nbsp;Option<i>switchIndices</i><br>which enables switching the index of the last and new focused items.</li>
-          <li><span class="label success">New</span>&nbsp;Option<i>keyDelay</i><br>which sets minimum time between keypress events are registered.</li>
-          <li><span class="label success">New</span>&nbsp;Option<i>wrapIndices</i><br>allowing to disable item index wrapping used in the carousels.</li>
-          <li><span class="label success">New</span>&nbsp;Opacity is now animated when hovering items.</li>
-          <li><span class="label notice">Change</span>&nbsp;Improved performance</li>
-          <li><span class="label notice">Fix</span>&nbsp;Bugfixes for items fading out or in</li>
-          <li><span class="label notice">Fix</span>&nbsp;Disabled autorotation when rondell is not visible.</li>
-          <li><span class="label notice">Fix</span>&nbsp;Horizontal mouse scroll event registering improved.</li>
+          <li><span class="label success">Change</span>&nbsp;New optimized item rendering technique and refactoring for improved performance and flexibility</li>
+          <li><span class="label notice">Change</span>&nbsp;CSS classes are now using hyphens instead of camelcase.<b>&nbsp;Please check your custom styles!</b></li>
+          <li><span class="label notice">Change</span>&nbsp;Preset 'products' is now called 'scroller'</li>
+          <li><span class="label notice">FIX</span>&nbsp;Fancybox samples now show working navigation arrows and item title</li>
+          <li><span class="label notice">FIX</span>&nbsp;Example for the 'size' option is now correct</li>
         </ul><br>
         <p><a href="#changelog" title="Collapse code" class="showCode">
             Click here to see changes in the last versions
             </a></p>
         <div class="hidden">
           <ul id="changelog">
+            <li>
+              <h6>0.9.1</h6>
+              <ul>
+                <li><span class="label success">New</span>&nbsp;awesome preset&nbsp;<a href="examples/thumbnails.html" title="Thumbnail gallery demo">thumbgallery</a><br>which uses all the new options and features.</li>
+                <li><span class="label success">New</span>&nbsp;Integrated my standalone scrollbar plugin (beta) into the rondell.<br>See the&nbsp;<a href="examples/options.html" title="Options">options</a>&nbsp;for setting it up.</li>
+                <li><span class="label success">New</span>&nbsp;Items absolute index as parameter for the animation functions.</li>
+                <li><span class="label success">New</span>&nbsp;Option&nbsp;<i>cropThumbnails</i>&nbsp;for image cropping to allow uniform size of thumbnails</li>
+                <li><span class="label success">New</span>&nbsp;Option&nbsp;<i>switchIndices</i><br>which enables switching the index of the last and new focused items.</li>
+                <li><span class="label success">New</span>&nbsp;Option&nbsp;<i>keyDelay</i><br>which sets minimum time between keypress events are registered.</li>
+                <li><span class="label success">New</span>&nbsp;Option&nbsp;<i>wrapIndices</i><br>allowing to disable item index wrapping used in the carousels.</li>
+                <li><span class="label success">New</span>&nbsp;Opacity is now animated when hovering items.</li>
+                <li><span class="label notice">Change</span>&nbsp;Improved performance</li>
+                <li><span class="label notice">Fix</span>&nbsp;Bugfixes for items fading out or in</li>
+                <li><span class="label notice">Fix</span>&nbsp;Disabled autorotation when rondell is not visible.</li>
+                <li><span class="label notice">Fix</span>&nbsp;Horizontal mouse scroll event registering improved.</li>
+              </ul>
+            </li>
             <li>
               <h6>0.8.7</h6>
               <ul>
@@ -123,23 +133,23 @@ IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+</p>
             <li>
               <h6>0.8.4</h6>
               <ul>
-                <li><b>Mousewheel (x-axis) support</b>&nbsp;allows you to traverse left and right in the rondell. (Requires the optional<a href="https://github.com/brandonaaron/jquery-mousewheel" title="jQuery mousewheel">jQuery mousewheel plugin</a>)</li>
-                <li>Controls hide if autorotation is disabled and shifting is impossible. (See the<a href="examples/scroller.html" title="Products demo">products demo</a>)</li>
+                <li><b>Mousewheel (x-axis) support</b>&nbsp;allows you to traverse left and right in the rondell. (Requires the optional&nbsp;<a href="https://github.com/brandonaaron/jquery-mousewheel" title="jQuery mousewheel">jQuery mousewheel plugin</a>)</li>
+                <li>Controls hide if autorotation is disabled and shifting is impossible. (See the&nbsp;<a href="examples/scroller.html" title="Products demo">products demo</a>)</li>
                 <li>Items are now displayed in the order you provide them.</li>
-                <li>Starting item index is now customizeable by providing the<i>currentLayer</i>option. (See the<a href="examples/options.html" title="List of options">options</a>)</li>
+                <li>Starting item index is now customizeable by providing the<i>currentLayer</i>option. (See the&nbsp;<a href="examples/options.html" title="List of options">options</a>)</li>
               </ul>
             </li>
             <li>
               <h6>0.8.3</h6>
               <ul>
-                <li><b>A size function</b>&nbsp;to simulate a depth effect. (See the<a href="examples/options.html" title="List of options">options</a>)</li>
+                <li><b>A size function</b>&nbsp;to simulate a depth effect. (See the&nbsp;<a href="examples/options.html" title="List of options">options</a>)</li>
                 <li><b>Presets</b>&nbsp;for the plugins options which contain the necessary settings to setup the plugin
                   like the examples on this page.
                 </li>
                 <li><b>Themes</b>&nbsp;are now included in the plugins css file to help you make your rondell look
                   like one of my examples.
                 </li>
-                <li><b>A callback</b>&nbsp;when the plugin has finished loading. (See<a href="#usage" title="Usage example" class="scrollToId">usage</a>)</li>
+                <li><b>A callback</b>&nbsp;when the plugin has finished loading. (See&nbsp;<a href="#usage" title="Usage example" class="scrollToId">usage</a>)</li>
               </ul>
             </li>
             <li>
@@ -171,12 +181,12 @@ IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+</p>
       </div><br class="clear">
       <hr><br>
       <h4>Feedback is welcome!</h4>
-      <p>Please send me suggestions, ideas for improvement or anything else to<a href="mailto:sebastian@helzle.net" title="Send me a mail">sebastian@helzle.net</a>&nbsp;or<a href="http://twitter.com/#!/sebobo" target="_blank" title="Sebobo at twitter">@sebobo</a></p><br class="clear"><br>
+      <p>Please send me suggestions, ideas for improvement or anything else to&nbsp;<a href="mailto:sebastian@helzle.net" title="Send me a mail">sebastian@helzle.net</a>&nbsp;or&nbsp;<a href="http://twitter.com/#!/sebobo" target="_blank" title="Sebobo at twitter">@sebobo</a></p><br class="clear"><br>
       <h4>Have fun and check out my other plugins</h4>
       <p><a href="http://projects.sebastianhelzle.net/jquery.smallipop" title="smallipop - a better tooltip plugin" class="btn primary">
           jQuery smallipop
           </a></p><br>
-      <p>jQuery Rondell is powered by<a href="http://jashkenas.github.com/coffee-script/" target="_blank" title="Coffeescript">coffeescript</a>,<a href="http://sass-lang.com/" target="_blank" title="Sass">sass</a>&nbsp;and<a href="http://www.jquery.com" target="_blank" title="jQuery">jQuery</a>.</p><br>
+      <p>jQuery Rondell is powered by&nbsp;<a href="http://jashkenas.github.com/coffee-script/" target="_blank" title="Coffeescript">coffeescript</a>,&nbsp;<a href="http://sass-lang.com/" target="_blank" title="Sass">sass</a>&nbsp;and&nbsp;<a href="http://www.jquery.com" target="_blank" title="jQuery">jQuery</a>.</p><br>
     </div><br>
     <script src="js/contrib/jquery-1.8.0.min.js"></script>
     <script src="js/contrib/jquery.fancybox-1.3.4.pack.js"></script>

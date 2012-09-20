@@ -81,59 +81,21 @@ append content
     h5 New and improved in this version
     ul
       li
-        span.label.success New
-        | &nbsp;awesome preset
-        a(href="examples/thumbnails.html", title="Thumbnail gallery demo") thumbgallery
-        br
-        | which uses all the new options and features.
-      li
-        span.label.success New
-        | &nbsp;Integrated my standalone scrollbar plugin (beta) into the rondell.
-        br
-        | See the
-        a(href="examples/options.html", title="Options") options
-        | &nbsp;for setting it up.
-      li
-        span.label.success New
-        | &nbsp;Items absolute index as parameter for the animation functions.
-      li
-        span.label.success New
-        | &nbsp;Option
-        i cropThumbnails
-        | &nbsp;for image cropping to allow uniform size of thumbnails
-      li
-        span.label.success New
-        | &nbsp;Option
-        i switchIndices
-        br
-        | which enables switching the index of the last and new focused items.
-      li
-        span.label.success New
-        | &nbsp;Option
-        i keyDelay
-        br
-        | which sets minimum time between keypress events are registered.
-      li
-        span.label.success New
-        | &nbsp;Option
-        i wrapIndices
-        br
-        | allowing to disable item index wrapping used in the carousels.
-      li
-        span.label.success New
-        | &nbsp;Opacity is now animated when hovering items.
+        span.label.success Change
+        | &nbsp;New optimized item rendering technique and refactoring for improved performance and flexibility
       li
         span.label.notice Change
-        | &nbsp;Improved performance
+        | &nbsp;CSS classes are now using hyphens instead of camelcase.
+        b &nbsp;Please check your custom styles!
       li
-        span.label.notice Fix
-        | &nbsp;Bugfixes for items fading out or in
+        span.label.notice Change
+        | &nbsp;Preset 'products' is now called 'scroller'
       li
-        span.label.notice Fix
-        | &nbsp;Disabled autorotation when rondell is not visible.
+        span.label.notice FIX
+        | &nbsp;Fancybox samples now show working navigation arrows and item title
       li
-        span.label.notice Fix
-        | &nbsp;Horizontal mouse scroll event registering improved.
+        span.label.notice FIX
+        | &nbsp;Example for the 'size' option is now correct
     br
     p
       a.showCode(href="#changelog", title="Collapse code").
@@ -141,6 +103,63 @@ append content
 
     .hidden
       ul#changelog
+        li
+          h6 0.9.1
+          ul
+            li
+              span.label.success New
+              | &nbsp;awesome preset&nbsp;
+              a(href="examples/thumbnails.html", title="Thumbnail gallery demo") thumbgallery
+              br
+              | which uses all the new options and features.
+            li
+              span.label.success New
+              | &nbsp;Integrated my standalone scrollbar plugin (beta) into the rondell.
+              br
+              | See the&nbsp;
+              a(href="examples/options.html", title="Options") options
+              | &nbsp;for setting it up.
+            li
+              span.label.success New
+              | &nbsp;Items absolute index as parameter for the animation functions.
+            li
+              span.label.success New
+              | &nbsp;Option&nbsp;
+              i cropThumbnails
+              | &nbsp;for image cropping to allow uniform size of thumbnails
+            li
+              span.label.success New
+              | &nbsp;Option&nbsp;
+              i switchIndices
+              br
+              | which enables switching the index of the last and new focused items.
+            li
+              span.label.success New
+              | &nbsp;Option&nbsp;
+              i keyDelay
+              br
+              | which sets minimum time between keypress events are registered.
+            li
+              span.label.success New
+              | &nbsp;Option&nbsp;
+              i wrapIndices
+              br
+              | allowing to disable item index wrapping used in the carousels.
+            li
+              span.label.success New
+              | &nbsp;Opacity is now animated when hovering items.
+            li
+              span.label.notice Change
+              | &nbsp;Improved performance
+            li
+              span.label.notice Fix
+              | &nbsp;Bugfixes for items fading out or in
+            li
+              span.label.notice Fix
+              | &nbsp;Disabled autorotation when rondell is not visible.
+            li
+              span.label.notice Fix
+              | &nbsp;Horizontal mouse scroll event registering improved.
         li
           h6 0.8.7
           ul
@@ -171,12 +190,12 @@ append content
           ul
             li
               b Mousewheel (x-axis) support
-              | &nbsp;allows you to traverse left and right in the rondell. (Requires the optional
+              | &nbsp;allows you to traverse left and right in the rondell. (Requires the optional&nbsp;
               a(href="https://github.com/brandonaaron/jquery-mousewheel", title="jQuery mousewheel").
                 jQuery mousewheel plugin
               | )
             li
-              | Controls hide if autorotation is disabled and shifting is impossible. (See the
+              | Controls hide if autorotation is disabled and shifting is impossible. (See the&nbsp;
               a(href="examples/scroller.html", title="Products demo") products demo
               | )
             li
@@ -184,7 +203,7 @@ append content
             li
               | Starting item index is now customizeable by providing the
               i currentLayer
-              | option. (See the
+              | option. (See the&nbsp;
               a(href="examples/options.html", title="List of options") options
               | )
         li
@@ -192,7 +211,7 @@ append content
           ul
             li
               b A size function
-              | &nbsp;to simulate a depth effect. (See the
+              | &nbsp;to simulate a depth effect. (See the&nbsp;
               a(href="examples/options.html", title="List of options") options
               | )
             li
@@ -205,7 +224,7 @@ append content
               | like one of my examples.
             li
               b A callback
-              | &nbsp;when the plugin has finished loading. (See
+              | &nbsp;when the plugin has finished loading. (See&nbsp;
               a.scrollToId(href="#usage", title="Usage example") usage
               | )
         li
@@ -247,9 +266,9 @@ append content
 
   h4 Feedback is welcome!
   p
-    | Please send me suggestions, ideas for improvement or anything else to
+    | Please send me suggestions, ideas for improvement or anything else to&nbsp;
     a(href="mailto:sebastian@helzle.net", title="Send me a mail") sebastian@helzle.net
-    | &nbsp;or
+    | &nbsp;or&nbsp;
     a(href="http://twitter.com/#!/sebobo", target="_blank", title="Sebobo at twitter") @sebobo
 
   br.clear
@@ -263,12 +282,12 @@ append content
   br
 
   p
-    | jQuery Rondell is powered by
+    | jQuery Rondell is powered by&nbsp;
     a(href="http://jashkenas.github.com/coffee-script/", target="_blank", title="Coffeescript").
       coffeescript
-    | ,
+    | ,&nbsp;
     a(href="http://sass-lang.com/", target="_blank", title="Sass") sass
-    | &nbsp;and
+    | &nbsp;and&nbsp;
     a(href="http://www.jquery.com", target="_blank", title="jQuery") jQuery
     | .
 
