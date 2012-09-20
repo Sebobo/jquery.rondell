@@ -38,10 +38,10 @@
       currentLayer: 0           # Active layer number in a rondell instance
       container: null           # Container object wrapping the rondell items
       radius:                   # Radius for the default circle function
-        x: 250 
-        y: 50  
+        x: 250
+        y: 50
       center:                   # Center where the focused element is displayed
-        left: 340 
+        left: 340
         top: 160
       size:                     # Defaults to center * 2 on init
         width: null
@@ -54,7 +54,7 @@
       zIndex: 1000              # All elements of the rondell will use this z-index and add their depth to it
       itemProperties:           # Default properties for each item
         delay: 100              # Time offset between the animation of each item
-        size: 
+        size:
           width: 150
           height: 150
         sizeFocused:
@@ -67,17 +67,17 @@
       captionsEnabled: true
       autoRotation:             # If the cursor leaves the rondell continue spinning
         enabled: false
-        paused: false           # Can be used to pause the auto rotation with a play/pause button for example 
+        paused: false           # Can be used to pause the auto rotation with a play/pause button for example
         direction: 0            # 0 or 1 means left and right
         once: false             # Will animate until the rondell will be hovered at least once
         delay: 5000
       controls:                 # Buttons to control the rondell
         enabled: true
         fadeTime: 400           # Show/hide animation speed
-        margin:     
+        margin:
           x: 130                 # Distance from left and right edge of the container
           y: 270                 # Distance from top and bottom edge of the container
-      strings: # String for the controls 
+      strings: # String for the controls
         prev: 'prev'
         next: 'next'
         loadingError: 'An error occured while loading <b>%s</b>'
@@ -88,14 +88,14 @@
       touch:
         enabled: true
         preventDefaults: true   # Will call event.preventDefault() on touch events
-        threshold: 100          # Distance in pixels the "finger" has to swipe to create the touch event      
+        threshold: 100          # Distance in pixels the "finger" has to swipe to create the touch event
       randomStart: false
       funcEase: 'easeInOutQuad' # jQuery easing function name for the movement of items
       theme: 'default'          # CSS theme class which gets added to the rondell container
       preset: ''                # Configuration preset
       effect: null              # Special effect function for the focused item, not used currently
       onAfterShift: null
-      cropThumbnails: false     
+      cropThumbnails: false
       scrollbar:
         enabled: false
         orientation: "bottom"
@@ -118,7 +118,7 @@
         scrollOnDrag: true
         animationDuration: 300
         easing: "easeInOutQuad"
-        classes: 
+        classes:
           container: "rondell-scrollbar"
           control: "rondell-scrollbar-control"
           dragging: "rondell-scrollbar-dragging"
@@ -126,17 +126,16 @@
           scrollLeft: "rondell-scrollbar-left"
           scrollRight: "rondell-scrollbar-right"
           scrollInner: "rondell-scrollbar-inner"
-  
+
   ### Add default easing function for rondell to jQuery if missing ###
-  unless $.easing.easeInOutQuad        
-    $.easing.easeInOutQuad = (x, t, b, c, d) ->
-      if ((t/=d/2) < 1) then c/2*t*t + b else -c/2 * ((--t)*(t-2) - 1) + b
-   
-  # Rondell class holds all rondell items and functions   
+  $.easing.easeInOutQuad ||= (x, t, b, c, d) ->
+    if ((t/=d/2) < 1) then c/2*t*t + b else -c/2 * ((--t)*(t-2) - 1) + b
+
+  # Rondell class holds all rondell items and functions
   class Rondell
     @rondellCount: 0            # Globally stores the number of rondells for uuid creation
     @activeRondell: null        # Globally stores the last activated rondell for keyboard interaction
-    
+
     constructor: (items, options, numItems, initCallback=undefined) ->
       @id = ++Rondell.rondellCount
       @items = [] # Holds the items
@@ -155,29 +154,29 @@
 
       # Init some private variables
       $.extend true, @,
-        _dimensions: 
+        _dimensions:
           computed: false
         _lastKeyEvent: 0
         _windowFocused: true
         _focusedIndex: @currentLayer
         _itemIndices: { 0: 0 }
         autoRotation:
-          _timer: -1              
+          _timer: -1
         controls:
           _lastShift: 0
         touch:
-          _start: undefined        
-          _end: undefined  
+          _start: undefined
+          _end: undefined
         scrollbar:
-          _instance: null 
-        
+          _instance: null
+
       # Compute focused item size if not set
       @itemProperties.sizeFocused =
        width: @itemProperties.sizeFocused.width or @itemProperties.size.width * @scaling
        height: @itemProperties.sizeFocused.height or @itemProperties.size.height * @scaling
 
-      # Compute size if not set  
-      @size = 
+      # Compute size if not set
+      @size =
         width: @size.width or @center.left * 2
         height: @size.height or @center.top * 2
 
@@ -186,13 +185,13 @@
       .addClass("#{@classes.initializing} #{@classes.container} #{@classes.themePrefix}-#{@theme}")
 
       @container = items.wrapAll(containerWrap).parent()
-      
+
       # Show items hidden parent container to prevent graphical glitch
       @container.parent().show() if @showContainer
 
       # Create scrollbar
       if @scrollbar.enabled
-        scrollbarContainer = $ "<div/>"
+        scrollbarContainer = $ '<div/>'
         @container.append scrollbarContainer
 
         $.extend true, @scrollbar,
@@ -202,9 +201,14 @@
           repeating: @repeating
 
         @scrollbar._instance = new $.rondell.RondellScrollbar(scrollbarContainer, @scrollbar)
-    
+
     log: (msg) ->
       console?.log msg
+
+    equals: (objA, objB) ->
+      return false for key, value of objA when objB[key] isnt value
+      return false for key, value of objB when objA[key] isnt value
+      true
 
     # Animation functions, can be different for each rondell
     funcLeft: (l, r, i) ->
@@ -218,74 +222,72 @@
     funcSize: (l, r, i) ->
       1
 
-    fitToContainer: (r) ->
+    fitToContainer: =>
       # Get new max size
-      parentContainer = r.container.parent()
+      parentContainer = @container.parent()
       newWidth = parentContainer.innerWidth()
       newHeight = parentContainer.innerHeight()
 
-      @log newWidth
-      @log newHeight
-
       # Check if size relations have been stored before and create them if not
-      unless r._dimensions.computed
-        [oldWidth, oldHeight] = r.size
+      unless @_dimensions.computed
+        oldWidth = @size.width
+        oldHeight = @size.height
 
-        $.extend true, r._dimensions
+        $.extend true, @_dimensions,
           computed: true
           center:
-            left: r.center.left / oldWidth
-            top: r.center.top / oldHeight
+            left: @center.left / oldWidth
+            top: @center.top / oldHeight
           radius:
-            x: r.radius.x / oldWidth
-            y: r.radius.y / oldHeight
+            x: @radius.x / oldWidth
+            y: @radius.y / oldHeight
           controls:
             margin:
-              x: r.controls.margin.x / oldWidth
-              y: r.controls.margin.y / oldHeight
-          itemProperties
+              x: @controls.margin.x / oldWidth
+              y: @controls.margin.y / oldHeight
+          itemProperties:
             size:
-              width: r.itemProperties.size.width / oldWidth
-              height: r.itemProperties.size.height / oldHeight
+              width: @itemProperties.size.width / oldWidth
+              height: @itemProperties.size.height / oldHeight
             sizeFocused:
-              width: r.itemProperties.sizeFocused.width / oldWidth
-              height: r.itemProperties.sizeFocused.height / oldHeight
+              width: @itemProperties.sizeFocused.width / oldWidth
+              height: @itemProperties.sizeFocused.height / oldHeight
 
       # Update rondell dimensions
-      $.extend true, r,
+      $.extend true, @,
         size:
           width: newWidth
           height: newHeight
         center:
-          left: r._dimensions.center.left * newWidth
-          top: r._dimensions.center.top * newHeight
+          left: @_dimensions.center.left * newWidth
+          top: @_dimensions.center.top * newHeight
         radius:
-          x: r._dimensions.radius.x * newWidth
-          y: r._dimensions.radius.y * newHeight
+          x: @_dimensions.radius.x * newWidth
+          y: @_dimensions.radius.y * newHeight
         controls:
           margin:
-            x: r._dimensions.controls.margin.x * newWidth
-            y: r._dimensions.controls.margin.y * newHeight
-        itemProperties
+            x: @_dimensions.controls.margin.x * newWidth
+            y: @_dimensions.controls.margin.y * newHeight
+        itemProperties:
           size:
-            width: r._dimensions.itemProperties.size.width * newWidth
-            height: r._dimensions.itemProperties.size.height * newHeight
+            width: @_dimensions.itemProperties.size.width * newWidth
+            height: @_dimensions.itemProperties.size.height * newHeight
           sizeFocused:
-            width: r._dimensions.itemProperties.sizeFocused.width * newWidth
-            height: r._dimensions.itemProperties.sizeFocused.height * newHeight
+            width: @_dimensions.itemProperties.sizeFocused.width * newWidth
+            height: @_dimensions.itemProperties.sizeFocused.height * newHeight
 
       # Fit container
-      r.container.css r.size
+      @container.css @size
 
       # Move everything to a new position
-      r.shiftTo r.currentLayer
+      @shiftTo @currentLayer
 
     _onMouseEnterItem: (idx) =>
       @_getItem(idx).onMouseEnter()
 
     _onMouseLeaveItem: (idx) =>
       @_getItem(idx).onMouseLeave()
-      
+
     _getItem: (idx) =>
       @items[idx - 1]
 
@@ -308,7 +310,7 @@
         item.prepareFadeIn()
       else
         item.prepareFadeOut()
-      item.runAnimations true
+      item.runAnimation true
 
     _start: =>
       # Set currentlayer to the middle item or leave it be if set before and index exists
@@ -316,10 +318,10 @@
         @currentLayer = Math.round(Math.random() * (@maxItems - 1))
       else
         @currentLayer = Math.max(0, Math.min(@currentLayer or Math.round(@maxItems / 2), @maxItems))
-      
+
       # Set visibleItems to half the maxItems if set to auto
       @visibleItems = Math.max(2, Math.floor(@maxItems / 2)) if @visibleItems is "auto"
-      
+
       # Create controls
       controls = @controls
       if controls.enabled
@@ -331,7 +333,7 @@
           left: controls.margin.x
           top: controls.margin.y
           zIndex: @zIndex + @maxItems + 2
-          
+
         @controls._shiftRight = $("<a href=\"#/\"/>")
         .addClass("#{@classes.control} #{@classes.shiftRight}")
         .html(@strings.next)
@@ -340,16 +342,16 @@
           right: controls.margin.x
           top: controls.margin.y
           zIndex: @zIndex + @maxItems + 2
-          
+
         @container.append @controls._shiftLeft, @controls._shiftRight
 
       @bindEvents()
-        
+
       @container.removeClass @classes.initializing
-          
+
       # Fire callback after initialization with rondell instance if callback was provided
       @initCallback?(@)
-      
+
       # Move items to starting positions
       @_focusedItem ?= @_getItem @currentLayer
       @shiftTo @currentLayer
@@ -364,7 +366,7 @@
       # Enable rondell traveling with mousewheel if plugin is available
       if @mousewheel.enabled and $.fn.mousewheel?
         @container.bind "mousewheel", @_onMousewheel
-      
+
       # Use modernizr feature detection to enable touch device support
       if @_onMobile()
         # Enable swiping
@@ -375,44 +377,44 @@
 
       rondell = @
 
-      # Delegate click and mouse events events to rondell items      
+      # Delegate click and mouse events events to rondell items
       @container
       .delegate ".#{@classes.item}", "click", (e) ->
         item = $(@).data "item"
         unless rondell._focusedItem.id is item.id
-          e.preventDefault() 
+          e.preventDefault()
           if not item.hidden and item.object.is ":visible"
             rondell.shiftTo item.currentSlot
       .delegate ".#{@classes.item}", "mouseenter mouseleave", (e) ->
           item = $(@).data "item"
-          if e.type is "mouseenter" 
+          if e.type is "mouseenter"
             rondell._onMouseEnterItem item.id
-          else 
+          else
             rondell._onMouseLeaveItem item.id
 
     _onMobile: ->
       ###
-      Mobile device detection. 
+      Mobile device detection.
       Check for touch functionality is currently enough.
       ###
       return Modernizr?.touch
-      
+
     _onMousewheel: (e, d, dx, dy) =>
       ###
       Allows rondell traveling with mousewheel.
-      Requires mousewheel plugin for jQuery. 
+      Requires mousewheel plugin for jQuery.
       ###
       return unless @mousewheel.enabled and @isFocused()
 
       now = (new Date()).getTime()
       return if now - @mousewheel._lastShift < @mousewheel.minTimeBetweenShifts
-      
+
       viewport = $ window
       viewportTop = viewport.scrollTop()
       viewportBottom = viewportTop + viewport.height()
-      
+
       selfYCenter = @container.offset().top + @container.outerHeight() / 2
-      
+
       if selfYCenter > viewportTop and selfYCenter < viewportBottom and Math.abs(dx) > @mousewheel.threshold
         e.preventDefault()
         if dx < 0 then @shiftLeft() else @shiftRight()
@@ -420,12 +422,12 @@
 
     _onTouch: (e) =>
       return unless @touch.enabled
-      
+
       touch = e.originalEvent.touches[0] or e.originalEvent.changedTouches[0]
-      
+
       switch e.type
         when "touchstart"
-          @touch._start = 
+          @touch._start =
             x: touch.pageX
             y: touch.pageY
         when "touchmove"
@@ -442,25 +444,25 @@
                 @shiftLeft()
               else if changeX < 0
                 @shiftRight()
-              
+
             # Reset end position
             @touch._start = @touch._end = undefined
-            
+
       true
-      
+
     _hover: (e) =>
       ###
       Shows/hides rondell controls.
       Starts/pauses autorotation.
       Updates active rondell id.
       ###
-      
+
       # Start or stop auto rotation if enabled
       paused = @autoRotation.paused
       if e.type is "mouseenter"
         # Set active rondell id if hovered
         Rondell.activeRondell = @id
-        
+
         @hovering = true
         unless paused
           @autoRotation.paused = true
@@ -471,10 +473,10 @@
           @autoRotation.paused = false
           @_autoShiftInit()
         @_focusedItem.hideCaption() unless @alwaysShowCaption
-            
+
       # Show or hide controls if they exist
       @_refreshControls() if @controls.enabled
-      
+
     shiftTo: (idx, keepOrder=false) =>
       return unless idx?
 
@@ -490,11 +492,10 @@
 
       # Get the items id in the selected layer slot
       newItemIndex = @_itemIndices[idx]
+      newItem = @_getItem newItemIndex
 
       # Switch item indices if flag is set
       if @switchIndices
-        newItem = @_getItem newItemIndex
-
         # Switch indices in list
         @_itemIndices[idx] = @_focusedItem.id
         @_itemIndices[@_focusedItem.currentSlot] = newItemIndex
@@ -503,8 +504,8 @@
         newItem.currentSlot = @_focusedItem.currentSlot
         @_focusedItem.currentSlot = idx
 
-        # Set new focused item
-        @_focusedItem = newItem
+      # Set new focused item
+      @_focusedItem = newItem
 
       # Store the now active layer index
       @currentLayer = idx
@@ -514,11 +515,11 @@
       item.prepareFadeOut() for item in @items when item isnt @_focusedItem
 
       # Run all animations
-      item.runAnimations() for item in @items
+      item.runAnimation() for item in @items
 
       # Prepare next shift
       @_autoShiftInit()
-      
+
       # Update buttons e.g. fadein/out
       @_refreshControls()
 
@@ -530,50 +531,50 @@
         scrollbarIdx = idx
         # Fix scrollbar index position for unreachable focus item index
         if idx is @_focusedItem.currentSlot
-          scrollbarIdx =  @_focusedItem.currentSlot + 1 
+          scrollbarIdx =  @_focusedItem.currentSlot + 1
         @scrollbar._instance.setPosition(scrollbarIdx, false)
 
     getRelativeItemPosition: (idx, wrapIndices=@wrapIndices) =>
       distance = Math.abs(idx - @currentLayer)
       relativeIndex = idx
-      
+
       # Find new layer position if rondell is repeating and indices are wrapped
       if distance > @visibleItems and distance > @maxItems / 2 and @repeating and wrapIndices
-        if idx > @currentLayer 
-          relativeIndex -= @maxItems 
-        else 
+        if idx > @currentLayer
+          relativeIndex -= @maxItems
+        else
           relativeIndex += @maxItems
         distance = Math.abs(relativeIndex - @currentLayer)
 
       [distance, relativeIndex]
 
     getIndexInRange: (idx) =>
-      if @repeating 
-        if idx < 1 
+      if @repeating
+        if idx < 1
           idx += @maxItems
-        else if idx > @maxItems 
-          idx -= @maxItems
-      else 
-        if idx < 1 
-          idx = 1 
         else if idx > @maxItems
-          idx = @maxItems 
+          idx -= @maxItems
+      else
+        if idx < 1
+          idx = 1
+        else if idx > @maxItems
+          idx = @maxItems
       idx
-        
+
     _refreshControls: =>
       return unless @controls.enabled
 
       @controls._shiftLeft.stop().fadeTo(@controls.fadeTime, if (@currentLayer > 1 or @repeating) and @hovering then 1 else 0)
       @controls._shiftRight.stop().fadeTo(@controls.fadeTime, if (@currentLayer < @maxItems or @repeating) and @hovering then 1 else 0)
-      
-    shiftLeft: (e) => 
+
+    shiftLeft: (e) =>
       e?.preventDefault()
       @shiftTo @currentLayer - 1
-        
-    shiftRight: (e) => 
+
+    shiftRight: (e) =>
       e?.preventDefault()
       @shiftTo @currentLayer + 1
-        
+
     _autoShiftInit: =>
       autoRotation = @autoRotation
       if @isActive() and autoRotation.enabled and autoRotation._timer < 0
@@ -594,13 +595,13 @@
 
     onWindowBlur: =>
       @_windowFocused = false
-        
+
     isActive: ->
       true
-      
+
     isFocused: =>
       @_windowFocused and Rondell.activeRondell is @id
-    
+
     keyDown: (e) =>
       return unless @isActive() and @isFocused()
 
@@ -614,22 +615,22 @@
         @autoRotation._timer = -1
 
       @_lastKeyEvent = now
-        
+
       switch e.which
         # arrow left
         when 37 then @shiftLeft(e)
-        # arrow right 
-        when 39 then @shiftRight(e) 
-  
+        # arrow right
+        when 39 then @shiftRight(e)
+
   $.fn.rondell = (options={}, callback=undefined) ->
     # Create new rondell instance
     rondell = new Rondell(@, options, @length, callback)
-     
+
     # Setup each item
     @each (idx) ->
       rondell._loadItem idx + 1, $(@)
-        
+
     # Return rondell instance
     rondell
-    
-)(jQuery) 
+
+)(jQuery)
