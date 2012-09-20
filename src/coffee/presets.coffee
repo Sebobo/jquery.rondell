@@ -1,6 +1,6 @@
 ###!
   Presets for jQuery rondell plugin
-  
+
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
   @category jQuery plugin
   @copyright (c) 2009-2012 Sebastian Helzle (www.sebastianhelzle.net)
@@ -10,49 +10,49 @@
 (($) ->
   $.rondell ||= {}
   $.rondell.presets =
-  
+
     carousel:
       autoRotation:
         enabled: true
         direction: 1
         once: false
         delay: 5000
-      radius: 
+      radius:
         x: 240
         y: 50
       center:
-        left: 340 
+        left: 340
         top: 160
-      controls: 
-        margin: 
+      controls:
+        margin:
           x: 130
           y: 260
       randomStart: true
       currentLayer: 1
       funcSize: (l, r, i) ->
         1 / Math.abs(l)
-      
-    products:
+
+    scroller:
       repeating: false
       alwaysShowCaption: true
       visibleItems: 4
       theme: "dark"
       itemProperties:
         delay: 0
-        size: 
+        size:
           width: 100
           height: 200
-        sizeFocused: 
+        sizeFocused:
           width: 300
           height: 200
       center:
-        left: 400 
+        left: 400
         top: 100
-      size: 
+      size:
         width: 800
         height: 200
-      controls: 
-        margin: 
+      controls:
+        margin:
           x: 210
           y: 158
       funcTop: (l, r, i) ->
@@ -63,10 +63,10 @@
         r.center.left + (l - 0.5) * r.itemProperties.size.width
       funcOpacity: (l, r, i) ->
         0.8
-       
+
     pages:
-      radius: 
-        x: 0 
+      radius:
+        x: 0
         y: 0
       scaling: 1
       theme: "page"
@@ -75,15 +75,15 @@
         margin:
           x: 0
           y: 0
-      strings: 
+      strings:
         prev: ' '
         next: ' '
-      center: 
-        left: 200 
+      center:
+        left: 200
         top: 200
-      itemProperties: 
-        size:  
-          width: 400 
+      itemProperties:
+        size:
+          width: 400
           height: 400
       funcTop: (l, r, i) ->
           r.center.top - r.itemProperties.size.height / 2
@@ -91,18 +91,18 @@
           r.center.left + l * r.itemProperties.size.width
       funcDiff: (l, r, i) ->
           Math.abs(l) + 0.5
-      
+
     cubic:
-      center: 
-        left: 300 
+      center:
+        left: 300
         top: 200
       visibleItems: 5
-      itemProperties: 
-        size: 
+      itemProperties:
+        size:
           width: 350
-          height: 350  
-        sizeFocused:  
-          width: 350 
+          height: 350
+        sizeFocused:
+          width: 350
           height: 350
       controls:
         margin:
@@ -114,10 +114,10 @@
           r.center.left - r.itemProperties.size.width / 2 + Math.sin(l) * r.radius.x
       funcSize: (l, r, i) ->
           Math.pow((Math.PI - Math.abs(l)) / Math.PI, 3)
-          
+
     gallery:
       # Custom options
-      special: 
+      special:
         itemPadding: 2
       # Standard rondell options
       visibleItems: 5
@@ -135,12 +135,12 @@
           y: 255
       itemProperties:
         delay: 0
-        sizeFocused: 
+        sizeFocused:
           width: 480
           height: 280
         size:
           width: 80
-          height: 100 
+          height: 100
       funcTop: (l, r, i) ->
         r.size.height - r.itemProperties.size.height - r.special.itemPadding
       funcDiff: (d, r, i) ->
@@ -152,14 +152,14 @@
 
     thumbGallery:
       # Custom options
-      special: 
+      special:
         columns: 3
         rows: 3
         groupSize: 9
         itemPadding: 5
         thumbsOffset:
           x: 500
-          y: 0 
+          y: 0
       # Standard rondell options
       visibleItems: 9
       wrapIndices: false
@@ -179,12 +179,12 @@
           y: 255
       itemProperties:
         delay: 40
-        sizeFocused: 
+        sizeFocused:
           width: 480
           height: 420
         size:
           width: 94
-          height: 126 
+          height: 126
       scrollbar:
         enabled: true
         stepSize: 9 # Should be same as group size in special options
@@ -230,7 +230,7 @@
         r.special.thumbsOffset.x + r.special.itemPadding \
           + (column + r.special.columns * groupOffset) \
           * (r.itemProperties.size.width + r.special.itemPadding)
-        
+
     slider:
       theme: 'slider'
       visibleItems: 1
@@ -238,14 +238,14 @@
       opacityMin: 0.01
       autoRotation:
         enabled: true
-      center: 
+      center:
         top: 150
         left: 300
       size:
         height: 300
         width: 600
       controls:
-        margin: 
+        margin:
           x: -1
           y: 135
       strings:
@@ -264,5 +264,5 @@
         0
       funcOpacity: (l, r, i) ->
         0.02
-          
-)(jQuery) 
+
+)(jQuery)
