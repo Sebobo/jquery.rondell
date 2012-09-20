@@ -1,6 +1,6 @@
 ###!
   RondellItem for jQuery rondell plugin
-  
+
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
   @category jQuery plugin
   @copyright (c) 2009-2012 Sebastian Helzle (www.sebastianhelzle.net)
@@ -14,7 +14,7 @@
 
     constructor: (id, obj, rondell) ->
       @id = id
-      @object = obj 
+      @object = obj
       @rondell = rondell
       @currentSlot = id
 
@@ -50,7 +50,7 @@
         left: @rondell.center.left - @sizeFocused.width / 2
         top: @rondell.center.top - @sizeFocused.height / 2
 
-      # Check whether item has an icon and load it asynchronous        
+      # Check whether item has an icon and load it asynchronous
       icon = @object.find "img:first"
       if icon.length
         @icon = icon
@@ -62,7 +62,7 @@
         if icon.width() > 0 or (icon[0].complete and icon[0].width > 0)
           # Image is already loaded (i.e. from cache)
           window.setTimeout @onIconLoad, 10
-        else 
+        else
           # Create copy of the image and wait for the copy to load to get the real dimensions
           @iconCopy = $ "<img style=\"display:none\"/>"
           $("body").append @iconCopy
@@ -89,7 +89,7 @@
 
       # Delete copy, not needed anymore
       @iconCopy?.remove()
-      
+
       # Return if width and height can't be resolved
       return unless iconWidth and iconHeight
 
@@ -99,7 +99,7 @@
         # Fit to small width
         smHeight *= itemSize.width / smWidth
         smWidth = itemSize.width
-          
+
         # Fit to small height
         if smHeight > itemSize.height
           smWidth *= itemSize.height / smHeight
@@ -108,7 +108,7 @@
         # Cropping will fill the thumbnail size in both dimensions
         if @rondell.cropThumbnails
           unless @icon.parent().hasClass @rondell.classes.crop
-            @icon.wrap $("<div/>").addClass @rondell.classes.crop
+            @icon.wrap $("<div>").addClass @rondell.classes.crop
 
           croppedSize =
             width: itemSize.width
@@ -120,11 +120,11 @@
 
           smWidth = itemSize.width
           smHeight = itemSize.height
-        
+
         # fit to focused width
         foHeight *= focusedSize.width / foWidth
         foWidth = focusedSize.width
-        
+
         # fit to focused height
         if foHeight > focusedSize.height
           foWidth *= focusedSize.height / foHeight
@@ -135,12 +135,12 @@
         smHeight = itemSize.height
         foWidth = focusedSize.width
         foHeight = focusedSize.height
-        
+
       # Update item with new size values and properties
       @croppedSize = croppedSize
       @iconWidth = iconWidth
       @iconHeight = iconHeight
-      @sizeSmall = 
+      @sizeSmall =
         width: Math.round smWidth
         height: Math.round smHeight
       @sizeFocused =
@@ -150,7 +150,7 @@
     onIconLoad: =>
       # Get dimensions from icon
       @refreshDimensions()
-        
+
       # Finally init item
       @finalize()
 
@@ -170,15 +170,22 @@
 
     finalize: =>
       @object.removeClass @rondell.classes.loading
-      
+
       if @rondell.captionsEnabled
-        # Wrap other content as overlay caption
-        captionContent = @icon?.siblings()
+        # Wrap other content after the icon as overlay caption
+        captionContent = null
+
+        # If cropping is enabled use the siblings of the crop div as possible caption
+        if @rondell.cropThumbnails
+          captionContent = @icon?.closest(".#{@rondell.classes.crop}").siblings()
+        else
+          captionContent = @icon?.siblings()
+
         if not (captionContent?.length or @icon) and @object.children().length
           captionContent = @object.children()
-          
+
         # Or use title/alt texts as overlay caption
-        unless captionContent?.length 
+        unless captionContent?.length
           caption = @object.attr("title") or @icon?.attr("title") or @icon?.attr("alt")
           if caption
             # Create caption block
@@ -194,7 +201,7 @@
       @rondell.onItemInit @id
 
     onMouseEnter: =>
-      if not @animating and not @hidden and @object.is(":visible")
+      if not @animating and not @hidden and @object.is ":visible"
         @object.addClass(@rondell.itemHoveredClass).stop(true).animate
             opacity: 1
           , @rondell.fadeTime, @rondell.funcEase
@@ -202,22 +209,23 @@
     onMouseLeave: =>
       @object.removeClass @rondell.classes.hovered
 
-      unless @animating and @hidden
+      unless @animating or @hidden
         @object.stop(true).animate
             opacity: @objectAnimationTarget.opacity
           , @rondell.fadeTime, @rondell.funcEase
 
-    showCaption: => 
-      if @captionsEnabled and @overlay?
+    showCaption: =>
+      if @rondell.captionsEnabled and @overlay?
         # Restore automatic height and show caption
         @overlay.stop(true).css
           height: "auto"
           overflow: "auto"
         .fadeTo 300, 1
-      
+
     hideCaption: =>
-      if @captionsEnabled and @overlay?.is(":visible")
-        # Fix height before hiding the caption to avoid jumping text when the item changes its size
+      if @rondell.captionsEnabled and @overlay?.is ":visible"
+        # Fix height before hiding the caption to avoid jumping
+        # text when the item changes its size
         @overlay.stop(true).css
           height: @overlay.height()
           overflow: "hidden"
@@ -238,7 +246,7 @@
         top: @rondell.center.top - itemFocusedHeight / 2
         opacity: 1
 
-      @objectCSSTarget = 
+      @objectCSSTarget =
         zIndex: @rondell.zIndex + @rondell.maxItems
         display: "block"
 
@@ -248,17 +256,19 @@
       if @icon
         @lastIconAnimationTarget = @iconAnimationTarget
 
-        iconMargin = 0
+        iconMarginLeft = 0
+        iconMarginTop = 0
         unless @resizeable
-          iconMargin = (@rondell.itemProperties.sizeFocused.height - @iconHeight) / 2
-          @iconAnimationTarget.marginTop = iconMargin
-          @iconAnimationTarget.marginLeft = iconMargin
+          iconMarginTop = (@rondell.itemProperties.sizeFocused.height - @iconHeight) / 2
+          iconMarginLeft = (@rondell.itemProperties.sizeFocused.width - @iconWidth) / 2
+          @iconAnimationTarget.marginTop = iconMarginTop
+          @iconAnimationTarget.marginLeft = iconMarginLeft
 
         # Icon is animated separately if cropping is enabled
         if @rondell.cropThumbnails
           @iconAnimationTarget =
-            marginTop: iconMargin
-            marginLeft: iconMargin
+            marginTop: iconMarginTop
+            marginLeft: iconMarginLeft
             width: itemFocusedWidth
             height: itemFocusedHeight
 
@@ -268,18 +278,18 @@
 
       # Replace the items index with the actual slot the item is in
       idx = @currentSlot
-      
+
       # Get the distance and relative index in relation to the focused element
       [layerDist, layerPos] = @rondell.getRelativeItemPosition idx
 
       # Get the absolute layer number difference
-      layerDiff = @rondell.funcDiff(layerPos - @currentLayer, @rondell, idx)
-      layerDiff *= -1 if layerPos < @currentLayer
-      
+      layerDiff = @rondell.funcDiff(layerPos - @rondell.currentLayer, @rondell, idx)
+      layerDiff *= -1 if layerPos < @rondell.currentLayer
+
       itemWidth = @sizeSmall.width * @rondell.funcSize(layerDiff, @rondell)
       itemHeight = @sizeSmall.height * @rondell.funcSize(layerDiff, @rondell)
-      newZ = @zIndex - layerDist
-      
+      newZ = @rondell.zIndex - layerDist
+
       # Modify fading time by items distance to focused item
       @animationSpeed = @rondell.fadeTime + @rondell.itemProperties.delay * layerDist
 
@@ -294,8 +304,8 @@
       @objectCSSTarget =
         zIndex: newZ
         display: "block"
-        
-      # Smooth animation when item is visible
+
+      # Compute some stuff only when the item is really visible
       if layerDist <= @rondell.visibleItems
         newTarget.opacity = @rondell.funcOpacity layerDiff, @rondell, idx
         @hidden = false
@@ -311,9 +321,9 @@
               height: @croppedSize.height
 
           unless @resizeable
-            margin = (@rondell.itemProperties.size.height - @iconHeight) / 2
-            @iconAnimationTarget.marginTop = margin
-            @iconAnimationTarget.marginBottom = margin
+            @iconAnimationTarget =
+              marginTop: (@rondell.itemProperties.size.height - @iconHeight) / 2
+              marginLeft: (@rondell.itemProperties.size.width - @iconWidth) / 2
 
       else if @hidden
         # Move item directly to new position instead of animating it
@@ -323,53 +333,44 @@
       @lastObjectAnimationTarget = @objectAnimationTarget
       @objectAnimationTarget = newTarget
 
-    runAnimations: (force=false) =>
-      unless @focused
-        # Remove focused class
-        @object.removeClass @rondell.classes.focused
-        # Hide caption when item isn't focused
-        @hideCaption()
+    onAnimationFinished: =>
+      @animating = false
 
+      if @focused
+        # Add special class for focused style
+        @object.addClass @rondell.classes.focused
+        # show caption if rondell is hovered
+        if @rondell.hovering or @rondell.alwaysShowCaption or @rondell._onMobile()
+          @showCaption()
+      else
+        # Hide item if it isn't visible anymore
+        if @objectAnimationTarget.opacity < @opacityMin
+          @hidden = true
+          @object.css "display", "none"
+        else
+          @hidden = false
+          @object.css "display", "block"
+
+    runAnimation: (force=false) =>
       # Move to new position
       @object.css @objectCSSTarget
 
-      if not @hidden
-        @animating = true
-
+      unless @hidden
         # Animate the icon
-        if @iconAnimationTarget
-          targetChanged = false
-          for key, value of @iconAnimationTarget
-            if @lastIconAnimationTarget[key] isnt value
-              targetChanged = true
-              break
-          if targetChanged              
-            @icon.stop(true).animate @iconAnimationTarget, @animationSpeed, @rondell.funcEase, =>
+        if (force or @iconAnimationTarget) and @icon and (@focused or not @rondell.equals @iconAnimationTarget, @lastIconAnimationTarget)
+          @icon.stop(true).animate @iconAnimationTarget, @animationSpeed, @rondell.funcEase
 
         # Animate the whole object
-        if @objectAnimationTarget?
-          targetChanged = false
-          for key, value of @objectAnimationTarget
-            if @lastObjectAnimationTarget[key] isnt value
-              targetChanged = true
-              break
+        if force or @objectAnimationTarget? and (@focused or not @rondell.equals @objectAnimationTarget, @lastObjectAnimationTarget)
+          @animating = true
 
-          if targetChanged
-            @object.stop(true)
-            .animate @objectAnimationTarget, @animationSpeed, @rondell.funcEase, =>
-              @animating = false
-              if @focused
-                @object.addClass @rondell.classes.focused
-                if @hovering or @rondell.alwaysShowCaption or @rondell._onMobile()
-                  @showCaption() 
-              else
-                # Hide item if it isn't visible anymore
-                if @objectAnimationTarget.opacity < @opacityMin
-                  @hidden = true
-                  @object.css "display", "none"
-                else
-                  @hidden = false
-                  @object.css "display", "block"
+          @object.stop(true)
+          .animate @objectAnimationTarget, @animationSpeed, @rondell.funcEase, @onAnimationFinished
 
+          unless @focused
+            # Remove focused class
+            @object.removeClass @rondell.classes.focused
+            # Hide caption when item isn't focused
+            @hideCaption()
 
-)(jQuery) 
+)(jQuery)
