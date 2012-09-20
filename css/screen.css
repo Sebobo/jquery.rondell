@@ -879,7 +879,10 @@ img.inline {
   left: 0;
 }
 
-#fancybox-loading div, #fancybox-close {
+#fancybox-loading div,
+#fancybox-left-ico,
+#fancybox-right-ico,
+#fancybox-close {
   background-image: url("../images/fancybox.png");
 }
 
@@ -958,6 +961,59 @@ img.inline {
   z-index: 1103;
   display: none;
   background-position: -40px 0px;
+}
+
+#fancybox-left,
+#fancybox-right {
+  position: absolute;
+  bottom: 0px;
+  height: 100%;
+  width: 35%;
+  cursor: pointer;
+  outline: none;
+  z-index: 1102;
+  display: none;
+}
+
+#fancybox-left {
+  left: 0px;
+}
+
+#fancybox-right {
+  right: 0px;
+}
+
+#fancybox-left-ico,
+#fancybox-right-ico {
+  position: absolute;
+  top: 50%;
+  left: -9999px;
+  width: 30px;
+  height: 30px;
+  margin-top: -15px;
+  cursor: pointer;
+  z-index: 1102;
+  display: block;
+  background-position: -40px -30px;
+}
+
+#fancybox-right-ico {
+  background-position: -40px -60px;
+}
+
+#fancybox-left:hover,
+#fancybox-right:hover {
+  visibility: visible;
+  /* IE6 */
+}
+
+#fancybox-left:hover span {
+  left: 20px;
+}
+
+#fancybox-right:hover span {
+  left: auto;
+  right: 20px;
 }
 
 /* Tabs */
