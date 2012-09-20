@@ -30,13 +30,13 @@ append content
 
   .size2of3.centered
     :markdown
-      This example fetches links and images from my brothers great webservice 
+      This example fetches links and images from my brothers great webservice
       [wookmark.com](http://www.wookmark.com "Wookmark.com")
       and creates a thumbnail gallery from the data.
       The gallery still uses the same plugin as the other demos but
       uses the absolute item index to minimize movement and distraction when focusing items.
-      
-      The scrollbar allows fast movement through the whole gallery 
+
+      The scrollbar allows fast movement through the whole gallery
       and the user sees his progress when going through the images.
       You can use the option *switchIndices* to disable direct item switching if you want to
       keep the items order.
@@ -94,7 +94,7 @@ append content
           });
         });
       </script>
-            
+
   br.clear
 
 append js
@@ -106,7 +106,7 @@ append js
         success: (data, text, xhqr) ->
           if text is "success"
             rondellContent = ""
-                   
+
             # Create link and image from each item data
             for item in data[0..24]
               rondellContent += "
@@ -114,20 +114,19 @@ append js
                   <img src=\"#{item.preview}\" title=\"#{item.title}\" width=\"#{item.width}\" height=\"#{item.height}\"/>
                 </a>
               ";
-                          
+
             # Append items to rondell and init rondell
             $("#rondellThumbnails").html(rondellContent).children().rondell
               preset: "thumbGallery"
 
       # Themepicker code
       $("#selectDefaultTheme").click ->
-        $("#rondellThumbnails .rondellContainer").removeClass("rondellTheme_dark rondellTheme_light").addClass("rondellTheme_default")
+        $("#rondellThumbnails .rondell-container").removeClass("rondell-theme-dark rondell-theme-light").addClass("rondell-theme-default")
         false
       $("#selectLightTheme").click ->
-        $("#rondellThumbnails .rondellContainer").removeClass("rondellTheme_dark rondellTheme_default").addClass("rondellTheme_light")
+        $("#rondellThumbnails .rondell-container").removeClass("rondell-theme-dark rondell-theme-default").addClass("rondell-theme-light")
         false
       $("#selectDarkTheme").click ->
-        console.log "test"
-        $("#rondellThumbnails .rondellContainer").removeClass("rondellTheme_default rondellTheme_light").addClass("rondellTheme_dark")
+        $("#rondellThumbnails .rondell-container").removeClass("rondell-theme-default rondell-theme-light").addClass("rondell-theme-dark")
         false
 

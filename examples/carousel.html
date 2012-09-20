@@ -13,7 +13,7 @@
   <body>
     <div class="pageHeader hasShadow">
       <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
-      <p><b>Version 0.9.2</b>&nbsp- Created by <a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
+      <p><b>Version 0.9.2</b>&nbsp- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
           Sebastian Helzle
           </a></p>
       <ul class="tabs">
@@ -56,12 +56,12 @@
         <h2>Preset - Carousel</h2>
       </div>
       <hr><br>
-      <div class="size2of3 centered"><p>This demo shows how to display a carousel enhanced with a lightbox. 
+      <div class="size2of3 centered"><p>This demo shows how to display a carousel enhanced with a lightbox.
 Click an image to focus it and a second click will open the original image in the lightbox.</p>
 
 <p>You can press arrow left and right on your keyboard to navigate through the images
 or swipe when using a touch device.
-The rondell will automatically continue to rotate through the carousel when 
+The rondell will automatically continue to rotate through the carousel when
 your mouse leaves it&#39;s area.</p>
 
 <p>The lightbox is powered by <a href="http://www.fancybox.net" title="Fancybox">Fancybox</a>.</p>
@@ -80,7 +80,7 @@ your mouse leaves it&#39;s area.</p>
 
 &lt;script type=&quot;text/javascript&quot;&gt;
   $(function() {
-    // Create a rondell with the 'carousel' preset and set an option 
+    // Create a rondell with the 'carousel' preset and set an option
     // to disable the rondell while the lightbox is displayed
     $(&quot;#rondellCarousel &gt; *&quot;).rondell({
       preset: &quot;carousel&quot;,
@@ -88,7 +88,7 @@ your mouse leaves it&#39;s area.</p>
         return !$(&quot;#fancybox-wrap&quot;).is(&quot;:visible&quot;);
       }
     }, function() {
-      // After the rondell has started initialize fancybox for links to full size 
+      // After the rondell has started initialize fancybox for links to full size
       // images and prevent fancybox from opening when an item is not focused
       $(&quot;#rondellGallery .rondell-item&quot;).fancybox({
         onStart: function(items, idx) {
@@ -106,12 +106,12 @@ your mouse leaves it&#39;s area.</p>
         <h2>Preset - Cubic</h2>
       </div>
       <hr><br>
-      <div class="size2of3 centered"><p>This demo fetches links &amp; images from my brothers great webservice 
+      <div class="size2of3 centered"><p>This demo fetches links &amp; images from my brothers great webservice
 <a href="http://www.wookmark.com" title="Wookmark.com">wookmark.com</a>
 and creates a rondell from the data.</p>
 
 <p>This example shows a carousel with a cubic function for the animation.
-The images titles are used as caption and clicking the focused 
+The images titles are used as caption and clicking the focused
 element will open the wookmark in a new tab or window.</p>
 
 <p>Here&#39;s how it&#39;s done</p>
@@ -127,11 +127,11 @@ element will open the wookmark in a new tab or window.</p>
         if (text === &quot;success&quot;) {
           for (i = 0; i &lt; 24; i++) {
             item = data[i];
-            rondellContent += ' \
-              &lt;a href=&quot;'+item.url+'&quot; title=&quot;'+item.title+'&quot; \
-                target=&quot;_blank&quot; style=&quot;display:none&quot;&gt; \
-                &lt;img src=&quot;'+item.preview+'&quot; title=&quot;'+item.title+'&quot; width=&quot;'+item.width+'&quot; height=&quot;'+item.height+'&quot;/&gt; \
-              &lt;/a&gt; \
+            rondellContent += ' \\
+              &lt;a href=&quot;'+item.url+'&quot; title=&quot;'+item.title+'&quot; \\
+                target=&quot;_blank&quot; style=&quot;display:none&quot;&gt; \\
+                &lt;img src=&quot;'+item.preview+'&quot; title=&quot;'+item.title+'&quot; width=&quot;'+item.width+'&quot; height=&quot;'+item.height+'&quot;/&gt; \\
+              &lt;/a&gt; \\
             ';
           }
           $(&quot;#rondellCubic&quot;).html(rondellContent).children().rondell({
@@ -145,7 +145,7 @@ element will open the wookmark in a new tab or window.</p>
 </pre>
       </div><br class="clear">
     </div><br>
-    <script src="../js/contrib/jquery-1.7.1.min.js"></script>
+    <script src="../js/contrib/jquery-1.8.0.min.js"></script>
     <script src="../js/contrib/jquery.fancybox-1.3.4.pack.js"></script>
     <script src="../js/contrib/jquery.mousewheel-3.0.6.min.js"></script>
     <script src="../js/jquery.rondell.js"></script>
@@ -190,7 +190,7 @@ element will open the wookmark in a new tab or window.</p>
       overlayColor: "#333",
       autoDimensions: false,
       onStart: function(items, idx) {
-        return $(items[idx]).hasClass("rondell-item-focused");
+        return $(items[idx]).hasClass('rondell-item-focused') || $('#fancybox-wrap').is(':visible');
       }
     };
     carousel = $("#rondellCarousel > *").rondell({
@@ -203,7 +203,7 @@ element will open the wookmark in a new tab or window.</p>
     });
     $(".resize-button").click(function(e) {
       e.preventDefault();
-      return carousel.fitContainer(carousel);
+      return carousel.fitToContainer();
     });
     return $.ajax({
       url: "http://www.wookmark.com/api/json",

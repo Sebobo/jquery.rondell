@@ -59,16 +59,16 @@ append content
 
   .size2of3.centered
     :markdown
-      This demo shows how to display a carousel enhanced with a lightbox. 
+      This demo shows how to display a carousel enhanced with a lightbox.
       Click an image to focus it and a second click will open the original image in the lightbox.
-      
+
       You can press arrow left and right on your keyboard to navigate through the images
       or swipe when using a touch device.
-      The rondell will automatically continue to rotate through the carousel when 
+      The rondell will automatically continue to rotate through the carousel when
       your mouse leaves it's area.
-      
+
       The lightbox is powered by [Fancybox](http://www.fancybox.net "Fancybox").
-      
+
       Here's how it's done
 
     pre.
@@ -85,7 +85,7 @@ append content
 
       <script type="text/javascript">
         $(function() {
-          // Create a rondell with the 'carousel' preset and set an option 
+          // Create a rondell with the 'carousel' preset and set an option
           // to disable the rondell while the lightbox is displayed
           $("#rondellCarousel > *").rondell({
             preset: "carousel",
@@ -93,7 +93,7 @@ append content
               return !$("#fancybox-wrap").is(":visible");
             }
           }, function() {
-            // After the rondell has started initialize fancybox for links to full size 
+            // After the rondell has started initialize fancybox for links to full size
             // images and prevent fancybox from opening when an item is not focused
             $("#rondellGallery .rondell-item").fancybox({
               onStart: function(items, idx) {
@@ -103,7 +103,7 @@ append content
           });
         });
       </script>
-            
+
   br
   hr
   br
@@ -118,12 +118,12 @@ append content
 
   .size2of3.centered
     :markdown
-      This demo fetches links & images from my brothers great webservice 
+      This demo fetches links & images from my brothers great webservice
       [wookmark.com](http://www.wookmark.com "Wookmark.com")
       and creates a rondell from the data.
 
       This example shows a carousel with a cubic function for the animation.
-      The images titles are used as caption and clicking the focused 
+      The images titles are used as caption and clicking the focused
       element will open the wookmark in a new tab or window.
 
       Here's how it's done
@@ -169,8 +169,8 @@ append js
         overlayColor: "#333"
         autoDimensions: false
         onStart: (items, idx) ->
-          $(items[idx]).hasClass "rondell-item-focused"
-      
+          $(items[idx]).hasClass('rondell-item-focused') or $('#fancybox-wrap').is(':visible')
+
       carousel = $("#rondellCarousel > *").rondell
           preset: "carousel"
           isActive: ->
@@ -180,7 +180,7 @@ append js
 
       $(".resize-button").click (e) ->
         e.preventDefault()
-        carousel.fitContainer carousel
+        carousel.fitToContainer()
 
       # Create wookmark carousel
       $.ajax
@@ -189,7 +189,7 @@ append js
         success: (data, text, xhqr) ->
           if text is "success"
             rondellContent = ""
-                   
+
             # Create link and image from each item data
             for item in data[0..24]
               rondellContent += "
@@ -197,7 +197,7 @@ append js
                   <img src=\"#{item.preview}\" title=\"#{item.title}\" width=\"#{item.width}\" height=\"#{item.height}\"/>
                 </a>
               ";
-                          
+
             # Append items to rondell and init rondell
             $("#rondellCubic").html(rondellContent).children().rondell
               preset: "cubic"

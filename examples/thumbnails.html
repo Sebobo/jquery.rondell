@@ -8,70 +8,48 @@
     <link rel="stylesheet" href="../css/screen.css" type="text/css" media="all" title="Screen">
     <link rel="stylesheet" href="../css/jquery.rondell.css" type="text/css" media="all" title="Screen">
     <script src="../js/contrib/modernizr-2.0.6.min.js"></script>
-    <title>Thumbnails - jQuery Rondell
-    </title>
+    <title>Thumbnails - jQuery Rondell</title>
   </head>
   <body>
     <div class="pageHeader hasShadow">
-      <h1 id="docustart">Rondell - Display images and other content in a nice way
-      </h1>
-      <p><b>Version 0.9.2</b>&nbsp- Created by 
-<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">Sebastian Helzle
-
-</a>
-      </p>
+      <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
+      <p><b>Version 0.9.2</b>&nbsp- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
+          Sebastian Helzle
+          </a></p>
       <ul class="tabs">
-        <li><a href="/" title="Projects overview">Home</a>
-        </li>
-        <li><a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">Smallipop</a>
-        </li>
-        <li class="selected"><a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">Rondell</a>
-        </li>
+        <li><a href="/" title="Projects overview">Home</a></li>
+        <li><a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">Smallipop</a></li>
+        <li class="selected"><a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">Rondell</a></li>
       </ul>
     </div>
     <div id="introduction" class="page hasShadow">
-      <div class="subnav centered">
-        <ul class="nav nav-pills">
-          <li><a href="../index.html">Overview</a>
-          </li>
-          <li><a href="installation.html">Installation</a>
-          </li>
-          <li><a href="options.html">Options</a>
-          </li>
-          <li><span class="spacer">|</span>
-          </li>
-          <li><a href="carousel.html">Carousel</a>
-          </li>
-          <li><a href="slider.html">Slider</a>
-          </li>
-          <li><a href="scroller.html">Scroller</a>
-          </li>
-          <li><a href="gallery.html">Gallery</a>
-          </li>
-          <li class="active"><a href="thumbnails.html">Thumbnails</a>
-          </li>
-          <li><a href="pages.html">Pages</a>
-          </li>
-        </ul><br class="clear">
-      </div><br>
-      <div id="rondellThumbnails" style="height:430px;">&nbsp;
-      </div><br>
-      <div class="center"><a id="selectDefaultTheme" href="#" class="label">default</a>&nbsp;-
-<a id="selectLightTheme" href="#" class="label warning">light</a>&nbsp;-
-<a id="selectDarkTheme" href="#" class="label inverse">dark</a>
-      </div><br class="clear"><br>
+            <div class="subnav centered">
+              <ul class="nav nav-pills">
+                <li><a href="../index.html">Overview</a></li>
+                <li><a href="installation.html">Installation</a></li>
+                <li><a href="options.html">Options</a></li>
+                <li><span class="spacer">|</span></li>
+                <li><a href="carousel.html">Carousel</a></li>
+                <li><a href="slider.html">Slider</a></li>
+                <li><a href="scroller.html">Scroller</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li class="active"><a href="thumbnails.html">Thumbnails</a></li>
+                <li><a href="pages.html">Pages</a></li>
+              </ul><br class="clear">
+            </div><br>
+      <div id="rondellThumbnails" style="height:430px;">&nbsp;</div><br>
+      <div class="center"><a id="selectDefaultTheme" href="#" class="label">default</a>&nbsp;-<a id="selectLightTheme" href="#" class="label warning">light</a>&nbsp;-<a id="selectDarkTheme" href="#" class="label inverse">dark</a></div><br class="clear"><br>
       <div class="center">
-        <h2>Preset - Gallery with thumbnails
-        </h2>
+        <h2>Preset - Gallery with thumbnails</h2>
       </div>
       <hr>
-      <div class="size2of3 centered"><p>This example fetches links and images from my brothers great webservice 
+      <div class="size2of3 centered"><p>This example fetches links and images from my brothers great webservice
 <a href="http://www.wookmark.com" title="Wookmark.com">wookmark.com</a>
 and creates a thumbnail gallery from the data.
 The gallery still uses the same plugin as the other demos but
 uses the absolute item index to minimize movement and distraction when focusing items.</p>
 
-<p>The scrollbar allows fast movement through the whole gallery 
+<p>The scrollbar allows fast movement through the whole gallery
 and the user sees his progress when going through the images.
 You can use the option <em>switchIndices</em> to disable direct item switching if you want to
 keep the items order.</p>
@@ -81,9 +59,9 @@ keep the items order.</p>
       <div class="size2of3 centered">
         <pre>&lt;div id=&quot;rondellThumbnails&quot;&gt;
   &lt;img src=&quot;images/slider/pic1.png&quot; alt=&quot;unicorn&quot; title=&quot;A beautiful unicorn&quot;&gt;
-
+  
   ...
-
+  
 &lt;/div&gt;
 
 &lt;script type=&quot;text/javascript&quot;&gt;
@@ -93,7 +71,6 @@ keep the items order.</p>
     });
   });
 &lt;/script&gt;
-
 </pre>
       </div><br>
       <div class="size2of3 centered"><p>Here&#39;s how you use images loaded from an api</p>
@@ -111,11 +88,11 @@ keep the items order.</p>
         if (text === &quot;success&quot;) {
           for (i = 0; i &lt; 24; i++) {
             item = data[i];
-            rondellContent += ' \
-              &lt;a href=&quot;'+item.url+'&quot; title=&quot;'+item.title+'&quot; \
-                target=&quot;_blank&quot; style=&quot;display:none&quot;&gt; \
-                &lt;img src=&quot;'+item.preview+'&quot; title=&quot;'+item.title+'&quot; width=&quot;'+item.width+'&quot; height=&quot;'+item.height+'&quot;/&gt; \
-              &lt;/a&gt; \
+            rondellContent += ' \\
+              &lt;a href=&quot;'+item.url+'&quot; title=&quot;'+item.title+'&quot; \\
+                target=&quot;_blank&quot; style=&quot;display:none&quot;&gt; \\
+                &lt;img src=&quot;'+item.preview+'&quot; title=&quot;'+item.title+'&quot; width=&quot;'+item.width+'&quot; height=&quot;'+item.height+'&quot;/&gt; \\
+              &lt;/a&gt; \\
             ';
           }
           $(&quot;#rondellThumbnails&quot;).html(rondellContent).children().rondell({
@@ -126,11 +103,10 @@ keep the items order.</p>
     });
   });
 &lt;/script&gt;
-
 </pre>
       </div><br class="clear">
     </div><br>
-    <script src="../js/contrib/jquery-1.7.1.min.js"></script>
+    <script src="../js/contrib/jquery-1.8.0.min.js"></script>
     <script src="../js/contrib/jquery.fancybox-1.3.4.pack.js"></script>
     <script src="../js/contrib/jquery.mousewheel-3.0.6.min.js"></script>
     <script src="../js/jquery.rondell.js"></script>
@@ -161,8 +137,7 @@ keep the items order.</p>
     <!-- Piwik-->
     <script></script>
     <noscript>
-      <p><img src="https://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt="">
-      </p>
+      <p><img src="https://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></p>
     </noscript>
     <!-- End Piwik Tracking Code--><script type="text/javascript">
 (function() {
@@ -187,16 +162,15 @@ keep the items order.</p>
       }
     });
     $("#selectDefaultTheme").click(function() {
-      $("#rondellThumbnails .rondellContainer").removeClass("rondellTheme_dark rondellTheme_light").addClass("rondellTheme_default");
+      $("#rondellThumbnails .rondell-container").removeClass("rondell-theme-dark rondell-theme-light").addClass("rondell-theme-default");
       return false;
     });
     $("#selectLightTheme").click(function() {
-      $("#rondellThumbnails .rondellContainer").removeClass("rondellTheme_dark rondellTheme_default").addClass("rondellTheme_light");
+      $("#rondellThumbnails .rondell-container").removeClass("rondell-theme-dark rondell-theme-default").addClass("rondell-theme-light");
       return false;
     });
     return $("#selectDarkTheme").click(function() {
-      console.log("test");
-      $("#rondellThumbnails .rondellContainer").removeClass("rondellTheme_default rondellTheme_light").addClass("rondellTheme_dark");
+      $("#rondellThumbnails .rondell-container").removeClass("rondell-theme-default rondell-theme-light").addClass("rondell-theme-dark");
       return false;
     });
   });

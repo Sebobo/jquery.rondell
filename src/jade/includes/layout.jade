@@ -18,10 +18,10 @@ html.no-js
     .pageHeader.hasShadow
       block pageHeader
         h1#docustart Rondell - Display images and other content in a nice way
-        
+
         p
           b= version
-          | &nbsp- Created by 
+          | &nbsp- Created by
           a(href="http://www.sebastianhelzle.net", target="_blank", title="Sebastian Helzle IT-Consulting").
             Sebastian Helzle
 
@@ -39,7 +39,7 @@ html.no-js
     br
 
     block js
-      script(src='#{path}js/contrib/jquery-1.7.1.min.js')
+      script(src='#{path}js/contrib/jquery-1.8.0.min.js')
       script(src="#{path}js/contrib/jquery.fancybox-1.3.4.pack.js")
       script(src="#{path}js/contrib/jquery.mousewheel-3.0.6.min.js")
       script(src="#{path}js/jquery.rondell.js")
@@ -49,7 +49,7 @@ html.no-js
         hostname = document.location.hostname
 
         if hostname and (hostname.indexOf("github") > 0 or hostname.indexOf("sebastianhelzle") > 0)
-          protocol = document.location.protocol or "https:" 
+          protocol = document.location.protocol or "https:"
           pkBaseURL = "#{protocol}//tracking.sebastianhelzle.net/"
 
           $.getScript "#{pkBaseURL}piwik.js", ->
