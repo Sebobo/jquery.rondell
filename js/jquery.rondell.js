@@ -4,8 +4,8 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 0.9.2
-  @date 09/20/2012
+  @version 0.9.3
+  @date 09/22/2012
   @category jQuery plugin
   @copyright (c) 2009-2012 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -21,7 +21,7 @@
 
     var Rondell, _base;
     $.rondell || ($.rondell = {
-      version: '0.9.2',
+      version: '0.9.3',
       name: 'rondell',
       defaults: {
         showContainer: true,
@@ -1368,6 +1368,7 @@
       RondellItem.prototype.prepareFadeIn = function() {
         var iconMarginLeft, iconMarginTop, itemFocusedHeight, itemFocusedWidth;
         this.focused = true;
+        this.hidden = false;
         itemFocusedWidth = this.sizeFocused.width;
         itemFocusedHeight = this.sizeFocused.height;
         this.lastObjectAnimationTarget = this.objectAnimationTarget;
@@ -1449,7 +1450,7 @@
             }
           }
         } else if (this.hidden) {
-          $.extend(this.objectCSSTarget(newTarget));
+          $.extend(this.objectCSSTarget, newTarget);
         }
         this.lastObjectAnimationTarget = this.objectAnimationTarget;
         return this.objectAnimationTarget = newTarget;
@@ -1463,7 +1464,7 @@
             return this.showCaption();
           }
         } else {
-          if (this.objectAnimationTarget.opacity < this.opacityMin) {
+          if (this.objectAnimationTarget.opacity < this.rondell.opacityMin) {
             this.hidden = true;
             return this.object.css("display", "none");
           } else {
@@ -1482,13 +1483,15 @@
           if ((force || this.iconAnimationTarget) && this.icon && (this.focused || !this.rondell.equals(this.iconAnimationTarget, this.lastIconAnimationTarget))) {
             this.icon.stop(true).animate(this.iconAnimationTarget, this.animationSpeed, this.rondell.funcEase);
           }
-          if (force || (this.objectAnimationTarget != null) && (this.focused || !this.rondell.equals(this.objectAnimationTarget, this.lastObjectAnimationTarget))) {
+          if ((force || (this.objectAnimationTarget != null)) && (this.focused || !this.rondell.equals(this.objectAnimationTarget, this.lastObjectAnimationTarget))) {
             this.animating = true;
             this.object.stop(true).animate(this.objectAnimationTarget, this.animationSpeed, this.rondell.funcEase, this.onAnimationFinished);
             if (!this.focused) {
               this.object.removeClass(this.rondell.classes.focused);
               return this.hideCaption();
             }
+          } else {
+            return this.onAnimationFinished();
           }
         }
       };

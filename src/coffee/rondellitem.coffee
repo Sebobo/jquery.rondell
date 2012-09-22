@@ -233,6 +233,7 @@
 
     prepareFadeIn: =>
       @focused = true
+      @hidden = false
 
       itemFocusedWidth = @sizeFocused.width
       itemFocusedHeight = @sizeFocused.height
@@ -327,7 +328,7 @@
 
       else if @hidden
         # Move item directly to new position instead of animating it
-        $.extend @objectCSSTarget newTarget
+        $.extend @objectCSSTarget, newTarget
 
       # Store last target for this item
       @lastObjectAnimationTarget = @objectAnimationTarget
@@ -344,7 +345,7 @@
           @showCaption()
       else
         # Hide item if it isn't visible anymore
-        if @objectAnimationTarget.opacity < @opacityMin
+        if @objectAnimationTarget.opacity < @rondell.opacityMin
           @hidden = true
           @object.css "display", "none"
         else
@@ -361,7 +362,7 @@
           @icon.stop(true).animate @iconAnimationTarget, @animationSpeed, @rondell.funcEase
 
         # Animate the whole object
-        if force or @objectAnimationTarget? and (@focused or not @rondell.equals @objectAnimationTarget, @lastObjectAnimationTarget)
+        if (force or @objectAnimationTarget?) and (@focused or not @rondell.equals @objectAnimationTarget, @lastObjectAnimationTarget)
           @animating = true
 
           @object.stop(true)
@@ -372,5 +373,8 @@
             @object.removeClass @rondell.classes.focused
             # Hide caption when item isn't focused
             @hideCaption()
+        else
+          # Animation was skipped
+          @onAnimationFinished()
 
 )(jQuery)
