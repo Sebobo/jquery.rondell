@@ -2,10 +2,10 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 0.9.3
-  @date 09/22/2012
+  @version 0.9.4
+  @date 01/18/2013
   @category jQuery plugin
-  @copyright (c) 2009-2012 Sebastian Helzle (www.sebastianhelzle.net)
+  @copyright (c) 2009-2013 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
 ###
 

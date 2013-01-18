@@ -1,0 +1,49 @@
+{
+    "name": "rondell",
+    "version": "0.9.4",
+    "title": "jQuery.Rondell()",
+    "author": {
+        "name": "Sebastian Helzle",
+        "url": "https://github.com/sebobo"
+    },
+    "homepage": "http://projects.sebastianhelzle.net/jquery.rondell",
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://raw.github.com/Sebobo/jquery.rondell/master/MIT-LICENSE.txt"
+        }
+    ],
+    "dependencies": {
+        "jquery": ">=1.5.2",
+        "modernizr": ">=2.0.0",
+        "mousewheel": "*"
+    },
+    "description": "This is a plugin for displaying galeries and other content as carousel, thumbnail gallery, slider and much more!",
+    "keywords": [
+        "carousel",
+        "rondell",
+        "ui",
+        "animate",
+        "slide"
+    ],
+    "maintainers": [
+        {
+            "name": "Sebastian Helzle",
+            "email": "sebastian@helzle.net",
+            "url": "http://www.sebastianhelzle.net"
+        }
+    ],
+    "files": [
+        "js",
+        "css",
+        "examples",
+        "images",
+        "src",
+        "index.html",
+        "README.md",
+        "Cakefile"
+    ],
+    "bugs": "https://github.com/Sebobo/jquery.rondell/issues",
+    "docs": "http://projects.sebastianhelzle.net/jquery.rondell",
+    "download": "https://github.com/Sebobo/jquery.rondell"
+}

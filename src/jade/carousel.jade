@@ -162,6 +162,7 @@ append content
 append js
   :coffeescript
     $ ->
+      # Options for the lightbox plugin
       fancyboxOptions =
         hideOnContentClick: false
         padding: 10
@@ -171,6 +172,7 @@ append js
         onStart: (items, idx) ->
           $(items[idx]).hasClass('rondell-item-focused') or $('#fancybox-wrap').is(':visible')
 
+      # Initializer for the carousel
       carousel = $("#rondellCarousel > *").rondell
           preset: "carousel"
           isActive: ->
@@ -178,11 +180,12 @@ append js
         , ->
           $("#rondellCarousel .rondell-item").fancybox fancyboxOptions
 
+      # Button for resizing the demo carousel
       $(".resize-button").click (e) ->
         e.preventDefault()
         carousel.fitToContainer()
 
-      # Create wookmark carousel
+      # Create sample wookmark carousel by calling it's api
       $.ajax
         url: "http://www.wookmark.com/api/json"
         dataType: "jsonp"

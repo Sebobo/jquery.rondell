@@ -65,6 +65,9 @@ append content
 append js
   :coffeescript
     $ ->
+      # Api call to wookmark for the sample gallery.
+      # Use the init call in the success callback when you just want to display
+      # gallery without the wookmark call.
       $.ajax
         url: "http://www.wookmark.com/api/json"
         dataType: "jsonp"
@@ -83,3 +86,19 @@ append js
             # Append items to rondell and init rondell
             $("#rondellGallery").html(rondellContent).children().rondell
               preset: "gallery"
+              theme: "light"
+              center:
+                top: 190
+                left: 210
+              controls:
+                margin:
+                  x: 190
+                  y: 370
+              itemProperties:
+                sizeFocused:
+                  width: 380
+                  height: 340
+              funcTop: (l, r, i) ->
+                r.center.top + (l - 0.5) * (r.itemProperties.size.height + r.special.itemPadding)
+              funcLeft: (l, r, i) ->
+                r.size.width - r.itemProperties.size.width - r.special.itemPadding
