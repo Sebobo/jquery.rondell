@@ -1,6 +1,6 @@
 {
     "name": "rondell",
-    "version": "0.9.4",
+    "version": "0.9.5",
     "title": "jQuery.Rondell()",
     "author": {
         "name": "Sebastian Helzle",
@@ -24,7 +24,8 @@
         "rondell",
         "ui",
         "animate",
-        "slide"
+        "slide",
+        "effect"
     ],
     "maintainers": [
         {
