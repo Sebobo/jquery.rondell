@@ -37,6 +37,8 @@
       alwaysShowCaption: true
       visibleItems: 4
       theme: "dark"
+      lightbox:
+        enabled: false
       itemProperties:
         delay: 0
         size:
@@ -68,6 +70,8 @@
       radius:
         x: 0
         y: 0
+      lightbox:
+        enabled: false
       scaling: 1
       theme: "page"
       visibleItems: 1

@@ -78,7 +78,7 @@
 
     &.rondell-shift-left,
     &.rondell-shift-right {
-      background: url('../images/buttons.png') no-repeat 0 0;
+      background: url('images/buttons.png') no-repeat 0 0;
     }
     &.rondell-shift-left {
       background-position: 0 -28px;
@@ -115,7 +115,7 @@
 
     &.rondell-shift-left,
     &.rondell-shift-right {
-      background: #ccd url('../images/arrows.png') no-repeat 2px 2px;
+      background: #ccd url('images/arrows.png') no-repeat 2px 2px;
       @include border-radius(0 3px 0 6px);
     }
     &.rondell-shift-left {
@@ -169,7 +169,7 @@
     @include background(linear-gradient(top, #666666, #555555));
 
     span {
-      background: url('../images/arrows.png') no-repeat 0 0;
+      background: url('images/arrows.png') no-repeat 0 0;
       display: block;
       height: 16px;
       width: 16px;

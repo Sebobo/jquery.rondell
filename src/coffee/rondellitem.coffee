@@ -56,6 +56,8 @@
         @icon = icon
         @resizeable = not icon.hasClass @rondell.classes.noScale
 
+        @icon.addClass @rondell.classes.image
+
         # Add loading class
         @object.addClass @rondell.classes.loading
 

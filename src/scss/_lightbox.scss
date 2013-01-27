@@ -4,7 +4,6 @@
   z-index: 9998;
   display: none;
   position: absolute;
-  overflow: scroll;
 }
 
 .rondell-lightbox,
@@ -18,32 +17,63 @@
 .rondell-lightbox-overlay {
   position: fixed;
   cursor: pointer;
-  opacity: .4;
+  opacity: .8;
   background-color: #000;
-}
-.rgba .rondell-lightbox-overlay {
-  opacity: 1;
-  background-color: rgba(0, 0, 0, .4);
 }
 
 .rondell-lightbox-content {
   position: fixed;
+  clear: both;
   left: 50%;
   top: 0;
+  max-height: 90%;
+  overflow: auto;
   background: #fafafa;
   padding: 10px;
   z-index: 9999;
+  text-align: center;
   @include border-radius(5px);
   @include box-shadow(0 2px 50px 1px rgba(0, 0, 0, 0.7));
 
   .rondell-caption,
   .rondell-caption.rondell-item-overlay {
+    text-align: left;
     position: relative;
     display: block;
     color: #222;
     margin: 0;
     padding: 0;
     background-color: transparent;
-    max-width: 300px;
+    max-width: 400px;
+  }
+
+  .rondell-lightbox-next,
+  .rondell-lightbox-prev {
+    color: #338;
+    cursor: pointer;
+  }
+
+  .rondell-lightbox-position {
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .rondell-lightbox-prev,
+  .rondell-lightbox-next {
+    position: absolute;
+    bottom: 10px;
+    width: 16px;
+    height: 16px;
+    background: url('images/arrows_dark.png') no-repeat;
+  }
+
+  .rondell-lightbox-prev {
+    left: 10px;
+    background-position: 0 -16px;
+  }
+
+  .rondell-lightbox-next {
+    right: 10px;
+    @include clearfix();
   }
 }

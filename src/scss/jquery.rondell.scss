@@ -9,7 +9,7 @@
   font-size: 12px;
 
   &.rondell-initializing {
-    background: url('../images/loader.gif') no-repeat 50% 50%;
+    background: url('images/loader.gif') no-repeat 50% 50%;
 
     * { display:none; }
   }
@@ -55,7 +55,7 @@
 }
 
 .rondell-item-loading {
-  background: #d9d9d9 url('../images/item-loader.gif') no-repeat center center !important;
+  background: #d9d9d9 url('images/item-loader.gif') no-repeat center center !important;
   @include border-radius(5px);
 
   * {
