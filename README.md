@@ -14,15 +14,16 @@ Installation
  * [jQuery](http://www.jquery.com) - 1.5.2 or better
  * [Modernizr](http://www.modernizr.com) - This library tests the browser for feature support and adds classes to the body tag. We use this for css fallbacks in our themes.
  
-Both are also provided in the `lib` folder. 
+Both are also provided in the `libs` folder. 
 
 If you don't want to use the `Modernizr` library you can remove the `.cssgradients`, `.borderradius`, `.rgba` and `.boxshadow` classes in `css/jquery-rondell.css`.
 
 ### Required files
 
-Copy `lib/jquery-rondell.js` to your javascript folder.
-Copy `css/jquery-rondell.css` to your css folder.
+Copy `dist/jquery-rondell.js` to your javascript folder.
+Copy `dist/jquery-rondell.css` to your css folder.
 
+There are also minified files in the `dist` folder.
 
 Usage
 -----
@@ -55,7 +56,7 @@ The sources are provided in the `src` folder.
 
 So you can either work with the compiled `.js` and `.css` files in your project or use the coffeescript and sass files.
 
-I have provided a `Cakefile` which starts the two watcher daemons, when your editing .scss and .coffee files.
+I have provided a `Gruntfile` which starts the watcher daemons, when your editing .scss, .jade and .coffee files.
 This requires node.js and coffeescript installed on your computer.
 
 Feedback

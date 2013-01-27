@@ -663,7 +663,7 @@ pre code {
 
 /* Demo css */
 html {
-  background: #222222 url("../images/bg.png");
+  background: #222222 url("images/bg.png");
 }
 
 body {
@@ -838,36 +838,6 @@ img.inline {
 /* rondell demo stuff */
 .rondell-container {
   margin: 0 auto;
-}
-
-/* Sidemenu */
-.side-menu {
-  position: fixed;
-  top: 168px;
-  left: 50%;
-  margin-left: -650px;
-  padding-top: 30px;
-  text-align: right;
-  width: 140px;
-  font-size: 14px;
-  z-index: 9999;
-}
-.side-menu h2 {
-  color: #267BE4;
-  font-size: 16px;
-}
-.side-menu li {
-  list-style-type: none;
-}
-.side-menu li a {
-  color: #999;
-}
-.side-menu li a:hover {
-  color: #333;
-  text-decoration: underline;
-}
-.side-menu li a.current {
-  color: #333;
 }
 
 /* Tabs */

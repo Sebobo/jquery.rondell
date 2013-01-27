@@ -15,19 +15,22 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   /* Global rondell plugin properties
   */
 
-  var Rondell, closeLightbox, getLightbox, resizeLightbox, updateLightbox, _base;
+  var Rondell, closeLightbox, getActiveRondell, getLightbox, lightboxIsVisible, resizeLightbox, resizeTimer, updateLightbox, _base;
   $.rondell || ($.rondell = {
     version: '1.0.0',
     name: 'rondell',
     lightbox: {
       instance: void 0,
-      visible: false,
       template: $.trim('\
         <div class="rondell-lightbox">\
-          <div class="rondell-lightbox-overlay"/>\
-          <div class="rondell-lightbox-content"/>\
-        </div>\
-      ')
+          <div class="rondell-lightbox-overlay">&nbsp;</div>\
+          <div class="rondell-lightbox-content">\
+            <div class="rondell-lightbox-inner"/>\
+            <div class="rondell-lightbox-prev">&nbsp;</div>\
+            <div class="rondell-lightbox-position">1</div>\
+            <div class="rondell-lightbox-next">&nbsp;</div>\
+          </div>\
+        </div>')
     },
     defaults: {
       showContainer: true,
@@ -38,6 +41,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
         caption: "rondell-caption",
         noScale: "no-scale",
         item: "rondell-item",
+        image: "rondell-item-image",
         resizeable: "rondell-item-resizeable",
         small: "rondell-item-small",
         hidden: "rondell-item-hidden",
@@ -172,38 +176,6 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       return -c / 2 * ((--t) * (t - 2) - 1) + b;
     }
   });
-  resizeLightbox = function() {
-    return true;
-  };
-  closeLightbox = function() {
-    if ($.rondell.lightbox.visible) {
-      $.rondell.lightbox.visible = false;
-      return getLightbox().stop().fadeOut(150);
-    }
-  };
-  getLightbox = function() {
-    if (!$.rondell.lightbox.instance) {
-      $.rondell.lightbox.instance = $($.rondell.lightbox.template).appendTo($('body'));
-      $('.rondell-lightbox-overlay', $.rondell.lightbox.instance).bind('click.rondell', closeLightbox);
-      $(window).bind('resize.rondell', resizeLightbox);
-    }
-    return $.rondell.lightbox.instance;
-  };
-  updateLightbox = function() {
-    var lightbox, lightboxContent, newHeight, newProps, newWidth, top, winHeight;
-    lightbox = getLightbox();
-    lightboxContent = $('.rondell-lightbox-content', lightbox);
-    newWidth = lightboxContent.outerWidth();
-    newHeight = lightboxContent.outerHeight();
-    winHeight = $(window).innerHeight();
-    top = (winHeight - newHeight) / 2;
-    newProps = {
-      marginLeft: -newWidth / 2,
-      top: Math.max(top, 20)
-    };
-    lightboxContent.css(newProps).fadeTo(200, 1);
-    return lightbox.stop().fadeTo(150, 1);
-  };
   Rondell = (function() {
 
     Rondell.rondellCount = 0;
@@ -309,7 +281,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
         height: this.size.height || this.center.top * 2
       };
       containerWrap = $("<div/>").css(this.size).addClass("" + this.classes.initializing + " " + this.classes.container + " " + this.classes.themePrefix + "-" + this.theme);
-      this.container = items.wrapAll(containerWrap).parent();
+      this.container = items.wrapAll(containerWrap).parent().addClass("rondell-instance-" + this.id).data('api', this);
       if (this.showContainer) {
         this.container.parent().show();
       }
@@ -530,7 +502,9 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
         item = $(this).data("item");
         if (rondell._focusedItem.id === item.id) {
           e.preventDefault();
-          return rondell.showLightbox();
+          if (rondell.lightbox.enabled) {
+            return rondell.showLightbox();
+          }
         } else {
           e.preventDefault();
           if (!item.hidden && item.object.is(":visible")) {
@@ -696,7 +670,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       }
       this._autoShiftInit();
       this._refreshControls();
-      if (this.lightbox.enabled && $.rondell.lightbox.visible) {
+      if (this.lightbox.enabled && lightboxIsVisible()) {
         this.showLightbox();
       }
       if (this.scrollbar.enabled) {
@@ -776,7 +750,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 
     Rondell.prototype._autoShift = function() {
       this.autoRotation._timer = -1;
-      if (this.isActive() && this.isFocused() && !this.autoRotation.paused) {
+      if (this.isActive() && this.isFocused() && !lightboxIsVisible() && !this.autoRotation.paused) {
         if (this.autoRotation.direction) {
           return this.shiftRight();
         } else {
@@ -823,7 +797,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
         case 39:
           return this.shiftRight(e);
         case 27:
-          return this.closeLightbox();
+          return closeLightbox();
       }
     };
 
@@ -831,15 +805,21 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       var content, lightbox, lightboxContent, rondell;
       lightbox = getLightbox();
       lightboxContent = $('.rondell-lightbox-content', lightbox);
-      if (!$.rondell.lightbox.visible) {
+      if (!lightboxIsVisible()) {
         lightbox.css('display', 'block');
         lightboxContent.css('display', 'none');
       }
-      $.rondell.lightbox.visible = true;
       content = this._focusedItem.object.html();
       rondell = this;
       return lightboxContent.stop().fadeTo(100, 0, function() {
-        $(this).html(content).find("." + rondell.classes.overlay).css('opacity', 1);
+        content = $('.rondell-lightbox-inner', lightboxContent).html(content);
+        $('.rondell-lightbox-position').text("" + rondell.currentLayer + " | " + rondell.maxItems);
+        $("." + rondell.classes.overlay, content).attr('style', '');
+        $("." + rondell.classes.image, content).attr({
+          style: '',
+          width: '',
+          height: ''
+        });
         return setTimeout(updateLightbox, 0);
       });
     };
@@ -847,6 +827,61 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     return Rondell;
 
   })();
+  getActiveRondell = function() {
+    return $(".rondell-instance-" + Rondell.activeRondell).data('api');
+  };
+  resizeTimer = 0;
+  resizeLightbox = function() {
+    clearTimeout(resizeTimer);
+    return resizeTimer = setTimeout(updateLightbox, 200);
+  };
+  lightboxIsVisible = function() {
+    var _ref;
+    return (_ref = $.rondell.lightbox.instance) != null ? _ref.is(':visible') : void 0;
+  };
+  closeLightbox = function() {
+    if (lightboxIsVisible()) {
+      return getLightbox().stop().fadeOut(150);
+    }
+  };
+  getLightbox = function() {
+    var lightbox;
+    if (!$.rondell.lightbox.instance) {
+      lightbox = $.rondell.lightbox.instance = $($.rondell.lightbox.template).appendTo($('body'));
+      $('.rondell-lightbox-overlay', lightbox).bind('click.rondell', closeLightbox);
+      $('.rondell-lightbox-prev', lightbox).bind('click.rondell', function() {
+        return getActiveRondell().shiftLeft();
+      });
+      $('.rondell-lightbox-next', lightbox).bind('click.rondell', function() {
+        return getActiveRondell().shiftRight();
+      });
+      $(window).bind('resize.rondell', resizeLightbox);
+      lightbox.bind("mousewheel.rondell", function(e, d, dx, dy) {
+        return getActiveRondell()._onMousewheel(e, d, dx, dy);
+      });
+    }
+    return $.rondell.lightbox.instance;
+  };
+  updateLightbox = function() {
+    var lightbox, lightboxContent, newHeight, newProps, newWidth, top, winHeight;
+    lightbox = getLightbox();
+    lightboxContent = $('.rondell-lightbox-content', lightbox);
+    newWidth = lightboxContent.outerWidth();
+    newHeight = lightboxContent.outerHeight();
+    winHeight = $(window).innerHeight();
+    top = (winHeight - newHeight) / 2;
+    newProps = {
+      marginLeft: -newWidth / 2,
+      top: Math.max(top, 20)
+    };
+    if (lightboxContent.css('opacity') < 1) {
+      lightboxContent.css(newProps).fadeTo(200, 1);
+    } else {
+      newProps.opacity = 1;
+      lightboxContent.animate(newProps, 200);
+    }
+    return lightbox.stop().fadeTo(150, 1);
+  };
   return $.fn.rondell = function(options, callback) {
     var rondell;
     if (options == null) {
@@ -907,6 +942,9 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       alwaysShowCaption: true,
       visibleItems: 4,
       theme: "dark",
+      lightbox: {
+        enabled: false
+      },
       itemProperties: {
         delay: 0,
         size: {
@@ -949,6 +987,9 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       radius: {
         x: 0,
         y: 0
+      },
+      lightbox: {
+        enabled: false
       },
       scaling: 1,
       theme: "page",
@@ -1456,6 +1497,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       if (icon.length) {
         this.icon = icon;
         this.resizeable = !icon.hasClass(this.rondell.classes.noScale);
+        this.icon.addClass(this.rondell.classes.image);
         this.object.addClass(this.rondell.classes.loading);
         if (icon.width() > 0 || (icon[0].complete && icon[0].width > 0)) {
           return window.setTimeout(this.onIconLoad, 10);

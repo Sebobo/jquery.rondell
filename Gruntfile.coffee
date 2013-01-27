@@ -14,7 +14,7 @@ module.exports = (grunt) ->
       banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
         '<%= grunt.template.today("yyyy-mm-dd") %> */'
     qunit:
-      index: ['tests/**/*.html']
+      files: ['tests/**/*.html']
     growl:
       coffee:
         title: 'grunt'
@@ -49,7 +49,7 @@ module.exports = (grunt) ->
           pluginVersion: '<%= pkg.version %>'
         files:
           'index.html': 'src/jade/index.jade'
-          'tests/tests.html': 'src/jade/tests.jade'
+          'tests/tests.html': 'src/jade/tests/tests.jade'
           'examples/carousel.html': 'src/jade/examples/carousel.jade'
           'examples/gallery.html': 'src/jade/examples/gallery.jade'
           'examples/installation.html': 'src/jade/examples/installation.jade'
