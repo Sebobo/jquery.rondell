@@ -1,10 +1,10 @@
-extends includes/layout
+extends ../includes/layout
 
 append head
   title Carousel - jQuery Rondell
 
 append content
-  include includes/submenu
+  include ../includes/submenu
   mixin submenu('Carousel')
 
   br
@@ -67,8 +67,6 @@ append content
       The rondell will automatically continue to rotate through the carousel when
       your mouse leaves it's area.
 
-      The lightbox is powered by [Fancybox](http://www.fancybox.net "Fancybox").
-
       Here's how it's done
 
     pre.
@@ -89,17 +87,6 @@ append content
           // to disable the rondell while the lightbox is displayed
           $("#rondellCarousel > *").rondell({
             preset: "carousel",
-            isActive: function() {
-              return !$("#fancybox-wrap").is(":visible");
-            }
-          }, function() {
-            // After the rondell has started initialize fancybox for links to full size
-            // images and prevent fancybox from opening when an item is not focused
-            $("#rondellGallery .rondell-item").fancybox({
-              onStart: function(items, idx) {
-                return $(items[idx]).hasClass("rondell-item-focused");
-              }
-            });
           });
         });
       </script>
@@ -162,23 +149,10 @@ append content
 append js
   :coffeescript
     $ ->
-      # Options for the lightbox plugin
-      fancyboxOptions =
-        hideOnContentClick: false
-        padding: 10
-        scrolling: "no"
-        overlayColor: "#333"
-        autoDimensions: false
-        onStart: (items, idx) ->
-          $(items[idx]).hasClass('rondell-item-focused') or $('#fancybox-wrap').is(':visible')
 
       # Initializer for the carousel
       carousel = $("#rondellCarousel > *").rondell
-          preset: "carousel"
-          isActive: ->
-            not $("#fancybox-wrap").is ":visible"
-        , ->
-          $("#rondellCarousel .rondell-item").fancybox fancyboxOptions
+        preset: "carousel"
 
       # Button for resizing the demo carousel
       $(".resize-button").click (e) ->

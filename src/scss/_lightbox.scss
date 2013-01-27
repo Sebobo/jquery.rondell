@@ -1,0 +1,49 @@
+@import "compass";
+
+.rondell-lightbox {
+  z-index: 9998;
+  display: none;
+  position: absolute;
+  overflow: scroll;
+}
+
+.rondell-lightbox,
+.rondell-lightbox-overlay {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.rondell-lightbox-overlay {
+  position: fixed;
+  cursor: pointer;
+  opacity: .4;
+  background-color: #000;
+}
+.rgba .rondell-lightbox-overlay {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, .4);
+}
+
+.rondell-lightbox-content {
+  position: fixed;
+  left: 50%;
+  top: 0;
+  background: #fafafa;
+  padding: 10px;
+  z-index: 9999;
+  @include border-radius(5px);
+  @include box-shadow(0 2px 50px 1px rgba(0, 0, 0, 0.7));
+
+  .rondell-caption,
+  .rondell-caption.rondell-item-overlay {
+    position: relative;
+    display: block;
+    color: #222;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    max-width: 300px;
+  }
+}

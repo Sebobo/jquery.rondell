@@ -1,20 +1,20 @@
 /* General demo helpers */
-$(function() {    
+$(function() {
     // Floating side menu
     var sideMenu = $(".side-menu"),
         sideMenuItems = $("a", sideMenu),
         sideMenuMinY = $(".page").position().top,
         lastSideMenuY = -1,
         currentSideMenuItem = 0;
-    
+
     $(window).scroll(function(e) {
         var scrollY = $(document).scrollTop();
-        
+
         if (scrollY == lastSideMenuY)
             return;
-            
+
         lastSideMenuY = scrollY;
-        
+
         // Move floating menu
         if (scrollY > sideMenuMinY) {
             sideMenu.css({
@@ -27,7 +27,7 @@ $(function() {
                 top: sideMenuMinY
             });
         }
-        
+
         // Check where we are in the document
         var currentItem = 0, itemY = 0;
         for (var i = 0; i < sideMenuItems.length; i++) {
@@ -37,41 +37,32 @@ $(function() {
             else
                 break;
         }
-        
-        // Switch current menu item                    
+
+        // Switch current menu item
         if (currentSideMenuItem != currentItem) {
             currentSideMenuItem = currentItem;
-            
+
             // Remove current class from inactive items
             sideMenuItems.not(":eq(" + currentItem + ")").removeClass("current");
             // Highlight current item
             sideMenuItems.eq(currentItem).addClass("current");
         }
     }).trigger("scroll");
-    
+
     // Collapsable contentelements
     $('.collapsor').click(function(e) {
         e.preventDefault();
         var self = $(this);
         self.slideUp(300, function() {
-            $(self.attr('href')).slideDown(300); 
+            $(self.attr('href')).slideDown(300);
         });
     });
-    
-    // Code popup via fancybox
-    $('.showCode').fancybox({
-        scrolling: 'no',
-        padding: 10,
-        titleShow: false,
-        autoDimensions: true,
-        overlayColor: '#333'
-    });
-    
+
     // Smooth scroller for menu
     $('.scrollToId').click(function(e) {
         e.preventDefault();
         $('html, body').animate({
             scrollTop: $($(this).attr('href')).offset().top
-        }, 800, 'swing');   
+        }, 800, 'swing');
     });
 });

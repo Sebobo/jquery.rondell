@@ -28,10 +28,11 @@
   text-decoration: none;
 }
 .rondell-item .rondell-item-crop {
-  border-radius: inherit;
-  -o-border-radius: inherit;
-  -moz-border-radius: inherit;
   -webkit-border-radius: inherit;
+  -moz-border-radius: inherit;
+  -ms-border-radius: inherit;
+  -o-border-radius: inherit;
+  border-radius: inherit;
   overflow: hidden;
   width: 100%;
   height: 100%;
@@ -54,10 +55,11 @@
 
 .rondell-item-loading {
   background: #d9d9d9 url("../images/item-loader.gif") no-repeat center center !important;
-  border-radius: 5px;
-  -o-border-radius: 5px;
-  -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
 }
 .rondell-item-loading * {
   display: none !important;
@@ -66,10 +68,11 @@
 .rondell-item-error {
   background: #b33 !important;
   background-color: rgba(200, 0, 0, 0.1) !important;
-  border-radius: 5px;
-  -o-border-radius: 5px;
-  -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
 }
 .rondell-item-error p {
   color: #333;
@@ -111,10 +114,11 @@
   color: #fafafa;
   background-color: #333;
   background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 4px;
-  -o-border-radius: 4px;
-  -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
 }
 
 .rondell-control {
@@ -158,21 +162,19 @@
   width: 16px;
   height: 16px;
   background-color: #ccc;
-  background-repeat: repeat-x;
-  background-image: -webkit-linear-gradient(top, #cccccc, #bbbbbb);
-  background-image: -moz-linear-gradient(top, #cccccc, #bbbbbb);
-  background-image: -ms-linear-gradient(top, #cccccc, #bbbbbb);
-  background-image: -o-linear-gradient(top, #cccccc, #bbbbbb);
-  background-image: linear-gradient(top, #cccccc, #bbbbbb);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #cccccc), color-stop(100%, #bbbbbb));
+  background: -webkit-linear-gradient(top, #cccccc, #bbbbbb);
+  background: -moz-linear-gradient(top, #cccccc, #bbbbbb);
+  background: -o-linear-gradient(top, #cccccc, #bbbbbb);
+  background: linear-gradient(top, #cccccc, #bbbbbb);
 }
 .rondell-scrollbar .rondell-scrollbar-left:active,
 .rondell-scrollbar .rondell-scrollbar-right:active {
-  background-repeat: repeat-x;
-  background-image: -webkit-linear-gradient(top, #cccccc, #dddddd);
-  background-image: -moz-linear-gradient(top, #cccccc, #dddddd);
-  background-image: -ms-linear-gradient(top, #cccccc, #dddddd);
-  background-image: -o-linear-gradient(top, #cccccc, #dddddd);
-  background-image: linear-gradient(top, #cccccc, #dddddd);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #cccccc), color-stop(100%, #dddddd));
+  background: -webkit-linear-gradient(top, #cccccc, #dddddd);
+  background: -moz-linear-gradient(top, #cccccc, #dddddd);
+  background: -o-linear-gradient(top, #cccccc, #dddddd);
+  background: linear-gradient(top, #cccccc, #dddddd);
 }
 .rondell-scrollbar .rondell-scrollbar-inner {
   width: 14px;
@@ -195,10 +197,11 @@
   cursor: pointer;
   position: absolute;
   border: 1px solid #ccc;
-  border-radius: 12px;
-  -o-border-radius: 12px;
-  -moz-border-radius: 12px;
   -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
+  border-radius: 12px;
 }
 .rondell-scrollbar .rondell-scrollbar-control {
   left: 50%;
@@ -207,21 +210,19 @@
   height: 12px;
   margin-left: -6px;
   background-color: #c00;
-  background-repeat: repeat-x;
-  background-image: -webkit-linear-gradient(top, red, #bb0000);
-  background-image: -moz-linear-gradient(top, red, #bb0000);
-  background-image: -ms-linear-gradient(top, red, #bb0000);
-  background-image: -o-linear-gradient(top, red, #bb0000);
-  background-image: linear-gradient(top, red, #bb0000);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ff0000), color-stop(100%, #bb0000));
+  background: -webkit-linear-gradient(top, #ff0000, #bb0000);
+  background: -moz-linear-gradient(top, #ff0000, #bb0000);
+  background: -o-linear-gradient(top, #ff0000, #bb0000);
+  background: linear-gradient(top, #ff0000, #bb0000);
 }
 .rondell-scrollbar .rondell-scrollbar-control:active {
   background: #d00;
-  background-repeat: repeat-x;
-  background-image: -webkit-linear-gradient(top, #ee0000, #dd0000);
-  background-image: -moz-linear-gradient(top, #ee0000, #dd0000);
-  background-image: -ms-linear-gradient(top, #ee0000, #dd0000);
-  background-image: -o-linear-gradient(top, #ee0000, #dd0000);
-  background-image: linear-gradient(top, #ee0000, #dd0000);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ee0000), color-stop(100%, #dd0000));
+  background: -webkit-linear-gradient(top, #ee0000, #dd0000);
+  background: -moz-linear-gradient(top, #ee0000, #dd0000);
+  background: -o-linear-gradient(top, #ee0000, #dd0000);
+  background: linear-gradient(top, #ee0000, #dd0000);
 }
 .rondell-scrollbar .rondell-scrollbar-control.rondell-scrollbar-dragging, .rondell-scrollbar .rondell-scrollbar-control:hover {
   top: 3px;
@@ -266,6 +267,60 @@
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3) inset;
 }
 
+.rondell-lightbox {
+  z-index: 9998;
+  display: none;
+  position: absolute;
+  overflow: scroll;
+}
+
+.rondell-lightbox,
+.rondell-lightbox-overlay {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.rondell-lightbox-overlay {
+  position: fixed;
+  cursor: pointer;
+  opacity: .4;
+  background-color: #000;
+}
+
+.rgba .rondell-lightbox-overlay {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.rondell-lightbox-content {
+  position: fixed;
+  left: 50%;
+  top: 0;
+  background: #fafafa;
+  padding: 10px;
+  z-index: 9999;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 2px 50px 1px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0 2px 50px 1px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 2px 50px 1px rgba(0, 0, 0, 0.7);
+}
+.rondell-lightbox-content .rondell-caption,
+.rondell-lightbox-content .rondell-caption.rondell-item-overlay {
+  position: relative;
+  display: block;
+  color: #222;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  max-width: 300px;
+}
+
 /* themes */
 /* default theme */
 .boxshadow.rgba .rondell-theme-default .rondell-control {
@@ -288,34 +343,32 @@
 .rondell-theme-default .rondell-control,
 .rondell-theme-default .rondell-item,
 .rondell-theme-default .rondell-item img {
-  border-radius: 3px;
-  -o-border-radius: 3px;
-  -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
 }
 .rondell-theme-default .rondell-control {
-  background-repeat: repeat-x;
-  background-image: -webkit-linear-gradient(top, #fcfcfc, #f9f9f9);
-  background-image: -moz-linear-gradient(top, #fcfcfc, #f9f9f9);
-  background-image: -ms-linear-gradient(top, #fcfcfc, #f9f9f9);
-  background-image: -o-linear-gradient(top, #fcfcfc, #f9f9f9);
-  background-image: linear-gradient(top, #fcfcfc, #f9f9f9);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fcfcfc), color-stop(100%, #f9f9f9));
+  background: -webkit-linear-gradient(#fcfcfc, #f9f9f9);
+  background: -moz-linear-gradient(#fcfcfc, #f9f9f9);
+  background: -o-linear-gradient(#fcfcfc, #f9f9f9);
+  background: linear-gradient(#fcfcfc, #f9f9f9);
 }
 .rondell-theme-default .rondell-control:hover {
-  background-repeat: repeat-x;
-  background-image: -webkit-linear-gradient(top, #fafafa, #f5f5f5);
-  background-image: -moz-linear-gradient(top, #fafafa, #f5f5f5);
-  background-image: -ms-linear-gradient(top, #fafafa, #f5f5f5);
-  background-image: -o-linear-gradient(top, #fafafa, #f5f5f5);
-  background-image: linear-gradient(top, #fafafa, #f5f5f5);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fafafa), color-stop(100%, #f5f5f5));
+  background: -webkit-linear-gradient(#fafafa, #f5f5f5);
+  background: -moz-linear-gradient(#fafafa, #f5f5f5);
+  background: -o-linear-gradient(#fafafa, #f5f5f5);
+  background: linear-gradient(#fafafa, #f5f5f5);
 }
 .rondell-theme-default .rondell-control:active {
-  background-repeat: repeat-x;
-  background-image: -webkit-linear-gradient(top, #f5f5f5, #fafafa);
-  background-image: -moz-linear-gradient(top, #f5f5f5, #fafafa);
-  background-image: -ms-linear-gradient(top, #f5f5f5, #fafafa);
-  background-image: -o-linear-gradient(top, #f5f5f5, #fafafa);
-  background-image: linear-gradient(top, #f5f5f5, #fafafa);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f5f5f5), color-stop(100%, #fafafa));
+  background: -webkit-linear-gradient(#f5f5f5, #fafafa);
+  background: -moz-linear-gradient(#f5f5f5, #fafafa);
+  background: -o-linear-gradient(#f5f5f5, #fafafa);
+  background: linear-gradient(#f5f5f5, #fafafa);
 }
 
 /* light theme */
@@ -326,10 +379,11 @@
   border: 0;
 }
 .rondell-theme-light .rondell-item, .rondell-theme-light .rondell-item img {
-  border-radius: 3px;
-  -o-border-radius: 3px;
-  -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
 }
 
 .boxshadow.rgba .rondell-theme-light .rondell-item {
@@ -347,16 +401,16 @@
 /* dark theme, good for preset 'products' and 'gallery' */
 .rondell-theme-dark {
   background: #333;
-  border-radius: 5px;
-  -o-border-radius: 5px;
-  -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  background-repeat: repeat-x;
-  background-image: -webkit-linear-gradient(top, #333333, #111111);
-  background-image: -moz-linear-gradient(top, #333333, #111111);
-  background-image: -ms-linear-gradient(top, #333333, #111111);
-  background-image: -o-linear-gradient(top, #333333, #111111);
-  background-image: linear-gradient(top, #333333, #111111);
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #333333), color-stop(100%, #111111));
+  background: -webkit-linear-gradient(#333333, #111111);
+  background: -moz-linear-gradient(#333333, #111111);
+  background: -o-linear-gradient(#333333, #111111);
+  background: linear-gradient(#333333, #111111);
 }
 .rondell-theme-dark .rondell-item {
   border: 0;
@@ -397,19 +451,21 @@
 /* page theme, good for preset 'pages' */
 .rondell-theme-page {
   border: 1px solid #ccc;
-  border-radius: 3px;
-  -o-border-radius: 3px;
-  -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
 }
 .rondell-theme-page .rondell-item {
   border: 0;
 }
 .rondell-theme-page .rondell-item, .rondell-theme-page .rondell-item img {
-  border-radius: 3px;
-  -o-border-radius: 3px;
-  -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
 }
 .rondell-theme-page .rondell-control {
   font-size: 0;
@@ -421,17 +477,19 @@
 }
 .rondell-theme-page .rondell-control.rondell-shift-left, .rondell-theme-page .rondell-control.rondell-shift-right {
   background: #ccccdd url("../images/arrows.png") no-repeat 2px 2px;
-  border-radius: 0 3px 0 6px;
-  -o-border-radius: 0 3px 0 6px;
-  -moz-border-radius: 0 3px 0 6px;
   -webkit-border-radius: 0 3px 0 6px;
+  -moz-border-radius: 0 3px 0 6px;
+  -ms-border-radius: 0 3px 0 6px;
+  -o-border-radius: 0 3px 0 6px;
+  border-radius: 0 3px 0 6px;
 }
 .rondell-theme-page .rondell-control.rondell-shift-left {
   background-position: 2px -14px;
-  border-radius: 3px 0 6px 0;
-  -o-border-radius: 3px 0 6px 0;
-  -moz-border-radius: 3px 0 6px 0;
   -webkit-border-radius: 3px 0 6px 0;
+  -moz-border-radius: 3px 0 6px 0;
+  -ms-border-radius: 3px 0 6px 0;
+  -o-border-radius: 3px 0 6px 0;
+  border-radius: 3px 0 6px 0;
 }
 
 .boxshadow.rgba .rondell-theme-page {
@@ -450,19 +508,21 @@
 /* slider theme */
 .rondell-theme-slider {
   border: 1px solid #aaa;
-  border-radius: 2px;
-  -o-border-radius: 2px;
-  -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
 }
 .rondell-theme-slider .rondell-item {
   border: 0;
 }
 .rondell-theme-slider .rondell-item, .rondell-theme-slider .rondell-item img {
-  border-radius: 2px;
-  -o-border-radius: 2px;
-  -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
 }
 .rondell-theme-slider .rondell-caption {
   text-align: center;
@@ -482,12 +542,11 @@
   background-color: #666;
   background-color: rbga(50, 50, 50, 0.2);
   border: 1px solid #555;
-  background-repeat: repeat-x;
-  background-image: -webkit-linear-gradient(top, #666666, #555555);
-  background-image: -moz-linear-gradient(top, #666666, #555555);
-  background-image: -ms-linear-gradient(top, #666666, #555555);
-  background-image: -o-linear-gradient(top, #666666, #555555);
-  background-image: linear-gradient(top, #666666, #555555);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #666666), color-stop(100%, #555555));
+  background: -webkit-linear-gradient(top, #666666, #555555);
+  background: -moz-linear-gradient(top, #666666, #555555);
+  background: -o-linear-gradient(top, #666666, #555555);
+  background: linear-gradient(top, #666666, #555555);
 }
 .rondell-theme-slider .rondell-control span {
   background: url("../images/arrows.png") no-repeat 0 0;
@@ -498,27 +557,28 @@
 }
 .rondell-theme-slider .rondell-control:hover {
   background-color: #888;
-  background-repeat: repeat-x;
-  background-image: -webkit-linear-gradient(top, #777777, #555555);
-  background-image: -moz-linear-gradient(top, #777777, #555555);
-  background-image: -ms-linear-gradient(top, #777777, #555555);
-  background-image: -o-linear-gradient(top, #777777, #555555);
-  background-image: linear-gradient(top, #777777, #555555);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #777777), color-stop(100%, #555555));
+  background: -webkit-linear-gradient(top, #777777, #555555);
+  background: -moz-linear-gradient(top, #777777, #555555);
+  background: -o-linear-gradient(top, #777777, #555555);
+  background: linear-gradient(top, #777777, #555555);
 }
 .rondell-theme-slider .rondell-control.rondell-shift-left {
-  border-radius: 0 15px 15px 0;
-  -o-border-radius: 0 15px 15px 0;
-  -moz-border-radius: 0 15px 15px 0;
   -webkit-border-radius: 0 15px 15px 0;
+  -moz-border-radius: 0 15px 15px 0;
+  -ms-border-radius: 0 15px 15px 0;
+  -o-border-radius: 0 15px 15px 0;
+  border-radius: 0 15px 15px 0;
 }
 .rondell-theme-slider .rondell-control.rondell-shift-left span {
   background-position: 0 -16px;
 }
 .rondell-theme-slider .rondell-control.rondell-shift-right {
-  border-radius: 15px 0 0 15px;
-  -o-border-radius: 15px 0 0 15px;
-  -moz-border-radius: 15px 0 0 15px;
   -webkit-border-radius: 15px 0 0 15px;
+  -moz-border-radius: 15px 0 0 15px;
+  -ms-border-radius: 15px 0 0 15px;
+  -o-border-radius: 15px 0 0 15px;
+  border-radius: 15px 0 0 15px;
 }
 
 .boxshadow.rgba .rondell-theme-slider {

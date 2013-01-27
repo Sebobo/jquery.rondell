@@ -2,8 +2,8 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 0.9.5
-  @date 01/18/2013
+  @version 1.0.0
+  @date 01/27/2013
   @category jQuery plugin
   @copyright (c) 2009-2013 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -12,8 +12,17 @@
 (($) ->
   ### Global rondell plugin properties ###
   $.rondell ||=
-    version: '0.9.5'
+    version: '1.0.0'
     name: 'rondell'
+    lightbox:
+      instance: undefined
+      visible: false
+      template: $.trim '
+        <div class="rondell-lightbox">
+          <div class="rondell-lightbox-overlay"/>
+          <div class="rondell-lightbox-content"/>
+        </div>
+      '
     defaults:
       showContainer: true       # When the plugin has finished initializing $.show() will be called on the items container
       classes:
@@ -60,6 +69,8 @@
         sizeFocused:
           width: 0
           height: 0
+      lightbox:
+        enabled: true
       repeating: true           # Will show first item after last item and so on
       wrapIndices: true         # Will modify relative item indices to fix positioning when repeating
       switchIndices: false      # After a shift the last focused item and the new one will switch indices
@@ -131,10 +142,55 @@
   $.easing.easeInOutQuad ||= (x, t, b, c, d) ->
     if ((t/=d/2) < 1) then c/2*t*t + b else -c/2 * ((--t)*(t-2) - 1) + b
 
+  resizeLightbox = ->
+    true
+
+  # Private function to hide the lightbox
+  closeLightbox = ->
+    if $.rondell.lightbox.visible
+      $.rondell.lightbox.visible = false
+      getLightbox().stop().fadeOut 150
+
+  # Private function for getting the lightbox within the rondell
+  getLightbox = ->
+    unless $.rondell.lightbox.instance
+      # Add lightbox to dom when required
+      $.rondell.lightbox.instance = $($.rondell.lightbox.template)
+        .appendTo($('body'))
+
+      # Add click event to lightbox overlay to hide lightbox
+      $('.rondell-lightbox-overlay', $.rondell.lightbox.instance)
+        .bind('click.rondell', closeLightbox)
+
+      # Add resize event to window for updating the overlay size
+      $(window).bind 'resize.rondell', resizeLightbox
+
+    $.rondell.lightbox.instance
+
+  # Private function to refresh the lightbox,
+  # called by showLightbox within a rondell
+  updateLightbox = ->
+    lightbox = getLightbox()
+    lightboxContent = $ '.rondell-lightbox-content', lightbox
+    newWidth = lightboxContent.outerWidth()
+    newHeight = lightboxContent.outerHeight()
+    winHeight = $(window).innerHeight()
+
+    top = (winHeight - newHeight) / 2
+
+    newProps =
+      marginLeft: - newWidth / 2
+      top: Math.max(top, 20)
+
+    lightboxContent.css(newProps).fadeTo 200, 1
+    lightbox.stop().fadeTo 150, 1
+
   # Rondell class holds all rondell items and functions
   class Rondell
-    @rondellCount: 0            # Globally stores the number of rondells for uuid creation
-    @activeRondell: null        # Globally stores the last activated rondell for keyboard interaction
+    # Globally stores the number of rondells for uuid creation
+    @rondellCount: 0
+    # Globally stores the last activated rondell for keyboard interaction
+    @activeRondell: null
 
     constructor: (items, options, numItems, initCallback=undefined) ->
       @id = ++Rondell.rondellCount
@@ -381,7 +437,10 @@
       @container
       .delegate ".#{@classes.item}", "click", (e) ->
         item = $(@).data "item"
-        unless rondell._focusedItem.id is item.id
+        if rondell._focusedItem.id is item.id
+          e.preventDefault()
+          rondell.showLightbox()
+        else
           e.preventDefault()
           if not item.hidden and item.object.is ":visible"
             rondell.shiftTo item.currentSlot
@@ -523,8 +582,9 @@
       # Update buttons e.g. fadein/out
       @_refreshControls()
 
-      # Fire shift callback
-      @onAfterShift? idx
+      # Update lightbox if enabled
+      if @lightbox.enabled and $.rondell.lightbox.visible
+        @showLightbox()
 
       # Update scrollbar with unmodified idx to prevent jumps
       if @scrollbar.enabled
@@ -533,6 +593,9 @@
         if idx is @_focusedItem.currentSlot
           scrollbarIdx =  @_focusedItem.currentSlot + 1
         @scrollbar._instance.setPosition(scrollbarIdx, false)
+
+      # Fire shift callback
+      @onAfterShift? idx
 
     getRelativeItemPosition: (idx, wrapIndices=@wrapIndices) =>
       distance = Math.abs(idx - @currentLayer)
@@ -617,10 +680,32 @@
       @_lastKeyEvent = now
 
       switch e.which
-        # arrow left
+        # arrow left to shift left
         when 37 then @shiftLeft(e)
-        # arrow right
+        # arrow right to shift right
         when 39 then @shiftRight(e)
+        # escape hides lightbox
+        when 27 then @closeLightbox()
+
+    showLightbox: =>
+      lightbox = getLightbox()
+      lightboxContent = $ '.rondell-lightbox-content', lightbox
+
+      # Display lightbox but hide content at first
+      unless $.rondell.lightbox.visible
+        lightbox.css 'display', 'block'
+        lightboxContent.css 'display', 'none'
+
+      $.rondell.lightbox.visible = true
+
+      content = @_focusedItem.object.html()
+      rondell = @
+
+      # Hide content then update lightbox
+      lightboxContent
+        .stop().fadeTo 100, 0, ->
+          $(@).html(content).find(".#{rondell.classes.overlay}").css 'opacity', 1
+          setTimeout updateLightbox, 0
 
   $.fn.rondell = (options={}, callback=undefined) ->
     # Create new rondell instance

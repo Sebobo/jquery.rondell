@@ -5,22 +5,22 @@
     <meta http-equiv="content-language" content="en">
     <meta name="keywords" content="jquery,tooltip,popup,plugin,css3,open-source,mit-license,extension,overlay">
     <meta name="description" content="Sebastian Helzle's jQuery Rondell plugin">
-    <link rel="stylesheet" href="../css/screen.css" type="text/css" media="all" title="Screen">
-    <link rel="stylesheet" href="../css/jquery.rondell.css" type="text/css" media="all" title="Screen">
-    <script src="../js/contrib/modernizr-2.0.6.min.js"></script>
+    <link rel="stylesheet" href="../examples/screen.css" type="text/css" media="all" title="Screen">
+    <link rel="stylesheet" href="../dist/jquery.rondell.css" type="text/css" media="all" title="Screen">
+    <script src="../libs/modernizr-2.0.6.min.js"></script>
     <title>Carousel - jQuery Rondell</title>
   </head>
   <body>
     <div class="pageHeader hasShadow">
       <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
-      <p><b>Version 0.9.4</b>&nbsp- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
+      <p><b>Version 0.9.5</b>&nbsp- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
           Sebastian Helzle
-          </a></p>
+          </a></p><br>
       <ul class="tabs">
         <li><a href="/" title="Projects overview">Home</a></li>
         <li><a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">Smallipop</a></li>
         <li class="selected"><a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">Rondell</a></li>
-        <li><a href="/jquery.smallimap" title="jQuery smallimap - An interactive map plugin">Smallimap</a></li>
+        <li><a href="https://github.com/SmallImprovements/jquery.smallimap" target="_blank" title="jQuery smallimap - An interactive map plugin">Smallimap</a></li>
       </ul>
     </div>
     <div id="introduction" class="page hasShadow">
@@ -65,8 +65,6 @@ or swipe when using a touch device.
 The rondell will automatically continue to rotate through the carousel when
 your mouse leaves it&#39;s area.</p>
 
-<p>The lightbox is powered by <a href="http://www.fancybox.net" title="Fancybox">Fancybox</a>.</p>
-
 <p>Here&#39;s how it&#39;s done</p>
         <pre>&lt;div id=&quot;rondellCarousel&quot;&gt;
   &lt;a target=&quot;_blank&quot; rel=&quot;rondell&quot; href=&quot;images/galery/band.jpg&quot; title=&quot;...&quot;&gt;
@@ -85,17 +83,6 @@ your mouse leaves it&#39;s area.</p>
     // to disable the rondell while the lightbox is displayed
     $(&quot;#rondellCarousel &gt; *&quot;).rondell({
       preset: &quot;carousel&quot;,
-      isActive: function() {
-        return !$(&quot;#fancybox-wrap&quot;).is(&quot;:visible&quot;);
-      }
-    }, function() {
-      // After the rondell has started initialize fancybox for links to full size
-      // images and prevent fancybox from opening when an item is not focused
-      $(&quot;#rondellGallery .rondell-item&quot;).fancybox({
-        onStart: function(items, idx) {
-          return $(items[idx]).hasClass(&quot;rondell-item-focused&quot;);
-        }
-      });
     });
   });
 &lt;/script&gt;
@@ -146,11 +133,10 @@ element will open the wookmark in a new tab or window.</p>
 </pre>
       </div><br class="clear">
     </div><br>
-    <script src="../js/contrib/jquery-1.8.0.min.js"></script>
-    <script src="../js/contrib/jquery.fancybox-1.3.4.pack.js"></script>
-    <script src="../js/contrib/jquery.mousewheel-3.0.6.min.js"></script>
-    <script src="../js/jquery.rondell.js"></script>
-    <script src="../js/demohelpers.js"></script><script type="text/javascript">
+    <script src="../libs/jquery-1.9.0.min.js"></script>
+    <script src="../libs/jquery.mousewheel-3.0.6.min.js"></script>
+    <script src="../dist/jquery.rondell.js"></script>
+    <script src="../examples/demohelpers.js"></script><script type="text/javascript">
 (function() {
   var hostname, pkBaseURL, protocol;
 
@@ -183,24 +169,9 @@ element will open the wookmark in a new tab or window.</p>
 (function() {
 
   $(function() {
-    var carousel, fancyboxOptions;
-    fancyboxOptions = {
-      hideOnContentClick: false,
-      padding: 10,
-      scrolling: "no",
-      overlayColor: "#333",
-      autoDimensions: false,
-      onStart: function(items, idx) {
-        return $(items[idx]).hasClass('rondell-item-focused') || $('#fancybox-wrap').is(':visible');
-      }
-    };
+    var carousel;
     carousel = $("#rondellCarousel > *").rondell({
-      preset: "carousel",
-      isActive: function() {
-        return !$("#fancybox-wrap").is(":visible");
-      }
-    }, function() {
-      return $("#rondellCarousel .rondell-item").fancybox(fancyboxOptions);
+      preset: "carousel"
     });
     $(".resize-button").click(function(e) {
       e.preventDefault();

@@ -1,10 +1,13 @@
+@import "compass";
+@import "mixins";
+
 /*
  * SASS Base for Sebobo github projects.
- * 01/26/2012 17:23
+ * 01/27/2013
  */
 
 // Base
-$baseFontSize:      13px;
+$baseFontSize: 13px;
 $baseLineHeight:    18px;
 $baseFontFamily:    "Lucida Grade", arial;
 
@@ -31,7 +34,7 @@ $orange:                #f89406 !default;
 $pink:                  #c3325f !default;
 $purple:                #7a43b6 !default;
 
-// Reset 
+// Reset
 html {
   height: 100%;
   font-size: $baseFontSize;
@@ -56,31 +59,33 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
   &.notice    { background-color: lighten($blue, 25%); }
   &.inverse   { background-color: $black; }
 }
-.borderradius .label { @include border-radius(3px); }
+.borderradius .label {
+  @include border-radius(3px);
+}
 
 // Basic stuff
-.clear { 
-  clear: both; 
+.clear {
+  clear: both;
 }
 
-.relative { 
-  position: relative; 
+.relative {
+  position: relative;
 }
 
-.centered { 
-  margin: 0 auto; 
+.centered {
+  margin: 0 auto;
 }
 
 .center {
   text-align: center;
 }
 
-.floatLeft { 
-  float: left; 
+.floatLeft {
+  float: left;
 }
 
-.floatRight { 
-  float: right; 
+.floatRight {
+  float: right;
 }
 
 .clearfix {
@@ -96,7 +101,7 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
   }
 }
 
-// Tabs 
+// Tabs
 .tabs {
   text-align: center;
   list-style: none;
@@ -108,7 +113,7 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
   font-family: verdana;
   position: absolute;
   bottom: 0;
-  
+
   li {
     border: 1px solid #aaa;
     background: #d1d1d1;
@@ -120,10 +125,10 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
     margin: 0 -3px;
     padding: 0;
     cursor: pointer;
-    
-    &:hover { 
+
+    &:hover {
       background: #dadada;
-      background-position: 0 -15px; 
+      background-position: 0 -15px;
     }
     &.selected {
       background: #fff;
@@ -131,7 +136,7 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
       z-index: 2;
       border-bottom-color: #fff;
     }
-    
+
     &:before,
     &:after {
       border: 1px solid #aaa;
@@ -153,12 +158,12 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
     text-decoration: none;
     display: block;
     margin: 0 20px;
-    
+
     &:hover {
       text-decoration: none;
     }
   }
-  
+
   &:before {
     position: absolute;
     content: " ";
@@ -172,30 +177,50 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 .csstransitions .tabs li {
   @include transition(.05s linear all);
 }
-.cssgradients .tabs li { 
-  @include linear-gradient(#ececec 50%, #d1d1d1 100%); 
-  
-  &:hover { @include linear-gradient(#efefef 50%, #dadada 100%); }
-  &.selected { 
-    &, &:hover { background: #fff; } 
-  } 
+.cssgradients .tabs li {
+  @include background(linear-gradient(top, #ececec 50%, #d1d1d1 100%));
+
+  &:hover {
+    @include background(linear-gradient(top, #efefef 50%, #dadada 100%));
+  }
+  &.selected {
+    &, &:hover {
+      background: #fff;
+    }
+  }
 }
-.borderradius .tabs li { 
-  @include border-radius(6px 6px 0 0); 
-  &:before { @include border-radius(0 0 6px 0); }
-  &:after { @include border-radius(0 0 0 6px); }
+.borderradius .tabs li {
+  @include border-radius(6px 6px 0 0);
+  &:before {
+    @include border-radius(0 0 6px 0);
+  }
+  &:after {
+    @include border-radius(0 0 0 6px);
+  }
 }
 .boxshadow .tabs li {
   @include box-shadow("0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #ffffff");
-  &:before { @include box-shadow(2px 2px 0 #d1d1d1); }
-  &:after { @include box-shadow(-2px 2px 0 #d1d1d1); }
+  &:before {
+    @include box-shadow(2px 2px 0 #d1d1d1);
+  }
+  &:after {
+    @include box-shadow(-2px 2px 0 #d1d1d1);
+  }
   &:hover {
-    &:before { @include box-shadow(2px 2px 0 #dadada); }
-    &:after { @include box-shadow(-2px 2px 0 #dadada); }  
+    &:before {
+      @include box-shadow(2px 2px 0 #dadada);
+    }
+    &:after {
+      @include box-shadow(-2px 2px 0 #dadada);
+    }
   }
   &.selected {
-    &:before { @include box-shadow(2px 2px 0 #ffffff); }
-    &:after { @include box-shadow(-2px 2px 0 #ffffff); }
+    &:before {
+      @include box-shadow(2px 2px 0 #ffffff);
+    }
+    &:after {
+      @include box-shadow(-2px 2px 0 #ffffff);
+    }
   }
 }
 
@@ -214,7 +239,7 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
   &.info:hover {
     color: $white
   }
-  
+
     // Danger and error appear as red
     &.danger,
     &.error {
@@ -228,7 +253,7 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
     &.info {
       background-color: #339bb9;
     }
-    
+
   // Sets the close button to the middle of message
   .close{
     font-family: Arial, sans-serif;
@@ -293,13 +318,13 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 }
 .cssgradients {
   .btn {
-    @include linear-gradient-with-stop(#ffffff, #ffffff 25%, darken(#ffffff, 10%));
-    
+    @include background(linear-gradient(top, #ffffff, #ffffff 25%, darken(#ffffff, 10%)));
+
     &.primary {
       @include gradient-bar($blue, $blueDark);
     }
   }
-  
+
   .btn,
   .alert-message {
     // Danger and error appear as red
@@ -320,7 +345,7 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 
 .borderradius .btn {
   @include border-radius(4px);
-  
+
   &.large {
     @include border-radius(6px);
   }
@@ -330,12 +355,12 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 }
 .box-shadow.rgba .btn {
   @include box-shadow("inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)");
-  
+
   &.active,
   &:active {
     @include box-shadow("inset 0 2px 4px rgba(0,0,0,.25), 0 1px 2px rgba(0,0,0,.05)");
   }
-  
+
   &.disabled,
   &[disabled] {
     @include box-shadow(none);
@@ -459,7 +484,7 @@ pre {
     @include box-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
   }
   & li a:hover {
-    background-color: $grayLighter; 
+    background-color: $grayLighter;
   }
 
   .spacer {
