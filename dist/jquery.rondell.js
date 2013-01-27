@@ -486,6 +486,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       var rondell;
       $(document).keydown(this.keyDown);
       $(window).blur(this.onWindowBlur).focus(this.onWindowFocus);
+      $(document).focusout(this.onWindowBlur).focusin(this.onWindowFocus);
       if (this.mousewheel.enabled && ($.fn.mousewheel != null)) {
         this.container.bind("mousewheel", this._onMousewheel);
       }
@@ -778,7 +779,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     };
 
     Rondell.prototype.keyDown = function(e) {
-      var now;
+      var keyCode, now;
       if (!(this.isActive() && this.isFocused())) {
         return;
       }
@@ -791,7 +792,8 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
         this.autoRotation._timer = -1;
       }
       this._lastKeyEvent = now;
-      switch (e.which) {
+      keyCode = e.which || e.keyCode;
+      switch (keyCode) {
         case 37:
           return this.shiftLeft(e);
         case 39:
@@ -814,12 +816,8 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       return lightboxContent.stop().fadeTo(100, 0, function() {
         content = $('.rondell-lightbox-inner', lightboxContent).html(content);
         $('.rondell-lightbox-position').text("" + rondell.currentLayer + " | " + rondell.maxItems);
-        $("." + rondell.classes.overlay, content).attr('style', '');
-        $("." + rondell.classes.image, content).attr({
-          style: '',
-          width: '',
-          height: ''
-        });
+        $("." + rondell.classes.overlay, content).removeAttr('style');
+        $("." + rondell.classes.image, content).removeAttr('style').removeAttr('width').removeAttr('height');
         return setTimeout(updateLightbox, 0);
       });
     };

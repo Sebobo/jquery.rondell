@@ -381,7 +381,13 @@
       $(document).keydown @keyDown
 
       # Attach window focus event to window do disable rondell when window is inactive
-      $(window).blur(@onWindowBlur).focus(@onWindowFocus)
+      $(window)
+        .blur(@onWindowBlur)
+        .focus(@onWindowFocus)
+
+      $(document)
+        .focusout(@onWindowBlur)
+        .focusin(@onWindowFocus)
 
       # Enable rondell traveling with mousewheel if plugin is available
       if @mousewheel.enabled and $.fn.mousewheel?
@@ -644,7 +650,10 @@
 
       @_lastKeyEvent = now
 
-      switch e.which
+      # IE uses keyCode
+      keyCode = e.which or e.keyCode
+
+      switch keyCode
         # arrow left to shift left
         when 37 then @shiftLeft(e)
         # arrow right to shift right
@@ -673,11 +682,13 @@
           $('.rondell-lightbox-position')
             .text "#{rondell.currentLayer} | #{rondell.maxItems}"
 
-          $(".#{rondell.classes.overlay}", content).attr 'style', ''
-          $(".#{rondell.classes.image}", content).attr
-            style: ''
-            width: ''
-            height: ''
+          $(".#{rondell.classes.overlay}", content).removeAttr 'style'
+
+          # Call removeAttr for each attribute so support jQuery < 1.7
+          $(".#{rondell.classes.image}", content)
+            .removeAttr('style')
+            .removeAttr('width')
+            .removeAttr('height')
 
           setTimeout updateLightbox, 0
 
