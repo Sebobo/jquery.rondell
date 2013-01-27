@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="content-language" content="en">
+    <meta name="keywords" content="jquery,tooltip,popup,plugin,css3,open-source,mit-license,extension,overlay">
+    <meta name="description" content="Sebastian Helzle's jQuery Rondell plugin">
+    <link rel="stylesheet" href="../examples/screen.css" type="text/css" media="all" title="Screen">
+    <link rel="stylesheet" href="../dist/jquery.rondell.css" type="text/css" media="all" title="Screen">
+    <script src="../libs/modernizr-2.0.6.min.js"></script>
+    <title>Tests - jQuery Rondell</title>
+    <link rel="stylesheet" href="../libs/qunit/qunit.css" type="text/css">
+  </head>
+  <body>
+    <div class="pageHeader hasShadow">
+      <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
+      <p><b>Version 1.0.0</b>&nbsp- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
+          Sebastian Helzle
+          </a></p><br>
+      <ul class="tabs">
+        <li><a href="/" title="Projects overview">Home</a></li>
+        <li><a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">Smallipop</a></li>
+        <li class="selected"><a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">Rondell</a></li>
+        <li><a href="https://github.com/SmallImprovements/jquery.smallimap" target="_blank" title="jQuery smallimap - An interactive map plugin">Smallimap</a></li>
+      </ul>
+    </div>
+    <div id="introduction" class="page hasShadow">
+      <div class="column size1of2"><img src="../examples/preview.png" alt="Rondell preview" class="hideOnJS">
+        <div id="rondellTest" class="showOnJS hidden"><img src="../examples/images/galery/band.jpg" title="My favourite band" alt="Band"><img src="../examples/images/galery/dog.jpg" title="My dog" alt="Dog"><img src="../examples/images/galery/cat.jpg" title="My cat" alt="Cat"><img src="../examples/images/galery/boar.jpg" title="Dead boar" alt="Boar"><img src="../examples/images/galery/snow.jpg" title="Winter wonderland" alt="Winter"><img src="../examples/images/galery/rabbit.jpg" title="The white rabbit" alt="Rabbit"><img src="../examples/images/galery/trash.jpg" title="Trash" alt="Trash"></div>
+      </div><br class="clear">
+      <div id="qunit">test</div>
+      <div id="qunit-fixture">test</div>
+    </div><br>
+    <script src="../libs/jquery-1.9.0.min.js"></script>
+    <script src="../libs/jquery.mousewheel-3.0.6.min.js"></script>
+    <script src="../dist/jquery.rondell.js"></script>
+    <script src="../examples/demohelpers.js"></script><script type="text/javascript">
+(function() {
+  var hostname, pkBaseURL, protocol;
+
+  hostname = document.location.hostname;
+
+  if (hostname && (hostname.indexOf("github") > 0 || hostname.indexOf("sebastianhelzle") > 0)) {
+    protocol = document.location.protocol || "https:";
+    pkBaseURL = "" + protocol + "//tracking.sebastianhelzle.net/";
+    $.getScript("" + pkBaseURL + "piwik.js", function() {
+      var piwikTracker;
+      console.log("loaded piwik");
+      try {
+        piwikTracker = Piwik.getTracker("" + pkBaseURL + "piwik.php", 5);
+        piwikTracker.trackPageView();
+        return piwikTracker.enableLinkTracking();
+      } catch (err) {
+        return typeof console !== "undefined" && console !== null ? console.log(err) : void 0;
+      }
+    });
+  }
+
+}).call(this);
+</script>
+    <!-- Piwik-->
+    <script></script>
+    <noscript>
+      <p><img src="https://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></p>
+    </noscript>
+    <!-- End Piwik Tracking Code-->
+    <script src="../libs/qunit/qunit.js"></script>
+    <script src="../tests/tests.js"></script><script type="text/javascript">
+(function() {
+
+  $("#rondellTest > img").rondell({
+    preset: "carousel",
+    radius: {
+      x: 130
+    },
+    center: {
+      left: 200,
+      top: 110
+    },
+    itemProperties: {
+      size: {
+        width: 100,
+        height: 100
+      }
+    }
+  });
+
+}).call(this);
+</script>
+  </body>
+</html>

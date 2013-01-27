@@ -1,41 +1,37 @@
 extends ../includes/layout
 
 prepend head
-  path = ''
   title Tests - jQuery Rondell
 
 append head
-  link(rel="stylesheet", href="#{path}css/tests/qunit.css", type="text/css")
+  link(rel="stylesheet", href="../libs/qunit/qunit.css", type="text/css")
 
 append content
 
-  #qunit
-  #qunit-fixture
-
   .column.size1of2
-    img.hideOnJS(src="examples/preview.png", alt="Rondell preview")
+    img.hideOnJS(src="../examples/preview.png", alt="Rondell preview")
 
-    #rondellTopDemo.showOnJS.hidden
-      img(src="examples/images/galery/band.jpg", title="My favourite band", alt="Band")
-      img(src="examples/images/galery/dog.jpg", title="My dog", alt="Dog")
-      img(src="examples/images/galery/cat.jpg", title="My cat", alt="Cat")
-      img(src="examples/images/galery/boar.jpg", title="Dead boar", alt="Boar")
-      img(src="examples/images/galery/snow.jpg", title="Winter wonderland", alt="Winter")
-      img(src="examples/images/galery/rabbit.jpg", title="The white rabbit", alt="Rabbit")
-      img(src="examples/images/galery/trash.jpg", title="Trash", alt="Trash")
+    #rondellTest.showOnJS.hidden
+      img(src="../examples/images/galery/band.jpg", title="My favourite band", alt="Band")
+      img(src="../examples/images/galery/dog.jpg", title="My dog", alt="Dog")
+      img(src="../examples/images/galery/cat.jpg", title="My cat", alt="Cat")
+      img(src="../examples/images/galery/boar.jpg", title="Dead boar", alt="Boar")
+      img(src="../examples/images/galery/snow.jpg", title="Winter wonderland", alt="Winter")
+      img(src="../examples/images/galery/rabbit.jpg", title="The white rabbit", alt="Rabbit")
+      img(src="../examples/images/galery/trash.jpg", title="Trash", alt="Trash")
 
   br.clear
 
-append js
-  path = 'js/tests/qunit.js'
+  #qunit test
+  #qunit-fixture test
 
 append js
-  path = 'js/tests/tests.js'
+  script(src='#{path}libs/qunit/qunit.js')
+  script(src='#{path}tests/tests.js')
 
-append js
   :coffeescript
     # Sample rondell carousel
-    $("#rondellTopDemo > img").rondell
+    $("#rondellTest > img").rondell
       preset: "carousel"
       radius:
         x: 130
