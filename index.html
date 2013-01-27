@@ -13,7 +13,7 @@
   <body>
     <div class="pageHeader hasShadow">
       <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
-      <p><b>Version 1.0.0</b>&nbsp- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
+      <p><b>Version 1.0.0</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
           Sebastian Helzle
           </a></p><br>
       <ul class="tabs">
@@ -54,7 +54,7 @@ by clicking the controls or by clicking the rondell items.</p>
 IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+</p>
 
 <p>Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php" title="MIT licence">MIT license</a>.</p>
-        <p><a href="https://github.com/Sebobo/jquery.rondell/zipball/0.9.5" title="Rondell zip download" class="btn success">Download rondell now</a>&nbsp;<a href="https://github.com/Sebobo/jquery.rondell" title="Rondell source at github" class="btn">
+        <p><a href="https://github.com/Sebobo/jquery.rondell/zipball/1.0.0" title="Rondell zip download" class="btn success">Download rondell now</a>&nbsp;<a href="https://github.com/Sebobo/jquery.rondell" title="Rondell source at github" class="btn">
             Visit rondell at github
             </a></p>
       </div>
@@ -76,25 +76,33 @@ IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+</p>
         <pre>&lt;script type=&quot;text/javascript&quot;&gt;
 
   $('.myContainer &gt; .myItem').rondell([options][, callback]);
-  
+
 &lt;/script&gt;
 </pre>
       </div><br>
       <div class="column size2of3">
         <h5>New and improved in this version</h5>
         <ul>
-          <li><span class="label success">New</span>&nbsp;Asynchronous image loading has been added and will be further improved in the next versions</li>
-          <li><span class="label notice">Change</span>&nbsp;New optimized item rendering technique and refactoring for improved performance and flexibility</li>
-          <li><span class="label notice">Change</span>&nbsp;CSS classes are now using hyphens instead of camelcase.<b>&nbsp;Please check your custom styles!</b></li>
-          <li><span class="label notice">Change</span>&nbsp;Preset 'products' is now called 'scroller'</li>
-          <li><span class="label notice">FIX</span>&nbsp;Fancybox samples now show working navigation arrows and item title</li>
-          <li><span class="label notice">FIX</span>&nbsp;Example for the 'size' option is now correct</li>
+          <li><span class="label success">New</span>&nbsp;Integrated lightweight lightbox to reduce 3rd party lightbox difficulties</li>
+          <li><span class="label success">Change</span>&nbsp;Using grunt for building, compass for sass mixins and QUnit for testing</li>
+          <li><span class="label notice">FIX</span>&nbsp;Blur and focus problems in IE</li>
         </ul><br>
         <p><a href="#changelog" title="Collapse code" class="showCode">
             Click here to see changes in the last versions
             </a></p>
         <div class="hidden">
           <ul id="changelog">
+            <li>
+              <h6>0.9.3</h6>
+              <ul>
+                <li><span class="label success">New</span>&nbsp;Asynchronous image loading has been added and will be further improved in the next versions</li>
+                <li><span class="label notice">Change</span>&nbsp;New optimized item rendering technique and refactoring for improved performance and flexibility</li>
+                <li><span class="label notice">Change</span>&nbsp;CSS classes are now using hyphens instead of camelcase.<b>&nbsp;Please check your custom styles!</b></li>
+                <li><span class="label notice">Change</span>&nbsp;Preset 'products' is now called 'scroller'</li>
+                <li><span class="label notice">FIX</span>&nbsp;Fancybox samples now show working navigation arrows and item title</li>
+                <li><span class="label notice">FIX</span>&nbsp;Example for the 'size' option is now correct</li>
+              </ul>
+            </li>
             <li>
               <h6>0.9.1</h6>
               <ul>
