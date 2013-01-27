@@ -11,8 +11,16 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON 'rondell.jquery.json'
     meta:
-      banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-        '<%= grunt.template.today("yyyy-mm-dd") %> */'
+      banner: '/*!\n' +
+        'jQuery <%= pkg.name %> plugin\n' +
+        '@name jquery.<%= pkg.name %>.js\n' +
+        '@author Sebastian Helzle (sebastian@helzle.net or @sebobo)\n' +
+        '@version <%= pkg.version %>\n' +
+        '@date <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+        '@category jQuery plugin\n' +
+        '@copyright (c) 2009-2013 Sebastian Helzle (www.sebastianhelzle.net)\n' +
+        '@license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.\n' +
+        '*/\n'
     qunit:
       files: ['tests/**/*.html']
     growl:
@@ -76,9 +84,10 @@ module.exports = (grunt) ->
       dist:
         options:
           banner: '<%= meta.banner %>'
-        files: 'dist/jquery.rondell.min.js': 'dist/jquery.rondell.js'
+        files:
+          'dist/jquery.rondell.min.js': ['dist/jquery.rondell.js']
 
   # Default task which watches jade, sass and coffee.
   grunt.registerTask 'default', ['watch']
   # Release task to run tests then minify js and css
-  grunt.registerTask 'release', ['qunit', 'min', 'sass:dist']
+  grunt.registerTask 'release', ['qunit', 'uglify', 'sass:dist']
