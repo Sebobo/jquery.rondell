@@ -37,12 +37,15 @@
       @lastIconAnimationTarget = {}
       @animationSpeed = rondell.fadeTime
 
+      @isLink = @object.is 'a'
+      @referencedImage = null
+
     init: =>
       # Wrap item if it's an image
-      @object = @object.wrap("<div/>").parent() if @object.is("img")
+      @object = @object.wrap("<div/>").parent() if @object.is 'img'
       @object
       .addClass("#{@rondell.classes.item}")
-      .data("item", @)
+      .data('item', @)
       .css
         opacity: 0
         width: @sizeSmall.width
@@ -50,8 +53,15 @@
         left: @rondell.center.left - @sizeFocused.width / 2
         top: @rondell.center.top - @sizeFocused.height / 2
 
+      if @isLink
+        linkUrl = @object.attr 'href'
+        linkType = @_getFiletype linkUrl
+        for filetype in @rondell.imageFiletypes when linkType is filetype
+          @referencedImage = linkUrl
+          break
+
       # Check whether item has an icon and load it asynchronous
-      icon = @object.find "img:first"
+      icon = @object.find 'img:first'
       if icon.length
         @icon = icon
         @resizeable = not icon.hasClass @rondell.classes.noScale
@@ -67,14 +77,17 @@
         else
           # Create copy of the image and wait for the copy to load to get the real dimensions
           @iconCopy = $ "<img style=\"display:none\"/>"
-          $("body").append @iconCopy
+          $('body').append @iconCopy
 
           @iconCopy
-          .one("load", @onIconLoad)
-          .one("error", @onError)
-          .attr("src", icon.attr("src"))
+            .one('load', @onIconLoad)
+            .one('error', @onError)
+            .attr('src', icon.attr('src'))
       else
         @finalize()
+
+    _getFiletype: (filename) ->
+      filename.substr(filename.lastIndexOf('.') + 1).toLowerCase()
 
     refreshDimensions: =>
       # Get icon dimensions

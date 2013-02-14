@@ -75,6 +75,13 @@
           height: 0
       lightbox:
         enabled: true
+      imageFiletypes: [
+        'png'
+        'jpg'
+        'jpeg'
+        'gif'
+        'bmp'
+      ]
       repeating: true           # Will show first item after last item and so on
       wrapIndices: true         # Will modify relative item indices to fix positioning when repeating
       switchIndices: false      # After a shift the last focused item and the new one will switch indices
@@ -671,25 +678,31 @@
         lightboxContent.css 'display', 'none'
 
       content = @_focusedItem.object.html()
-      rondell = @
 
       # Hide content then update lightbox
       lightboxContent
-        .stop().fadeTo 100, 0, ->
+        .stop().fadeTo 100, 0, =>
           # Update content and remove style parameters
           content = $('.rondell-lightbox-inner', lightboxContent).html content
 
+          # Use referenced image if given
+          if @_focusedItem.referencedImage and @_focusedItem.icon
+            $('img:first', content)
+              .attr 'src', @_focusedItem.referencedImage
+
+          # Update position text
           $('.rondell-lightbox-position')
-            .text "#{rondell.currentLayer} | #{rondell.maxItems}"
+            .text "#{@currentLayer} | #{@maxItems}"
 
-          $(".#{rondell.classes.overlay}", content).removeAttr 'style'
+          $(".#{@classes.overlay}", content).removeAttr 'style'
 
-          # Call removeAttr for each attribute so support jQuery < 1.7
-          $(".#{rondell.classes.image}", content)
+          # Call removeAttr for each attribute to support jQuery < 1.7
+          $(".#{@classes.image}", content)
             .removeAttr('style')
             .removeAttr('width')
             .removeAttr('height')
 
+          # Async call to update the lightbox to allow the layout to update
           setTimeout updateLightbox, 0
 
   # Get api for active rondell instance

@@ -89,6 +89,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       lightbox: {
         enabled: true
       },
+      imageFiletypes: ['png', 'jpg', 'jpeg', 'gif', 'bmp'],
       repeating: true,
       wrapIndices: true,
       switchIndices: false,
@@ -804,7 +805,8 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     };
 
     Rondell.prototype.showLightbox = function() {
-      var content, lightbox, lightboxContent, rondell;
+      var content, lightbox, lightboxContent,
+        _this = this;
       lightbox = getLightbox();
       lightboxContent = $('.rondell-lightbox-content', lightbox);
       if (!lightboxIsVisible()) {
@@ -812,12 +814,14 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
         lightboxContent.css('display', 'none');
       }
       content = this._focusedItem.object.html();
-      rondell = this;
       return lightboxContent.stop().fadeTo(100, 0, function() {
         content = $('.rondell-lightbox-inner', lightboxContent).html(content);
-        $('.rondell-lightbox-position').text("" + rondell.currentLayer + " | " + rondell.maxItems);
-        $("." + rondell.classes.overlay, content).removeAttr('style');
-        $("." + rondell.classes.image, content).removeAttr('style').removeAttr('width').removeAttr('height');
+        if (_this._focusedItem.referencedImage && _this._focusedItem.icon) {
+          $('img:first', content).attr('src', _this._focusedItem.referencedImage);
+        }
+        $('.rondell-lightbox-position').text("" + _this.currentLayer + " | " + _this.maxItems);
+        $("." + _this.classes.overlay, content).removeAttr('style');
+        $("." + _this.classes.image, content).removeAttr('style').removeAttr('width').removeAttr('height');
         return setTimeout(updateLightbox, 0);
       });
     };
@@ -1477,21 +1481,36 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       this.iconAnimationTarget = {};
       this.lastIconAnimationTarget = {};
       this.animationSpeed = rondell.fadeTime;
+      this.isLink = this.object.is('a');
+      this.referencedImage = null;
     }
 
     RondellItem.prototype.init = function() {
-      var icon;
-      if (this.object.is("img")) {
+      var filetype, icon, linkType, linkUrl, _i, _len, _ref;
+      if (this.object.is('img')) {
         this.object = this.object.wrap("<div/>").parent();
       }
-      this.object.addClass("" + this.rondell.classes.item).data("item", this).css({
+      this.object.addClass("" + this.rondell.classes.item).data('item', this).css({
         opacity: 0,
         width: this.sizeSmall.width,
         height: this.sizeSmall.height,
         left: this.rondell.center.left - this.sizeFocused.width / 2,
         top: this.rondell.center.top - this.sizeFocused.height / 2
       });
-      icon = this.object.find("img:first");
+      if (this.isLink) {
+        linkUrl = this.object.attr('href');
+        linkType = this._getFiletype(linkUrl);
+        _ref = this.rondell.imageFiletypes;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          filetype = _ref[_i];
+          if (!(linkType === filetype)) {
+            continue;
+          }
+          this.referencedImage = linkUrl;
+          break;
+        }
+      }
+      icon = this.object.find('img:first');
       if (icon.length) {
         this.icon = icon;
         this.resizeable = !icon.hasClass(this.rondell.classes.noScale);
@@ -1501,12 +1520,16 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
           return window.setTimeout(this.onIconLoad, 10);
         } else {
           this.iconCopy = $("<img style=\"display:none\"/>");
-          $("body").append(this.iconCopy);
-          return this.iconCopy.one("load", this.onIconLoad).one("error", this.onError).attr("src", icon.attr("src"));
+          $('body').append(this.iconCopy);
+          return this.iconCopy.one('load', this.onIconLoad).one('error', this.onError).attr('src', icon.attr('src'));
         }
       } else {
         return this.finalize();
       }
+    };
+
+    RondellItem.prototype._getFiletype = function(filename) {
+      return filename.substr(filename.lastIndexOf('.') + 1).toLowerCase();
     };
 
     RondellItem.prototype.refreshDimensions = function() {
