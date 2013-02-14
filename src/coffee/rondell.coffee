@@ -75,6 +75,7 @@
           height: 0
       lightbox:
         enabled: true
+        displayReferencedImages: true
       imageFiletypes: [
         'png'
         'jpg'
@@ -685,11 +686,6 @@
           # Update content and remove style parameters
           content = $('.rondell-lightbox-inner', lightboxContent).html content
 
-          # Use referenced image if given
-          if @_focusedItem.referencedImage and @_focusedItem.icon
-            $('img:first', content)
-              .attr 'src', @_focusedItem.referencedImage
-
           # Update position text
           $('.rondell-lightbox-position')
             .text "#{@currentLayer} | #{@maxItems}"
@@ -697,10 +693,14 @@
           $(".#{@classes.overlay}", content).removeAttr 'style'
 
           # Call removeAttr for each attribute to support jQuery < 1.7
-          $(".#{@classes.image}", content)
+          icon = $(".#{@classes.image}", content)
             .removeAttr('style')
             .removeAttr('width')
             .removeAttr('height')
+
+          # Use referenced image if given
+          if @_focusedItem.referencedImage and @_focusedItem.icon
+            icon.attr 'src', @_focusedItem.referencedImage
 
           # Async call to update the lightbox to allow the layout to update
           setTimeout updateLightbox, 0
@@ -758,15 +758,44 @@
   updateLightbox = ->
     lightbox = getLightbox()
     lightboxContent = $ '.rondell-lightbox-content', lightbox
+    win = $ window
+    winWidth = win.innerWidth()
+    winHeight = win.innerHeight()
+    windowPadding = 20
+
+    image = $ 'img:first', lightboxContent
+    if image.length
+      unless image.data 'originalWidth'
+        image.data 'originalWidth', image.width()
+        image.data 'originalHeight', image.height()
+
+      imageWidth = image.data 'originalWidth'
+      imageHeight = image.data 'originalHeight'
+      imageDimension = imageWidth / imageHeight
+
+      maxWidth = winWidth - windowPadding * 2
+      maxHeight = winHeight - windowPadding * 2
+
+      if imageWidth > maxWidth
+        imageWidth = maxWidth
+        imageHeight = imageWidth / imageDimension
+
+      if imageHeight > maxHeight
+        imageHeight = maxHeight
+        imageWidth = imageHeight * imageDimension
+
+      image
+        .attr('width', imageWidth)
+        .attr('height', imageHeight)
+
     newWidth = lightboxContent.outerWidth()
     newHeight = lightboxContent.outerHeight()
-    winHeight = $(window).innerHeight()
 
     top = (winHeight - newHeight) / 2
 
     newProps =
       marginLeft: - newWidth / 2
-      top: Math.max(top, 20)
+      top: Math.max top, 20
 
     if lightboxContent.css('opacity') < 1
       lightboxContent.css(newProps).fadeTo 200, 1

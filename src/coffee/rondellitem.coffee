@@ -53,7 +53,7 @@
         left: @rondell.center.left - @sizeFocused.width / 2
         top: @rondell.center.top - @sizeFocused.height / 2
 
-      if @isLink
+      if @isLink and @rondell.lightbox.displayReferencedImages
         linkUrl = @object.attr 'href'
         linkType = @_getFiletype linkUrl
         for filetype in @rondell.imageFiletypes when linkType is filetype

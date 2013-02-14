@@ -87,7 +87,8 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
         }
       },
       lightbox: {
-        enabled: true
+        enabled: true,
+        displayReferencedImages: true
       },
       imageFiletypes: ['png', 'jpg', 'jpeg', 'gif', 'bmp'],
       repeating: true,
@@ -815,13 +816,14 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       }
       content = this._focusedItem.object.html();
       return lightboxContent.stop().fadeTo(100, 0, function() {
+        var icon;
         content = $('.rondell-lightbox-inner', lightboxContent).html(content);
-        if (_this._focusedItem.referencedImage && _this._focusedItem.icon) {
-          $('img:first', content).attr('src', _this._focusedItem.referencedImage);
-        }
         $('.rondell-lightbox-position').text("" + _this.currentLayer + " | " + _this.maxItems);
         $("." + _this.classes.overlay, content).removeAttr('style');
-        $("." + _this.classes.image, content).removeAttr('style').removeAttr('width').removeAttr('height');
+        icon = $("." + _this.classes.image, content).removeAttr('style').removeAttr('width').removeAttr('height');
+        if (_this._focusedItem.referencedImage && _this._focusedItem.icon) {
+          icon.attr('src', _this._focusedItem.referencedImage);
+        }
         return setTimeout(updateLightbox, 0);
       });
     };
@@ -865,12 +867,36 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     return $.rondell.lightbox.instance;
   };
   updateLightbox = function() {
-    var lightbox, lightboxContent, newHeight, newProps, newWidth, top, winHeight;
+    var image, imageDimension, imageHeight, imageWidth, lightbox, lightboxContent, maxHeight, maxWidth, newHeight, newProps, newWidth, top, win, winHeight, winWidth, windowPadding;
     lightbox = getLightbox();
     lightboxContent = $('.rondell-lightbox-content', lightbox);
+    win = $(window);
+    winWidth = win.innerWidth();
+    winHeight = win.innerHeight();
+    windowPadding = 20;
+    image = $('img:first', lightboxContent);
+    if (image.length) {
+      if (!image.data('originalWidth')) {
+        image.data('originalWidth', image.width());
+        image.data('originalHeight', image.height());
+      }
+      imageWidth = image.data('originalWidth');
+      imageHeight = image.data('originalHeight');
+      imageDimension = imageWidth / imageHeight;
+      maxWidth = winWidth - windowPadding * 2;
+      maxHeight = winHeight - windowPadding * 2;
+      if (imageWidth > maxWidth) {
+        imageWidth = maxWidth;
+        imageHeight = imageWidth / imageDimension;
+      }
+      if (imageHeight > maxHeight) {
+        imageHeight = maxHeight;
+        imageWidth = imageHeight * imageDimension;
+      }
+      image.attr('width', imageWidth).attr('height', imageHeight);
+    }
     newWidth = lightboxContent.outerWidth();
     newHeight = lightboxContent.outerHeight();
-    winHeight = $(window).innerHeight();
     top = (winHeight - newHeight) / 2;
     newProps = {
       marginLeft: -newWidth / 2,
@@ -1497,7 +1523,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
         left: this.rondell.center.left - this.sizeFocused.width / 2,
         top: this.rondell.center.top - this.sizeFocused.height / 2
       });
-      if (this.isLink) {
+      if (this.isLink && this.rondell.lightbox.displayReferencedImages) {
         linkUrl = this.object.attr('href');
         linkType = this._getFiletype(linkUrl);
         _ref = this.rondell.imageFiletypes;
