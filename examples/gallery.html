@@ -64,7 +64,7 @@ focused element will open the wookmark in a new tab or window.</p>
           for (i = 0; i &lt; 24; i++) {
             item = data[i];
             rondellContent += ' \\
-              &lt;a href=&quot;'+item.url+'&quot; title=&quot;'+item.title+'&quot; \\
+              &lt;a href=&quot;'+item.image+'&quot; title=&quot;'+item.title+' @ '+item.url+'&quot; \\
                 target=&quot;_blank&quot; style=&quot;display:none&quot;&gt; \\
                 &lt;img src=&quot;'+item.preview+'&quot; title=&quot;'+item.title+'&quot; width=&quot;'+item.width+'&quot; height=&quot;'+item.height+'&quot;/&gt; \\
               &lt;/a&gt; \\
@@ -127,7 +127,7 @@ focused element will open the wookmark in a new tab or window.</p>
           _ref = data.slice(0, 25);
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             item = _ref[_i];
-            rondellContent += "            <a href=\"" + item.url + "\" title=\"" + item.title + "\" target=\"_blank\" style=\"display:none\">              <img src=\"" + item.preview + "\" title=\"" + item.title + "\" width=\"" + item.width + "\" height=\"" + item.height + "\"/>            </a>          ";
+            rondellContent += "            <a href=\"" + item.image + "\" title=\"" + item.title + " @ " + item.url + "\" target=\"_blank\" style=\"display:none\">              <img src=\"" + item.preview + "\" title=\"" + item.title + "\" width=\"" + item.width + "\" height=\"" + item.height + "\"/>            </a>          ";
           }
           return $("#rondellGallery").html(rondellContent).children().rondell({
             preset: "gallery",

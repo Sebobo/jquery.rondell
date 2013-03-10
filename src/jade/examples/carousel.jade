@@ -129,7 +129,7 @@ append content
                 for (i = 0; i < 24; i++) {
                   item = data[i];
                   rondellContent += ' \\
-                    <a href="'+item.url+'" title="'+item.title+'" \\
+                    <a href="'+item.image+'" title="'+item.title+' @ '+item.url+'" \\
                       target="_blank" style="display:none"> \\
                       <img src="'+item.preview+'" title="'+item.title+'" width="'+item.width+'" height="'+item.height+'"/> \\
                     </a> \\
@@ -170,7 +170,7 @@ append js
             # Create link and image from each item data
             for item in data[0..24]
               rondellContent += "
-                <a href=\"#{item.url}\" title=\"#{item.title}\" target=\"_blank\" style=\"display:none\">
+                <a href=\"#{item.image}\" title=\"#{item.title} @ #{item.url}\" target=\"_blank\" style=\"display:none\">
                   <img src=\"#{item.preview}\" title=\"#{item.title}\" width=\"#{item.width}\" height=\"#{item.height}\"/>
                 </a>
               ";
