@@ -817,15 +817,19 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       }
       content = this._focusedItem.object.html();
       return lightboxContent.stop().fadeTo(100, 0, function() {
-        var icon;
+        var icon, iconCopy;
         content = $('.rondell-lightbox-inner', lightboxContent).html(content);
         $('.rondell-lightbox-position').text("" + _this.currentLayer + " | " + _this.maxItems);
         $("." + _this.classes.overlay, content).removeAttr('style');
         icon = $("." + _this.classes.image, content).removeAttr('style').removeAttr('width').removeAttr('height');
         if (_this._focusedItem.referencedImage && _this._focusedItem.icon) {
           icon.attr('src', _this._focusedItem.referencedImage);
+          iconCopy = $("<img style=\"display:none\"/>");
+          lightboxContent.append(_this.iconCopy);
+          return iconCopy.one('load', updateLightbox).attr('src', icon.attr('src'));
+        } else {
+          return setTimeout(updateLightbox, 0);
         }
-        return setTimeout(updateLightbox, 0);
       });
     };
 

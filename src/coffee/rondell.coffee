@@ -703,8 +703,16 @@
           if @_focusedItem.referencedImage and @_focusedItem.icon
             icon.attr 'src', @_focusedItem.referencedImage
 
-          # Async call to update the lightbox to allow the layout to update
-          setTimeout updateLightbox, 0
+            # Create copy of the image and wait for the copy to load to get the real dimensions
+            iconCopy = $ "<img style=\"display:none\"/>"
+            lightboxContent.append @iconCopy
+
+            iconCopy
+              .one('load', updateLightbox)
+              .attr('src', icon.attr('src'))
+          else
+            # Async call to update the lightbox to allow the layout to update
+            setTimeout updateLightbox, 0
 
   # Get api for active rondell instance
   getActiveRondell = ->
