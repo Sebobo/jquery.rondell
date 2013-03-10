@@ -26,6 +26,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
           <div class="rondell-lightbox-overlay">&nbsp;</div>\
           <div class="rondell-lightbox-content">\
             <div class="rondell-lightbox-inner"/>\
+            <div class="rondell-lightbox-close">&Chi;</div>\
             <div class="rondell-lightbox-prev">&nbsp;</div>\
             <div class="rondell-lightbox-position">1</div>\
             <div class="rondell-lightbox-next">&nbsp;</div>\
@@ -852,7 +853,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     var lightbox;
     if (!$.rondell.lightbox.instance) {
       lightbox = $.rondell.lightbox.instance = $($.rondell.lightbox.template).appendTo($('body'));
-      $('.rondell-lightbox-overlay', lightbox).bind('click.rondell', closeLightbox);
+      $('.rondell-lightbox-overlay, .rondell-lightbox-close', lightbox).bind('click.rondell', closeLightbox);
       $('.rondell-lightbox-prev', lightbox).bind('click.rondell', function() {
         return getActiveRondell().shiftLeft();
       });

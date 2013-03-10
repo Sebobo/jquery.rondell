@@ -21,6 +21,7 @@
           <div class="rondell-lightbox-overlay">&nbsp;</div>
           <div class="rondell-lightbox-content">
             <div class="rondell-lightbox-inner"/>
+            <div class="rondell-lightbox-close">&Chi;</div>
             <div class="rondell-lightbox-prev">&nbsp;</div>
             <div class="rondell-lightbox-position">1</div>
             <div class="rondell-lightbox-next">&nbsp;</div>
@@ -732,7 +733,7 @@
         .appendTo($('body'))
 
       # Add click event to lightbox overlay to hide lightbox
-      $('.rondell-lightbox-overlay', lightbox)
+      $('.rondell-lightbox-overlay, .rondell-lightbox-close', lightbox)
         .bind 'click.rondell', closeLightbox
 
       # Bind events to controls

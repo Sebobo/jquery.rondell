@@ -28,52 +28,97 @@
   top: 0;
   max-height: 90%;
   overflow: auto;
-  background: #fafafa;
+  background-color: #555;
+  background-color: rgba(70, 70, 70, 0.6);
   padding: 10px;
   z-index: 9999;
   text-align: center;
   @include border-radius(5px);
   @include box-shadow(0 2px 50px 1px rgba(0, 0, 0, 0.7));
 
+  .rondell-item-image {
+    border: 1px solid #333;
+  }
+
   .rondell-caption,
   .rondell-caption.rondell-item-overlay {
     text-align: left;
     position: relative;
     display: block;
-    color: #222;
+    color: #eee;
+    text-shadow: 0 1px 1px #111;
     margin: 0;
     padding: 0;
     background-color: transparent;
     max-width: 400px;
   }
 
+  .rondell-lightbox-prev,
   .rondell-lightbox-next,
-  .rondell-lightbox-prev {
-    color: #338;
+  .rondell-lightbox-close,
+  .rondell-lightbox-position {
+    color: #fafafa;
     cursor: pointer;
+    position: absolute;
+    opacity: 0;
+    width: 16px;
+    height: 16px;
+    background: #333;
+    border: 2px solid #555;
+    @include transition(opacity 0.2s ease 0.1);
+    @include border-radius(5px);
+    @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+
+    &:hover {
+      @include box-shadow(0 1px 6px rgba(0, 0, 0, 0.7));
+      border: 2px solid #888;
+    }
   }
 
   .rondell-lightbox-position {
+    top: 2px;
+    left: 50%;
+    margin-left: -40px;
+    width: 80px;
+    padding: 2px 0 1px;
     text-align: center;
     font-weight: bold;
+    text-shadow: 0 1px 1px #111;
+    border: 1px solid #555;
+    cursor: default;
+
+    &:hover {
+      @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+      border: 1px solid #555;
+    }
+  }
+
+  .rondell-lightbox-close {
+    top: 2px;
+    right: 2px;
   }
 
   .rondell-lightbox-prev,
   .rondell-lightbox-next {
-    position: absolute;
-    bottom: 10px;
-    width: 16px;
-    height: 16px;
-    background: url('images/arrows_dark.png') no-repeat;
+    top: 50%;
+    background: #333 url('images/arrows.png') no-repeat;
+  }
+
+  &:hover {
+    .rondell-lightbox-prev,
+    .rondell-lightbox-next,
+    .rondell-lightbox-close,
+    .rondell-lightbox-position {
+      opacity: 1;
+    }
   }
 
   .rondell-lightbox-prev {
-    left: 10px;
+    left: 2px;
     background-position: 0 -16px;
   }
 
   .rondell-lightbox-next {
-    right: 10px;
-    @include clearfix();
+    right: 2px;
   }
 }
