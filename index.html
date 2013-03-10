@@ -59,7 +59,7 @@ IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+</p>
             </a></p>
       </div>
       <div class="column size1of2"><img src="examples/images/preview.png" alt="Rondell preview" class="hideOnJS">
-        <div id="rondellTopDemo" class="showOnJS hidden"><img src="examples/images/galery/band.jpg" title="My favourite band" alt="Band"><img src="examples/images/galery/dog.jpg" title="My dog" alt="Dog"><img src="examples/images/galery/cat.jpg" title="My cat" alt="Cat"><img src="examples/images/galery/boar.jpg" title="Dead boar" alt="Boar"><img src="examples/images/galery/snow.jpg" title="Winter wonderland" alt="Winter"><img src="examples/images/galery/rabbit.jpg" title="The white rabbit" alt="Rabbit"><img src="examples/images/galery/trash.jpg" title="Trash" alt="Trash"></div>
+        <div id="rondellTopDemo" class="showOnJS hidden"><a target="_blank" rel="rondell_1" href="examples/images/galery/band.jpg" title="My favourite band"><img src="examples/images/galery/band_small.jpg" alt="Band" title="My favourite band"></a><a target="_blank" rel="rondell_1" href="examples/images/galery/dog.jpg" title="My dog"><img src="examples/images/galery/dog_small.jpg" alt="Dog" title="My dog"></a><a target="_blank" rel="rondell_1" href="examples/images/galery/cat.jpg" title="My cat"><img src="examples/images/galery/cat_small.jpg" alt="Cat" title="My cat"></a><a target="_blank" rel="rondell_1" href="examples/images/galery/boar.jpg" title="Boar"><img src="examples/images/galery/boar_small.jpg" alt="Boar" title="Boar"></a><a target="_blank" rel="rondell_1" href="examples/images/galery/snow.jpg" title="Snow"><img src="examples/images/galery/snow_small.jpg" alt="Snow" title="Snow"></a><a target="_blank" rel="rondell_1" href="examples/images/galery/rabbit.jpg" title="Rabbit"><img src="examples/images/galery/rabbit_small.jpg" alt="Rabbit" title="Rabbit"></a><a target="_blank" rel="rondell_1" href="examples/images/galery/trash.jpg" title="Trash"><img src="examples/images/galery/trash_small.jpg" alt="Trash" title="Trash"></a></div>
       </div><br class="clear"><br>
       <div class="column">
         <!-- Flattr button BEGIN--><a rev="flattr;button:compact;" href="http://sebobo.github.com/jquery.rondell" class="FlattrButton hidden"></a>
@@ -236,7 +236,7 @@ IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+</p>
     <!-- End Piwik Tracking Code--><script type="text/javascript">
 (function() {
 
-  $("#rondellTopDemo > img").rondell({
+  $("#rondellTopDemo > *").rondell({
     preset: "carousel",
     radius: {
       x: 130
