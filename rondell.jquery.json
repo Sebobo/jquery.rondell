@@ -1,9 +1,10 @@
 {
     "name": "rondell",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "title": "jQuery Rondell",
     "author": {
         "name": "Sebastian Helzle",
+        "email": "sebastian@helzle.net",
         "url": "https://github.com/sebobo"
     },
     "homepage": "http://projects.sebastianhelzle.net/jquery.rondell",

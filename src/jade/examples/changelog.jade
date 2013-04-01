@@ -1,0 +1,214 @@
+extends ../includes/layout
+
+append head
+  title Changelog - jQuery Rondell
+
+append content
+  include ../includes/submenu
+  mixin submenu('Changelog')
+
+  br
+  .center
+    h2 Changelog
+  hr
+  br
+
+  div
+    ul#changelog
+      li
+        h6 1.0.2
+        ul
+          li
+            span.label.success New
+            | &nbsp;The lightbox now contains a 'more' link when the rondell item is a link and the lightbox is enabled. See the 'strings' option to customize the text.
+          li
+            span.label.notice FIX
+            | &nbsp;Links on images work again when lightbox is turned off.
+      li
+        h6 1.0.1
+        ul
+          li
+            span.label.success New
+            | &nbsp;Referenced images allow you to use small images in the rondell and big images for the lightbox. Just wrap an image with an image link to the big image.
+          li
+            span.label.success New
+            | &nbsp;A close button for the lightbox ;-)
+          li
+            span.label.notice Change
+            | &nbsp;Better auto resize for the lightbox.
+          li
+            span.label.notice CHANGE
+            | &nbsp;Lightbox now has a default dark theme. New themes for the lightbox will be added eventually.
+      li
+        h6 1.0.0
+        ul
+          li
+            span.label.success New
+            | &nbsp;Integrated lightweight lightbox to reduce 3rd party lightbox difficulties
+          li
+            span.label.success Change
+            | &nbsp;Using grunt for building, compass for sass mixins and QUnit for testing
+          li
+            span.label.notice FIX
+            | &nbsp;Blur and focus problems in IE
+      li
+        h6 0.9.3
+        ul
+          li
+            span.label.success New
+            | &nbsp;Asynchronous image loading has been added and will be further improved in the next versions
+          li
+            span.label.notice Change
+            | &nbsp;New optimized item rendering technique and refactoring for improved performance and flexibility
+          li
+            span.label.notice Change
+            | &nbsp;CSS classes are now using hyphens instead of camelcase.
+            b &nbsp;Please check your custom styles!
+          li
+            span.label.notice Change
+            | &nbsp;Preset 'products' is now called 'scroller'
+          li
+            span.label.notice FIX
+            | &nbsp;Fancybox samples now show working navigation arrows and item title
+          li
+            span.label.notice FIX
+            | &nbsp;Example for the 'size' option is now correct
+      li
+        h6 0.9.1
+        ul
+          li
+            span.label.success New
+            | &nbsp;awesome preset&nbsp;
+            a(href="examples/thumbnails.html", title="Thumbnail gallery demo") thumbgallery
+            br
+            | which uses all the new options and features.
+          li
+            span.label.success New
+            | &nbsp;Integrated my standalone scrollbar plugin (beta) into the rondell.
+            br
+            | See the&nbsp;
+            a(href="examples/options.html", title="Options") options
+            | &nbsp;for setting it up.
+          li
+            span.label.success New
+            | &nbsp;Items absolute index as parameter for the animation functions.
+          li
+            span.label.success New
+            | &nbsp;Option&nbsp;
+            i cropThumbnails
+            | &nbsp;for image cropping to allow uniform size of thumbnails
+          li
+            span.label.success New
+            | &nbsp;Option&nbsp;
+            i switchIndices
+            br
+            | which enables switching the index of the last and new focused items.
+          li
+            span.label.success New
+            | &nbsp;Option&nbsp;
+            i keyDelay
+            br
+            | which sets minimum time between keypress events are registered.
+          li
+            span.label.success New
+            | &nbsp;Option&nbsp;
+            i wrapIndices
+            br
+            | allowing to disable item index wrapping used in the carousels.
+          li
+            span.label.success New
+            | &nbsp;Opacity is now animated when hovering items.
+          li
+            span.label.notice Change
+            | &nbsp;Improved performance
+          li
+            span.label.notice Fix
+            | &nbsp;Bugfixes for items fading out or in
+          li
+            span.label.notice Fix
+            | &nbsp;Disabled autorotation when rondell is not visible.
+          li
+            span.label.notice Fix
+            | &nbsp;Horizontal mouse scroll event registering improved.
+      li
+        h6 0.8.7
+        ul
+          li
+            span.label.notice Fix
+            | &nbsp;Wrong image sizes when rondell items are all images.
+      li
+        h6 0.8.6
+        ul
+          li
+            span.label.success New
+            | &nbsp;Added slider preset.
+          li
+            span.label.success New
+            | &nbsp;Added random start option.
+          li
+            span.label.notice Change
+            | &nbsp;Improved some presets and themes.
+      li
+        h6 0.8.5
+        ul
+          li Fixed a bug in image size computations and improved performance.
+          li Moved more default options into presets.
+          li Improved dark theme text readability.
+          li New gallery example and preset.
+      li
+        h6 0.8.4
+        ul
+          li
+            b Mousewheel (x-axis) support
+            | &nbsp;allows you to traverse left and right in the rondell. (Requires the optional&nbsp;
+            a(href="https://github.com/brandonaaron/jquery-mousewheel", title="jQuery mousewheel").
+              jQuery mousewheel plugin
+            | )
+          li
+            | Controls hide if autorotation is disabled and shifting is impossible. (See the&nbsp;
+            a(href="examples/scroller.html", title="Products demo") products demo
+            | )
+          li
+            | Items are now displayed in the order you provide them.
+          li
+            | Starting item index is now customizeable by providing the
+            i currentLayer
+            | option. (See the&nbsp;
+            a(href="examples/options.html", title="List of options") options
+            | )
+      li
+        h6 0.8.3
+        ul
+          li
+            b A size function
+            | &nbsp;to simulate a depth effect. (See the&nbsp;
+            a(href="examples/options.html", title="List of options") options
+            | )
+          li
+            b Presets
+            | &nbsp;for the plugins options which contain the necessary settings to setup the plugin
+            | like the examples on this page.
+          li
+            b Themes
+            | &nbsp;are now included in the plugins css file to help you make your rondell look
+            | like one of my examples.
+          li
+            b A callback
+            | &nbsp;when the plugin has finished loading. (See&nbsp;
+            a.scrollToId(href="#usage", title="Usage example") usage
+            | )
+      li
+        h6 0.8.2
+        ul
+          li
+            b Touch controls for mobile devices
+            | &nbsp;- Swipe left and right to move the rondell.
+          li
+            b Reliable image loading
+            | &nbsp;- The previous versions had sometimes problems getting the correct image sizes
+            | for some browsers and configurations.
+          li And some minor fixes and code improvements.
+
+  br.clear
+
+

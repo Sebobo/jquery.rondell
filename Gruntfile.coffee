@@ -66,6 +66,7 @@ module.exports = (grunt) ->
           'examples/scroller.html': 'src/jade/examples/scroller.jade'
           'examples/slider.html': 'src/jade/examples/slider.jade'
           'examples/thumbnails.html': 'src/jade/examples/thumbnails.jade'
+          'examples/changelog.html': 'src/jade/examples/changelog.jade'
     sass:
       dist:
         options:

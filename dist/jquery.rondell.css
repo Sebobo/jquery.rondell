@@ -269,7 +269,7 @@
 
 .rondell-lightbox {
   z-index: 9998;
-  display: none;
+  left: -99999;
   position: absolute;
 }
 
@@ -323,6 +323,13 @@
   padding: 0;
   background-color: transparent;
   max-width: 400px;
+}
+.rondell-lightbox-content .rondell-caption a {
+  color: #ade;
+  text-decoration: underline;
+}
+.rondell-lightbox-content .rondell-caption a:hover {
+  text-decoration: none;
 }
 .rondell-lightbox-content .rondell-lightbox-prev,
 .rondell-lightbox-content .rondell-lightbox-next,

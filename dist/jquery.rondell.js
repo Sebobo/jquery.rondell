@@ -2,8 +2,8 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 1.0.0
-  @date 01/27/2013
+  @version 1.0.2
+  @date 04/01/2013
   @category jQuery plugin
   @copyright (c) 2009-2013 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -15,9 +15,9 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   /* Global rondell plugin properties
   */
 
-  var Rondell, closeLightbox, getActiveRondell, getLightbox, lightboxIsVisible, resizeLightbox, resizeTimer, updateLightbox, _base;
+  var $document, $window, Rondell, closeLightbox, delayCall, getActiveRondell, getLightbox, lightboxIsVisible, resizeLightbox, resizeTimer, updateLightbox, _base;
   $.rondell || ($.rondell = {
-    version: '1.0.0',
+    version: '1.0.2',
     name: 'rondell',
     lightbox: {
       instance: void 0,
@@ -115,7 +115,8 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       strings: {
         prev: 'prev',
         next: 'next',
-        loadingError: 'An error occured while loading <b>%s</b>'
+        loadingError: 'An error occured while loading <b>%s</b>',
+        more: 'More...'
       },
       mousewheel: {
         enabled: true,
@@ -179,6 +180,11 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       return -c / 2 * ((--t) * (t - 2) - 1) + b;
     }
   });
+  delayCall = function(delay, callback) {
+    return setTimeout(callback, delay);
+  };
+  $window = $(window);
+  $document = $(document);
   Rondell = (function() {
 
     Rondell.rondellCount = 0;
@@ -487,26 +493,26 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 
     Rondell.prototype.bindEvents = function() {
       var rondell;
-      $(document).keydown(this.keyDown);
-      $(window).blur(this.onWindowBlur).focus(this.onWindowFocus);
-      $(document).focusout(this.onWindowBlur).focusin(this.onWindowFocus);
+      $document.keydown(this.keyDown);
+      $window.blur(this.onWindowBlur).focus(this.onWindowFocus);
+      $document.focusout(this.onWindowBlur).focusin(this.onWindowFocus);
       if (this.mousewheel.enabled && ($.fn.mousewheel != null)) {
-        this.container.bind("mousewheel", this._onMousewheel);
+        this.container.bind("mousewheel.rondell", this._onMousewheel);
       }
       if (this._onMobile()) {
         if (this.touch.enabled) {
-          this.container.bind("touchstart touchmove touchend", this._onTouch);
+          this.container.bind("touchstart.rondell touchmove.rondell touchend.rondell", this._onTouch);
         }
       } else {
-        this.container.bind("mouseenter mouseleave", this._hover);
+        this.container.bind("mouseenter.rondell mouseleave.rondell", this._hover);
       }
       rondell = this;
-      return this.container.delegate("." + this.classes.item, "click", function(e) {
+      return this.container.delegate("." + this.classes.item, "click.rondell", function(e) {
         var item;
         item = $(this).data("item");
         if (rondell._focusedItem.id === item.id) {
-          e.preventDefault();
           if (rondell.lightbox.enabled) {
+            e.preventDefault();
             return rondell.showLightbox();
           }
         } else {
@@ -515,7 +521,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
             return rondell.shiftTo(item.currentSlot);
           }
         }
-      }).delegate("." + this.classes.item, "mouseenter mouseleave", function(e) {
+      }).delegate("." + this.classes.item, "mouseenter.rondell mouseleave.rondell", function(e) {
         var item;
         item = $(this).data("item");
         if (e.type === "mouseenter") {
@@ -540,7 +546,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
             Requires mousewheel plugin for jQuery.
       */
 
-      var now, selfYCenter, viewport, viewportBottom, viewportTop;
+      var now, selfYCenter, viewportBottom, viewportTop;
       if (!(this.mousewheel.enabled && this.isFocused())) {
         return;
       }
@@ -548,9 +554,8 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       if (now - this.mousewheel._lastShift < this.mousewheel.minTimeBetweenShifts) {
         return;
       }
-      viewport = $(window);
-      viewportTop = viewport.scrollTop();
-      viewportBottom = viewportTop + viewport.height();
+      viewportTop = $window.scrollTop();
+      viewportBottom = viewportTop + $window.height();
       selfYCenter = this.container.offset().top + this.container.outerHeight() / 2;
       if (selfYCenter > viewportTop && selfYCenter < viewportBottom && Math.abs(dx) > this.mousewheel.threshold) {
         e.preventDefault();
@@ -807,26 +812,36 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     };
 
     Rondell.prototype.showLightbox = function() {
-      var content, lightbox, lightboxContent,
+      var lightbox, lightboxContent,
         _this = this;
       lightbox = getLightbox();
       lightboxContent = $('.rondell-lightbox-content', lightbox);
       if (!lightboxIsVisible()) {
-        lightbox.css('display', 'block');
-        lightboxContent.css('display', 'none');
+        lightbox.add(lightboxContent).css('display', 'none');
       }
-      content = this._focusedItem.object.html();
       return lightboxContent.stop().fadeTo(100, 0, function() {
-        var icon, iconCopy;
-        content = $('.rondell-lightbox-inner', lightboxContent).html(content);
+        var attr, content, icon, iconCopy, linkTarget, linkUrl, _i, _len, _ref;
+        content = $('.rondell-lightbox-inner', lightboxContent).html(_this._focusedItem.object.html());
         $('.rondell-lightbox-position').text("" + _this.currentLayer + " | " + _this.maxItems);
-        $("." + _this.classes.overlay, content).removeAttr('style');
-        icon = $("." + _this.classes.image, content).removeAttr('style').removeAttr('width').removeAttr('height');
-        if (_this._focusedItem.referencedImage && _this._focusedItem.icon) {
-          icon.attr('src', _this._focusedItem.referencedImage);
+        $("." + _this.classes.overlay, content).style = '';
+        if (_this._focusedItem.isLink) {
+          linkUrl = _this._focusedItem.object.attr('href');
+          linkTarget = _this._focusedItem.object.attr('target');
+          $("." + _this.classes.caption, content).append("<a href='" + linkUrl + "' target='" + linkTarget + "'>" + _this.strings.more + "</a>").attr('style', '');
+        }
+        icon = $("." + _this.classes.image, content);
+        if (icon && _this._focusedItem.referencedImage) {
+          _ref = ['style', 'width', 'height'];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            attr = _ref[_i];
+            icon.removeAttr(attr);
+          }
+          icon[0].src = _this._focusedItem.referencedImage;
+        }
+        if (icon && !icon[0].complete) {
           iconCopy = $("<img style=\"display:none\"/>");
           lightboxContent.append(_this.iconCopy);
-          return iconCopy.one('load', updateLightbox).attr('src', icon.attr('src'));
+          return iconCopy.one('load', updateLightbox)[0].src = _this._focusedItem.referencedImage;
         } else {
           return setTimeout(updateLightbox, 0);
         }
@@ -864,7 +879,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       $('.rondell-lightbox-next', lightbox).bind('click.rondell', function() {
         return getActiveRondell().shiftRight();
       });
-      $(window).bind('resize.rondell', resizeLightbox);
+      $window.bind('resize.rondell', resizeLightbox);
       lightbox.bind("mousewheel.rondell", function(e, d, dx, dy) {
         return getActiveRondell()._onMousewheel(e, d, dx, dy);
       });
@@ -872,18 +887,17 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     return $.rondell.lightbox.instance;
   };
   updateLightbox = function() {
-    var image, imageDimension, imageHeight, imageWidth, lightbox, lightboxContent, maxHeight, maxWidth, newHeight, newProps, newWidth, top, win, winHeight, winWidth, windowPadding;
-    lightbox = getLightbox();
-    lightboxContent = $('.rondell-lightbox-content', lightbox);
-    win = $(window);
-    winWidth = win.innerWidth();
-    winHeight = win.innerHeight();
+    var $lightbox, $lightboxContent, image, imageDimension, imageHeight, imageWidth, maxHeight, maxWidth, newHeight, newProps, newWidth, winHeight, winWidth, windowPadding;
+    $lightbox = getLightbox();
+    $lightboxContent = $('.rondell-lightbox-content', $lightbox);
+    winWidth = $window.innerWidth();
+    winHeight = $window.innerHeight();
     windowPadding = 20;
-    image = $('img:first', lightboxContent);
+    image = $('img:first', $lightboxContent);
     if (image.length) {
       if (!image.data('originalWidth')) {
-        image.data('originalWidth', image.width());
-        image.data('originalHeight', image.height());
+        image.data('originalWidth', image[0].width);
+        image.data('originalHeight', image[0].height);
       }
       imageWidth = image.data('originalWidth');
       imageHeight = image.data('originalHeight');
@@ -900,20 +914,20 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       }
       image.attr('width', imageWidth).attr('height', imageHeight);
     }
-    newWidth = lightboxContent.outerWidth();
-    newHeight = lightboxContent.outerHeight();
-    top = (winHeight - newHeight) / 2;
+    $lightbox.css('display', 'block');
+    newWidth = $lightboxContent.outerWidth();
+    newHeight = $lightboxContent.outerHeight();
     newProps = {
       marginLeft: -newWidth / 2,
-      top: Math.max(top, 20)
+      top: Math.max((winHeight - newHeight) / 2, 20)
     };
-    if (lightboxContent.css('opacity') < 1) {
-      lightboxContent.css(newProps).fadeTo(200, 1);
+    if ($lightboxContent.css('opacity') < 1) {
+      $lightboxContent.css(newProps).fadeTo(200, 1);
     } else {
       newProps.opacity = 1;
-      lightboxContent.animate(newProps, 200);
+      $lightboxContent.animate(newProps, 200);
     }
-    return lightbox.stop().fadeTo(150, 1);
+    return $lightbox.stop().fadeTo(150, 1);
   };
   return $.fn.rondell = function(options, callback) {
     var rondell;
@@ -1466,7 +1480,10 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   $.rondell || ($.rondell = {});
   return $.rondell.RondellItem = (function() {
 
-    function RondellItem(id, obj, rondell) {
+    function RondellItem(id, object, rondell) {
+      this.id = id;
+      this.object = object;
+      this.rondell = rondell;
       this.runAnimation = __bind(this.runAnimation, this);
 
       this.onAnimationFinished = __bind(this.onAnimationFinished, this);
@@ -1492,10 +1509,8 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       this.refreshDimensions = __bind(this.refreshDimensions, this);
 
       this.init = __bind(this.init, this);
-      this.id = id;
-      this.object = obj;
-      this.rondell = rondell;
-      this.currentSlot = id;
+
+      this.currentSlot = this.id;
       this.focused = false;
       this.hidden = false;
       this.animating = false;
@@ -1503,15 +1518,15 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       this.icon = null;
       this.resizeable = true;
       this.iconCopy = null;
-      this.croppedSize = rondell.itemProperties.size;
-      this.sizeSmall = rondell.itemProperties.size;
-      this.sizeFocused = rondell.itemProperties.sizeFocused;
+      this.croppedSize = this.rondell.itemProperties.size;
+      this.sizeSmall = this.rondell.itemProperties.size;
+      this.sizeFocused = this.rondell.itemProperties.sizeFocused;
       this.objectCSSTarget = {};
       this.objectAnimationTarget = {};
       this.lastObjectAnimationTarget = {};
       this.iconAnimationTarget = {};
       this.lastIconAnimationTarget = {};
-      this.animationSpeed = rondell.fadeTime;
+      this.animationSpeed = this.rondell.fadeTime;
       this.isLink = this.object.is('a');
       this.referencedImage = null;
     }

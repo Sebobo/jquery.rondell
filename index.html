@@ -13,7 +13,7 @@
   <body>
     <div class="pageHeader hasShadow">
       <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
-      <p><b>Version 1.0.1</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
+      <p><b>Version 1.0.2</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
           Sebastian Helzle
           </a></p><br>
       <ul class="tabs">
@@ -28,6 +28,7 @@
               <ul class="nav nav-pills">
                 <li class="active"><a href="index.html">Overview</a></li>
                 <li><a href="examples/installation.html">Installation</a></li>
+                <li><a href="examples/changelog.html">Changelog</a></li>
                 <li><a href="examples/options.html">Options</a></li>
                 <li><span class="spacer">|</span></li>
                 <li><a href="examples/carousel.html">Carousel</a></li>
@@ -54,7 +55,7 @@ by clicking the controls or by clicking the rondell items.</p>
 IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+</p>
 
 <p>Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php" title="MIT licence">MIT license</a>.</p>
-        <p><a href="https://github.com/Sebobo/jquery.rondell/zipball/1.0.1" title="Rondell zip download" class="btn success">Download rondell now</a>&nbsp;<a href="https://github.com/Sebobo/jquery.rondell" title="Rondell source at github" class="btn">
+        <p><a href="https://github.com/Sebobo/jquery.rondell/zipball/master" title="Rondell zip download" class="btn success">Download rondell now</a>&nbsp;<a href="https://github.com/Sebobo/jquery.rondell" title="Rondell source at github" class="btn">
             Visit rondell at github
             </a></p>
       </div>
@@ -80,114 +81,8 @@ IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+</p>
 &lt;/script&gt;
 </pre>
       </div><br>
-      <div class="column size2of3">
-        <h5>New and improved in this version</h5>
-        <ul>
-          <li><span class="label success">New</span>&nbsp;Referenced images allow you to use small images in the rondell and big images for the lightbox. Just wrap an image with an image link to the big image.</li>
-          <li><span class="label success">New</span>&nbsp;A close button for the lightbox ;-)</li>
-          <li><span class="label notice">Change</span>&nbsp;Better auto resize for the lightbox.</li>
-          <li><span class="label notice">CHANGE</span>&nbsp;Lightbox now has a default dark theme. New themes for the lightbox will be added eventually.</li>
-        </ul><br>
-        <p><a href="#changelog" title="Collapse code" class="showCode">
-            Click here to see changes in the last versions
-            </a></p>
-        <div class="hidden">
-          <ul id="changelog">
-            <li>
-              <h6>1.0.0</h6>
-              <ul>
-                <li><span class="label success">New</span>&nbsp;Integrated lightweight lightbox to reduce 3rd party lightbox difficulties</li>
-                <li><span class="label success">Change</span>&nbsp;Using grunt for building, compass for sass mixins and QUnit for testing</li>
-                <li><span class="label notice">FIX</span>&nbsp;Blur and focus problems in IE</li>
-              </ul>
-            </li>
-            <li>
-              <h6>0.9.3</h6>
-              <ul>
-                <li><span class="label success">New</span>&nbsp;Asynchronous image loading has been added and will be further improved in the next versions</li>
-                <li><span class="label notice">Change</span>&nbsp;New optimized item rendering technique and refactoring for improved performance and flexibility</li>
-                <li><span class="label notice">Change</span>&nbsp;CSS classes are now using hyphens instead of camelcase.<b>&nbsp;Please check your custom styles!</b></li>
-                <li><span class="label notice">Change</span>&nbsp;Preset 'products' is now called 'scroller'</li>
-                <li><span class="label notice">FIX</span>&nbsp;Fancybox samples now show working navigation arrows and item title</li>
-                <li><span class="label notice">FIX</span>&nbsp;Example for the 'size' option is now correct</li>
-              </ul>
-            </li>
-            <li>
-              <h6>0.9.1</h6>
-              <ul>
-                <li><span class="label success">New</span>&nbsp;awesome preset&nbsp;<a href="examples/thumbnails.html" title="Thumbnail gallery demo">thumbgallery</a><br>which uses all the new options and features.</li>
-                <li><span class="label success">New</span>&nbsp;Integrated my standalone scrollbar plugin (beta) into the rondell.<br>See the&nbsp;<a href="examples/options.html" title="Options">options</a>&nbsp;for setting it up.</li>
-                <li><span class="label success">New</span>&nbsp;Items absolute index as parameter for the animation functions.</li>
-                <li><span class="label success">New</span>&nbsp;Option&nbsp;<i>cropThumbnails</i>&nbsp;for image cropping to allow uniform size of thumbnails</li>
-                <li><span class="label success">New</span>&nbsp;Option&nbsp;<i>switchIndices</i><br>which enables switching the index of the last and new focused items.</li>
-                <li><span class="label success">New</span>&nbsp;Option&nbsp;<i>keyDelay</i><br>which sets minimum time between keypress events are registered.</li>
-                <li><span class="label success">New</span>&nbsp;Option&nbsp;<i>wrapIndices</i><br>allowing to disable item index wrapping used in the carousels.</li>
-                <li><span class="label success">New</span>&nbsp;Opacity is now animated when hovering items.</li>
-                <li><span class="label notice">Change</span>&nbsp;Improved performance</li>
-                <li><span class="label notice">Fix</span>&nbsp;Bugfixes for items fading out or in</li>
-                <li><span class="label notice">Fix</span>&nbsp;Disabled autorotation when rondell is not visible.</li>
-                <li><span class="label notice">Fix</span>&nbsp;Horizontal mouse scroll event registering improved.</li>
-              </ul>
-            </li>
-            <li>
-              <h6>0.8.7</h6>
-              <ul>
-                <li><span class="label notice">Fix</span>&nbsp;Wrong image sizes when rondell items are all images.</li>
-              </ul>
-            </li>
-            <li>
-              <h6>0.8.6</h6>
-              <ul>
-                <li><span class="label success">New</span>&nbsp;Added slider preset.</li>
-                <li><span class="label success">New</span>&nbsp;Added random start option.</li>
-                <li><span class="label notice">Change</span>&nbsp;Improved some presets and themes.</li>
-              </ul>
-            </li>
-            <li>
-              <h6>0.8.5</h6>
-              <ul>
-                <li>Fixed a bug in image size computations and improved performance.</li>
-                <li>Moved more default options into presets.</li>
-                <li>Improved dark theme text readability.</li>
-                <li>New gallery example and preset.</li>
-              </ul>
-            </li>
-            <li>
-              <h6>0.8.4</h6>
-              <ul>
-                <li><b>Mousewheel (x-axis) support</b>&nbsp;allows you to traverse left and right in the rondell. (Requires the optional&nbsp;<a href="https://github.com/brandonaaron/jquery-mousewheel" title="jQuery mousewheel">jQuery mousewheel plugin</a>)</li>
-                <li>Controls hide if autorotation is disabled and shifting is impossible. (See the&nbsp;<a href="examples/scroller.html" title="Products demo">products demo</a>)</li>
-                <li>Items are now displayed in the order you provide them.</li>
-                <li>Starting item index is now customizeable by providing the<i>currentLayer</i>option. (See the&nbsp;<a href="examples/options.html" title="List of options">options</a>)</li>
-              </ul>
-            </li>
-            <li>
-              <h6>0.8.3</h6>
-              <ul>
-                <li><b>A size function</b>&nbsp;to simulate a depth effect. (See the&nbsp;<a href="examples/options.html" title="List of options">options</a>)</li>
-                <li><b>Presets</b>&nbsp;for the plugins options which contain the necessary settings to setup the plugin
-                  like the examples on this page.
-                </li>
-                <li><b>Themes</b>&nbsp;are now included in the plugins css file to help you make your rondell look
-                  like one of my examples.
-                </li>
-                <li><b>A callback</b>&nbsp;when the plugin has finished loading. (See&nbsp;<a href="#usage" title="Usage example" class="scrollToId">usage</a>)</li>
-              </ul>
-            </li>
-            <li>
-              <h6>0.8.2</h6>
-              <ul>
-                <li><b>Touch controls for mobile devices</b>&nbsp;- Swipe left and right to move the rondell.</li>
-                <li><b>Reliable image loading</b>&nbsp;- The previous versions had sometimes problems getting the correct image sizes
-                  for some browsers and configurations.
-                </li>
-                <li>And some minor fixes and code improvements.</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="column size1of3 last">
+      <div class="column size1of2">
+        <h5>Changelog</h5><a href="/examples/changelog.html" title="See changes in the last versions" class="showCode">Click here to see changes in the last versions</a><br><br>
         <h5>Roadmap</h5>
         <ul>
           <li>More themes</li>
@@ -195,6 +90,8 @@ IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+</p>
           <li>CSS animations</li>
           <li>Full QUnit testsuite</li>
         </ul><br>
+      </div>
+      <div class="column size1of2 last">
         <h5>Dependencies</h5>
         <ul>
           <li><a href="http://www.jQuery.com" title="jQuery">jQuery</a>&nbsp;version 1.5.2 or better</li>

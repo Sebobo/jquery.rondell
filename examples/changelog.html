@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="content-language" content="en">
+    <meta name="keywords" content="jquery,tooltip,popup,plugin,css3,open-source,mit-license,extension,overlay">
+    <meta name="description" content="Sebastian Helzle's jQuery Rondell plugin">
+    <link rel="stylesheet" href="../examples/screen.css" type="text/css" media="all" title="Screen">
+    <link rel="stylesheet" href="../dist/jquery.rondell.css" type="text/css" media="all" title="Screen">
+    <script src="../libs/modernizr-2.0.6.min.js"></script>
+    <title>Changelog - jQuery Rondell</title>
+  </head>
+  <body>
+    <div class="pageHeader hasShadow">
+      <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
+      <p><b>Version 1.0.2</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
+          Sebastian Helzle
+          </a></p><br>
+      <ul class="tabs">
+        <li><a href="/" title="Projects overview">Home</a></li>
+        <li><a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">Smallipop</a></li>
+        <li class="selected"><a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">Rondell</a></li>
+        <li><a href="https://github.com/SmallImprovements/jquery.smallimap" target="_blank" title="jQuery smallimap - An interactive map plugin">Smallimap</a></li>
+      </ul>
+    </div>
+    <div id="introduction" class="page hasShadow">
+            <div class="subnav centered">
+              <ul class="nav nav-pills">
+                <li><a href="../index.html">Overview</a></li>
+                <li><a href="installation.html">Installation</a></li>
+                <li class="active"><a href="changelog.html">Changelog</a></li>
+                <li><a href="options.html">Options</a></li>
+                <li><span class="spacer">|</span></li>
+                <li><a href="carousel.html">Carousel</a></li>
+                <li><a href="slider.html">Slider</a></li>
+                <li><a href="scroller.html">Scroller</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="thumbnails.html">Thumbnails</a></li>
+                <li><a href="pages.html">Pages</a></li>
+              </ul><br class="clear">
+            </div><br>
+      <div class="center">
+        <h2>Changelog</h2>
+      </div>
+      <hr><br>
+      <div>
+        <ul id="changelog">
+          <li>
+            <h6>1.0.2</h6>
+            <ul>
+              <li><span class="label success">New</span>&nbsp;The lightbox now contains a 'more' link when the rondell item is a link and the lightbox is enabled. See the 'strings' option to customize the text.</li>
+              <li><span class="label notice">FIX</span>&nbsp;Links on images work again when lightbox is turned off.</li>
+            </ul>
+          </li>
+          <li>
+            <h6>1.0.1</h6>
+            <ul>
+              <li><span class="label success">New</span>&nbsp;Referenced images allow you to use small images in the rondell and big images for the lightbox. Just wrap an image with an image link to the big image.</li>
+              <li><span class="label success">New</span>&nbsp;A close button for the lightbox ;-)</li>
+              <li><span class="label notice">Change</span>&nbsp;Better auto resize for the lightbox.</li>
+              <li><span class="label notice">CHANGE</span>&nbsp;Lightbox now has a default dark theme. New themes for the lightbox will be added eventually.</li>
+            </ul>
+          </li>
+          <li>
+            <h6>1.0.0</h6>
+            <ul>
+              <li><span class="label success">New</span>&nbsp;Integrated lightweight lightbox to reduce 3rd party lightbox difficulties</li>
+              <li><span class="label success">Change</span>&nbsp;Using grunt for building, compass for sass mixins and QUnit for testing</li>
+              <li><span class="label notice">FIX</span>&nbsp;Blur and focus problems in IE</li>
+            </ul>
+          </li>
+          <li>
+            <h6>0.9.3</h6>
+            <ul>
+              <li><span class="label success">New</span>&nbsp;Asynchronous image loading has been added and will be further improved in the next versions</li>
+              <li><span class="label notice">Change</span>&nbsp;New optimized item rendering technique and refactoring for improved performance and flexibility</li>
+              <li><span class="label notice">Change</span>&nbsp;CSS classes are now using hyphens instead of camelcase.<b>&nbsp;Please check your custom styles!</b></li>
+              <li><span class="label notice">Change</span>&nbsp;Preset 'products' is now called 'scroller'</li>
+              <li><span class="label notice">FIX</span>&nbsp;Fancybox samples now show working navigation arrows and item title</li>
+              <li><span class="label notice">FIX</span>&nbsp;Example for the 'size' option is now correct</li>
+            </ul>
+          </li>
+          <li>
+            <h6>0.9.1</h6>
+            <ul>
+              <li><span class="label success">New</span>&nbsp;awesome preset&nbsp;<a href="examples/thumbnails.html" title="Thumbnail gallery demo">thumbgallery</a><br>which uses all the new options and features.</li>
+              <li><span class="label success">New</span>&nbsp;Integrated my standalone scrollbar plugin (beta) into the rondell.<br>See the&nbsp;<a href="examples/options.html" title="Options">options</a>&nbsp;for setting it up.</li>
+              <li><span class="label success">New</span>&nbsp;Items absolute index as parameter for the animation functions.</li>
+              <li><span class="label success">New</span>&nbsp;Option&nbsp;<i>cropThumbnails</i>&nbsp;for image cropping to allow uniform size of thumbnails</li>
+              <li><span class="label success">New</span>&nbsp;Option&nbsp;<i>switchIndices</i><br>which enables switching the index of the last and new focused items.</li>
+              <li><span class="label success">New</span>&nbsp;Option&nbsp;<i>keyDelay</i><br>which sets minimum time between keypress events are registered.</li>
+              <li><span class="label success">New</span>&nbsp;Option&nbsp;<i>wrapIndices</i><br>allowing to disable item index wrapping used in the carousels.</li>
+              <li><span class="label success">New</span>&nbsp;Opacity is now animated when hovering items.</li>
+              <li><span class="label notice">Change</span>&nbsp;Improved performance</li>
+              <li><span class="label notice">Fix</span>&nbsp;Bugfixes for items fading out or in</li>
+              <li><span class="label notice">Fix</span>&nbsp;Disabled autorotation when rondell is not visible.</li>
+              <li><span class="label notice">Fix</span>&nbsp;Horizontal mouse scroll event registering improved.</li>
+            </ul>
+          </li>
+          <li>
+            <h6>0.8.7</h6>
+            <ul>
+              <li><span class="label notice">Fix</span>&nbsp;Wrong image sizes when rondell items are all images.</li>
+            </ul>
+          </li>
+          <li>
+            <h6>0.8.6</h6>
+            <ul>
+              <li><span class="label success">New</span>&nbsp;Added slider preset.</li>
+              <li><span class="label success">New</span>&nbsp;Added random start option.</li>
+              <li><span class="label notice">Change</span>&nbsp;Improved some presets and themes.</li>
+            </ul>
+          </li>
+          <li>
+            <h6>0.8.5</h6>
+            <ul>
+              <li>Fixed a bug in image size computations and improved performance.</li>
+              <li>Moved more default options into presets.</li>
+              <li>Improved dark theme text readability.</li>
+              <li>New gallery example and preset.</li>
+            </ul>
+          </li>
+          <li>
+            <h6>0.8.4</h6>
+            <ul>
+              <li><b>Mousewheel (x-axis) support</b>&nbsp;allows you to traverse left and right in the rondell. (Requires the optional&nbsp;<a href="https://github.com/brandonaaron/jquery-mousewheel" title="jQuery mousewheel">jQuery mousewheel plugin</a>)</li>
+              <li>Controls hide if autorotation is disabled and shifting is impossible. (See the&nbsp;<a href="examples/scroller.html" title="Products demo">products demo</a>)</li>
+              <li>Items are now displayed in the order you provide them.</li>
+              <li>Starting item index is now customizeable by providing the<i>currentLayer</i>option. (See the&nbsp;<a href="examples/options.html" title="List of options">options</a>)</li>
+            </ul>
+          </li>
+          <li>
+            <h6>0.8.3</h6>
+            <ul>
+              <li><b>A size function</b>&nbsp;to simulate a depth effect. (See the&nbsp;<a href="examples/options.html" title="List of options">options</a>)</li>
+              <li><b>Presets</b>&nbsp;for the plugins options which contain the necessary settings to setup the plugin
+                like the examples on this page.
+              </li>
+              <li><b>Themes</b>&nbsp;are now included in the plugins css file to help you make your rondell look
+                like one of my examples.
+              </li>
+              <li><b>A callback</b>&nbsp;when the plugin has finished loading. (See&nbsp;<a href="#usage" title="Usage example" class="scrollToId">usage</a>)</li>
+            </ul>
+          </li>
+          <li>
+            <h6>0.8.2</h6>
+            <ul>
+              <li><b>Touch controls for mobile devices</b>&nbsp;- Swipe left and right to move the rondell.</li>
+              <li><b>Reliable image loading</b>&nbsp;- The previous versions had sometimes problems getting the correct image sizes
+                for some browsers and configurations.
+              </li>
+              <li>And some minor fixes and code improvements.</li>
+            </ul>
+          </li>
+        </ul>
+      </div><br class="clear">
+    </div><br>
+    <script src="../libs/jquery-1.9.1.min.js"></script>
+    <script src="../libs/jquery.mousewheel-3.0.6.min.js"></script>
+    <script src="../dist/jquery.rondell.js"></script>
+    <script src="../examples/demohelpers.js"></script><script type="text/javascript">
+(function() {
+  var hostname, pkBaseURL, protocol;
+
+  hostname = document.location.hostname;
+
+  if (hostname && (hostname.indexOf("github") > 0 || hostname.indexOf("sebastianhelzle") > 0)) {
+    protocol = document.location.protocol || "https:";
+    pkBaseURL = "" + protocol + "//tracking.sebastianhelzle.net/";
+    $.getScript("" + pkBaseURL + "piwik.js", function() {
+      var piwikTracker;
+      console.log("loaded piwik");
+      try {
+        piwikTracker = Piwik.getTracker("" + pkBaseURL + "piwik.php", 5);
+        piwikTracker.trackPageView();
+        return piwikTracker.enableLinkTracking();
+      } catch (err) {
+        return typeof console !== "undefined" && console !== null ? console.log(err) : void 0;
+      }
+    });
+  }
+
+}).call(this);
+</script>
+    <!-- Piwik-->
+    <script></script>
+    <noscript>
+      <p><img src="https://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></p>
+    </noscript>
+    <!-- End Piwik Tracking Code-->
+  </body>
+</html>
