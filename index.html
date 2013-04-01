@@ -95,7 +95,7 @@ IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+</p>
         <h5>Dependencies</h5>
         <ul>
           <li><a href="http://www.jQuery.com" title="jQuery">jQuery</a>&nbsp;version 1.5.2 or better</li>
-          <li><a href="http://www.modernizr.com/" title="Modernizr library">Modernizr</a>&nbsp;for browser capability fallbacks.<br>The library is included in the plugins<i>lib</i>&nbsp;folder.</li>
+          <li><a href="http://www.modernizr.com/" title="Modernizr library">Modernizr</a>&nbsp;for browser capability fallbacks.<br>The library is included in the plugins<i>&nbsp;lib</i>&nbsp;folder.</li>
         </ul>
       </div><br class="clear">
       <hr><br>
@@ -107,39 +107,11 @@ IE 7-9, Firefox 3.6+, Chrome, Safari 4+, Opera 11+</p>
           </a></p><br>
       <p>jQuery Rondell is powered by&nbsp;<a href="http://jashkenas.github.com/coffee-script/" target="_blank" title="Coffeescript">coffeescript</a>,&nbsp;<a href="http://sass-lang.com/" target="_blank" title="Sass">sass</a>&nbsp;and&nbsp;<a href="http://www.jquery.com" target="_blank" title="jQuery">jQuery</a>.</p><br>
     </div><br>
+    <noscript><img src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></noscript>
     <script src="libs/jquery-1.9.1.min.js"></script>
     <script src="libs/jquery.mousewheel-3.0.6.min.js"></script>
     <script src="dist/jquery.rondell.js"></script>
     <script src="examples/demohelpers.js"></script><script type="text/javascript">
-(function() {
-  var hostname, pkBaseURL, protocol;
-
-  hostname = document.location.hostname;
-
-  if (hostname && (hostname.indexOf("github") > 0 || hostname.indexOf("sebastianhelzle") > 0)) {
-    protocol = document.location.protocol || "https:";
-    pkBaseURL = "" + protocol + "//tracking.sebastianhelzle.net/";
-    $.getScript("" + pkBaseURL + "piwik.js", function() {
-      var piwikTracker;
-      console.log("loaded piwik");
-      try {
-        piwikTracker = Piwik.getTracker("" + pkBaseURL + "piwik.php", 5);
-        piwikTracker.trackPageView();
-        return piwikTracker.enableLinkTracking();
-      } catch (err) {
-        return typeof console !== "undefined" && console !== null ? console.log(err) : void 0;
-      }
-    });
-  }
-
-}).call(this);
-</script>
-    <!-- Piwik-->
-    <script></script>
-    <noscript>
-      <p><img src="https://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></p>
-    </noscript>
-    <!-- End Piwik Tracking Code--><script type="text/javascript">
 (function() {
 
   $("#rondellTopDemo > *").rondell({

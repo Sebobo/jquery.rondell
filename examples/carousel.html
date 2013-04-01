@@ -134,39 +134,11 @@ element will open the wookmark in a new tab or window.</p>
 </pre>
       </div><br class="clear">
     </div><br>
+    <noscript><img src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></noscript>
     <script src="../libs/jquery-1.9.1.min.js"></script>
     <script src="../libs/jquery.mousewheel-3.0.6.min.js"></script>
     <script src="../dist/jquery.rondell.js"></script>
     <script src="../examples/demohelpers.js"></script><script type="text/javascript">
-(function() {
-  var hostname, pkBaseURL, protocol;
-
-  hostname = document.location.hostname;
-
-  if (hostname && (hostname.indexOf("github") > 0 || hostname.indexOf("sebastianhelzle") > 0)) {
-    protocol = document.location.protocol || "https:";
-    pkBaseURL = "" + protocol + "//tracking.sebastianhelzle.net/";
-    $.getScript("" + pkBaseURL + "piwik.js", function() {
-      var piwikTracker;
-      console.log("loaded piwik");
-      try {
-        piwikTracker = Piwik.getTracker("" + pkBaseURL + "piwik.php", 5);
-        piwikTracker.trackPageView();
-        return piwikTracker.enableLinkTracking();
-      } catch (err) {
-        return typeof console !== "undefined" && console !== null ? console.log(err) : void 0;
-      }
-    });
-  }
-
-}).call(this);
-</script>
-    <!-- Piwik-->
-    <script></script>
-    <noscript>
-      <p><img src="https://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></p>
-    </noscript>
-    <!-- End Piwik Tracking Code--><script type="text/javascript">
 (function() {
 
   $(function() {

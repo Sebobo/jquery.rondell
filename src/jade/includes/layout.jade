@@ -42,31 +42,11 @@ html.no-js
 
     br
 
+    noscript
+      img(src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5", style="border:0", alt="")
+
     block js
       script(src='#{path}libs/jquery-1.9.1.min.js')
       script(src="#{path}libs/jquery.mousewheel-3.0.6.min.js")
       script(src="#{path}dist/jquery.rondell.js")
       script(src="#{path}examples/demohelpers.js")
-
-      :coffeescript
-        hostname = document.location.hostname
-
-        if hostname and (hostname.indexOf("github") > 0 or hostname.indexOf("sebastianhelzle") > 0)
-          protocol = document.location.protocol or "https:"
-          pkBaseURL = "#{protocol}//tracking.sebastianhelzle.net/"
-
-          $.getScript "#{pkBaseURL}piwik.js", ->
-            console.log "loaded piwik"
-            try
-              piwikTracker = Piwik.getTracker "#{pkBaseURL}piwik.php", 5
-              piwikTracker.trackPageView()
-              piwikTracker.enableLinkTracking()
-            catch err
-              console?.log err
-
-      // Piwik
-      script
-      noscript
-        p
-          img(src="https://tracking.sebastianhelzle.net/piwik.php?idsite=5", style="border:0", alt="")
-      // End Piwik Tracking Code
