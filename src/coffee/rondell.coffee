@@ -784,15 +784,17 @@
     winHeight = $window.innerHeight()
     windowPadding = 20
 
+    focusedItem = getActiveRondell()._focusedItem
+
     image = $ 'img:first', $lightboxContent
     if image.length
       # Store original image size
-      unless image.data 'originalWidth'
-        image.data 'originalWidth', image[0].width
-        image.data 'originalHeight', image[0].height
+      unless focusedItem.lightboxImageWidth
+        focusedItem.lightboxImageWidth = image[0].width
+        focusedItem.lightboxImageHeight = image[0].height
 
-      imageWidth = image.data 'originalWidth'
-      imageHeight = image.data 'originalHeight'
+      imageWidth = focusedItem.lightboxImageWidth
+      imageHeight = focusedItem.lightboxImageHeight
       imageDimension = imageWidth / imageHeight
 
       maxWidth = winWidth - windowPadding * 2

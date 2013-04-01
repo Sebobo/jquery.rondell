@@ -887,20 +887,21 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     return $.rondell.lightbox.instance;
   };
   updateLightbox = function() {
-    var $lightbox, $lightboxContent, image, imageDimension, imageHeight, imageWidth, maxHeight, maxWidth, newHeight, newProps, newWidth, winHeight, winWidth, windowPadding;
+    var $lightbox, $lightboxContent, focusedItem, image, imageDimension, imageHeight, imageWidth, maxHeight, maxWidth, newHeight, newProps, newWidth, winHeight, winWidth, windowPadding;
     $lightbox = getLightbox();
     $lightboxContent = $('.rondell-lightbox-content', $lightbox);
     winWidth = $window.innerWidth();
     winHeight = $window.innerHeight();
     windowPadding = 20;
+    focusedItem = getActiveRondell()._focusedItem;
     image = $('img:first', $lightboxContent);
     if (image.length) {
-      if (!image.data('originalWidth')) {
-        image.data('originalWidth', image[0].width);
-        image.data('originalHeight', image[0].height);
+      if (!focusedItem.lightboxImageWidth) {
+        focusedItem.lightboxImageWidth = image[0].width;
+        focusedItem.lightboxImageHeight = image[0].height;
       }
-      imageWidth = image.data('originalWidth');
-      imageHeight = image.data('originalHeight');
+      imageWidth = focusedItem.lightboxImageWidth;
+      imageHeight = focusedItem.lightboxImageHeight;
       imageDimension = imageWidth / imageHeight;
       maxWidth = winWidth - windowPadding * 2;
       maxHeight = winHeight - windowPadding * 2;
