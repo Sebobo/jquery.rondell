@@ -12,11 +12,8 @@
 
   class $.rondell.RondellItem
 
-    constructor: (id, obj, rondell) ->
-      @id = id
-      @object = obj
-      @rondell = rondell
-      @currentSlot = id
+    constructor: (@id, @object, @rondell) ->
+      @currentSlot = @id
 
       # Create some defaults for the item
       @focused = false
@@ -26,16 +23,16 @@
       @icon = null
       @resizeable = true
       @iconCopy = null
-      @croppedSize = rondell.itemProperties.size
-      @sizeSmall = rondell.itemProperties.size
-      @sizeFocused = rondell.itemProperties.sizeFocused
+      @croppedSize = @rondell.itemProperties.size
+      @sizeSmall = @rondell.itemProperties.size
+      @sizeFocused = @rondell.itemProperties.sizeFocused
 
       @objectCSSTarget = {}
       @objectAnimationTarget = {}
       @lastObjectAnimationTarget = {}
       @iconAnimationTarget = {}
       @lastIconAnimationTarget = {}
-      @animationSpeed = rondell.fadeTime
+      @animationSpeed = @rondell.fadeTime
 
       @isLink = @object.is 'a'
       @referencedImage = null

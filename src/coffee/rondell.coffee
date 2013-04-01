@@ -2,8 +2,8 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 1.0.0
-  @date 01/27/2013
+  @version 1.0.2
+  @date 04/01/2013
   @category jQuery plugin
   @copyright (c) 2009-2013 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -12,7 +12,7 @@
 (($) ->
   ### Global rondell plugin properties ###
   $.rondell ||=
-    version: '1.0.0'
+    version: '1.0.2'
     name: 'rondell'
     lightbox:
       instance: undefined
@@ -105,6 +105,7 @@
         prev: 'prev'
         next: 'next'
         loadingError: 'An error occured while loading <b>%s</b>'
+        more: 'More...'
       mousewheel:
         enabled: true
         threshold: 0
@@ -154,6 +155,13 @@
   ### Add default easing function for rondell to jQuery if missing ###
   $.easing.easeInOutQuad ||= (x, t, b, c, d) ->
     if ((t/=d/2) < 1) then c/2*t*t + b else -c/2 * ((--t)*(t-2) - 1) + b
+
+  # Custom set timeout call
+  delayCall = (delay, callback) -> setTimeout callback, delay
+
+  # Cache some jQuery selectors
+  $window = $ window
+  $document = $ document
 
   # Rondell class holds all rondell items and functions
   class Rondell
@@ -387,44 +395,45 @@
 
     bindEvents: =>
       # Attach keydown event to document for each rondell instance
-      $(document).keydown @keyDown
+      $document.keydown @keyDown
 
       # Attach window focus event to window do disable rondell when window is inactive
-      $(window)
+      $window
         .blur(@onWindowBlur)
         .focus(@onWindowFocus)
 
-      $(document)
+      $document
         .focusout(@onWindowBlur)
         .focusin(@onWindowFocus)
 
       # Enable rondell traveling with mousewheel if plugin is available
       if @mousewheel.enabled and $.fn.mousewheel?
-        @container.bind "mousewheel", @_onMousewheel
+        @container.bind "mousewheel.rondell", @_onMousewheel
 
       # Use modernizr feature detection to enable touch device support
       if @_onMobile()
         # Enable swiping
-        @container.bind("touchstart touchmove touchend", @_onTouch) if @touch.enabled
+        if @touch.enabled
+          @container.bind("touchstart.rondell touchmove.rondell touchend.rondell", @_onTouch)
       else
         # Add hover and touch functions to container when we don't have touch support
-        @container.bind "mouseenter mouseleave", @_hover
+        @container.bind "mouseenter.rondell mouseleave.rondell", @_hover
 
       rondell = @
 
       # Delegate click and mouse events events to rondell items
       @container
-      .delegate ".#{@classes.item}", "click", (e) ->
+      .delegate ".#{@classes.item}", "click.rondell", (e) ->
         item = $(@).data "item"
         if rondell._focusedItem.id is item.id
-          e.preventDefault()
           if rondell.lightbox.enabled
+            e.preventDefault()
             rondell.showLightbox()
         else
           e.preventDefault()
           if not item.hidden and item.object.is ":visible"
             rondell.shiftTo item.currentSlot
-      .delegate ".#{@classes.item}", "mouseenter mouseleave", (e) ->
+      .delegate ".#{@classes.item}", "mouseenter.rondell mouseleave.rondell", (e) ->
           item = $(@).data "item"
           if e.type is "mouseenter"
             rondell._onMouseEnterItem item.id
@@ -448,9 +457,8 @@
       now = (new Date()).getTime()
       return if now - @mousewheel._lastShift < @mousewheel.minTimeBetweenShifts
 
-      viewport = $ window
-      viewportTop = viewport.scrollTop()
-      viewportBottom = viewportTop + viewport.height()
+      viewportTop = $window.scrollTop()
+      viewportBottom = viewportTop + $window.height()
 
       selfYCenter = @container.offset().top + @container.outerHeight() / 2
 
@@ -676,40 +684,45 @@
 
       # Display lightbox but hide content at first
       unless lightboxIsVisible()
-        lightbox.css 'display', 'block'
-        lightboxContent.css 'display', 'none'
-
-      content = @_focusedItem.object.html()
+        lightbox.add(lightboxContent).css 'display', 'none'
 
       # Hide content then update lightbox
       lightboxContent
         .stop().fadeTo 100, 0, =>
           # Update content and remove style parameters
-          content = $('.rondell-lightbox-inner', lightboxContent).html content
+          content = $('.rondell-lightbox-inner', lightboxContent).html @_focusedItem.object.html()
 
           # Update position text
           $('.rondell-lightbox-position')
             .text "#{@currentLayer} | #{@maxItems}"
 
-          $(".#{@classes.overlay}", content).removeAttr 'style'
+          # Remove overlay style
+          $(".#{@classes.overlay}", content).style = ''
 
-          # Call removeAttr for each attribute to support jQuery < 1.7
-          icon = $(".#{@classes.image}", content)
-            .removeAttr('style')
-            .removeAttr('width')
-            .removeAttr('height')
+          # Add link to source if item is link
+          if @_focusedItem.isLink
+            linkUrl = @_focusedItem.object.attr 'href'
+            linkTarget = @_focusedItem.object.attr 'target'
+
+            $(".#{@classes.caption}", content)
+              .append("<a href='#{linkUrl}' target='#{linkTarget}'>#{@strings.more}</a>")
+              .attr('style', '')
+
+          icon = $ ".#{@classes.image}", content
 
           # Use referenced image if given
-          if @_focusedItem.referencedImage and @_focusedItem.icon
-            icon.attr 'src', @_focusedItem.referencedImage
+          if icon and @_focusedItem.referencedImage
+            # Call removeAttr for each attribute to support jQuery < 1.7
+            icon.removeAttr(attr) for attr in ['style', 'width', 'height']
+            # Set new src for the icon
+            icon[0].src = @_focusedItem.referencedImage
 
+          if icon and not icon[0].complete
             # Create copy of the image and wait for the copy to load to get the real dimensions
             iconCopy = $ "<img style=\"display:none\"/>"
             lightboxContent.append @iconCopy
 
-            iconCopy
-              .one('load', updateLightbox)
-              .attr('src', icon.attr('src'))
+            iconCopy.one('load', updateLightbox)[0].src = @_focusedItem.referencedImage
           else
             # Async call to update the lightbox to allow the layout to update
             setTimeout updateLightbox, 0
@@ -754,7 +767,7 @@
           getActiveRondell().shiftRight()
 
       # Add resize event to window for updating the overlay size
-      $(window).bind 'resize.rondell', resizeLightbox
+      $window.bind 'resize.rondell', resizeLightbox
 
       # Add mousewheel event to lightbox and delegate to currently active rondell
       lightbox.bind "mousewheel.rondell", (e, d, dx, dy) ->
@@ -765,18 +778,18 @@
   # Private function to refresh the lightbox,
   # called by showLightbox within a rondell
   updateLightbox = ->
-    lightbox = getLightbox()
-    lightboxContent = $ '.rondell-lightbox-content', lightbox
-    win = $ window
-    winWidth = win.innerWidth()
-    winHeight = win.innerHeight()
+    $lightbox = getLightbox()
+    $lightboxContent = $ '.rondell-lightbox-content', $lightbox
+    winWidth = $window.innerWidth()
+    winHeight = $window.innerHeight()
     windowPadding = 20
 
-    image = $ 'img:first', lightboxContent
+    image = $ 'img:first', $lightboxContent
     if image.length
+      # Store original image size
       unless image.data 'originalWidth'
-        image.data 'originalWidth', image.width()
-        image.data 'originalHeight', image.height()
+        image.data 'originalWidth', image[0].width
+        image.data 'originalHeight', image[0].height
 
       imageWidth = image.data 'originalWidth'
       imageHeight = image.data 'originalHeight'
@@ -797,21 +810,20 @@
         .attr('width', imageWidth)
         .attr('height', imageHeight)
 
-    newWidth = lightboxContent.outerWidth()
-    newHeight = lightboxContent.outerHeight()
-
-    top = (winHeight - newHeight) / 2
+    $lightbox.css 'display', 'block'
+    newWidth = $lightboxContent.outerWidth()
+    newHeight = $lightboxContent.outerHeight()
 
     newProps =
       marginLeft: - newWidth / 2
-      top: Math.max top, 20
+      top: Math.max((winHeight - newHeight) / 2, 20)
 
-    if lightboxContent.css('opacity') < 1
-      lightboxContent.css(newProps).fadeTo 200, 1
+    if $lightboxContent.css('opacity') < 1
+      $lightboxContent.css(newProps).fadeTo 200, 1
     else
       newProps.opacity = 1
-      lightboxContent.animate newProps, 200
-    lightbox.stop().fadeTo 150, 1
+      $lightboxContent.animate newProps, 200
+    $lightbox.stop().fadeTo 150, 1
 
   # Add rondell to jQuery
   $.fn.rondell = (options={}, callback=undefined) ->
