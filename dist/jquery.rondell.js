@@ -857,7 +857,9 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   resizeTimer = 0;
   resizeLightbox = function() {
     clearTimeout(resizeTimer);
-    return resizeTimer = setTimeout(updateLightbox, 200);
+    if (lightboxIsVisible()) {
+      return resizeTimer = setTimeout(updateLightbox, 200);
+    }
   };
   lightboxIsVisible = function() {
     var _ref;

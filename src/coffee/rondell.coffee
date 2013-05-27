@@ -735,7 +735,8 @@
   resizeTimer = 0
   resizeLightbox = ->
     clearTimeout resizeTimer
-    resizeTimer = setTimeout updateLightbox, 200
+    if lightboxIsVisible()
+      resizeTimer = setTimeout updateLightbox, 200
 
   # Checks if lightbox is visible
   lightboxIsVisible = ->
