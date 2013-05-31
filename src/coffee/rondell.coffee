@@ -2,7 +2,7 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 1.0.2
+  @version 1.0.3
   @date 04/01/2013
   @category jQuery plugin
   @copyright (c) 2009-2013 Sebastian Helzle (www.sebastianhelzle.net)
@@ -12,7 +12,7 @@
 (($) ->
   ### Global rondell plugin properties ###
   $.rondell ||=
-    version: '1.0.2'
+    version: '1.0.3'
     name: 'rondell'
     lightbox:
       instance: undefined
@@ -357,7 +357,7 @@
         @currentLayer = Math.max(0, Math.min(@currentLayer or Math.round(@maxItems / 2), @maxItems))
 
       # Set visibleItems to half the maxItems if set to auto
-      @visibleItems = Math.max(2, Math.floor(@maxItems / 2)) if @visibleItems is "auto"
+      @visibleItems = Math.max(2, ~~(@maxItems / 2)) if @visibleItems is "auto"
 
       # Create controls
       controls = @controls
@@ -684,7 +684,7 @@
 
       # Display lightbox but hide content at first
       unless lightboxIsVisible()
-        lightbox.add(lightboxContent).css 'display', 'none'
+        lightbox.add(lightboxContent).css 'visibility', 'hidden'
 
       # Hide content then update lightbox
       lightboxContent
@@ -787,6 +787,9 @@
 
     focusedItem = getActiveRondell()._focusedItem
 
+    $lightbox.css 'display', 'block'
+
+    # Get original and scaled image size for lightbox
     image = $ 'img:first', $lightboxContent
     if image.length
       # Store original image size
@@ -813,7 +816,9 @@
         .attr('width', imageWidth)
         .attr('height', imageHeight)
 
-    $lightbox.css 'display', 'block'
+    $lightbox.add($lightboxContent)
+      .css 'visibility', 'visible'
+
     newWidth = $lightboxContent.outerWidth()
     newHeight = $lightboxContent.outerHeight()
 
