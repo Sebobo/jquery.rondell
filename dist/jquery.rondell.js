@@ -2,7 +2,7 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 1.0.2
+  @version 1.0.3
   @date 04/01/2013
   @category jQuery plugin
   @copyright (c) 2009-2013 Sebastian Helzle (www.sebastianhelzle.net)
@@ -17,7 +17,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 
   var $document, $window, Rondell, closeLightbox, delayCall, getActiveRondell, getLightbox, lightboxIsVisible, resizeLightbox, resizeTimer, updateLightbox, _base;
   $.rondell || ($.rondell = {
-    version: '1.0.2',
+    version: '1.0.3',
     name: 'rondell',
     lightbox: {
       instance: void 0,
@@ -464,7 +464,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
         this.currentLayer = Math.max(0, Math.min(this.currentLayer || Math.round(this.maxItems / 2), this.maxItems));
       }
       if (this.visibleItems === "auto") {
-        this.visibleItems = Math.max(2, Math.floor(this.maxItems / 2));
+        this.visibleItems = Math.max(2, ~~(this.maxItems / 2));
       }
       controls = this.controls;
       if (controls.enabled) {
@@ -817,7 +817,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       lightbox = getLightbox();
       lightboxContent = $('.rondell-lightbox-content', lightbox);
       if (!lightboxIsVisible()) {
-        lightbox.add(lightboxContent).css('display', 'none');
+        lightbox.add(lightboxContent).css('visibility', 'hidden');
       }
       return lightboxContent.stop().fadeTo(100, 0, function() {
         var attr, content, icon, iconCopy, linkTarget, linkUrl, _i, _len, _ref;
@@ -896,6 +896,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     winHeight = $window.innerHeight();
     windowPadding = 20;
     focusedItem = getActiveRondell()._focusedItem;
+    $lightbox.css('display', 'block');
     image = $('img:first', $lightboxContent);
     if (image.length) {
       if (!focusedItem.lightboxImageWidth) {
@@ -917,7 +918,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       }
       image.attr('width', imageWidth).attr('height', imageHeight);
     }
-    $lightbox.css('display', 'block');
+    $lightbox.add($lightboxContent).css('visibility', 'visible');
     newWidth = $lightboxContent.outerWidth();
     newHeight = $lightboxContent.outerHeight();
     newProps = {
