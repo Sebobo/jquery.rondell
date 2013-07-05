@@ -1,0 +1,32 @@
+{
+  "name": "jquery.rondell",
+  "version": "1.0.4",
+  "description": "This is a plugin for displaying galeries and other content as carousel, thumbnail gallery, slider and much more!",
+  "main": "index.html",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "dependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "",
+    "grunt-contrib-coffee": "",
+    "grunt-contrib-watch": "",
+    "grunt-contrib-qunit": "",
+    "grunt-contrib-uglify": "",
+    "grunt-contrib-jade": "",
+    "grunt-contrib-sass": ""
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Sebobo/jquery.rondell.git"
+  },
+  "author": "Sebastian Helzle",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "8657d9f92939b0a64b03ffbcdef6d85e7dccd411"
+}

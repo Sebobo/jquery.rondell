@@ -2,8 +2,8 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 1.0.3
-  @date 04/01/2013
+  @version 1.0.4
+  @date 07/05/2013
   @category jQuery plugin
   @copyright (c) 2009-2013 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -12,12 +12,11 @@
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 (function($) {
-  /* Global rondell plugin properties
-  */
+  /* Global rondell plugin properties*/
 
   var $document, $window, Rondell, closeLightbox, delayCall, getActiveRondell, getLightbox, lightboxIsVisible, resizeLightbox, resizeTimer, updateLightbox, _base;
   $.rondell || ($.rondell = {
-    version: '1.0.3',
+    version: '1.0.4',
     name: 'rondell',
     lightbox: {
       instance: void 0,
@@ -134,6 +133,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       preset: '',
       effect: null,
       onAfterShift: null,
+      onUpdateLightbox: null,
       cropThumbnails: false,
       scrollbar: {
         enabled: false,
@@ -170,8 +170,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       }
     }
   });
-  /* Add default easing function for rondell to jQuery if missing
-  */
+  /* Add default easing function for rondell to jQuery if missing*/
 
   (_base = $.easing).easeInOutQuad || (_base.easeInOutQuad = function(x, t, b, c, d) {
     if ((t /= d / 2) < 1) {
@@ -186,7 +185,6 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   $window = $(window);
   $document = $(document);
   Rondell = (function() {
-
     Rondell.rondellCount = 0;
 
     Rondell.activeRondell = null;
@@ -197,53 +195,29 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
         initCallback = void 0;
       }
       this.showLightbox = __bind(this.showLightbox, this);
-
       this.keyDown = __bind(this.keyDown, this);
-
       this.isFocused = __bind(this.isFocused, this);
-
       this.onWindowBlur = __bind(this.onWindowBlur, this);
-
       this.onWindowFocus = __bind(this.onWindowFocus, this);
-
       this._autoShift = __bind(this._autoShift, this);
-
       this._autoShiftInit = __bind(this._autoShiftInit, this);
-
       this.shiftRight = __bind(this.shiftRight, this);
-
       this.shiftLeft = __bind(this.shiftLeft, this);
-
       this._refreshControls = __bind(this._refreshControls, this);
-
       this.getIndexInRange = __bind(this.getIndexInRange, this);
-
       this.getRelativeItemPosition = __bind(this.getRelativeItemPosition, this);
-
       this.shiftTo = __bind(this.shiftTo, this);
-
       this._hover = __bind(this._hover, this);
-
       this._onTouch = __bind(this._onTouch, this);
-
       this._onMousewheel = __bind(this._onMousewheel, this);
-
       this.bindEvents = __bind(this.bindEvents, this);
-
       this._start = __bind(this._start, this);
-
       this.onItemInit = __bind(this.onItemInit, this);
-
       this._loadItem = __bind(this._loadItem, this);
-
       this._getItem = __bind(this._getItem, this);
-
       this._onMouseLeaveItem = __bind(this._onMouseLeaveItem, this);
-
       this._onMouseEnterItem = __bind(this._onMouseEnterItem, this);
-
       this.fitToContainer = __bind(this.fitToContainer, this);
-
       this.id = ++Rondell.rondellCount;
       this.items = [];
       this.maxItems = numItems;
@@ -457,7 +431,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     };
 
     Rondell.prototype._start = function() {
-      var controls, _ref;
+      var controls;
       if (this.randomStart) {
         this.currentLayer = Math.round(Math.random() * (this.maxItems - 1));
       } else {
@@ -485,7 +459,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       if (typeof this.initCallback === "function") {
         this.initCallback(this);
       }
-      if ((_ref = this._focusedItem) == null) {
+      if (this._focusedItem == null) {
         this._focusedItem = this._getItem(this.currentLayer);
       }
       return this.shiftTo(this.currentLayer);
@@ -534,16 +508,17 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 
     Rondell.prototype._onMobile = function() {
       /*
-            Mobile device detection.
-            Check for touch functionality is currently enough.
+      Mobile device detection.
+      Check for touch functionality is currently enough.
       */
+
       return typeof Modernizr !== "undefined" && Modernizr !== null ? Modernizr.touch : void 0;
     };
 
     Rondell.prototype._onMousewheel = function(e, d, dx, dy) {
       /*
-            Allows rondell traveling with mousewheel.
-            Requires mousewheel plugin for jQuery.
+      Allows rondell traveling with mousewheel.
+      Requires mousewheel plugin for jQuery.
       */
 
       var now, selfYCenter, viewportBottom, viewportTop;
@@ -608,9 +583,9 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 
     Rondell.prototype._hover = function(e) {
       /*
-            Shows/hides rondell controls.
-            Starts/pauses autorotation.
-            Updates active rondell id.
+      Shows/hides rondell controls.
+      Starts/pauses autorotation.
+      Updates active rondell id.
       */
 
       var paused;
@@ -889,19 +864,21 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     return $.rondell.lightbox.instance;
   };
   updateLightbox = function() {
-    var $lightbox, $lightboxContent, focusedItem, image, imageDimension, imageHeight, imageWidth, maxHeight, maxWidth, newHeight, newProps, newWidth, winHeight, winWidth, windowPadding;
+    var $lightbox, $lightboxContent, activeRondell, focusedItem, image, imageDimension, imageHeight, imageWidth, maxHeight, maxWidth, newHeight, newProps, newWidth, updateCallback, winHeight, winWidth, windowPadding;
     $lightbox = getLightbox();
     $lightboxContent = $('.rondell-lightbox-content', $lightbox);
     winWidth = $window.innerWidth();
     winHeight = $window.innerHeight();
     windowPadding = 20;
-    focusedItem = getActiveRondell()._focusedItem;
+    activeRondell = getActiveRondell();
+    focusedItem = activeRondell._focusedItem;
     $lightbox.css('display', 'block');
     image = $('img:first', $lightboxContent);
     if (image.length) {
       if (!focusedItem.lightboxImageWidth) {
         focusedItem.lightboxImageWidth = image[0].width;
         focusedItem.lightboxImageHeight = image[0].height;
+        image.attr('width', focusedItem.lightboxImageWidth).attr('height', focusedItem.lightboxImageHeight);
       }
       imageWidth = focusedItem.lightboxImageWidth;
       imageHeight = focusedItem.lightboxImageHeight;
@@ -916,7 +893,10 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
         imageHeight = maxHeight;
         imageWidth = imageHeight * imageDimension;
       }
-      image.attr('width', imageWidth).attr('height', imageHeight);
+      image.css({
+        width: imageWidth,
+        height: imageHeight
+      });
     }
     $lightbox.add($lightboxContent).css('visibility', 'visible');
     newWidth = $lightboxContent.outerWidth();
@@ -925,11 +905,14 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       marginLeft: -newWidth / 2,
       top: Math.max((winHeight - newHeight) / 2, 20)
     };
+    updateCallback = function() {
+      return typeof activeRondell.onUpdateLightbox === "function" ? activeRondell.onUpdateLightbox(focusedItem) : void 0;
+    };
     if ($lightboxContent.css('opacity') < 1) {
-      $lightboxContent.css(newProps).fadeTo(200, 1);
+      $lightboxContent.css(newProps).fadeTo(200, 1, updateCallback);
     } else {
       newProps.opacity = 1;
-      $lightboxContent.animate(newProps, 200);
+      $lightboxContent.animate(newProps, 200, updateCallback);
     }
     return $lightbox.stop().fadeTo(150, 1);
   };
@@ -1299,24 +1282,15 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 (function($) {
   $.rondell || ($.rondell = {});
   return $.rondell.RondellScrollbar = (function() {
-
     function RondellScrollbar(container, options) {
       this.scrollRight = __bind(this.scrollRight, this);
-
       this.scrollLeft = __bind(this.scrollLeft, this);
-
       this.onScrollbarClick = __bind(this.onScrollbarClick, this);
-
       this.onDragStart = __bind(this.onDragStart, this);
-
       this.onDrag = __bind(this.onDrag, this);
-
       this.setPosition = __bind(this.setPosition, this);
-
       this.scrollTo = __bind(this.scrollTo, this);
-
       this.updatePosition = __bind(this.updatePosition, this);
-
       this._initControls = __bind(this._initControls, this);
       $.extend(true, this, $.rondell.defaults.scrollbar, options);
       this.container = container.addClass(this.classes.container);
@@ -1483,37 +1457,23 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 (function($) {
   $.rondell || ($.rondell = {});
   return $.rondell.RondellItem = (function() {
-
     function RondellItem(id, object, rondell) {
       this.id = id;
       this.object = object;
       this.rondell = rondell;
       this.runAnimation = __bind(this.runAnimation, this);
-
       this.onAnimationFinished = __bind(this.onAnimationFinished, this);
-
       this.prepareFadeOut = __bind(this.prepareFadeOut, this);
-
       this.prepareFadeIn = __bind(this.prepareFadeIn, this);
-
       this.hideCaption = __bind(this.hideCaption, this);
-
       this.showCaption = __bind(this.showCaption, this);
-
       this.onMouseLeave = __bind(this.onMouseLeave, this);
-
       this.onMouseEnter = __bind(this.onMouseEnter, this);
-
       this.finalize = __bind(this.finalize, this);
-
       this.onError = __bind(this.onError, this);
-
       this.onIconLoad = __bind(this.onIconLoad, this);
-
       this.refreshDimensions = __bind(this.refreshDimensions, this);
-
       this.init = __bind(this.init, this);
-
       this.currentSlot = this.id;
       this.focused = false;
       this.hidden = false;

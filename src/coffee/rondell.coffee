@@ -2,8 +2,8 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 1.0.3
-  @date 04/01/2013
+  @version 1.0.4
+  @date 07/05/2013
   @category jQuery plugin
   @copyright (c) 2009-2013 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -12,7 +12,7 @@
 (($) ->
   ### Global rondell plugin properties ###
   $.rondell ||=
-    version: '1.0.3'
+    version: '1.0.4'
     name: 'rondell'
     lightbox:
       instance: undefined
@@ -120,6 +120,7 @@
       preset: ''                # Configuration preset
       effect: null              # Special effect function for the focused item, not used currently
       onAfterShift: null
+      onUpdateLightbox: null
       cropThumbnails: false
       scrollbar:
         enabled: false
@@ -785,7 +786,8 @@
     winHeight = $window.innerHeight()
     windowPadding = 20
 
-    focusedItem = getActiveRondell()._focusedItem
+    activeRondell = getActiveRondell()
+    focusedItem = activeRondell._focusedItem
 
     $lightbox.css 'display', 'block'
 
@@ -796,6 +798,10 @@
       unless focusedItem.lightboxImageWidth
         focusedItem.lightboxImageWidth = image[0].width
         focusedItem.lightboxImageHeight = image[0].height
+
+        image
+          .attr('width', focusedItem.lightboxImageWidth)
+          .attr('height', focusedItem.lightboxImageHeight)
 
       imageWidth = focusedItem.lightboxImageWidth
       imageHeight = focusedItem.lightboxImageHeight
@@ -812,9 +818,9 @@
         imageHeight = maxHeight
         imageWidth = imageHeight * imageDimension
 
-      image
-        .attr('width', imageWidth)
-        .attr('height', imageHeight)
+      image.css
+        width: imageWidth
+        height: imageHeight
 
     $lightbox.add($lightboxContent)
       .css 'visibility', 'visible'
@@ -826,11 +832,15 @@
       marginLeft: - newWidth / 2
       top: Math.max((winHeight - newHeight) / 2, 20)
 
+    updateCallback = ->
+      activeRondell.onUpdateLightbox? focusedItem
+
     if $lightboxContent.css('opacity') < 1
-      $lightboxContent.css(newProps).fadeTo 200, 1
+      $lightboxContent.css(newProps).fadeTo 200, 1, updateCallback
     else
       newProps.opacity = 1
-      $lightboxContent.animate newProps, 200
+      $lightboxContent.animate newProps, 200, updateCallback
+
     $lightbox.stop().fadeTo 150, 1
 
   # Add rondell to jQuery
