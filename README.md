@@ -6,6 +6,10 @@ This is a [jQuery](http://www.jquery.com) plugin for displaying galeries and oth
 See the [documentation page](http://sebobo.github.com/jquery.rondell/) for a live demo and examples.
 
 
+Do you like this project?
+[Buy me a beer](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TSN2TDYNKZHF4)
+
+
 Installation
 ------------
 
@@ -13,8 +17,8 @@ Installation
 
  * [jQuery](http://www.jquery.com) - 1.5.2 or better
  * [Modernizr](http://www.modernizr.com) - This library tests the browser for feature support and adds classes to the body tag. We use this for css fallbacks in our themes.
- 
-Both are also provided in the `libs` folder. 
+
+Both are also provided in the `libs` folder.
 
 If you don't want to use the `Modernizr` library you can remove the `.cssgradients`, `.borderradius`, `.rgba` and `.boxshadow` classes in `css/jquery-rondell.css`.
 
@@ -31,11 +35,11 @@ Usage
 If you like demos more than a boring documentation see the `index.html` file and play with it.
 
 The plugin can be called with jQuery in different ways.
-    
+
 ### Standard call with default settings:
 
     $('.myElement').rondell();
-    
+
 Where `myElement` is the class of the items you want to display as rondell.
 
 #### Rondell content
@@ -52,7 +56,7 @@ Editing
 Read this chapter if you want to modify or extend the rondell.
 
 The plugin is written in [coffeescript](http://jashkenas.github.com/coffee-script/) and the css with [sass](http://sass-lang.com/).
-The sources are provided in the `src` folder.  
+The sources are provided in the `src` folder.
 
 So you can either work with the compiled `.js` and `.css` files in your project or use the coffeescript and sass files.
 
