@@ -45,20 +45,20 @@ append content
 
   .size2of3.centered
     pre.
-      <div id="rondellThumbnails">
-        <img src="images/slider/pic1.png" alt="unicorn" title="A beautiful unicorn">
+      &lt;div id="rondellThumbnails"&gt;
+        &lt;img src="images/slider/pic1.png" alt="unicorn" title="A beautiful unicorn"&gt;
 
         ...
 
-      </div>
+      &lt;/div&gt;
 
-      <script type="text/javascript">
+      &lt;script type="text/javascript"&gt;
         $(function() {
-          $("#rondellThumbnails > *").rondell({
+          $("#rondellThumbnails &gt; *").rondell({
             preset: "thumbGallery"
           });
         });
-      </script>
+      &lt;/script&gt;
 
   br
   .size2of3.centered
@@ -67,9 +67,9 @@ append content
 
   .size2of3.centered
     pre.
-      <div id="rondellThumbnails" style="height:430px;">&nbsp;</div>
+      &lt;div id="rondellThumbnails" style="height:430px;"&gt;&nbsp;&lt;/div&gt;
 
-      <script type="text/javascript">
+      &lt;script type="text/javascript"&gt;
         $(function() {
           $.ajax({
             url: "http://www.wookmark.com/api/json",
@@ -77,13 +77,13 @@ append content
             success: function(data, text, xhqr) {
               var item, rondellContent = "", i;
               if (text === "success") {
-                for (i = 0; i < 24; i++) {
+                for (i = 0; i &lt; 24; i++) {
                   item = data[i];
                   rondellContent += ' \\
-                    <a href="'+item.url+'" title="'+item.title+'" \\
-                      target="_blank" style="display:none"> \\
-                      <img src="'+item.preview+'" title="'+item.title+'" width="'+item.width+'" height="'+item.height+'"/> \\
-                    </a> \\
+                    &lt;a href="'+item.url+'" title="'+item.title+'" \\
+                      target="_blank" style="display:none"&gt; \\
+                      &lt;img src="'+item.preview+'" title="'+item.title+'" width="'+item.width+'" height="'+item.height+'"/&gt; \\
+                    &lt;/a&gt; \\
                   ';
                 }
                 $("#rondellThumbnails").html(rondellContent).children().rondell({
@@ -93,7 +93,7 @@ append content
             }
           });
         });
-      </script>
+      &lt;/script&gt;
 
   br.clear
 

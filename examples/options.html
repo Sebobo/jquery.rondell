@@ -13,7 +13,7 @@
   <body>
     <div class="pageHeader hasShadow">
       <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
-      <p><b>Version 1.0.3</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
+      <p><b>Version 1.0.4</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
           Sebastian Helzle
           </a></p><br>
       <ul class="tabs">
@@ -236,7 +236,7 @@ By default it&#39;s only shown when hovering the rondell.</p>
             <pre>{
   prev: 'prev',
   next: 'next',
-  loadingError: 'An error occured while loading &lt;b&gt;%s&lt;/b&gt;',
+  loadingError: 'An error occured while loading <b>%s</b>',
   more: 'More...'
 }</pre>
           </td>
@@ -290,6 +290,11 @@ By default it&#39;s only shown when hovering the rondell.</p>
           <td>Will select a random item to start with.</td>
         </tr>
         <tr>
+          <td>onUpdateLightbox</td>
+          <td>null</td>
+          <td>You can provide a function which is called after the lightbox shows a new item.</td>
+        </tr>
+        <tr>
           <td><p>funcLeft</p>
 
 <p>funcTop</p>
@@ -332,26 +337,26 @@ are shown one under another.</p>
           <td>
             <pre>{
   enabled: false,
-  orientation: &quot;bottom&quot;,
+  orientation: "bottom",
   start: 1,
   end: 100,
   stepSize: 1,
   position: 1,
   padding: 10,
   style: {
-    width: &quot;100%&quot;,
+    width: "100%",
     height: 20,
-    left: &quot;auto&quot;,
-    right: &quot;auto&quot;,
-    top: &quot;auto&quot;,
-    bottom: &quot;auto&quot;
+    left: "auto",
+    right: "auto",
+    top: "auto",
+    bottom: "auto"
   },
   repeating: false,
   onScroll: undefined,
   scrollOnHover: false,
   scrollOnDrag: true,
   animationDuration: 300,
-  easing: &quot;easeInOutQuad&quot;
+  easing: "easeInOutQuad"
 }</pre>
           </td>
           <td>Scrollbar options description will be updated later when it's final.</td>
@@ -359,7 +364,7 @@ are shown one under another.</p>
       </table>
     </div><br>
     <noscript><img src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></noscript>
-    <script src="../libs/jquery-1.8.3.min.js"></script>
+    <script src="../libs/jquery-1.9.1.min.js"></script>
     <script src="../libs/jquery.mousewheel-3.0.6.min.js"></script>
     <script src="../dist/jquery.rondell.js"></script>
     <script src="../examples/demohelpers.js"></script>

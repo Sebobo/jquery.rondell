@@ -13,7 +13,7 @@
   <body>
     <div class="pageHeader hasShadow">
       <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
-      <p><b>Version 1.0.3</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
+      <p><b>Version 1.0.4</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
           Sebastian Helzle
           </a></p><br>
       <ul class="tabs">
@@ -50,14 +50,14 @@
 Try swiping over the rondell if you are using a touch device.</p>
 
 <p>Here&#39;s how it&#39;s done</p>
-        <pre>&lt;div id=&quot;rondellSlider&quot;&gt;
-  &lt;img src=&quot;images/slider/pic1.png&quot; alt=&quot;unicorn&quot; title=&quot;A beautiful unicorn&quot;&gt;
-  &lt;img src=&quot;images/slider/pic2.png&quot; alt=&quot;swan&quot; title=&quot;Swan on the alpsee&quot;&gt;
-  &lt;img src=&quot;images/slider/pic3.png&quot; alt=&quot;landscape&quot; title=&quot;Great landscape&quot;&gt;
-  &lt;img src=&quot;images/slider/pic4.png&quot; alt=&quot;mountains&quot; title=&quot;Austrian mountains&quot;&gt;
+        <pre>&lt;div id="rondellSlider"&gt;
+  &lt;img src="images/slider/pic1.png" alt="unicorn" title="A beautiful unicorn"&gt;
+  &lt;img src="images/slider/pic2.png" alt="swan" title="Swan on the alpsee"&gt;
+  &lt;img src="images/slider/pic3.png" alt="landscape" title="Great landscape"&gt;
+  &lt;img src="images/slider/pic4.png" alt="mountains" title="Austrian mountains"&gt;
 &lt;/div&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type="text/javascript"&gt;
   $(function() {
     $('#rondellSlider &gt; *').rondell({
       preset: 'slider'
@@ -68,12 +68,11 @@ Try swiping over the rondell if you are using a touch device.</p>
       </div><br class="clear">
     </div><br>
     <noscript><img src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></noscript>
-    <script src="../libs/jquery-1.8.3.min.js"></script>
+    <script src="../libs/jquery-1.9.1.min.js"></script>
     <script src="../libs/jquery.mousewheel-3.0.6.min.js"></script>
     <script src="../dist/jquery.rondell.js"></script>
     <script src="../examples/demohelpers.js"></script><script type="text/javascript">
 (function() {
-
   $(function() {
     return $('#rondellSlider > *').rondell({
       preset: 'slider'

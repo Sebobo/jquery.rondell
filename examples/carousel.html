@@ -13,7 +13,7 @@
   <body>
     <div class="pageHeader hasShadow">
       <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
-      <p><b>Version 1.0.3</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
+      <p><b>Version 1.0.4</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
           Sebastian Helzle
           </a></p><br>
       <ul class="tabs">
@@ -67,9 +67,9 @@ The rondell will automatically continue to rotate through the carousel when
 your mouse leaves it&#39;s area.</p>
 
 <p>Here&#39;s how it&#39;s done</p>
-        <pre>&lt;div id=&quot;rondellCarousel&quot;&gt;
-  &lt;a target=&quot;_blank&quot; rel=&quot;rondell&quot; href=&quot;images/galery/band.jpg&quot; title=&quot;...&quot;&gt;
-    &lt;img src=&quot;images/galery/band.jpg&quot; alt=&quot;Band&quot; title=&quot;My favourite band&quot;&gt;
+        <pre>&lt;div id="rondellCarousel"&gt;
+  &lt;a target="_blank" rel="rondell" href="images/galery/band.jpg" title="..."&gt;
+    &lt;img src="images/galery/band.jpg" alt="Band" title="My favourite band"&gt;
     &lt;h5&gt;Awesome concert&lt;/h5&gt;
     &lt;p&gt;My favourite band.&lt;/p&gt;
   &lt;/a&gt;
@@ -78,12 +78,12 @@ your mouse leaves it&#39;s area.</p>
   
 &lt;/div&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type="text/javascript"&gt;
   $(function() {
     // Create a rondell with the 'carousel' preset and set an option
     // to disable the rondell while the lightbox is displayed
-    $(&quot;#rondellCarousel &gt; *&quot;).rondell({
-      preset: &quot;carousel&quot;,
+    $("#rondellCarousel &gt; *").rondell({
+      preset: "carousel",
     });
   });
 &lt;/script&gt;
@@ -104,27 +104,27 @@ The images titles are used as caption and clicking the focused
 element will open the wookmark in a new tab or window.</p>
 
 <p>Here&#39;s how it&#39;s done</p>
-        <pre>&lt;div id=&quot;rondellCubic&quot;&gt;&nbsp;&lt;/div&gt;
+        <pre>&lt;div id="rondellCubic"&gt;&nbsp;&lt;/div&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;script type="text/javascript"&gt;
   $(function() {
     $.ajax({
-      url: &quot;http://www.wookmark.com/api/json&quot;,
-      dataType: &quot;jsonp&quot;,
+      url: "http://www.wookmark.com/api/json",
+      dataType: "jsonp",
       success: function(data, text, xhqr) {
-        var item, rondellContent = &quot;&quot;, i;
-        if (text === &quot;success&quot;) {
-          for (i = 0; i &lt; 24; i++) {
+        var item, rondellContent = "", i;
+        if (text === "success") {
+          for (i = 0; i < 24; i++) {
             item = data[i];
             rondellContent += ' \\
-              &lt;a href=&quot;'+item.image+'&quot; title=&quot;'+item.title+' @ '+item.url+'&quot; \\
-                target=&quot;_blank&quot; style=&quot;display:none&quot;&gt; \\
-                &lt;img src=&quot;'+item.preview+'&quot; title=&quot;'+item.title+'&quot; width=&quot;'+item.width+'&quot; height=&quot;'+item.height+'&quot;/&gt; \\
+              &lt;a href="'+item.image+'" title="'+item.title+' @ '+item.url+'" \\
+                target="_blank" style="display:none"&gt; \\
+                &lt;img src="'+item.preview+'" title="'+item.title+'" width="'+item.width+'" height="'+item.height+'"/&gt; \\
               &lt;/a&gt; \\
             ';
           }
-          $(&quot;#rondellCubic&quot;).html(rondellContent).children().rondell({
-            preset: &quot;cubic&quot;
+          $("#rondellCubic").html(rondellContent).children().rondell({
+            preset: "cubic"
           });
         }
       }
@@ -135,12 +135,11 @@ element will open the wookmark in a new tab or window.</p>
       </div><br class="clear">
     </div><br>
     <noscript><img src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></noscript>
-    <script src="../libs/jquery-1.8.3.min.js"></script>
+    <script src="../libs/jquery-1.9.1.min.js"></script>
     <script src="../libs/jquery.mousewheel-3.0.6.min.js"></script>
     <script src="../dist/jquery.rondell.js"></script>
     <script src="../examples/demohelpers.js"></script><script type="text/javascript">
 (function() {
-
   $(function() {
     var carousel;
     carousel = $("#rondellCarousel > *").rondell({

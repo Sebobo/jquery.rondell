@@ -13,7 +13,7 @@
   <body>
     <div class="pageHeader hasShadow">
       <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
-      <p><b>Version 1.0.3</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
+      <p><b>Version 1.0.4</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
           Sebastian Helzle
           </a></p><br>
       <ul class="tabs">
@@ -123,9 +123,9 @@ And if the item contains an image, the caption is displayed as overlay.</p>
 Automatic rotation is disabled in this demo.</p>
 
 <p>Here&#39;s how it&#39;s done</p>
-        <pre>&lt;div id=&quot;rondellPages&quot;&gt;
+        <pre>&lt;div id="rondellPages"&gt;
   &lt;div&gt;
-    &lt;img src=&quot;images/page/water.png&quot; alt=&quot;Waterfall&quot;&gt;
+    &lt;img src="images/page/water.png" alt="Waterfall"&gt;
     &lt;h2&gt;Waterfall&lt;/h2&gt;
     &lt;p&gt;...&lt;/p&gt;
   &lt;/div&gt;
@@ -134,21 +134,20 @@ Automatic rotation is disabled in this demo.</p>
   
 &lt;/div&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;
-  $(&quot;#rondellPages &gt; div&quot;).rondell({
-    preset: &quot;pages&quot;
+&lt;script type="text/javascript"&gt;
+  $("#rondellPages &gt; div").rondell({
+    preset: "pages"
   });
 &lt;/script&gt;
 </pre>
       </div><br class="clear">
     </div><br>
     <noscript><img src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></noscript>
-    <script src="../libs/jquery-1.8.3.min.js"></script>
+    <script src="../libs/jquery-1.9.1.min.js"></script>
     <script src="../libs/jquery.mousewheel-3.0.6.min.js"></script>
     <script src="../dist/jquery.rondell.js"></script>
     <script src="../examples/demohelpers.js"></script><script type="text/javascript">
 (function() {
-
   $(function() {
     return $("#rondellPages > div").rondell({
       preset: "pages"

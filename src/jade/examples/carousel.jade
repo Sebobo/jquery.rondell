@@ -70,26 +70,26 @@ append content
       Here's how it's done
 
     pre.
-      <div id="rondellCarousel">
-        <a target="_blank" rel="rondell" href="images/galery/band.jpg" title="...">
-          <img src="images/galery/band.jpg" alt="Band" title="My favourite band">
-          <h5>Awesome concert</h5>
-          <p>My favourite band.</p>
-        </a>
+      &lt;div id="rondellCarousel"&gt;
+        &lt;a target="_blank" rel="rondell" href="images/galery/band.jpg" title="..."&gt;
+          &lt;img src="images/galery/band.jpg" alt="Band" title="My favourite band"&gt;
+          &lt;h5&gt;Awesome concert&lt;/h5&gt;
+          &lt;p&gt;My favourite band.&lt;/p&gt;
+        &lt;/a&gt;
 
         ...
 
-      </div>
+      &lt;/div&gt;
 
-      <script type="text/javascript">
+      &lt;script type="text/javascript"&gt;
         $(function() {
           // Create a rondell with the 'carousel' preset and set an option
           // to disable the rondell while the lightbox is displayed
-          $("#rondellCarousel > *").rondell({
+          $("#rondellCarousel &gt; *").rondell({
             preset: "carousel",
           });
         });
-      </script>
+      &lt;/script&gt;
 
   br
   hr
@@ -116,9 +116,9 @@ append content
       Here's how it's done
 
     pre.
-      <div id="rondellCubic">&nbsp;</div>
+      &lt;div id="rondellCubic"&gt;&nbsp;&lt;/div&gt;
 
-      <script type="text/javascript">
+      &lt;script type="text/javascript"&gt;
         $(function() {
           $.ajax({
             url: "http://www.wookmark.com/api/json",
@@ -129,10 +129,10 @@ append content
                 for (i = 0; i < 24; i++) {
                   item = data[i];
                   rondellContent += ' \\
-                    <a href="'+item.image+'" title="'+item.title+' @ '+item.url+'" \\
-                      target="_blank" style="display:none"> \\
-                      <img src="'+item.preview+'" title="'+item.title+'" width="'+item.width+'" height="'+item.height+'"/> \\
-                    </a> \\
+                    &lt;a href="'+item.image+'" title="'+item.title+' @ '+item.url+'" \\
+                      target="_blank" style="display:none"&gt; \\
+                      &lt;img src="'+item.preview+'" title="'+item.title+'" width="'+item.width+'" height="'+item.height+'"/&gt; \\
+                    &lt;/a&gt; \\
                   ';
                 }
                 $("#rondellCubic").html(rondellContent).children().rondell({
@@ -142,7 +142,7 @@ append content
             }
           });
         });
-      </script>
+      &lt;/script&gt;
 
   br.clear
 

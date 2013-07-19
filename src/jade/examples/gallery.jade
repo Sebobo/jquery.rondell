@@ -32,9 +32,9 @@ append content
       Here's how it's done
 
     pre.
-      <div id="rondellGallery" style="height:400px;">&nbsp;</div>
+      &lt;div id="rondellGallery" style="height:400px;"&gt;&nbsp;&lt;/div&gt;
 
-      <script type="text/javascript">
+      &lt;script type="text/javascript"&gt;
         $(function() {
           $.ajax({
             url: "http://www.wookmark.com/api/json",
@@ -42,13 +42,13 @@ append content
             success: function(data, text, xhqr) {
               var item, rondellContent = "", i;
               if (text === "success") {
-                for (i = 0; i < 24; i++) {
+                for (i = 0; i &lt; 24; i++) {
                   item = data[i];
                   rondellContent += ' \\
-                    <a href="'+item.image+'" title="'+item.title+' @ '+item.url+'" \\
-                      target="_blank" style="display:none"> \\
-                      <img src="'+item.preview+'" title="'+item.title+'" width="'+item.width+'" height="'+item.height+'"/> \\
-                    </a> \\
+                    &lt;a href="'+item.image+'" title="'+item.title+' @ '+item.url+'" \\
+                      target="_blank" style="display:none"&gt; \\
+                      &lt;img src="'+item.preview+'" title="'+item.title+'" width="'+item.width+'" height="'+item.height+'"/&gt; \\
+                    &lt;/a&gt; \\
                   ';
                 }
                 $("#rondellGallery").html(rondellContent).children().rondell({
@@ -58,7 +58,7 @@ append content
             }
           });
         });
-      </script>
+      &lt;/script&gt;
 
   br.clear
 
