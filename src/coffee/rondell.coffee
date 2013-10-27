@@ -360,7 +360,6 @@
       idx = @items.length + 1
       @_itemIndices[idx] = idx
       @items.push new RondellItem(idx, obj, @).init()
-      debugger
 
       # Start rondell after adding the last item
       @_start() if idx is @maxItems
@@ -371,7 +370,6 @@
       if idx is @currentLayer
         item.prepareFadeIn()
       else
-        debugger
         item.prepareFadeOut()
       item.runAnimation true
 

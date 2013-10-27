@@ -418,7 +418,6 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       idx = this.items.length + 1;
       this._itemIndices[idx] = idx;
       this.items.push(new RondellItem(idx, obj, this).init());
-      debugger;
       if (idx === this.maxItems) {
         return this._start();
       }
@@ -430,7 +429,6 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       if (idx === this.currentLayer) {
         item.prepareFadeIn();
       } else {
-        debugger;
         item.prepareFadeOut();
       }
       return item.runAnimation(true);
