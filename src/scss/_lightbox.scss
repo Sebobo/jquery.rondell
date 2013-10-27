@@ -2,7 +2,7 @@
 
 .rondell-lightbox {
   z-index: 9998;
-  left: -99999;
+  left: -99999px;
   position: absolute;
 }
 
@@ -74,7 +74,7 @@
     height: 16px;
     background: #333;
     border: 2px solid #555;
-    @include transition(opacity 0.2s ease 0.1);
+    @include transition(opacity 0.2s ease 0.1s);
     @include border-radius(5px);
     @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
 

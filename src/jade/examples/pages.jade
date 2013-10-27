@@ -46,7 +46,7 @@ append content
         [Read more](http://en.wikipedia.org/wiki/Mountains "Mountains")
 
     div
-      img.no-scale(src="images/page/ranseier.jpg", alt="Karl Ranseier")
+      img.rondell-no-scale(src="images/page/ranseier.jpg", alt="Karl Ranseier")
       h2 Karl Ranseier
       :markdown
         Karl Ranseier ist eine fiktive Person, die im Rahmen der Samstag-Nacht-News von
@@ -124,7 +124,7 @@ append content
       &lt;/div&gt;
 
       &lt;script type="text/javascript"&gt;
-        $("#rondellPages &gt; div").rondell({
+        $("#rondellPages").rondell({
           preset: "pages"
         });
       &lt;/script&gt;
@@ -135,6 +135,6 @@ append js
   :coffeescript
     $ ->
       # Rondell sample for pages preset
-      $("#rondellPages > div").rondell
+      $("#rondellPages").rondell
         preset: "pages"
 

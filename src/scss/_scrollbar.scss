@@ -66,6 +66,7 @@
     margin-left: -6px;
     background-color: #c00;
     @include background(linear-gradient(top, #f00, #b00));
+    @include transition(left .2s linear);
 
     &:active {
       background: #d00;

@@ -13,15 +13,7 @@
   <body>
     <div class="pageHeader hasShadow">
       <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
-      <p><b>Version 1.0.4</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
-          Sebastian Helzle
-          </a></p><br>
-      <ul class="tabs">
-        <li><a href="/" title="Projects overview">Home</a></li>
-        <li><a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">Smallipop</a></li>
-        <li class="selected"><a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">Rondell</a></li>
-        <li><a href="https://github.com/SmallImprovements/jquery.smallimap" target="_blank" title="jQuery smallimap - An interactive map plugin">Smallimap</a></li>
-      </ul>
+      <p><b>Version 1.1.0</b>&nbsp;- Created by&nbsp;<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">Sebastian Helzle</a></p>
     </div>
     <div id="introduction" class="page hasShadow">
             <div class="subnav centered">
@@ -68,7 +60,7 @@ keep the items order.</p>
 
 &lt;script type="text/javascript"&gt;
   $(function() {
-    $("#rondellThumbnails &gt; *").rondell({
+    $("#rondellThumbnails").rondell({
       preset: "thumbGallery"
     });
   });
@@ -97,7 +89,7 @@ keep the items order.</p>
               &lt;/a&gt; \\
             ';
           }
-          $("#rondellThumbnails").html(rondellContent).children().rondell({
+          $("#rondellThumbnails").html(rondellContent).rondell({
             preset: "thumbGallery"
           });
         }
@@ -109,10 +101,9 @@ keep the items order.</p>
       </div><br class="clear">
     </div><br>
     <noscript><img src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></noscript>
-    <script src="../libs/jquery-1.9.1.min.js"></script>
+    <script src="../libs/jquery-1.10.2.min.js"></script>
     <script src="../libs/jquery.mousewheel-3.0.6.min.js"></script>
-    <script src="../dist/jquery.rondell.js"></script>
-    <script src="../examples/demohelpers.js"></script><script type="text/javascript">
+    <script src="../dist/jquery.rondell.js"></script><script type="text/javascript">
 (function() {
   $(function() {
     $.ajax({
@@ -127,7 +118,7 @@ keep the items order.</p>
             item = _ref[_i];
             rondellContent += "            <a href=\"" + item.image + "\" title=\"" + item.title + " @ " + item.url + "\" target=\"_blank\" style=\"display:none\">              <img src=\"" + item.preview + "\" title=\"" + item.title + "\" width=\"" + item.width + "\" height=\"" + item.height + "\"/>            </a>          ";
           }
-          return $("#rondellThumbnails").html(rondellContent).children().rondell({
+          return $("#rondellThumbnails").html(rondellContent).rondell({
             preset: "thumbGallery"
           });
         }
@@ -149,5 +140,6 @@ keep the items order.</p>
 
 }).call(this);
 </script>
+    <script src="../examples/demohelpers.js"></script>
   </body>
 </html>

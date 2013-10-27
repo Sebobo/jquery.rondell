@@ -87,22 +87,6 @@ append content
           Index of the item which should be focused at the start.
 
           If left at 0 it will automatically be set to half the item count.
-
-    tr
-      td resizeableClass
-      td 'resizeable'
-      td
-        :markdown
-          *img* tags with this class are resized when animated
-
-    tr
-      td smallClass
-      td 'itemSmall'
-      td css class for unfocused items
-    tr
-      td hiddenClass
-      td 'itemHidden'
-      td css class for hidden items
     tr
       td visibleItems
       td 'auto'
@@ -137,7 +121,6 @@ append content
         pre.
           {
               delay: 100,
-              cssClass: 'rondellItem',
               size: {
                   width: 150,
                   height: 150
@@ -329,8 +312,6 @@ append content
               repeating: false,
               onScroll: undefined,
               scrollOnHover: false,
-              scrollOnDrag: true,
-              animationDuration: 300,
-              easing: "easeInOutQuad"
+              scrollOnDrag: true
             }
       td Scrollbar options description will be updated later when it's final.

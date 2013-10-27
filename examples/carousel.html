@@ -13,15 +13,7 @@
   <body>
     <div class="pageHeader hasShadow">
       <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
-      <p><b>Version 1.0.4</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
-          Sebastian Helzle
-          </a></p><br>
-      <ul class="tabs">
-        <li><a href="/" title="Projects overview">Home</a></li>
-        <li><a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">Smallipop</a></li>
-        <li class="selected"><a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">Rondell</a></li>
-        <li><a href="https://github.com/SmallImprovements/jquery.smallimap" target="_blank" title="jQuery smallimap - An interactive map plugin">Smallimap</a></li>
-      </ul>
+      <p><b>Version 1.1.0</b>&nbsp;- Created by&nbsp;<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">Sebastian Helzle</a></p>
     </div>
     <div id="introduction" class="page hasShadow">
             <div class="subnav centered">
@@ -39,21 +31,23 @@
                 <li><a href="pages.html">Pages</a></li>
               </ul><br class="clear">
             </div><br>
-      <div id="rondellCarousel" class="hidden"><a target="_blank" rel="rondell_1" href="images/galery/band.jpg" title="My favourite band"><img src="images/galery/band_small.jpg" alt="Band" title="My favourite band">
-          <h5>Awesome concert</h5>
-          <p>My favourite band.</p></a><a target="_blank" rel="rondell_1" href="images/galery/dog.jpg" title="My dog"><img src="images/galery/dog_small.jpg" alt="Dog" title="My dog">
-          <h5>My dog</h5>
-          <p>Standing in front of a glass door and wants in.</p></a><a target="_blank" rel="rondell_1" href="images/galery/cat.jpg" title="My cat"><img src="images/galery/cat_small.jpg" alt="Cat" title="My cat">
-          <h5>My cat</h5>
-          <p>Sleeping...</p></a><a target="_blank" rel="rondell_1" href="images/galery/boar.jpg" title="Boar"><img src="images/galery/boar_small.jpg" alt="Boar" title="Boar">
-          <h5>Dead boar on the wall</h5>
-          <p>Hanging around.</p></a><a target="_blank" rel="rondell_1" href="images/galery/snow.jpg" title="Snow"><img src="images/galery/snow_small.jpg" alt="Snow" title="Snow">
-          <h5>Winter wonderland</h5>
-          <p>The german alps.</p></a><a target="_blank" rel="rondell_1" href="images/galery/rabbit.jpg" title="Rabbit"><img src="images/galery/rabbit_small.jpg" alt="Rabbit" title="Rabbit">
-          <h5>Bunny</h5>
-          <p>In my brothers garden.</p></a><a target="_blank" rel="rondell_1" href="images/galery/trash.jpg" title=""><img src="images/galery/trash_small.jpg" alt="Trash" title="Trash">
-          <h5>Trash</h5>
-          <p>Somewhere in the USA.</p></a></div><br><a href="#" class="resize-button">Resize</a><br>
+      <div>
+        <div id="rondellCarousel" class="hidden"><a target="_blank" rel="rondell_1" href="images/galery/band.jpg" title="My favourite band"><img src="images/galery/band_small.jpg" alt="Band" title="My favourite band">
+            <h5>Awesome concert</h5>
+            <p>My favourite band.</p></a><a target="_blank" rel="rondell_1" href="images/galery/dog.jpg" title="My dog"><img src="images/galery/dog_small.jpg" alt="Dog" title="My dog">
+            <h5>My dog</h5>
+            <p>Standing in front of a glass door and wants in.</p></a><a target="_blank" rel="rondell_1" href="images/galery/cat.jpg" title="My cat"><img src="images/galery/cat_small.jpg" alt="Cat" title="My cat">
+            <h5>My cat</h5>
+            <p>Sleeping...</p></a><a target="_blank" rel="rondell_1" href="images/galery/boar.jpg" title="Boar"><img src="images/galery/boar_small.jpg" alt="Boar" title="Boar">
+            <h5>Dead boar on the wall</h5>
+            <p>Hanging around.</p></a><a target="_blank" rel="rondell_1" href="images/galery/snow.jpg" title="Snow"><img src="images/galery/snow_small.jpg" alt="Snow" title="Snow">
+            <h5>Winter wonderland</h5>
+            <p>The german alps.</p></a><a target="_blank" rel="rondell_1" href="images/galery/rabbit.jpg" title="Rabbit"><img src="images/galery/rabbit_small.jpg" alt="Rabbit" title="Rabbit">
+            <h5>Bunny</h5>
+            <p>In my brothers garden.</p></a><a target="_blank" rel="rondell_1" href="images/galery/trash.jpg" title=""><img src="images/galery/trash_small.jpg" alt="Trash" title="Trash">
+            <h5>Trash</h5>
+            <p>Somewhere in the USA.</p></a></div>
+      </div><br><a href="#" class="resize-button">Resize</a><br>
       <div class="center">
         <h2>Preset - Carousel</h2>
       </div>
@@ -82,7 +76,7 @@ your mouse leaves it&#39;s area.</p>
   $(function() {
     // Create a rondell with the 'carousel' preset and set an option
     // to disable the rondell while the lightbox is displayed
-    $("#rondellCarousel &gt; *").rondell({
+    $("#rondellCarousel").rondell({
       preset: "carousel",
     });
   });
@@ -123,7 +117,7 @@ element will open the wookmark in a new tab or window.</p>
               &lt;/a&gt; \\
             ';
           }
-          $("#rondellCubic").html(rondellContent).children().rondell({
+          $("#rondellCubic").html(rondellContent).rondell({
             preset: "cubic"
           });
         }
@@ -135,14 +129,13 @@ element will open the wookmark in a new tab or window.</p>
       </div><br class="clear">
     </div><br>
     <noscript><img src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></noscript>
-    <script src="../libs/jquery-1.9.1.min.js"></script>
+    <script src="../libs/jquery-1.10.2.min.js"></script>
     <script src="../libs/jquery.mousewheel-3.0.6.min.js"></script>
-    <script src="../dist/jquery.rondell.js"></script>
-    <script src="../examples/demohelpers.js"></script><script type="text/javascript">
+    <script src="../dist/jquery.rondell.js"></script><script type="text/javascript">
 (function() {
   $(function() {
     var carousel;
-    carousel = $("#rondellCarousel > *").rondell({
+    carousel = $("#rondellCarousel").rondell({
       preset: "carousel"
     });
     $(".resize-button").click(function(e) {
@@ -161,7 +154,7 @@ element will open the wookmark in a new tab or window.</p>
             item = _ref[_i];
             rondellContent += "            <a href=\"" + item.image + "\" title=\"" + item.title + " @ " + item.url + "\" target=\"_blank\" style=\"display:none\">              <img src=\"" + item.preview + "\" title=\"" + item.title + "\" width=\"" + item.width + "\" height=\"" + item.height + "\"/>            </a>          ";
           }
-          return $("#rondellCubic").html(rondellContent).children().rondell({
+          return $("#rondellCubic").html(rondellContent).rondell({
             preset: "cubic"
           });
         }
@@ -171,5 +164,6 @@ element will open the wookmark in a new tab or window.</p>
 
 }).call(this);
 </script>
+    <script src="../examples/demohelpers.js"></script>
   </body>
 </html>

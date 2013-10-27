@@ -54,7 +54,7 @@ append content
 
       &lt;script type="text/javascript"&gt;
         $(function() {
-          $("#rondellThumbnails &gt; *").rondell({
+          $("#rondellThumbnails").rondell({
             preset: "thumbGallery"
           });
         });
@@ -86,7 +86,7 @@ append content
                     &lt;/a&gt; \\
                   ';
                 }
-                $("#rondellThumbnails").html(rondellContent).children().rondell({
+                $("#rondellThumbnails").html(rondellContent).rondell({
                   preset: "thumbGallery"
                 });
               }
@@ -119,7 +119,7 @@ append js
               ";
 
             # Append items to rondell and init rondell
-            $("#rondellThumbnails").html(rondellContent).children().rondell
+            $("#rondellThumbnails").html(rondellContent).rondell
               preset: "thumbGallery"
 
       # Themepicker code

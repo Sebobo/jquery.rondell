@@ -215,6 +215,10 @@
   background: -moz-linear-gradient(top, #ff0000, #bb0000);
   background: -o-linear-gradient(top, #ff0000, #bb0000);
   background: linear-gradient(top, #ff0000, #bb0000);
+  -webkit-transition: left 0.2s linear;
+  -moz-transition: left 0.2s linear;
+  -o-transition: left 0.2s linear;
+  transition: left 0.2s linear;
 }
 .rondell-scrollbar .rondell-scrollbar-control:active {
   background: #d00;
@@ -269,7 +273,7 @@
 
 .rondell-lightbox {
   z-index: 9998;
-  left: -99999;
+  left: -99999px;
   position: absolute;
 }
 
@@ -344,10 +348,10 @@
   background: #333;
   border: 2px solid #555;
   -webkit-transition: opacity 0.2s ease;
-  -webkit-transition-delay: 0.1;
-  -moz-transition: opacity 0.2s ease 0.1;
-  -o-transition: opacity 0.2s ease 0.1;
-  transition: opacity 0.2s ease 0.1;
+  -webkit-transition-delay: 0.1s;
+  -moz-transition: opacity 0.2s ease 0.1s;
+  -o-transition: opacity 0.2s ease 0.1s;
+  transition: opacity 0.2s ease 0.1s;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -409,23 +413,6 @@
 
 /* themes */
 /* default theme */
-.boxshadow.rgba .rondell-theme-default .rondell-control {
-  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
-}
-.boxshadow.rgba .rondell-theme-default .rondell-control:hover {
-  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
-}
-.boxshadow.rgba .rondell-theme-default .rondell-item {
-  border: 0;
-  -webkit-box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.5);
-}
-
 .rondell-theme-default .rondell-control,
 .rondell-theme-default .rondell-item,
 .rondell-theme-default .rondell-item img {
@@ -436,6 +423,9 @@
   border-radius: 3px;
 }
 .rondell-theme-default .rondell-control {
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fcfcfc), color-stop(100%, #f9f9f9));
   background: -webkit-linear-gradient(#fcfcfc, #f9f9f9);
   background: -moz-linear-gradient(#fcfcfc, #f9f9f9);
@@ -448,6 +438,9 @@
   background: -moz-linear-gradient(#fafafa, #f5f5f5);
   background: -o-linear-gradient(#fafafa, #f5f5f5);
   background: linear-gradient(#fafafa, #f5f5f5);
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 }
 .rondell-theme-default .rondell-control:active {
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f5f5f5), color-stop(100%, #fafafa));
@@ -456,6 +449,12 @@
   background: -o-linear-gradient(#f5f5f5, #fafafa);
   background: linear-gradient(#f5f5f5, #fafafa);
 }
+.boxshadow.rgba .rondell-theme-default .rondell-item {
+  border: 0;
+  -webkit-box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.5);
+}
 
 /* light theme */
 .rondell-theme-light .rondell-container {
@@ -463,6 +462,9 @@
 }
 .rondell-theme-light .rondell-item {
   border: 0;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 .rondell-theme-light .rondell-item, .rondell-theme-light .rondell-item img {
   -webkit-border-radius: 3px;
@@ -471,14 +473,7 @@
   -o-border-radius: 3px;
   border-radius: 3px;
 }
-
-.boxshadow.rgba .rondell-theme-light .rondell-item {
-  border: 0;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-}
-.boxshadow.rgba .rondell-theme-light .rondell-item:hover {
+.rondell-theme-light .rondell-item:hover {
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -521,7 +516,6 @@
 .rondell-theme-dark .rondell-control.rondell-shift-left {
   background-position: 0 -28px;
 }
-
 .boxshadow.rgba .rondell-theme-dark {
   border: 0;
   -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6) inset;
@@ -577,7 +571,6 @@
   -o-border-radius: 3px 0 6px 0;
   border-radius: 3px 0 6px 0;
 }
-
 .boxshadow.rgba .rondell-theme-page {
   border: 0;
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
@@ -599,6 +592,9 @@
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
   border-radius: 2px;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 .rondell-theme-slider .rondell-item {
   border: 0;
@@ -615,6 +611,9 @@
   font-weight: bold;
   text-shadow: 0 0 3px #000;
   font-size: 14px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 .rondell-theme-slider .rondell-caption.rondell-item-overlay {
   background: transparent;
@@ -626,13 +625,16 @@
   width: 15px;
   height: 30px;
   background-color: #666;
-  background-color: rbga(50, 50, 50, 0.2);
+  background-color: rgba(50, 50, 50, 0.2);
   border: 1px solid #555;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #666666), color-stop(100%, #555555));
   background: -webkit-linear-gradient(top, #666666, #555555);
   background: -moz-linear-gradient(top, #666666, #555555);
   background: -o-linear-gradient(top, #666666, #555555);
   background: linear-gradient(top, #666666, #555555);
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 .rondell-theme-slider .rondell-control span {
   background: url("images/arrows.png") no-repeat 0 0;
@@ -665,20 +667,4 @@
   -ms-border-radius: 15px 0 0 15px;
   -o-border-radius: 15px 0 0 15px;
   border-radius: 15px 0 0 15px;
-}
-
-.boxshadow.rgba .rondell-theme-slider {
-  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-}
-.boxshadow.rgba .rondell-theme-slider .rondell-caption {
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
-.boxshadow.rgba .rondell-theme-slider .rondell-control {
-  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
-  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }

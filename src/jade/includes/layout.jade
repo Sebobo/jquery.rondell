@@ -1,4 +1,4 @@
-version = 'Version 1.0.4'
+version = 'Version 1.1.0'
 path = '../'
 
 !!! 5
@@ -21,21 +21,8 @@ html.no-js
 
         p
           b= version
-          | &nbsp;- Created by
-          a(href="http://www.sebastianhelzle.net", target="_blank", title="Sebastian Helzle IT-Consulting").
-            Sebastian Helzle
-
-        br
-
-        ul.tabs
-          li
-            a(href="/", title="Projects overview") Home
-          li
-            a(href="/jquery.smallipop", title="jQuery smallipop - A tooltip plugin") Smallipop
-          li.selected
-            a(href="/jquery.rondell", title="jQuery rondell - A graphical plugin") Rondell
-          li
-            a(href="https://github.com/SmallImprovements/jquery.smallimap", target="_blank", title="jQuery smallimap - An interactive map plugin") Smallimap
+          | &nbsp;- Created by&nbsp;
+          a(href="http://www.sebastianhelzle.net", target="_blank", title="Sebastian Helzle IT-Consulting") Sebastian Helzle
 
     #introduction.page.hasShadow
       block content
@@ -46,7 +33,9 @@ html.no-js
       img(src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5", style="border:0", alt="")
 
     block js
-      script(src='#{path}libs/jquery-1.9.1.min.js')
+      script(src='#{path}libs/jquery-1.10.2.min.js')
       script(src="#{path}libs/jquery.mousewheel-3.0.6.min.js")
       script(src="#{path}dist/jquery.rondell.js")
+
+    block tracking
       script(src="#{path}examples/demohelpers.js")

@@ -9,41 +9,42 @@ append content
 
   br
 
-  #rondellCarousel.hidden
-    a(target="_blank", rel="rondell_1", href="images/galery/band.jpg", title="My favourite band")
-      img(src="images/galery/band_small.jpg", alt="Band", title="My favourite band")
-      h5 Awesome concert
-      p My favourite band.
+  div
+    #rondellCarousel.hidden
+      a(target="_blank", rel="rondell_1", href="images/galery/band.jpg", title="My favourite band")
+        img(src="images/galery/band_small.jpg", alt="Band", title="My favourite band")
+        h5 Awesome concert
+        p My favourite band.
 
-    a(target="_blank", rel="rondell_1", href="images/galery/dog.jpg", title="My dog")
-      img(src="images/galery/dog_small.jpg", alt="Dog", title="My dog")
-      h5 My dog
-      p Standing in front of a glass door and wants in.
+      a(target="_blank", rel="rondell_1", href="images/galery/dog.jpg", title="My dog")
+        img(src="images/galery/dog_small.jpg", alt="Dog", title="My dog")
+        h5 My dog
+        p Standing in front of a glass door and wants in.
 
-    a(target="_blank", rel="rondell_1", href="images/galery/cat.jpg", title="My cat")
-      img(src="images/galery/cat_small.jpg", alt="Cat", title="My cat")
-      h5 My cat
-      p Sleeping...
+      a(target="_blank", rel="rondell_1", href="images/galery/cat.jpg", title="My cat")
+        img(src="images/galery/cat_small.jpg", alt="Cat", title="My cat")
+        h5 My cat
+        p Sleeping...
 
-    a(target="_blank", rel="rondell_1", href="images/galery/boar.jpg", title="Boar")
-      img(src="images/galery/boar_small.jpg", alt="Boar", title="Boar")
-      h5 Dead boar on the wall
-      p Hanging around.
+      a(target="_blank", rel="rondell_1", href="images/galery/boar.jpg", title="Boar")
+        img(src="images/galery/boar_small.jpg", alt="Boar", title="Boar")
+        h5 Dead boar on the wall
+        p Hanging around.
 
-    a(target="_blank", rel="rondell_1", href="images/galery/snow.jpg", title="Snow")
-      img(src="images/galery/snow_small.jpg", alt="Snow", title="Snow")
-      h5 Winter wonderland
-      p The german alps.
+      a(target="_blank", rel="rondell_1", href="images/galery/snow.jpg", title="Snow")
+        img(src="images/galery/snow_small.jpg", alt="Snow", title="Snow")
+        h5 Winter wonderland
+        p The german alps.
 
-    a(target="_blank", rel="rondell_1", href="images/galery/rabbit.jpg", title="Rabbit")
-      img(src="images/galery/rabbit_small.jpg", alt="Rabbit", title="Rabbit")
-      h5 Bunny
-      p In my brothers garden.
+      a(target="_blank", rel="rondell_1", href="images/galery/rabbit.jpg", title="Rabbit")
+        img(src="images/galery/rabbit_small.jpg", alt="Rabbit", title="Rabbit")
+        h5 Bunny
+        p In my brothers garden.
 
-    a(target="_blank", rel="rondell_1", href="images/galery/trash.jpg", title="")
-      img(src="images/galery/trash_small.jpg", alt="Trash", title="Trash")
-      h5 Trash
-      p Somewhere in the USA.
+      a(target="_blank", rel="rondell_1", href="images/galery/trash.jpg", title="")
+        img(src="images/galery/trash_small.jpg", alt="Trash", title="Trash")
+        h5 Trash
+        p Somewhere in the USA.
 
   br
 
@@ -85,7 +86,7 @@ append content
         $(function() {
           // Create a rondell with the 'carousel' preset and set an option
           // to disable the rondell while the lightbox is displayed
-          $("#rondellCarousel &gt; *").rondell({
+          $("#rondellCarousel").rondell({
             preset: "carousel",
           });
         });
@@ -135,7 +136,7 @@ append content
                     &lt;/a&gt; \\
                   ';
                 }
-                $("#rondellCubic").html(rondellContent).children().rondell({
+                $("#rondellCubic").html(rondellContent).rondell({
                   preset: "cubic"
                 });
               }
@@ -151,7 +152,7 @@ append js
     $ ->
 
       # Initializer for the carousel
-      carousel = $("#rondellCarousel > *").rondell
+      carousel = $("#rondellCarousel").rondell
         preset: "carousel"
 
       # Button for resizing the demo carousel
@@ -176,6 +177,6 @@ append js
               ";
 
             # Append items to rondell and init rondell
-            $("#rondellCubic").html(rondellContent).children().rondell
+            $("#rondellCubic").html(rondellContent).rondell
               preset: "cubic"
 

@@ -11,35 +11,35 @@ append content
 
   #rondellScroller.hidden
     a(href="#", title="Dummy link to the cloud")
-      img.no-scale(src="images/products/cloud.png", alt="cloud product")
+      img.rondell-no-scale(src="images/products/cloud.png", alt="cloud product")
       h5 Your own cloud
       p Buy your own cloud to do some really complicated stuff very fast!
 
     a(href="#", title="Dummy link to the router")
-      img.no-scale(src="images/products/router.png", alt="router product")
+      img.rondell-no-scale(src="images/products/router.png", alt="router product")
       h5 The new router
       p The router which can connect to anything without cables!
 
     a(href="#", title="Dummy link to the client")
-      img.no-scale(src="images/products/client.png", alt="client product")
+      img.rondell-no-scale(src="images/products/client.png", alt="client product")
       h5 The green computer
       :markdown
         Our climate saver for only **999$**!
 
     a(href="#", title="Dummy link to the client")
-      img.no-scale(src="images/products/client3.png", alt="client product")
+      img.rondell-no-scale(src="images/products/client3.png", alt="client product")
       h5 The blue computer
       :markdown
         Makes you calm while working. Now only **1999$**!
 
     a(href="#", title="Dummy link to the client")
-      img.no-scale(src="images/products/client2.png", alt="client product")
+      img.rondell-no-scale(src="images/products/client2.png", alt="client product")
       h5 The pink computer
       :markdown
         For the girls. Only **599$**!
 
     a(href="#", title="Dummy link to the unknown")
-      img.no-scale(src="images/products/unknown.png", alt="unknown product")
+      img.rondell-no-scale(src="images/products/unknown.png", alt="unknown product")
       h5 Surprise
       p Order this and you will be surprised!
 
@@ -78,7 +78,7 @@ append content
 
       &lt;script type="text/javascript"&gt;
         $(function() {
-          $("#rondellScroller &gt; *").rondell({
+          $("#rondellScroller").rondell({
             preset: 'scroller'
           });
         });
@@ -90,5 +90,5 @@ append js
   :coffeescript
     $ ->
       # Sample preset for the rondell scroller
-      $("#rondellScroller > *").rondell
+      $("#rondellScroller").rondell
         preset: 'scroller'

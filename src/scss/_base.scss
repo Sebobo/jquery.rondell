@@ -101,129 +101,6 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
   }
 }
 
-// Tabs
-.tabs {
-  text-align: center;
-  list-style: none;
-  padding: 0 10px;
-  line-height: 24px;
-  height: 26px;
-  overflow: hidden;
-  font-size: 12px;
-  font-family: verdana;
-  position: absolute;
-  bottom: 0;
-
-  li {
-    border: 1px solid #aaa;
-    background: #d1d1d1;
-    display: block;
-    float: left;
-    position: relative;
-    z-index: 0;
-    text-shadow: 0 1px #fff;
-    margin: 0 -3px;
-    padding: 0;
-    cursor: pointer;
-
-    &:hover {
-      background: #dadada;
-      background-position: 0 -15px;
-    }
-    &.selected {
-      background: #fff;
-      color: #333;
-      z-index: 2;
-      border-bottom-color: #fff;
-    }
-
-    &:before,
-    &:after {
-      border: 1px solid #aaa;
-      position: absolute;
-      bottom: -1px;
-      width: 5px;
-      height: 5px;
-      content: " ";
-      border-width: 0 0 1px 1px;
-    }
-    &:before {
-      left: -6px;
-      border-width: 0 1px 1px 0;
-    }
-    &:after { right: -6px; }
-  }
-  a {
-    color: #555;
-    text-decoration: none;
-    display: block;
-    margin: 0 20px;
-
-    &:hover {
-      text-decoration: none;
-    }
-  }
-
-  &:before {
-    position: absolute;
-    content: " ";
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    border-bottom: 1px solid #aaa;
-    z-index: 1;
-  }
-}
-.csstransitions .tabs li {
-  @include transition(.05s linear all);
-}
-.cssgradients .tabs li {
-  @include background(linear-gradient(top, #ececec 50%, #d1d1d1 100%));
-
-  &:hover {
-    @include background(linear-gradient(top, #efefef 50%, #dadada 100%));
-  }
-  &.selected {
-    &, &:hover {
-      background: #fff;
-    }
-  }
-}
-.borderradius .tabs li {
-  @include border-radius(6px 6px 0 0);
-  &:before {
-    @include border-radius(0 0 6px 0);
-  }
-  &:after {
-    @include border-radius(0 0 0 6px);
-  }
-}
-.boxshadow .tabs li {
-  @include box-shadow("0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #ffffff");
-  &:before {
-    @include box-shadow(2px 2px 0 #d1d1d1);
-  }
-  &:after {
-    @include box-shadow(-2px 2px 0 #d1d1d1);
-  }
-  &:hover {
-    &:before {
-      @include box-shadow(2px 2px 0 #dadada);
-    }
-    &:after {
-      @include box-shadow(-2px 2px 0 #dadada);
-    }
-  }
-  &.selected {
-    &:before {
-      @include box-shadow(2px 2px 0 #ffffff);
-    }
-    &:after {
-      @include box-shadow(-2px 2px 0 #ffffff);
-    }
-  }
-}
-
 // Buttons
 // Shared colors for buttons and alerts
 .btn,
@@ -273,6 +150,18 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
   border-bottom-color: #bbb;
   text-decoration: none;
   background-color: darken(#ffffff, 10%);
+  @include border-radius(4px);
+  @include transition(.1s linear all);
+  @include background(linear-gradient(top, #ffffff, #ffffff 25%, darken(#ffffff, 10%)));
+  @include box-shadow(inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05));
+
+  &.active, &:active {
+    @include box-shadow(inset 0 2px 4px rgba(0,0,0,.25), 0 1px 2px rgba(0,0,0,.05));
+  }
+
+  &.large {
+    @include border-radius(6px);
+  }
 
   &:hover {
     background-position: 0 -15px;
@@ -289,20 +178,17 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
   &.primary {
     color: $white;
     background-color: $blueDark;
+    @include gradient-bar($blue, $blueDark);
   }
 
   // Active and Disabled states
-  &.disabled {
-    cursor: default;
-    background-image: none;
-    opacity: 0.65;
-  }
-  &[disabled] {
+  &.disabled, &[disabled] {
     // disabled pseudo can't be included with .disabled
     // def because IE8 and below will drop it ;_;
     cursor: default;
     background-image: none;
     opacity: 0.65;
+    @include box-shadow(none);
   }
 
   // Button Sizes
@@ -316,54 +202,21 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
     font-size: $baseFontSize - 2px;
   }
 }
-.cssgradients {
-  .btn {
-    @include background(linear-gradient(top, #ffffff, #ffffff 25%, darken(#ffffff, 10%)));
 
-    &.primary {
-      @include gradient-bar($blue, $blueDark);
-    }
+.btn,
+.alert-message {
+  // Danger and error appear as red
+  &.danger,
+  &.error {
+    @include gradient-bar(#ee5f5b, #c43c35);
   }
-
-  .btn,
-  .alert-message {
-    // Danger and error appear as red
-    &.danger,
-    &.error {
-      @include gradient-bar(#ee5f5b, #c43c35);
-    }
-    // Success appears as green
-    &.success {
-      @include gradient-bar(#62c462, #57a957);
-    }
-    // Info appears as a neutral blue
-    &.info {
-      @include gradient-bar(#5bc0de, #339bb9);
-    }
+  // Success appears as green
+  &.success {
+    @include gradient-bar(#62c462, #57a957);
   }
-}
-
-.borderradius .btn {
-  @include border-radius(4px);
-
-  &.large {
-    @include border-radius(6px);
-  }
-}
-.csstransitions .btn {
-  @include transition(.1s linear all);
-}
-.box-shadow.rgba .btn {
-  @include box-shadow("inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)");
-
-  &.active,
-  &:active {
-    @include box-shadow("inset 0 2px 4px rgba(0,0,0,.25), 0 1px 2px rgba(0,0,0,.05)");
-  }
-
-  &.disabled,
-  &[disabled] {
-    @include box-shadow(none);
+  // Info appears as a neutral blue
+  &.info {
+    @include gradient-bar(#5bc0de, #339bb9);
   }
 }
 
@@ -411,11 +264,7 @@ code, pre {
   padding: 0 3px 2px;
   font-family: Monaco, Andale Mono, Courier New, monospace;
   font-size: 12px;
-}
-.borderradius {
-  code, pre {
     @include border-radius(3px);
-  }
 }
 code {
   background-color: lighten($orange, 40%);

@@ -1,6 +1,6 @@
 {
   "name": "jquery.rondell",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "This is a plugin for displaying galeries and other content as carousel, thumbnail gallery, slider and much more!",
   "main": "index.html",
   "directories": {
@@ -19,7 +19,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tests/tests.js"
   },
   "repository": {
     "type": "git",

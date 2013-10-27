@@ -27,7 +27,11 @@
   left: 0;
   opacity: 1;
 
-  a { cursor:pointer; color: #fff; text-decoration: none; }
+  a {
+    cursor: pointer;
+    color: #fff;
+    text-decoration: none;
+  }
 
   .rondell-item-crop {
     @include border-radius(inherit);

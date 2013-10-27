@@ -2,8 +2,8 @@
   jQuery rondell plugin
   @name jquery.rondell.js
   @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @version 1.0.4
-  @date 07/05/2013
+  @version 1.1.0
+  @date 10/27/2013
   @category jQuery plugin
   @copyright (c) 2009-2013 Sebastian Helzle (www.sebastianhelzle.net)
   @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -11,52 +11,61 @@
 
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-(function($) {
+(function($, win, doc) {
+  var $document, $window, Rondell, RondellItem, RondellScrollbar, classCaption, classContainer, classControl, classInitializing, classInstance, classItem, classItemCrop, classItemError, classItemFocused, classItemHidden, classItemHovered, classItemImage, classItemLoading, classItemOverlay, classItemResizeable, classItemSmall, classLightbox, classLightboxClose, classLightboxContent, classLightboxInner, classLightboxNext, classLightboxOverlay, classLightboxPosition, classLightboxPrev, classNoScale, classScrollbar, classScrollbarBackground, classScrollbarControl, classScrollbarDragging, classScrollbarInner, classScrollbarLeft, classScrollbarRight, classShiftLeft, classShiftRight, classThemePrefix, closeLightbox, delayCall, eventClick, eventMousewheel, eventResize, getActiveRondell, getLightbox, lightboxIsVisible, resizeLightbox, resizeTimer, rondellBaseClass, updateLightbox, _base;
+  $window = $(win);
+  $document = $(doc);
+  rondellBaseClass = 'rondell';
+  classInstance = "" + rondellBaseClass + "-instance";
+  classContainer = "" + rondellBaseClass + "-container";
+  classInitializing = "" + rondellBaseClass + "-initializing";
+  classThemePrefix = "" + rondellBaseClass + "-theme";
+  classCaption = "" + rondellBaseClass + "-caption";
+  classControl = "" + rondellBaseClass + "-control";
+  classShiftLeft = "" + rondellBaseClass + "-shift-left";
+  classShiftRight = "" + rondellBaseClass + "-shift-right";
+  classNoScale = "" + rondellBaseClass + "-no-scale";
+  classItem = "" + rondellBaseClass + "-item";
+  classItemImage = "" + classItem + "-image";
+  classItemResizeable = "" + classItem + "-resizeable";
+  classItemSmall = "" + classItem + "-small";
+  classItemHidden = "" + classItem + "-hidden";
+  classItemLoading = "" + classItem + "-loading";
+  classItemHovered = "" + classItem + "-hovered";
+  classItemOverlay = "" + classItem + "-overlay";
+  classItemFocused = "" + classItem + "-focused";
+  classItemCrop = "" + classItem + "-crop";
+  classItemError = "" + classItem + "-error";
+  classLightbox = "" + rondellBaseClass + "-lightbox";
+  classLightboxOverlay = "" + classLightbox + "-overlay";
+  classLightboxContent = "" + classLightbox + "-content";
+  classLightboxInner = "" + classLightbox + "-inner";
+  classLightboxClose = "" + classLightbox + "-close";
+  classLightboxPrev = "" + classLightbox + "-prev";
+  classLightboxPosition = "" + classLightbox + "-position";
+  classLightboxNext = "" + classLightbox + "-next";
+  classScrollbar = "" + rondellBaseClass + "-scrollbar";
+  classScrollbarControl = "" + classScrollbar + "-control";
+  classScrollbarDragging = "" + classScrollbar + "-dragging";
+  classScrollbarBackground = "" + classScrollbar + "-background";
+  classScrollbarLeft = "" + classScrollbar + "-left";
+  classScrollbarRight = "" + classScrollbar + "-right";
+  classScrollbarInner = "" + classScrollbar + "-inner";
+  eventClick = "click." + rondellBaseClass;
+  eventResize = "resize." + rondellBaseClass;
+  eventMousewheel = "mousewheel." + rondellBaseClass;
   /* Global rondell plugin properties*/
 
-  var $document, $window, Rondell, closeLightbox, delayCall, getActiveRondell, getLightbox, lightboxIsVisible, resizeLightbox, resizeTimer, updateLightbox, _base;
   $.rondell || ($.rondell = {
-    version: '1.0.4',
+    version: '1.1.0',
     name: 'rondell',
     lightbox: {
       instance: void 0,
-      template: $.trim('\
-        <div class="rondell-lightbox">\
-          <div class="rondell-lightbox-overlay">&nbsp;</div>\
-          <div class="rondell-lightbox-content">\
-            <div class="rondell-lightbox-inner"/>\
-            <div class="rondell-lightbox-close">&Chi;</div>\
-            <div class="rondell-lightbox-prev">&nbsp;</div>\
-            <div class="rondell-lightbox-position">1</div>\
-            <div class="rondell-lightbox-next">&nbsp;</div>\
-          </div>\
-        </div>')
+      template: $.trim("        <div class='" + classLightbox + "'>          <div class='" + classLightboxOverlay + "'>&nbsp;</div>          <div class='" + classLightboxContent + "'>            <div class='" + classLightboxInner + "'/>            <div class='" + classLightboxClose + "'>&Chi;</div>            <div class='" + classLightboxPrev + "'>&nbsp;</div>            <div class='" + classLightboxPosition + "'>1</div>            <div class='" + classLightboxNext + "'>&nbsp;</div>          </div>        </div>")
     },
     defaults: {
       showContainer: true,
-      classes: {
-        container: "rondell-container",
-        initializing: "rondell-initializing",
-        themePrefix: "rondell-theme",
-        caption: "rondell-caption",
-        noScale: "no-scale",
-        item: "rondell-item",
-        image: "rondell-item-image",
-        resizeable: "rondell-item-resizeable",
-        small: "rondell-item-small",
-        hidden: "rondell-item-hidden",
-        loading: "rondell-item-loading",
-        hovered: "rondell-item-hovered",
-        overlay: "rondell-item-overlay",
-        focused: "rondell-item-focused",
-        crop: "rondell-item-crop",
-        error: "rondell-item-error",
-        control: "rondell-control",
-        shiftLeft: "rondell-shift-left",
-        shiftRight: "rondell-shift-right"
-      },
       currentLayer: 0,
-      container: null,
       radius: {
         x: 250,
         y: 50
@@ -155,18 +164,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
         repeating: false,
         onScroll: void 0,
         scrollOnHover: false,
-        scrollOnDrag: true,
-        animationDuration: 300,
-        easing: "easeInOutQuad",
-        classes: {
-          container: "rondell-scrollbar",
-          control: "rondell-scrollbar-control",
-          dragging: "rondell-scrollbar-dragging",
-          background: "rondell-scrollbar-background",
-          scrollLeft: "rondell-scrollbar-left",
-          scrollRight: "rondell-scrollbar-right",
-          scrollInner: "rondell-scrollbar-inner"
-        }
+        scrollOnDrag: true
       }
     }
   });
@@ -182,18 +180,15 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   delayCall = function(delay, callback) {
     return setTimeout(callback, delay);
   };
-  $window = $(window);
-  $document = $(document);
   Rondell = (function() {
     Rondell.rondellCount = 0;
 
     Rondell.activeRondell = null;
 
-    function Rondell(items, options, numItems, initCallback) {
-      var containerWrap, scrollbarContainer;
-      if (initCallback == null) {
-        initCallback = void 0;
-      }
+    function Rondell(container, options, initCallback) {
+      var children, item, presetOptions, scrollbarContainer, _i, _len;
+      this.container = container;
+      this.initCallback = initCallback != null ? initCallback : void 0;
       this.showLightbox = __bind(this.showLightbox, this);
       this.keyDown = __bind(this.keyDown, this);
       this.isFocused = __bind(this.isFocused, this);
@@ -218,19 +213,17 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       this._onMouseLeaveItem = __bind(this._onMouseLeaveItem, this);
       this._onMouseEnterItem = __bind(this._onMouseEnterItem, this);
       this.fitToContainer = __bind(this.fitToContainer, this);
+      this.clear = __bind(this.clear, this);
+      this.update = __bind(this.update, this);
       this.id = ++Rondell.rondellCount;
       this.items = [];
-      this.maxItems = numItems;
-      this.loadedItems = 0;
-      this.initCallback = initCallback;
+      children = container.children();
+      this.maxItems = children.length;
       if (this.id === 1) {
         Rondell.activeRondell = this.id;
       }
-      if ((options != null ? options.preset : void 0) in $.rondell.presets) {
-        $.extend(true, this, $.rondell.defaults, $.rondell.presets[options.preset], options || {});
-      } else {
-        $.extend(true, this, $.rondell.defaults, options || {});
-      }
+      presetOptions = (options != null ? options.preset : void 0) in $.rondell.presets ? $.rondell.presets[options.preset] : {};
+      $.extend(true, this, $.rondell.defaults, presetOptions, options || {});
       $.extend(true, this, {
         _dimensions: {
           computed: false
@@ -263,11 +256,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
         width: this.size.width || this.center.left * 2,
         height: this.size.height || this.center.top * 2
       };
-      containerWrap = $("<div/>").css(this.size).addClass("" + this.classes.initializing + " " + this.classes.container + " " + this.classes.themePrefix + "-" + this.theme);
-      this.container = items.wrapAll(containerWrap).parent().addClass("rondell-instance-" + this.id).data('api', this);
-      if (this.showContainer) {
-        this.container.parent().show();
-      }
+      this.container.data(rondellBaseClass, this).css(this.size).addClass("" + classInitializing + " " + classContainer + " " + classThemePrefix + "-" + this.theme + " " + classInstance + "-" + this.id);
       if (this.scrollbar.enabled) {
         scrollbarContainer = $('<div/>');
         this.container.append(scrollbarContainer);
@@ -277,12 +266,26 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
           position: this.currentLayer,
           repeating: this.repeating
         });
-        this.scrollbar._instance = new $.rondell.RondellScrollbar(scrollbarContainer, this.scrollbar);
+        this.scrollbar._instance = new RondellScrollbar(scrollbarContainer, this.scrollbar);
+      }
+      for (_i = 0, _len = children.length; _i < _len; _i++) {
+        item = children[_i];
+        this._loadItem($(item));
+      }
+      if (this.showContainer) {
+        this.container.show();
       }
     }
 
-    Rondell.prototype.log = function(msg) {
-      return typeof console !== "undefined" && console !== null ? console.log(msg) : void 0;
+    Rondell.prototype.update = function(options) {
+      $.extend(true, this, options || {});
+      return this.shiftTo(this.currentLayer);
+    };
+
+    Rondell.prototype.clear = function() {
+      this.container.data(rondellBaseClass, this).removeClass("" + this.lassInitializing + " " + classContainer + " " + classThemePrefix + "-" + this.theme + " " + classInstance + "-" + this.id).find("." + classControl).remove();
+      this.container.children("." + classItem).removeClass(classItem);
+      return this.container.rondell = null;
     };
 
     Rondell.prototype.equals = function(objA, objB) {
@@ -317,6 +320,8 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     Rondell.prototype.funcOpacity = function(l, r, i) {
       if (r.visibleItems > 1) {
         return Math.max(0, 1.0 - Math.pow(l / r.visibleItems, 2));
+      } else if (r.visibleItems === 0) {
+        return 1;
       } else {
         return 0;
       }
@@ -408,13 +413,13 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       return this.items[idx - 1];
     };
 
-    Rondell.prototype._loadItem = function(idx, obj) {
-      var item;
-      item = new $.rondell.RondellItem(idx, obj, this);
-      this.items[idx - 1] = item;
+    Rondell.prototype._loadItem = function(obj) {
+      var idx;
+      idx = this.items.length + 1;
       this._itemIndices[idx] = idx;
-      item.init();
-      if (++this.loadedItems === this.maxItems) {
+      this.items.push(new RondellItem(idx, obj, this).init());
+      debugger;
+      if (idx === this.maxItems) {
         return this._start();
       }
     };
@@ -425,6 +430,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       if (idx === this.currentLayer) {
         item.prepareFadeIn();
       } else {
+        debugger;
         item.prepareFadeOut();
       }
       return item.runAnimation(true);
@@ -442,12 +448,12 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       }
       controls = this.controls;
       if (controls.enabled) {
-        this.controls._shiftLeft = $("<a href=\"#/\"/>").addClass("" + this.classes.control + " " + this.classes.shiftLeft).html(this.strings.prev).click(this.shiftLeft).css({
+        this.controls._shiftLeft = $("<a href=\"#/\"/>").addClass("" + classControl + " " + classShiftLeft).html(this.strings.prev).click(this.shiftLeft).css({
           left: controls.margin.x,
           top: controls.margin.y,
           zIndex: this.zIndex + this.maxItems + 2
         });
-        this.controls._shiftRight = $("<a href=\"#/\"/>").addClass("" + this.classes.control + " " + this.classes.shiftRight).html(this.strings.next).click(this.shiftRight).css({
+        this.controls._shiftRight = $("<a href=\"#/\"/>").addClass("" + classControl + " " + classShiftRight).html(this.strings.next).click(this.shiftRight).css({
           right: controls.margin.x,
           top: controls.margin.y,
           zIndex: this.zIndex + this.maxItems + 2
@@ -455,7 +461,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
         this.container.append(this.controls._shiftLeft, this.controls._shiftRight);
       }
       this.bindEvents();
-      this.container.removeClass(this.classes.initializing);
+      this.container.removeClass(classInitializing);
       if (typeof this.initCallback === "function") {
         this.initCallback(this);
       }
@@ -471,17 +477,17 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       $window.blur(this.onWindowBlur).focus(this.onWindowFocus);
       $document.focusout(this.onWindowBlur).focusin(this.onWindowFocus);
       if (this.mousewheel.enabled && ($.fn.mousewheel != null)) {
-        this.container.bind("mousewheel.rondell", this._onMousewheel);
+        this.container.bind("mousewheel." + rondellBaseClass, this._onMousewheel);
       }
       if (this._onMobile()) {
         if (this.touch.enabled) {
-          this.container.bind("touchstart.rondell touchmove.rondell touchend.rondell", this._onTouch);
+          this.container.bind("touchstart." + rondellBaseClass + " touchmove." + rondellBaseClass + " touchend." + rondellBaseClass, this._onTouch);
         }
       } else {
-        this.container.bind("mouseenter.rondell mouseleave.rondell", this._hover);
+        this.container.bind("mouseenter." + rondellBaseClass + " mouseleave." + rondellBaseClass, this._hover);
       }
       rondell = this;
-      return this.container.delegate("." + this.classes.item, "click.rondell", function(e) {
+      return this.container.delegate("." + classItem, "click." + rondellBaseClass, function(e) {
         var item;
         item = $(this).data("item");
         if (rondell._focusedItem.id === item.id) {
@@ -495,7 +501,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
             return rondell.shiftTo(item.currentSlot);
           }
         }
-      }).delegate("." + this.classes.item, "mouseenter.rondell mouseleave.rondell", function(e) {
+      }).delegate("." + classItem, "mouseenter." + rondellBaseClass + " mouseleave." + rondellBaseClass, function(e) {
         var item;
         item = $(this).data("item");
         if (e.type === "mouseenter") {
@@ -790,21 +796,21 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       var lightbox, lightboxContent,
         _this = this;
       lightbox = getLightbox();
-      lightboxContent = $('.rondell-lightbox-content', lightbox);
+      lightboxContent = $("." + classLightboxContent, lightbox);
       if (!lightboxIsVisible()) {
         lightbox.add(lightboxContent).css('visibility', 'hidden');
       }
       return lightboxContent.stop().fadeTo(100, 0, function() {
         var attr, content, icon, iconCopy, linkTarget, linkUrl, _i, _len, _ref;
-        content = $('.rondell-lightbox-inner', lightboxContent).html(_this._focusedItem.object.html());
-        $('.rondell-lightbox-position').text("" + _this.currentLayer + " | " + _this.maxItems);
-        $("." + _this.classes.overlay, content).style = '';
+        content = $("." + classLightboxInner, lightboxContent).html(_this._focusedItem.object.html());
+        $("." + classLightboxPosition).text("" + _this.currentLayer + " | " + _this.maxItems);
+        $("." + classItemOverlay, content).style = '';
         if (_this._focusedItem.isLink) {
           linkUrl = _this._focusedItem.object.attr('href');
           linkTarget = _this._focusedItem.object.attr('target');
-          $("." + _this.classes.caption, content).append("<a href='" + linkUrl + "' target='" + linkTarget + "'>" + _this.strings.more + "</a>").attr('style', '');
+          $("." + classCaption, content).append("<a href='" + linkUrl + "' target='" + linkTarget + "'>" + _this.strings.more + "</a>").attr('style', '');
         }
-        icon = $("." + _this.classes.image, content);
+        icon = $("." + classItemImage, content);
         if (icon && _this._focusedItem.referencedImage) {
           _ref = ['style', 'width', 'height'];
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -827,7 +833,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 
   })();
   getActiveRondell = function() {
-    return $(".rondell-instance-" + Rondell.activeRondell).data('api');
+    return $("." + classInstance + "-" + Rondell.activeRondell).data('rondell');
   };
   resizeTimer = 0;
   resizeLightbox = function() {
@@ -849,15 +855,15 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     var lightbox;
     if (!$.rondell.lightbox.instance) {
       lightbox = $.rondell.lightbox.instance = $($.rondell.lightbox.template).appendTo($('body'));
-      $('.rondell-lightbox-overlay, .rondell-lightbox-close', lightbox).bind('click.rondell', closeLightbox);
-      $('.rondell-lightbox-prev', lightbox).bind('click.rondell', function() {
+      $("." + classLightboxOverlay + ", ." + classLightboxClose, lightbox).bind(eventClick, closeLightbox);
+      $("." + classLightboxPrev, lightbox).bind(eventClick, function() {
         return getActiveRondell().shiftLeft();
       });
-      $('.rondell-lightbox-next', lightbox).bind('click.rondell', function() {
+      $("." + classLightboxNext, lightbox).bind(eventClick, function() {
         return getActiveRondell().shiftRight();
       });
-      $window.bind('resize.rondell', resizeLightbox);
-      lightbox.bind("mousewheel.rondell", function(e, d, dx, dy) {
+      $window.bind(eventResize, resizeLightbox);
+      lightbox.bind(eventMousewheel, function(e, d, dx, dy) {
         return getActiveRondell()._onMousewheel(e, d, dx, dy);
       });
     }
@@ -866,7 +872,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   updateLightbox = function() {
     var $lightbox, $lightboxContent, activeRondell, focusedItem, image, imageDimension, imageHeight, imageWidth, maxHeight, maxWidth, newHeight, newProps, newWidth, updateCallback, winHeight, winWidth, windowPadding;
     $lightbox = getLightbox();
-    $lightboxContent = $('.rondell-lightbox-content', $lightbox);
+    $lightboxContent = $("." + classLightboxContent, $lightbox);
     winWidth = $window.innerWidth();
     winHeight = $window.innerHeight();
     windowPadding = 20;
@@ -916,21 +922,546 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     }
     return $lightbox.stop().fadeTo(150, 1);
   };
+  RondellItem = (function() {
+    function RondellItem(id, object, rondell) {
+      this.id = id;
+      this.object = object;
+      this.rondell = rondell;
+      this.runAnimation = __bind(this.runAnimation, this);
+      this.onAnimationFinished = __bind(this.onAnimationFinished, this);
+      this.prepareFadeOut = __bind(this.prepareFadeOut, this);
+      this.prepareFadeIn = __bind(this.prepareFadeIn, this);
+      this.hideCaption = __bind(this.hideCaption, this);
+      this.showCaption = __bind(this.showCaption, this);
+      this.onMouseLeave = __bind(this.onMouseLeave, this);
+      this.onMouseEnter = __bind(this.onMouseEnter, this);
+      this.finalize = __bind(this.finalize, this);
+      this.onError = __bind(this.onError, this);
+      this.onIconLoad = __bind(this.onIconLoad, this);
+      this.refreshDimensions = __bind(this.refreshDimensions, this);
+      this.init = __bind(this.init, this);
+      this.currentSlot = this.id;
+      this.focused = this.hidden = this.animating = false;
+      this.isNew = this.resizeable = true;
+      this.icon = this.iconCopy = this.referencedImage = null;
+      this.croppedSize = this.rondell.itemProperties.size;
+      this.sizeSmall = this.rondell.itemProperties.size;
+      this.sizeFocused = this.rondell.itemProperties.sizeFocused;
+      this.objectCSSTarget = {};
+      this.objectAnimationTarget = {};
+      this.lastObjectAnimationTarget = {};
+      this.iconAnimationTarget = {};
+      this.lastIconAnimationTarget = {};
+      this.animationSpeed = this.rondell.fadeTime;
+      this.isLink = this.object.is('a');
+    }
+
+    RondellItem.prototype.init = function() {
+      var filetype, icon, linkType, linkUrl, _i, _len, _ref;
+      if (this.object.is('img')) {
+        this.object = this.object.wrap("<div/>").parent();
+      }
+      this.object.addClass(classItem).data('item', this).css({
+        opacity: 0,
+        width: this.sizeSmall.width,
+        height: this.sizeSmall.height,
+        left: this.rondell.center.left - this.sizeFocused.width / 2,
+        top: this.rondell.center.top - this.sizeFocused.height / 2
+      });
+      if (this.isLink && this.rondell.lightbox.displayReferencedImages) {
+        linkUrl = this.object.attr('href');
+        linkType = this._getFiletype(linkUrl);
+        _ref = this.rondell.imageFiletypes;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          filetype = _ref[_i];
+          if (!(linkType === filetype)) {
+            continue;
+          }
+          this.referencedImage = linkUrl;
+          break;
+        }
+      }
+      icon = this.object.find('img:first');
+      if (icon.length) {
+        this.icon = icon;
+        this.resizeable = !icon.hasClass(classNoScale);
+        this.icon.addClass(classItemImage);
+        this.object.addClass(classItemLoading);
+        if (icon.width() > 0 || (icon[0].complete && icon[0].width > 0)) {
+          window.setTimeout(this.onIconLoad, 10);
+        } else {
+          this.iconCopy = $("<img style=\"display:none\"/>");
+          $('body').append(this.iconCopy);
+          this.iconCopy.one('load', this.onIconLoad).one('error', this.onError).attr('src', icon.attr('src'));
+        }
+      } else {
+        delayCall(0, this.finalize);
+      }
+      return this;
+    };
+
+    RondellItem.prototype._getFiletype = function(filename) {
+      return filename.substr(filename.lastIndexOf('.') + 1).toLowerCase();
+    };
+
+    RondellItem.prototype.refreshDimensions = function() {
+      var croppedSize, foHeight, foWidth, focusedSize, iconHeight, iconWidth, itemSize, smHeight, smWidth, _ref, _ref1, _ref2, _ref3, _ref4;
+      iconWidth = ((_ref = this.iconCopy) != null ? _ref.width() : void 0) || ((_ref1 = this.iconCopy) != null ? _ref1[0].width : void 0) || this.icon[0].width || this.icon.width();
+      iconHeight = ((_ref2 = this.iconCopy) != null ? _ref2.height() : void 0) || ((_ref3 = this.iconCopy) != null ? _ref3[0].height : void 0) || this.icon[0].height || this.icon.height();
+      foWidth = smWidth = iconWidth;
+      foHeight = smHeight = iconHeight;
+      itemSize = this.rondell.itemProperties.size;
+      focusedSize = this.rondell.itemProperties.sizeFocused;
+      croppedSize = itemSize;
+      if ((_ref4 = this.iconCopy) != null) {
+        _ref4.remove();
+      }
+      if (!(iconWidth && iconHeight)) {
+        return;
+      }
+      if (this.resizeable) {
+        this.icon.addClass(classItemResizeable);
+        smHeight *= itemSize.width / smWidth;
+        smWidth = itemSize.width;
+        if (smHeight > itemSize.height) {
+          smWidth *= itemSize.height / smHeight;
+          smHeight = itemSize.height;
+        }
+        if (this.rondell.cropThumbnails) {
+          if (!this.icon.parent().hasClass(classItemResizeable)) {
+            this.icon.wrap($("<div>").addClass(classItemCrop));
+          }
+          croppedSize = {
+            width: itemSize.width,
+            height: itemSize.width / smWidth * smHeight
+          };
+          if (croppedSize.height < itemSize.height) {
+            croppedSize = {
+              width: itemSize.height / croppedSize.height * croppedSize.width,
+              height: itemSize.height
+            };
+          }
+          smWidth = itemSize.width;
+          smHeight = itemSize.height;
+        }
+        foHeight *= focusedSize.width / foWidth;
+        foWidth = focusedSize.width;
+        if (foHeight > focusedSize.height) {
+          foWidth *= focusedSize.height / foHeight;
+          foHeight = focusedSize.height;
+        }
+      } else {
+        smWidth = itemSize.width;
+        smHeight = itemSize.height;
+        foWidth = focusedSize.width;
+        foHeight = focusedSize.height;
+      }
+      this.croppedSize = croppedSize;
+      this.iconWidth = iconWidth;
+      this.iconHeight = iconHeight;
+      this.sizeSmall = {
+        width: Math.round(smWidth),
+        height: Math.round(smHeight)
+      };
+      return this.sizeFocused = {
+        width: Math.round(foWidth),
+        height: Math.round(foHeight)
+      };
+    };
+
+    RondellItem.prototype.onIconLoad = function() {
+      this.refreshDimensions();
+      return this.finalize();
+    };
+
+    RondellItem.prototype.onError = function() {
+      var errorString, _ref;
+      errorString = this.rondell.strings.loadingError.replace("%s", this.icon.attr("src"));
+      this.icon.remove();
+      if ((_ref = this.iconCopy) != null) {
+        _ref.remove();
+      }
+      return this.object.removeClass(classItemLoading).addClass(classItemError).html("<p>" + errorString + "</p>");
+    };
+
+    RondellItem.prototype.finalize = function() {
+      var caption, captionContent, captionWrap, _ref, _ref1, _ref2, _ref3;
+      this.object.removeClass(classItemLoading);
+      if (this.rondell.captionsEnabled) {
+        captionContent = null;
+        if (this.rondell.cropThumbnails) {
+          captionContent = (_ref = this.icon) != null ? _ref.closest("." + this.classItemCrop).siblings() : void 0;
+        } else {
+          captionContent = (_ref1 = this.icon) != null ? _ref1.siblings() : void 0;
+        }
+        if (!((captionContent != null ? captionContent.length : void 0) || this.icon) && this.object.children().length) {
+          captionContent = this.object.children();
+        }
+        if (!(captionContent != null ? captionContent.length : void 0)) {
+          caption = this.object.attr("title") || ((_ref2 = this.icon) != null ? _ref2.attr("title") : void 0) || ((_ref3 = this.icon) != null ? _ref3.attr("alt") : void 0);
+          if (caption) {
+            captionContent = $("<p>" + caption + "</p>");
+            this.object.append(captionContent);
+          }
+        }
+        if (captionContent != null ? captionContent.length : void 0) {
+          captionWrap = (captionContent.wrapAll("<div/>")).parent().addClass(classCaption);
+          if (this.icon) {
+            this.overlay = captionWrap.addClass(classItemOverlay);
+          }
+        }
+      }
+      return this.rondell.onItemInit(this.id);
+    };
+
+    RondellItem.prototype.onMouseEnter = function() {
+      if (!this.animating && !this.hidden && this.object.is(":visible")) {
+        return this.object.addClass(this.rondell.itemHoveredClass).stop(true).animate({
+          opacity: 1
+        }, this.rondell.fadeTime, this.rondell.funcEase);
+      }
+    };
+
+    RondellItem.prototype.onMouseLeave = function() {
+      this.object.removeClass(classItemHovered);
+      if (!(this.animating || this.hidden)) {
+        return this.object.stop(true).animate({
+          opacity: this.objectAnimationTarget.opacity
+        }, this.rondell.fadeTime, this.rondell.funcEase);
+      }
+    };
+
+    RondellItem.prototype.showCaption = function() {
+      if (this.rondell.captionsEnabled && (this.overlay != null)) {
+        return this.overlay.stop(true).css({
+          height: "auto",
+          overflow: "auto"
+        }).fadeTo(300, 1);
+      }
+    };
+
+    RondellItem.prototype.hideCaption = function() {
+      var _ref;
+      if (this.rondell.captionsEnabled && ((_ref = this.overlay) != null ? _ref.is(":visible") : void 0)) {
+        return this.overlay.stop(true).css({
+          height: this.overlay.height(),
+          overflow: "hidden"
+        }).fadeTo(200, 0);
+      }
+    };
+
+    RondellItem.prototype.prepareFadeIn = function() {
+      var iconMarginLeft, iconMarginTop, itemFocusedHeight, itemFocusedWidth;
+      this.focused = true;
+      this.hidden = false;
+      itemFocusedWidth = this.sizeFocused.width;
+      itemFocusedHeight = this.sizeFocused.height;
+      this.lastObjectAnimationTarget = this.objectAnimationTarget;
+      this.objectAnimationTarget = {
+        width: itemFocusedWidth,
+        height: itemFocusedHeight,
+        left: this.rondell.center.left - itemFocusedWidth / 2,
+        top: this.rondell.center.top - itemFocusedHeight / 2,
+        opacity: 1
+      };
+      this.objectCSSTarget = {
+        zIndex: this.rondell.zIndex + this.rondell.maxItems,
+        display: "block"
+      };
+      this.animationSpeed = this.rondell.fadeTime;
+      if (this.icon) {
+        this.lastIconAnimationTarget = this.iconAnimationTarget;
+        iconMarginLeft = 0;
+        iconMarginTop = 0;
+        if (!this.resizeable) {
+          iconMarginTop = (this.rondell.itemProperties.sizeFocused.height - this.iconHeight) / 2;
+          iconMarginLeft = (this.rondell.itemProperties.sizeFocused.width - this.iconWidth) / 2;
+          this.iconAnimationTarget.marginTop = iconMarginTop;
+          this.iconAnimationTarget.marginLeft = iconMarginLeft;
+        }
+        if (this.rondell.cropThumbnails) {
+          return this.iconAnimationTarget = {
+            marginTop: iconMarginTop,
+            marginLeft: iconMarginLeft,
+            width: itemFocusedWidth,
+            height: itemFocusedHeight
+          };
+        }
+      }
+    };
+
+    RondellItem.prototype.prepareFadeOut = function() {
+      var idx, itemHeight, itemSize, itemWidth, layerDiff, layerDist, layerPos, newTarget, newZ, relativeSize, rondellItemProperties, _ref;
+      this.focused = false;
+      idx = this.currentSlot;
+      rondellItemProperties = this.rondell.itemProperties;
+      itemSize = rondellItemProperties.size;
+      _ref = this.rondell.getRelativeItemPosition(idx), layerDist = _ref[0], layerPos = _ref[1];
+      layerDiff = this.rondell.funcDiff(layerPos - this.rondell.currentLayer, this.rondell, idx);
+      if (layerPos < this.rondell.currentLayer) {
+        layerDiff *= -1;
+      }
+      relativeSize = this.rondell.funcSize(layerDiff, this.rondell);
+      itemWidth = this.sizeSmall.width * relativeSize;
+      itemHeight = this.sizeSmall.height * relativeSize;
+      newZ = this.rondell.zIndex - layerDist;
+      this.animationSpeed = this.rondell.fadeTime + rondellItemProperties.delay * layerDist;
+      newTarget = {
+        width: itemWidth,
+        height: itemHeight,
+        left: this.rondell.funcLeft(layerDiff, this.rondell, idx) + (itemSize.width - itemWidth) / 2,
+        top: this.rondell.funcTop(layerDiff, this.rondell, idx) + (itemSize.height - itemHeight) / 2,
+        opacity: 0
+      };
+      this.objectCSSTarget = {
+        zIndex: newZ,
+        display: "block"
+      };
+      if (layerDist <= this.rondell.visibleItems) {
+        newTarget.opacity = this.rondell.funcOpacity(layerDiff, this.rondell, idx);
+        this.hidden = false;
+        if (this.icon) {
+          this.lastIconAnimationTarget = this.iconAnimationTarget;
+          if (this.rondell.cropThumbnails) {
+            this.iconAnimationTarget = {
+              marginTop: (itemSize.height - this.croppedSize.height) / 2,
+              marginLeft: (itemSize.width - this.croppedSize.width) / 2,
+              width: this.croppedSize.width,
+              height: this.croppedSize.height
+            };
+          }
+          if (!this.resizeable) {
+            this.iconAnimationTarget = {
+              marginTop: (itemSize.height - this.iconHeight) / 2,
+              marginLeft: (itemSize.width - this.iconWidth) / 2
+            };
+          }
+        }
+      } else if (this.hidden) {
+        $.extend(this.objectCSSTarget, newTarget);
+      }
+      this.lastObjectAnimationTarget = this.objectAnimationTarget;
+      return this.objectAnimationTarget = newTarget;
+    };
+
+    RondellItem.prototype.onAnimationFinished = function() {
+      this.animating = false;
+      if (this.focused) {
+        this.object.addClass(classItemFocused);
+        if (this.rondell.hovering || this.rondell.alwaysShowCaption || this.rondell._onMobile()) {
+          return this.showCaption();
+        }
+      } else {
+        if (this.objectAnimationTarget.opacity < this.rondell.opacityMin) {
+          this.hidden = true;
+          return this.object.css("display", "none");
+        } else {
+          this.hidden = false;
+          return this.object.css("display", "block");
+        }
+      }
+    };
+
+    RondellItem.prototype.runAnimation = function(force) {
+      if (force == null) {
+        force = false;
+      }
+      this.object.css(this.objectCSSTarget);
+      if (!this.hidden) {
+        if ((force || this.iconAnimationTarget) && this.icon && (this.focused || !this.rondell.equals(this.iconAnimationTarget, this.lastIconAnimationTarget))) {
+          this.icon.stop(true).animate(this.iconAnimationTarget, this.animationSpeed, this.rondell.funcEase);
+        }
+        if ((force || (this.objectAnimationTarget != null)) && (this.focused || !this.rondell.equals(this.objectAnimationTarget, this.lastObjectAnimationTarget))) {
+          this.animating = true;
+          this.object.stop(true).animate(this.objectAnimationTarget, this.animationSpeed, this.rondell.funcEase, this.onAnimationFinished);
+          if (!this.focused) {
+            this.object.removeClass(classItemFocused);
+            return this.hideCaption();
+          }
+        } else {
+          return this.onAnimationFinished();
+        }
+      }
+    };
+
+    return RondellItem;
+
+  })();
+  RondellScrollbar = (function() {
+    function RondellScrollbar(container, options) {
+      this.scrollRight = __bind(this.scrollRight, this);
+      this.scrollLeft = __bind(this.scrollLeft, this);
+      this.onScrollbarClick = __bind(this.onScrollbarClick, this);
+      this.onDragStart = __bind(this.onDragStart, this);
+      this.onDrag = __bind(this.onDrag, this);
+      this.setPosition = __bind(this.setPosition, this);
+      this.scrollTo = __bind(this.scrollTo, this);
+      this.updatePosition = __bind(this.updatePosition, this);
+      this._initControls = __bind(this._initControls, this);
+      var scrollControlWidth;
+      $.extend(true, this, $.rondell.defaults.scrollbar, options);
+      this.container = container.addClass(classScrollbar);
+      this._drag = {
+        _dragging: false,
+        _lastDragEvent: 0
+      };
+      this.container.addClass("" + classScrollbar + "-" + this.orientation).css(this.style);
+      this._initControls();
+      scrollControlWidth = this.scrollControl.outerWidth();
+      this._minX = this.padding + this.scrollLeftControl.outerWidth() + scrollControlWidth / 2;
+      this._maxX = this.container.innerWidth() - this.padding - this.scrollRightControl.outerWidth() - scrollControlWidth / 2;
+      this.setPosition(this.position, false, true);
+    }
+
+    RondellScrollbar.prototype._initControls = function() {
+      var scrollControlTemplate;
+      scrollControlTemplate = "<div><span class=\"" + classScrollbarInner + "\">&nbsp;</span></div>";
+      this.scrollLeftControl = $(scrollControlTemplate).addClass(classScrollbarLeft).click(this.scrollLeft);
+      this.scrollRightControl = $(scrollControlTemplate).addClass(classScrollbarRight).click(this.scrollRight);
+      this.scrollControl = $("<div class=\"" + classScrollbarControl + "\">&nbsp;</div>").css("left", this.container.innerWidth() / 2).mousedown(this.onDragStart);
+      this.scrollBackground = $("<div class=\"" + classScrollbarBackground + "\"/>");
+      this.container.append(this.scrollBackground, this.scrollLeftControl, this.scrollRightControl, this.scrollControl);
+      return this.container.add(this.scrollBackground).click(this.onScrollbarClick);
+    };
+
+    RondellScrollbar.prototype.updatePosition = function(position, fireCallback) {
+      if (fireCallback == null) {
+        fireCallback = true;
+      }
+      if (!position || position === this.position || position < this.start || position > this.end) {
+        return;
+      }
+      this.position = position;
+      if (fireCallback) {
+        return typeof this.onScroll === "function" ? this.onScroll(position, true) : void 0;
+      }
+    };
+
+    RondellScrollbar.prototype.scrollTo = function(x, animate, fireCallback) {
+      var newPosition;
+      if (animate == null) {
+        animate = true;
+      }
+      if (fireCallback == null) {
+        fireCallback = true;
+      }
+      if (x < this._minX || x > this._maxX) {
+        return;
+      }
+      this.scrollControl.stop(true).css('left', x);
+      newPosition = Math.round((x - this._minX) / (this._maxX - this._minX) * (this.end - this.start)) + this.start;
+      if (newPosition !== this.position) {
+        return this.updatePosition(newPosition, fireCallback);
+      }
+    };
+
+    RondellScrollbar.prototype.setPosition = function(position, fireCallback, force) {
+      var newX;
+      if (fireCallback == null) {
+        fireCallback = true;
+      }
+      if (force == null) {
+        force = false;
+      }
+      if (this.repeating) {
+        if (position < this.start) {
+          position = this.end;
+        }
+        if (position > this.end) {
+          position = this.start;
+        }
+      }
+      if (!force && (position < this.start || position > this.end || position === this.position)) {
+        return;
+      }
+      newX = Math.round((position - this.start) / (this.end - this.start) * (this._maxX - this._minX)) + this._minX;
+      return this.scrollTo(newX, true, fireCallback);
+    };
+
+    RondellScrollbar.prototype.onDrag = function(e) {
+      var newX, _ref;
+      e.preventDefault();
+      if (!this._drag._dragging) {
+        return;
+      }
+      if (e.type === "mouseup") {
+        this._drag._dragging = false;
+        this.scrollControl.removeClass(classScrollbarDragging);
+        return $(window).unbind("mousemove mouseup", this.onDrag);
+      } else {
+        newX = 0;
+        if ((_ref = this.orientation) === "top" || _ref === "bottom") {
+          newX = e.pageX - this.container.offset().left;
+        } else {
+          newX = e.pageY - this.container.offset().top;
+        }
+        newX = Math.max(this._minX, Math.min(this._maxX, newX));
+        return this.scrollTo(newX, false);
+      }
+    };
+
+    RondellScrollbar.prototype.onDragStart = function(e) {
+      e.preventDefault();
+      this._drag._dragging = true;
+      this.scrollControl.addClass(classScrollbarDragging);
+      return $(window).bind("mousemove mouseup", this.onDrag);
+    };
+
+    RondellScrollbar.prototype.onScrollbarClick = function(e) {
+      return this.scrollTo(e.pageX - this.container.offset().left);
+    };
+
+    RondellScrollbar.prototype.scrollLeft = function(e) {
+      var newPosition;
+      e.preventDefault();
+      newPosition = this.position - this.stepSize;
+      if (this.keepStepOrder && this.stepSize > 1) {
+        if (newPosition >= this.start) {
+          newPosition -= (newPosition - this.start) % this.stepSize;
+        } else if (this.repeating) {
+          newPosition = this.start + Math.floor((this.end - this.start) / this.stepSize) * this.stepSize;
+        }
+      }
+      return this.setPosition(newPosition);
+    };
+
+    RondellScrollbar.prototype.scrollRight = function(e) {
+      var newPosition;
+      e.preventDefault();
+      newPosition = this.position + this.stepSize;
+      if (this.keepStepOrder && this.stepSize > 1) {
+        newPosition -= (newPosition - this.start) % this.stepSize;
+        if (this.repeating && newPosition > this.end) {
+          newPosition = this.start;
+        }
+      }
+      return this.setPosition(newPosition);
+    };
+
+    return RondellScrollbar;
+
+  })();
   return $.fn.rondell = function(options, callback) {
-    var rondell;
+    var self;
     if (options == null) {
       options = {};
     }
     if (callback == null) {
       callback = void 0;
     }
-    rondell = new Rondell(this, options, this.length, callback);
-    this.each(function(idx) {
-      return rondell._loadItem(idx + 1, $(this));
-    });
-    return rondell;
+    self = $(this);
+    if (this.length > 1) {
+      this.each(function() {
+        return self.rondell(options, callback);
+      });
+    } else if (self.data('rondell') === void 0) {
+      new Rondell(this, options, callback);
+    } else {
+      self.data('rondell').update(options);
+    }
+    return this;
   };
-})(jQuery);
+})(jQuery, window, document);
 
 /*!
   Presets for jQuery rondell plugin
@@ -1266,560 +1797,4 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
       }
     }
   };
-})(jQuery);
-
-/*!
-  Scrollbar for jQuery rondell plugin
-  
-  @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @category jQuery plugin
-  @copyright (c) 2009-2012 Sebastian Helzle (www.sebastianhelzle.net)
-  @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
-*/
-
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-(function($) {
-  $.rondell || ($.rondell = {});
-  return $.rondell.RondellScrollbar = (function() {
-    function RondellScrollbar(container, options) {
-      this.scrollRight = __bind(this.scrollRight, this);
-      this.scrollLeft = __bind(this.scrollLeft, this);
-      this.onScrollbarClick = __bind(this.onScrollbarClick, this);
-      this.onDragStart = __bind(this.onDragStart, this);
-      this.onDrag = __bind(this.onDrag, this);
-      this.setPosition = __bind(this.setPosition, this);
-      this.scrollTo = __bind(this.scrollTo, this);
-      this.updatePosition = __bind(this.updatePosition, this);
-      this._initControls = __bind(this._initControls, this);
-      $.extend(true, this, $.rondell.defaults.scrollbar, options);
-      this.container = container.addClass(this.classes.container);
-      this._drag = {
-        _dragging: false,
-        _lastDragEvent: 0
-      };
-      this.container.addClass("" + this.classes.container + "-" + this.orientation).css(this.style);
-      this._initControls();
-      this._minX = this.padding + this.scrollLeftControl.outerWidth() + this.scrollControl.outerWidth() / 2;
-      this._maxX = this.container.innerWidth() - this.padding - this.scrollRightControl.outerWidth() - this.scrollControl.outerWidth() / 2;
-      this.setPosition(this.position, false, true);
-    }
-
-    RondellScrollbar.prototype._initControls = function() {
-      var scrollControlTemplate;
-      scrollControlTemplate = "<div><span class=\"" + this.classes.scrollInner + "\">&nbsp;</span></div>";
-      this.scrollLeftControl = $(scrollControlTemplate).addClass(this.classes.scrollLeft).click(this.scrollLeft);
-      this.scrollRightControl = $(scrollControlTemplate).addClass(this.classes.scrollRight).click(this.scrollRight);
-      this.scrollControl = $("<div class=\"" + this.classes.control + "\">&nbsp;</div>").css("left", this.container.innerWidth() / 2).mousedown(this.onDragStart);
-      this.scrollBackground = $("<div class=\"" + this.classes.background + "\"/>");
-      this.container.append(this.scrollBackground, this.scrollLeftControl, this.scrollRightControl, this.scrollControl);
-      return this.container.add(this.scrollBackground).click(this.onScrollbarClick);
-    };
-
-    RondellScrollbar.prototype.updatePosition = function(position, fireCallback) {
-      if (fireCallback == null) {
-        fireCallback = true;
-      }
-      if (!position || position === this.position || position < this.start || position > this.end) {
-        return;
-      }
-      this.position = position;
-      if (fireCallback) {
-        return typeof this.onScroll === "function" ? this.onScroll(position, true) : void 0;
-      }
-    };
-
-    RondellScrollbar.prototype.scrollTo = function(x, animate, fireCallback) {
-      var newPosition, scroller, target;
-      if (animate == null) {
-        animate = true;
-      }
-      if (fireCallback == null) {
-        fireCallback = true;
-      }
-      if (x < this._minX || x > this._maxX) {
-        return;
-      }
-      scroller = this.scrollControl.stop(true);
-      target = {
-        left: x
-      };
-      if (animate) {
-        scroller.animate(target, this.animationDuration, this.easing);
-      } else {
-        scroller.css(target);
-      }
-      newPosition = Math.round((x - this._minX) / (this._maxX - this._minX) * (this.end - this.start)) + this.start;
-      if (newPosition !== this.position) {
-        return this.updatePosition(newPosition, fireCallback);
-      }
-    };
-
-    RondellScrollbar.prototype.setPosition = function(position, fireCallback, force) {
-      var newX;
-      if (fireCallback == null) {
-        fireCallback = true;
-      }
-      if (force == null) {
-        force = false;
-      }
-      if (this.repeating) {
-        if (position < this.start) {
-          position = this.end;
-        }
-        if (position > this.end) {
-          position = this.start;
-        }
-      }
-      if (!force && (position < this.start || position > this.end || position === this.position)) {
-        return;
-      }
-      newX = Math.round((position - this.start) / (this.end - this.start) * (this._maxX - this._minX)) + this._minX;
-      return this.scrollTo(newX, true, fireCallback);
-    };
-
-    RondellScrollbar.prototype.onDrag = function(e) {
-      var newX, _ref;
-      e.preventDefault();
-      if (!this._drag._dragging) {
-        return;
-      }
-      if (e.type === "mouseup") {
-        this._drag._dragging = false;
-        this.scrollControl.removeClass(this.classes.dragging);
-        return $(window).unbind("mousemove mouseup", this.onDrag);
-      } else {
-        newX = 0;
-        if ((_ref = this.orientation) === "top" || _ref === "bottom") {
-          newX = e.pageX - this.container.offset().left;
-        } else {
-          newX = e.pageY - this.container.offset().top;
-        }
-        newX = Math.max(this._minX, Math.min(this._maxX, newX));
-        return this.scrollTo(newX, false);
-      }
-    };
-
-    RondellScrollbar.prototype.onDragStart = function(e) {
-      e.preventDefault();
-      this._drag._dragging = true;
-      this.scrollControl.addClass(this.classes.dragging);
-      return $(window).bind("mousemove mouseup", this.onDrag);
-    };
-
-    RondellScrollbar.prototype.onScrollbarClick = function(e) {
-      return this.scrollTo(e.pageX - this.container.offset().left);
-    };
-
-    RondellScrollbar.prototype.scrollLeft = function(e) {
-      var newPosition;
-      e.preventDefault();
-      newPosition = this.position - this.stepSize;
-      if (this.keepStepOrder && this.stepSize > 1) {
-        if (newPosition >= this.start) {
-          newPosition -= (newPosition - this.start) % this.stepSize;
-        } else if (this.repeating) {
-          newPosition = this.start + Math.floor((this.end - this.start) / this.stepSize) * this.stepSize;
-        }
-      }
-      return this.setPosition(newPosition);
-    };
-
-    RondellScrollbar.prototype.scrollRight = function(e) {
-      var newPosition;
-      e.preventDefault();
-      newPosition = this.position + this.stepSize;
-      if (this.keepStepOrder && this.stepSize > 1) {
-        newPosition -= (newPosition - this.start) % this.stepSize;
-        if (this.repeating && newPosition > this.end) {
-          newPosition = this.start;
-        }
-      }
-      return this.setPosition(newPosition);
-    };
-
-    return RondellScrollbar;
-
-  })();
-})(jQuery);
-
-/*!
-  RondellItem for jQuery rondell plugin
-
-  @author Sebastian Helzle (sebastian@helzle.net or @sebobo)
-  @category jQuery plugin
-  @copyright (c) 2009-2012 Sebastian Helzle (www.sebastianhelzle.net)
-  @license Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
-*/
-
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-(function($) {
-  $.rondell || ($.rondell = {});
-  return $.rondell.RondellItem = (function() {
-    function RondellItem(id, object, rondell) {
-      this.id = id;
-      this.object = object;
-      this.rondell = rondell;
-      this.runAnimation = __bind(this.runAnimation, this);
-      this.onAnimationFinished = __bind(this.onAnimationFinished, this);
-      this.prepareFadeOut = __bind(this.prepareFadeOut, this);
-      this.prepareFadeIn = __bind(this.prepareFadeIn, this);
-      this.hideCaption = __bind(this.hideCaption, this);
-      this.showCaption = __bind(this.showCaption, this);
-      this.onMouseLeave = __bind(this.onMouseLeave, this);
-      this.onMouseEnter = __bind(this.onMouseEnter, this);
-      this.finalize = __bind(this.finalize, this);
-      this.onError = __bind(this.onError, this);
-      this.onIconLoad = __bind(this.onIconLoad, this);
-      this.refreshDimensions = __bind(this.refreshDimensions, this);
-      this.init = __bind(this.init, this);
-      this.currentSlot = this.id;
-      this.focused = false;
-      this.hidden = false;
-      this.animating = false;
-      this.isNew = true;
-      this.icon = null;
-      this.resizeable = true;
-      this.iconCopy = null;
-      this.croppedSize = this.rondell.itemProperties.size;
-      this.sizeSmall = this.rondell.itemProperties.size;
-      this.sizeFocused = this.rondell.itemProperties.sizeFocused;
-      this.objectCSSTarget = {};
-      this.objectAnimationTarget = {};
-      this.lastObjectAnimationTarget = {};
-      this.iconAnimationTarget = {};
-      this.lastIconAnimationTarget = {};
-      this.animationSpeed = this.rondell.fadeTime;
-      this.isLink = this.object.is('a');
-      this.referencedImage = null;
-    }
-
-    RondellItem.prototype.init = function() {
-      var filetype, icon, linkType, linkUrl, _i, _len, _ref;
-      if (this.object.is('img')) {
-        this.object = this.object.wrap("<div/>").parent();
-      }
-      this.object.addClass("" + this.rondell.classes.item).data('item', this).css({
-        opacity: 0,
-        width: this.sizeSmall.width,
-        height: this.sizeSmall.height,
-        left: this.rondell.center.left - this.sizeFocused.width / 2,
-        top: this.rondell.center.top - this.sizeFocused.height / 2
-      });
-      if (this.isLink && this.rondell.lightbox.displayReferencedImages) {
-        linkUrl = this.object.attr('href');
-        linkType = this._getFiletype(linkUrl);
-        _ref = this.rondell.imageFiletypes;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          filetype = _ref[_i];
-          if (!(linkType === filetype)) {
-            continue;
-          }
-          this.referencedImage = linkUrl;
-          break;
-        }
-      }
-      icon = this.object.find('img:first');
-      if (icon.length) {
-        this.icon = icon;
-        this.resizeable = !icon.hasClass(this.rondell.classes.noScale);
-        this.icon.addClass(this.rondell.classes.image);
-        this.object.addClass(this.rondell.classes.loading);
-        if (icon.width() > 0 || (icon[0].complete && icon[0].width > 0)) {
-          return window.setTimeout(this.onIconLoad, 10);
-        } else {
-          this.iconCopy = $("<img style=\"display:none\"/>");
-          $('body').append(this.iconCopy);
-          return this.iconCopy.one('load', this.onIconLoad).one('error', this.onError).attr('src', icon.attr('src'));
-        }
-      } else {
-        return this.finalize();
-      }
-    };
-
-    RondellItem.prototype._getFiletype = function(filename) {
-      return filename.substr(filename.lastIndexOf('.') + 1).toLowerCase();
-    };
-
-    RondellItem.prototype.refreshDimensions = function() {
-      var croppedSize, foHeight, foWidth, focusedSize, iconHeight, iconWidth, itemSize, smHeight, smWidth, _ref, _ref1, _ref2, _ref3, _ref4;
-      iconWidth = ((_ref = this.iconCopy) != null ? _ref.width() : void 0) || ((_ref1 = this.iconCopy) != null ? _ref1[0].width : void 0) || this.icon[0].width || this.icon.width();
-      iconHeight = ((_ref2 = this.iconCopy) != null ? _ref2.height() : void 0) || ((_ref3 = this.iconCopy) != null ? _ref3[0].height : void 0) || this.icon[0].height || this.icon.height();
-      foWidth = smWidth = iconWidth;
-      foHeight = smHeight = iconHeight;
-      itemSize = this.rondell.itemProperties.size;
-      focusedSize = this.rondell.itemProperties.sizeFocused;
-      croppedSize = itemSize;
-      if ((_ref4 = this.iconCopy) != null) {
-        _ref4.remove();
-      }
-      if (!(iconWidth && iconHeight)) {
-        return;
-      }
-      if (this.resizeable) {
-        this.icon.addClass(this.rondell.classes.resizeable);
-        smHeight *= itemSize.width / smWidth;
-        smWidth = itemSize.width;
-        if (smHeight > itemSize.height) {
-          smWidth *= itemSize.height / smHeight;
-          smHeight = itemSize.height;
-        }
-        if (this.rondell.cropThumbnails) {
-          if (!this.icon.parent().hasClass(this.rondell.classes.crop)) {
-            this.icon.wrap($("<div>").addClass(this.rondell.classes.crop));
-          }
-          croppedSize = {
-            width: itemSize.width,
-            height: itemSize.width / smWidth * smHeight
-          };
-          if (croppedSize.height < itemSize.height) {
-            croppedSize = {
-              width: itemSize.height / croppedSize.height * croppedSize.width,
-              height: itemSize.height
-            };
-          }
-          smWidth = itemSize.width;
-          smHeight = itemSize.height;
-        }
-        foHeight *= focusedSize.width / foWidth;
-        foWidth = focusedSize.width;
-        if (foHeight > focusedSize.height) {
-          foWidth *= focusedSize.height / foHeight;
-          foHeight = focusedSize.height;
-        }
-      } else {
-        smWidth = itemSize.width;
-        smHeight = itemSize.height;
-        foWidth = focusedSize.width;
-        foHeight = focusedSize.height;
-      }
-      this.croppedSize = croppedSize;
-      this.iconWidth = iconWidth;
-      this.iconHeight = iconHeight;
-      this.sizeSmall = {
-        width: Math.round(smWidth),
-        height: Math.round(smHeight)
-      };
-      return this.sizeFocused = {
-        width: Math.round(foWidth),
-        height: Math.round(foHeight)
-      };
-    };
-
-    RondellItem.prototype.onIconLoad = function() {
-      this.refreshDimensions();
-      return this.finalize();
-    };
-
-    RondellItem.prototype.onError = function() {
-      var errorString, _ref;
-      errorString = this.rondell.strings.loadingError.replace("%s", this.icon.attr("src"));
-      this.icon.remove();
-      if ((_ref = this.iconCopy) != null) {
-        _ref.remove();
-      }
-      return this.object.removeClass(this.rondell.classes.loading).addClass(this.rondell.classes.error).html("<p>" + errorString + "</p>");
-    };
-
-    RondellItem.prototype.finalize = function() {
-      var caption, captionContent, captionWrap, _ref, _ref1, _ref2, _ref3;
-      this.object.removeClass(this.rondell.classes.loading);
-      if (this.rondell.captionsEnabled) {
-        captionContent = null;
-        if (this.rondell.cropThumbnails) {
-          captionContent = (_ref = this.icon) != null ? _ref.closest("." + this.rondell.classes.crop).siblings() : void 0;
-        } else {
-          captionContent = (_ref1 = this.icon) != null ? _ref1.siblings() : void 0;
-        }
-        if (!((captionContent != null ? captionContent.length : void 0) || this.icon) && this.object.children().length) {
-          captionContent = this.object.children();
-        }
-        if (!(captionContent != null ? captionContent.length : void 0)) {
-          caption = this.object.attr("title") || ((_ref2 = this.icon) != null ? _ref2.attr("title") : void 0) || ((_ref3 = this.icon) != null ? _ref3.attr("alt") : void 0);
-          if (caption) {
-            captionContent = $("<p>" + caption + "</p>");
-            this.object.append(captionContent);
-          }
-        }
-        if (captionContent != null ? captionContent.length : void 0) {
-          captionWrap = (captionContent.wrapAll("<div/>")).parent().addClass(this.rondell.classes.caption);
-          if (this.icon) {
-            this.overlay = captionWrap.addClass(this.rondell.classes.overlay);
-          }
-        }
-      }
-      return this.rondell.onItemInit(this.id);
-    };
-
-    RondellItem.prototype.onMouseEnter = function() {
-      if (!this.animating && !this.hidden && this.object.is(":visible")) {
-        return this.object.addClass(this.rondell.itemHoveredClass).stop(true).animate({
-          opacity: 1
-        }, this.rondell.fadeTime, this.rondell.funcEase);
-      }
-    };
-
-    RondellItem.prototype.onMouseLeave = function() {
-      this.object.removeClass(this.rondell.classes.hovered);
-      if (!(this.animating || this.hidden)) {
-        return this.object.stop(true).animate({
-          opacity: this.objectAnimationTarget.opacity
-        }, this.rondell.fadeTime, this.rondell.funcEase);
-      }
-    };
-
-    RondellItem.prototype.showCaption = function() {
-      if (this.rondell.captionsEnabled && (this.overlay != null)) {
-        return this.overlay.stop(true).css({
-          height: "auto",
-          overflow: "auto"
-        }).fadeTo(300, 1);
-      }
-    };
-
-    RondellItem.prototype.hideCaption = function() {
-      var _ref;
-      if (this.rondell.captionsEnabled && ((_ref = this.overlay) != null ? _ref.is(":visible") : void 0)) {
-        return this.overlay.stop(true).css({
-          height: this.overlay.height(),
-          overflow: "hidden"
-        }).fadeTo(200, 0);
-      }
-    };
-
-    RondellItem.prototype.prepareFadeIn = function() {
-      var iconMarginLeft, iconMarginTop, itemFocusedHeight, itemFocusedWidth;
-      this.focused = true;
-      this.hidden = false;
-      itemFocusedWidth = this.sizeFocused.width;
-      itemFocusedHeight = this.sizeFocused.height;
-      this.lastObjectAnimationTarget = this.objectAnimationTarget;
-      this.objectAnimationTarget = {
-        width: itemFocusedWidth,
-        height: itemFocusedHeight,
-        left: this.rondell.center.left - itemFocusedWidth / 2,
-        top: this.rondell.center.top - itemFocusedHeight / 2,
-        opacity: 1
-      };
-      this.objectCSSTarget = {
-        zIndex: this.rondell.zIndex + this.rondell.maxItems,
-        display: "block"
-      };
-      this.animationSpeed = this.rondell.fadeTime;
-      if (this.icon) {
-        this.lastIconAnimationTarget = this.iconAnimationTarget;
-        iconMarginLeft = 0;
-        iconMarginTop = 0;
-        if (!this.resizeable) {
-          iconMarginTop = (this.rondell.itemProperties.sizeFocused.height - this.iconHeight) / 2;
-          iconMarginLeft = (this.rondell.itemProperties.sizeFocused.width - this.iconWidth) / 2;
-          this.iconAnimationTarget.marginTop = iconMarginTop;
-          this.iconAnimationTarget.marginLeft = iconMarginLeft;
-        }
-        if (this.rondell.cropThumbnails) {
-          return this.iconAnimationTarget = {
-            marginTop: iconMarginTop,
-            marginLeft: iconMarginLeft,
-            width: itemFocusedWidth,
-            height: itemFocusedHeight
-          };
-        }
-      }
-    };
-
-    RondellItem.prototype.prepareFadeOut = function() {
-      var idx, itemHeight, itemWidth, layerDiff, layerDist, layerPos, newTarget, newZ, _ref;
-      this.focused = false;
-      idx = this.currentSlot;
-      _ref = this.rondell.getRelativeItemPosition(idx), layerDist = _ref[0], layerPos = _ref[1];
-      layerDiff = this.rondell.funcDiff(layerPos - this.rondell.currentLayer, this.rondell, idx);
-      if (layerPos < this.rondell.currentLayer) {
-        layerDiff *= -1;
-      }
-      itemWidth = this.sizeSmall.width * this.rondell.funcSize(layerDiff, this.rondell);
-      itemHeight = this.sizeSmall.height * this.rondell.funcSize(layerDiff, this.rondell);
-      newZ = this.rondell.zIndex - layerDist;
-      this.animationSpeed = this.rondell.fadeTime + this.rondell.itemProperties.delay * layerDist;
-      newTarget = {
-        width: itemWidth,
-        height: itemHeight,
-        left: this.rondell.funcLeft(layerDiff, this.rondell, idx) + (this.rondell.itemProperties.size.width - itemWidth) / 2,
-        top: this.rondell.funcTop(layerDiff, this.rondell, idx) + (this.rondell.itemProperties.size.height - itemHeight) / 2,
-        opacity: 0
-      };
-      this.objectCSSTarget = {
-        zIndex: newZ,
-        display: "block"
-      };
-      if (layerDist <= this.rondell.visibleItems) {
-        newTarget.opacity = this.rondell.funcOpacity(layerDiff, this.rondell, idx);
-        this.hidden = false;
-        if (this.icon) {
-          this.lastIconAnimationTarget = this.iconAnimationTarget;
-          if (this.rondell.cropThumbnails) {
-            this.iconAnimationTarget = {
-              marginTop: (this.rondell.itemProperties.size.height - this.croppedSize.height) / 2,
-              marginLeft: (this.rondell.itemProperties.size.width - this.croppedSize.width) / 2,
-              width: this.croppedSize.width,
-              height: this.croppedSize.height
-            };
-          }
-          if (!this.resizeable) {
-            this.iconAnimationTarget = {
-              marginTop: (this.rondell.itemProperties.size.height - this.iconHeight) / 2,
-              marginLeft: (this.rondell.itemProperties.size.width - this.iconWidth) / 2
-            };
-          }
-        }
-      } else if (this.hidden) {
-        $.extend(this.objectCSSTarget, newTarget);
-      }
-      this.lastObjectAnimationTarget = this.objectAnimationTarget;
-      return this.objectAnimationTarget = newTarget;
-    };
-
-    RondellItem.prototype.onAnimationFinished = function() {
-      this.animating = false;
-      if (this.focused) {
-        this.object.addClass(this.rondell.classes.focused);
-        if (this.rondell.hovering || this.rondell.alwaysShowCaption || this.rondell._onMobile()) {
-          return this.showCaption();
-        }
-      } else {
-        if (this.objectAnimationTarget.opacity < this.rondell.opacityMin) {
-          this.hidden = true;
-          return this.object.css("display", "none");
-        } else {
-          this.hidden = false;
-          return this.object.css("display", "block");
-        }
-      }
-    };
-
-    RondellItem.prototype.runAnimation = function(force) {
-      if (force == null) {
-        force = false;
-      }
-      this.object.css(this.objectCSSTarget);
-      if (!this.hidden) {
-        if ((force || this.iconAnimationTarget) && this.icon && (this.focused || !this.rondell.equals(this.iconAnimationTarget, this.lastIconAnimationTarget))) {
-          this.icon.stop(true).animate(this.iconAnimationTarget, this.animationSpeed, this.rondell.funcEase);
-        }
-        if ((force || (this.objectAnimationTarget != null)) && (this.focused || !this.rondell.equals(this.objectAnimationTarget, this.lastObjectAnimationTarget))) {
-          this.animating = true;
-          this.object.stop(true).animate(this.objectAnimationTarget, this.animationSpeed, this.rondell.funcEase, this.onAnimationFinished);
-          if (!this.focused) {
-            this.object.removeClass(this.rondell.classes.focused);
-            return this.hideCaption();
-          }
-        } else {
-          return this.onAnimationFinished();
-        }
-      }
-    };
-
-    return RondellItem;
-
-  })();
 })(jQuery);

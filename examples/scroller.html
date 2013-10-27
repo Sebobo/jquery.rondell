@@ -13,15 +13,7 @@
   <body>
     <div class="pageHeader hasShadow">
       <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
-      <p><b>Version 1.0.4</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
-          Sebastian Helzle
-          </a></p><br>
-      <ul class="tabs">
-        <li><a href="/" title="Projects overview">Home</a></li>
-        <li><a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">Smallipop</a></li>
-        <li class="selected"><a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">Rondell</a></li>
-        <li><a href="https://github.com/SmallImprovements/jquery.smallimap" target="_blank" title="jQuery smallimap - An interactive map plugin">Smallimap</a></li>
-      </ul>
+      <p><b>Version 1.1.0</b>&nbsp;- Created by&nbsp;<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">Sebastian Helzle</a></p>
     </div>
     <div id="introduction" class="page hasShadow">
             <div class="subnav centered">
@@ -39,14 +31,14 @@
                 <li><a href="pages.html">Pages</a></li>
               </ul><br class="clear">
             </div><br>
-      <div id="rondellScroller" class="hidden"><a href="#" title="Dummy link to the cloud"><img src="images/products/cloud.png" alt="cloud product" class="no-scale">
+      <div id="rondellScroller" class="hidden"><a href="#" title="Dummy link to the cloud"><img src="images/products/cloud.png" alt="cloud product" class="rondell-no-scale">
           <h5>Your own cloud</h5>
-          <p>Buy your own cloud to do some really complicated stuff very fast!</p></a><a href="#" title="Dummy link to the router"><img src="images/products/router.png" alt="router product" class="no-scale">
+          <p>Buy your own cloud to do some really complicated stuff very fast!</p></a><a href="#" title="Dummy link to the router"><img src="images/products/router.png" alt="router product" class="rondell-no-scale">
           <h5>The new router</h5>
-          <p>The router which can connect to anything without cables!</p></a><a href="#" title="Dummy link to the client"><img src="images/products/client.png" alt="client product" class="no-scale">
-          <h5>The green computer</h5><p>Our climate saver for only <strong>999$</strong>!</p></a><a href="#" title="Dummy link to the client"><img src="images/products/client3.png" alt="client product" class="no-scale">
-          <h5>The blue computer</h5><p>Makes you calm while working. Now only <strong>1999$</strong>!</p></a><a href="#" title="Dummy link to the client"><img src="images/products/client2.png" alt="client product" class="no-scale">
-          <h5>The pink computer</h5><p>For the girls. Only <strong>599$</strong>!</p></a><a href="#" title="Dummy link to the unknown"><img src="images/products/unknown.png" alt="unknown product" class="no-scale">
+          <p>The router which can connect to anything without cables!</p></a><a href="#" title="Dummy link to the client"><img src="images/products/client.png" alt="client product" class="rondell-no-scale">
+          <h5>The green computer</h5><p>Our climate saver for only <strong>999$</strong>!</p></a><a href="#" title="Dummy link to the client"><img src="images/products/client3.png" alt="client product" class="rondell-no-scale">
+          <h5>The blue computer</h5><p>Makes you calm while working. Now only <strong>1999$</strong>!</p></a><a href="#" title="Dummy link to the client"><img src="images/products/client2.png" alt="client product" class="rondell-no-scale">
+          <h5>The pink computer</h5><p>For the girls. Only <strong>599$</strong>!</p></a><a href="#" title="Dummy link to the unknown"><img src="images/products/unknown.png" alt="unknown product" class="rondell-no-scale">
           <h5>Surprise</h5>
           <p>Order this and you will be surprised!</p></a></div><br><br>
       <div class="center">
@@ -75,7 +67,7 @@ products on a company page or webshop.</p>
 
 &lt;script type="text/javascript"&gt;
   $(function() {
-    $("#rondellScroller &gt; *").rondell({
+    $("#rondellScroller").rondell({
       preset: 'scroller'
     });
   });
@@ -84,18 +76,18 @@ products on a company page or webshop.</p>
       </div><br class="clear">
     </div><br>
     <noscript><img src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></noscript>
-    <script src="../libs/jquery-1.9.1.min.js"></script>
+    <script src="../libs/jquery-1.10.2.min.js"></script>
     <script src="../libs/jquery.mousewheel-3.0.6.min.js"></script>
-    <script src="../dist/jquery.rondell.js"></script>
-    <script src="../examples/demohelpers.js"></script><script type="text/javascript">
+    <script src="../dist/jquery.rondell.js"></script><script type="text/javascript">
 (function() {
   $(function() {
-    return $("#rondellScroller > *").rondell({
+    return $("#rondellScroller").rondell({
       preset: 'scroller'
     });
   });
 
 }).call(this);
 </script>
+    <script src="../examples/demohelpers.js"></script>
   </body>
 </html>

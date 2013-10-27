@@ -13,15 +13,7 @@
   <body>
     <div class="pageHeader hasShadow">
       <h1 id="docustart">Rondell - Display images and other content in a nice way</h1>
-      <p><b>Version 1.0.4</b>&nbsp;- Created by<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">
-          Sebastian Helzle
-          </a></p><br>
-      <ul class="tabs">
-        <li><a href="/" title="Projects overview">Home</a></li>
-        <li><a href="/jquery.smallipop" title="jQuery smallipop - A tooltip plugin">Smallipop</a></li>
-        <li class="selected"><a href="/jquery.rondell" title="jQuery rondell - A graphical plugin">Rondell</a></li>
-        <li><a href="https://github.com/SmallImprovements/jquery.smallimap" target="_blank" title="jQuery smallimap - An interactive map plugin">Smallimap</a></li>
-      </ul>
+      <p><b>Version 1.1.0</b>&nbsp;- Created by&nbsp;<a href="http://www.sebastianhelzle.net" target="_blank" title="Sebastian Helzle IT-Consulting">Sebastian Helzle</a></p>
     </div>
     <div id="introduction" class="page hasShadow">
             <div class="subnav centered">
@@ -45,6 +37,17 @@
       <hr><br>
       <div>
         <ul id="changelog">
+          <li>
+            <h6>1.1.0</h6>
+            <ul>
+              <li><span class="label success">Breaking</span>&nbsp;Removed wrapping around rondell items. Selector now has to select the items parent. All children will become rondell items.</li>
+              <li><span class="label success">Breaking</span>&nbsp;CSS classes can't be customized anymore to reduce size via minify</li>
+              <li><span class="label success">Breaking</span>&nbsp;Scrollbar switched to css animation</li>
+              <li><span class="label success">New</span>&nbsp;Added cleanup function to remove everything rondell specific</li>
+              <li><span class="label success">New</span>&nbsp;Rondell options can be updated with a new rondell call. Maybe this leads to a wizard :)</li>
+              <li><span class="label notice">Change</span>&nbsp;Some performance improvements</li>
+            </ul>
+          </li>
           <li>
             <h6>1.0.4</h6>
             <ul>
@@ -169,7 +172,7 @@
       </div><br class="clear">
     </div><br>
     <noscript><img src="http://tracking.sebastianhelzle.net/piwik.php?idsite=5" style="border:0" alt=""></noscript>
-    <script src="../libs/jquery-1.9.1.min.js"></script>
+    <script src="../libs/jquery-1.10.2.min.js"></script>
     <script src="../libs/jquery.mousewheel-3.0.6.min.js"></script>
     <script src="../dist/jquery.rondell.js"></script>
     <script src="../examples/demohelpers.js"></script>
