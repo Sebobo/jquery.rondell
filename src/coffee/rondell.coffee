@@ -280,7 +280,7 @@
     funcOpacity: (l, r, i) ->
       if r.visibleItems > 1
         Math.max(0, 1.0 - Math.pow(l / r.visibleItems, 2))
-      else if r.visibleItems is 0 then 1 else 0
+      else if r.visibleItems == 1 then 1 else 0
 
     funcSize: (l, r, i) ->
       1

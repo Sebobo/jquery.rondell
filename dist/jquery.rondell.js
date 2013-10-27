@@ -320,7 +320,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
     Rondell.prototype.funcOpacity = function(l, r, i) {
       if (r.visibleItems > 1) {
         return Math.max(0, 1.0 - Math.pow(l / r.visibleItems, 2));
-      } else if (r.visibleItems === 0) {
+      } else if (r.visibleItems === 1) {
         return 1;
       } else {
         return 0;
