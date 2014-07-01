@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/sebobo/jquery.rondell.png?label=ready&title=Ready)](https://waffle.io/sebobo/jquery.rondell)
 jQuery Rondell
 =============
 
